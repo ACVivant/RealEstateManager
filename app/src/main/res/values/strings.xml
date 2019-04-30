@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Real Estate Manager</string>
+    <string name="app_slogan">"Le bien qu'il vous faut"</string>
+    <string name="login_go">"Démarrer"</string>
+</resources>
