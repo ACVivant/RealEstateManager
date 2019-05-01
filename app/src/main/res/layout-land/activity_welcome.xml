@@ -47,7 +47,7 @@ tools:context=".WelcomeActivity">
             android:textStyle="italic" />
 
         <Button
-            android:id="@+id/mainactivity_button_already_connected"
+            android:id="@+id/welcome_go_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"

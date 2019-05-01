@@ -1,6 +1,24 @@
 <resources>
+    <!-- welcome screen-->
     <string name="app_name">Real Estate Manager</string>
     <string name="app_slogan">"Le bien qu'il vous faut"</string>
     <string name="login_go">"Démarrer"</string>
     <string name="welcome_picture">"photo d'accueil"</string>
+
+    <!-- Menu -->
+    <string name="menu_add">"Ajouter un bien"</string>
+    <string name="menu_update">"Modifier un bien"</string>
+    <string name="menu_search">"Rechercher un bien"</string>
+
+    <!-- Bottom Nav Bar -->
+    <string name="nav_title">"Nav title"</string>
+    <string name="nav_map">"Carte"</string>
+    <string name="nav_list">"Liste"</string>
+
+    <!-- Navigation drawer -->
+    <string name="navigation_drawer_open">"Ouvrir le menu"</string>
+    <string name="navigation_drawer_close">"Fermer le menu"</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
