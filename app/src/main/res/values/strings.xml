@@ -19,6 +19,27 @@
     <string name="navigation_drawer_open">"Ouvrir le menu"</string>
     <string name="navigation_drawer_close">"Fermer le menu"</string>
 
+    <!-- Detail layout-->
+    <string name="recyclerview_title">"Photos"</string>
+    <string name="recyclerview_description">"Description du carousel photos"</string>
+    <string name="description_title">"Description"</string>
+    <string name="house_description">"Description du bien"</string>
+    <string name="surface_title">"Surface"</string>
+    <string name="surface_text">"75 m2"</string>
+    <string name="room_title">"Pièces"</string>
+    <string name="room_text">"4"</string>
+    <string name="bedroom_title">"Chambres"</string>
+    <string name="bedroom_text">"2"</string>
+    <string name="bathroom_title">"Salles de bain"</string>
+    <string name="bathroom_text">"1"</string>
+    <string name="location_title">"Adresse"</string>
+    <string name="location_number">"5"</string>
+    <string name="location_street">" rue de la Pompe"</string>
+    <string name="location_street2">"Appt 5"</string>
+    <string name="location_zipcode">"60150"</string>
+    <string name="location_town">"Parici"</string>
+    <string name="location_country">"France"</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
