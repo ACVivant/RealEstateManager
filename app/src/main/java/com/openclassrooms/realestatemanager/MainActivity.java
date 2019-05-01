@@ -43,16 +43,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.configureDrawerLayout();
         this.configureNavigationView();
         this.configureBottomNavigationView();
+        //this.configureAndShowBothFragment();
 
-        fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
-        fm.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
+        if (findViewById(R.id.frame_layout_map) == null) {
+            fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
+            fm.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
+        } else {
+            fm.beginTransaction().add(R.id.frame_layout_map, fragment2, "2").commit();
+            fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
+        }
     }
 
     // ---------------------
     // CONFIGURATION
     // ---------------------
 
-    // COnfigure toolbar
+    // Configure toolbar
     private void configureToolbar(){
         // Get the toolbar view inside the activity layout
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -75,8 +81,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void configureBottomNavigationView() {
-        BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        //We only add use bottom navigation in phone mode (If not found frame_layout_map)
+        if (findViewById(R.id.frame_layout_map) == null) {
+            BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
+            navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        }
+    }
+
+    private void configureAndShowBothFragment(){
+        // We only add DetailFragment in Tablet mode (If found frame_layout_map)
+        if (findViewById(R.id.frame_layout_map) != null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.frame_layout_map, fragment2)
+                    .commit();
+        }
     }
 
     @Override
