@@ -6,11 +6,11 @@
     tools:context=".ListHouseFragment"
     android:background="@color/colorPrimaryLight">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="liste des maisons"
-        android:gravity="center"/>
+    <Button
+        android:id="@+id/btn_essai_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="essai vers détail"/>
 
 </FrameLayout>

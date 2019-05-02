@@ -9,13 +9,12 @@ import android.widget.Button;
 import java.util.Objects;
 
 import androidx.appcompat.app.AppCompatActivity;
-//import butterknife.BindView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class WelcomeActivity extends AppCompatActivity {
 
-/*    @BindView(R.id.welcome_go_btn)
-    Button go_btn;*/
-
+    @BindView(R.id.welcome_go_btn)
     Button go_btn;
 
     @Override
@@ -23,7 +22,7 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        go_btn = findViewById(R.id.welcome_go_btn);
+        ButterKnife.bind(this);
         go_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -31,14 +30,6 @@ public class WelcomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        /*go_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                startActivity(intent);
-            }
-        });*/
 
     }
 

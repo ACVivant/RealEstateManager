@@ -1,10 +1,14 @@
 package com.openclassrooms.realestatemanager;
 
 //import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -33,17 +37,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragment1;
 
+    Context mContext;
+
     private int clic = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         this.configureToolbar();
         this.configureDrawerLayout();
         this.configureNavigationView();
         this.configureBottomNavigationView();
-        //this.configureAndShowBothFragment();
 
         if (findViewById(R.id.frame_layout_map) == null) {
             fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
@@ -85,15 +91,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (findViewById(R.id.frame_layout_map) == null) {
             BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
             navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        }
-    }
-
-    private void configureAndShowBothFragment(){
-        // We only add DetailFragment in Tablet mode (If found frame_layout_map)
-        if (findViewById(R.id.frame_layout_map) != null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.frame_layout_map, fragment2)
-                    .commit();
         }
     }
 
