@@ -40,6 +40,7 @@
     <string name="location_town">"Parici"</string>
     <string name="location_country">"France"</string>
     <string name="square_meter">"sq m"</string>
+    <string name="devise">"€/$"</string>
 
     <!-- Create layout-->
     <string name="set_location_number">"Numéro"</string>
