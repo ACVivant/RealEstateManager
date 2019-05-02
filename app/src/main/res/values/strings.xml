@@ -18,6 +18,7 @@
     <!-- Navigation drawer -->
     <string name="navigation_drawer_open">"Ouvrir le menu"</string>
     <string name="navigation_drawer_close">"Fermer le menu"</string>
+    <string name="title_3">"Real \nEstate \nManager"</string>
 
     <!-- Detail layout-->
     <string name="recyclerview_title">"Photos"</string>

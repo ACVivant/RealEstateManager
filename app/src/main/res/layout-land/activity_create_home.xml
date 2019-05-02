@@ -9,6 +9,31 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:title="@string/nav_title"/>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="@dimen/default_margin">
 
@@ -298,7 +323,9 @@
             android:hint="@string/location_country"/>
     </LinearLayout>
 
-
+    </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -307,13 +334,13 @@
         android:gravity="center_horizontal"
         android:layout_marginTop="@dimen/default_mini_margin">
 
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/validation"
-    android:background="@color/colorPrimaryLight"
-    android:textColor="@android:color/white"
-    android:padding="@dimen/default_mini_margin"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/validation"
+            android:background="@color/colorPrimaryLight"
+            android:textColor="@android:color/white"
+            android:padding="@dimen/default_mini_margin"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -323,7 +350,5 @@
             android:background="@color/colorPrimaryLight"
             android:textColor="@android:color/white"
             android:padding="@dimen/default_mini_margin"/>
-    </LinearLayout>
-    </LinearLayout>
     </LinearLayout>
 </ScrollView>

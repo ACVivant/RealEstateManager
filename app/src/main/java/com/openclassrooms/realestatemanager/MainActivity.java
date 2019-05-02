@@ -37,8 +37,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragment1;
 
-    Context mContext;
-
     private int clic = 0;
 
     @Override
@@ -72,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
     }
 
-    // 2 - Configure Drawer Layout
+    // Configure Drawer Layout
     private void configureDrawerLayout(){
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -80,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
     }
 
-    // 3 - Configure NavigationView
+    // Configure NavigationView
     private void configureNavigationView(){
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -92,6 +90,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
             navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //Inflate the menu and add it to the top Toolbar
+        getMenuInflater().inflate(R.menu.top_toolbar_menu, menu);
+        return true;
     }
 
     @Override
