@@ -359,30 +359,18 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:text="@string/price_title" />
 
-    <TextView
-        android:id="@+id/textView21"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/price_text"
-        android:textSize="@dimen/default_text_size"
-        app:layout_constraintBaseline_toBaselineOf="@+id/switch1"
-        app:layout_constraintStart_toEndOf="@+id/textView20" />
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/price_text"
+            android:textSize="@dimen/default_text_size"
+            app:layout_constraintStart_toEndOf="@+id/textView20"
+            app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/devise"
-        android:textOff="@string/dollars"
-        android:textOn="@string/euros"
-        android:textSize="@dimen/default_text_size"
-        app:layout_constraintStart_toEndOf="@+id/textView21"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
-
-    <ImageView
+        <ImageView
         android:id="@+id/imageView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

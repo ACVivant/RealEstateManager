@@ -18,4 +18,9 @@ tools:showIn="navigation_view">
         android:title="@string/menu_search" />
 </group>
 
+    <item
+        android:id="@+id/menu_param"
+        android:icon="@drawable/menu_param"
+        android:title="@string/menu_param" />
+
 </menu>

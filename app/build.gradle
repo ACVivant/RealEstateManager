@@ -41,6 +41,12 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
 
+    //RECYCLERVIEW
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+
+    //GLIDE
+    implementation 'jp.wasabeef:glide-transformations:3.3.0'
+
     //MULTIDEX
     implementation 'com.android.support:multidex:1.0.3'
 

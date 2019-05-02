@@ -154,6 +154,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.menu_search:
                 return true;
+
+            case R.id.menu_param:
+                return true;
         }
         return false;
     }

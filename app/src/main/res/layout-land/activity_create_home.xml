@@ -82,19 +82,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="80"
-            android:text="@string/euros"
+            android:text="@string/devise"
             android:textSize="@dimen/default_text_size" />
 
-        <Switch
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="80"
-            android:text="@string/dollars"
-            android:textSize="@dimen/default_text_size"/>
     </LinearLayout>
 
     <LinearLayout
