@@ -4,6 +4,7 @@
     <dimen name="default_very_large_margin">75dip</dimen>
     <dimen name="default_large_margin">30dip</dimen>
     <dimen name="default_margin">10dip</dimen>
+    <dimen name="default_mini_margin">5dip</dimen>
 
     <dimen name="default_welcome_title_size">55sp</dimen>
     <dimen name="default_title_size">20sp</dimen>
@@ -13,5 +14,5 @@
     <dimen name="nav_header_height">176dip</dimen>
     <dimen name="nav_header_vertical_spacing">15dip</dimen>
 
-    <dimen name="create_home_description">124dip</dimen>
+    <dimen name="create_home_description">116dip</dimen>
 </resources>
