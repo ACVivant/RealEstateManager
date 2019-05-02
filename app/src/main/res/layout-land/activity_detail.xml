@@ -220,10 +220,12 @@
             android:id="@+id/textView11"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:text="@string/location_title"
             android:textSize="@dimen/default_text_size"
-            tools:layout_editor_absoluteX="360dp"
-            tools:layout_editor_absoluteY="263dp"
+            app:layout_constraintStart_toEndOf="@+id/imageView7"
+            app:layout_constraintTop_toBottomOf="@+id/editText"
             tools:text="@string/location_title" />
 
         <TextView

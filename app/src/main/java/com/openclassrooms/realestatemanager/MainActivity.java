@@ -48,14 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.configureDrawerLayout();
         this.configureNavigationView();
         this.configureBottomNavigationView();
-
-        if (findViewById(R.id.frame_layout_map) == null) {
-            fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
-            fm.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
-        } else {
-            fm.beginTransaction().add(R.id.frame_layout_map, fragment2, "2").commit();
-            fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
-        }
+        this.configureFirstView();
     }
 
     // ---------------------
@@ -84,6 +77,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    // Configure first view
+    private void configureFirstView() {
+        if (findViewById(R.id.frame_layout_map) == null) {
+            fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
+            fm.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
+        } else {
+            fm.beginTransaction().add(R.id.frame_layout_map, fragment2, "2").commit();
+            fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
+        }
+    }
+
     private void configureBottomNavigationView() {
         //We only add use bottom navigation in phone mode (If not found frame_layout_map)
         if (findViewById(R.id.frame_layout_map) == null) {
@@ -100,11 +104,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        return false;
-    }
-
-    @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -114,6 +113,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+
+    // Actions from bottom bar
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -139,6 +140,45 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return false;
         }
     };
+
+    // Actions from navigation drawer
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.menu_add :
+                launchCreate();
+                return true;
+
+            case R.id.menu_update:
+                return true;
+
+            case R.id.menu_search:
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.top_menu_add:
+                launchCreate();
+                return true;
+
+            case R.id.top_menu_update:
+                return true;
+
+            case R.id.top_menu_search:
+                return true;
+        }
+        return false;
+    }
+
+    private void launchCreate() {
+        Intent intent = new Intent(this, CreateHomeActivity.class);
+        startActivity(intent);
+    }
+
 }
 
 
