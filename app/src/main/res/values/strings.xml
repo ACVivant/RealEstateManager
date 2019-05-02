@@ -25,7 +25,7 @@
     <string name="description_title">"Description"</string>
     <string name="house_description">"Description du bien"</string>
     <string name="surface_title">"Surface"</string>
-    <string name="surface_text">"75 m2"</string>
+    <string name="surface_text">"75"</string>
     <string name="room_title">"Pièces"</string>
     <string name="room_text">"4"</string>
     <string name="bedroom_title">"Chambres"</string>
@@ -39,6 +39,23 @@
     <string name="location_zipcode">"60150"</string>
     <string name="location_town">"Parici"</string>
     <string name="location_country">"France"</string>
+    <string name="square_meter">"sq m"</string>
+
+    <!-- Create layout-->
+    <string name="set_location_number">"Numéro"</string>
+    <string name="set_location_street">"Rue"</string>
+    <string name="set_location_street2">"Complément"</string>
+    <string name="set_location_zipcode">"Code postal"</string>
+    <string name="set_location_town">"Ville"</string>
+    <string name="set_location_country">"Pays"</string>
+    <string name="price_title">"Prix"</string>
+    <string name="price_text">"99999"</string>
+    <string name="euros">"€"</string>
+    <string name="dollars">"$"</string>
+    <string name="insert_photo">"Ajouter une photo"</string>
+    <string name="describe_photo">"Légende"</string>
+    <string name="validation">"Valider"</string>
+    <string name="add_photo">"Ajouter des photos"</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
