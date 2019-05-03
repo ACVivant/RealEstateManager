@@ -3,7 +3,8 @@
 xmlns:tools="http://schemas.android.com/tools"
 tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <item android:title="@string/drawer_title_search">
+    <menu>
         <item
             android:id="@+id/menu_map"
             android:icon="@drawable/menu_map"
@@ -12,9 +13,11 @@ tools:showIn="navigation_view">
             android:id="@+id/menu_search"
             android:icon="@drawable/menu_search"
             android:title="@string/menu_search" />
-    </group>
+    </menu>
+    </item>
 
-<group android:checkableBehavior="single">
+    <item android:title="@string/drawer_title_update">
+    <menu>
     <item
         android:id="@+id/menu_add"
         android:icon="@drawable/menu_add"
@@ -23,11 +26,15 @@ tools:showIn="navigation_view">
         android:id="@+id/menu_update"
         android:icon="@drawable/menu_update"
         android:title="@string/menu_update" />
-</group>
+    </menu>
+    </item>
 
+    <item android:title="@string/drawer_title_settings">
+        <menu>
     <item
         android:id="@+id/menu_param"
         android:icon="@drawable/menu_param"
         android:title="@string/menu_param" />
-
+        </menu>
+    </item>
 </menu>

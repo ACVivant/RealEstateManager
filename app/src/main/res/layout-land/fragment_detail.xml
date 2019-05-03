@@ -11,18 +11,74 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/textView23"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/statut"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="@dimen/default_small_title_size"/>
+
+        <TextView
+            android:id="@+id/textView24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/date_offer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView23"
+            tools:text="@string/date_offer"
+            android:textSize="@dimen/default_text_size"/>
+
+        <TextView
+            android:id="@+id/textView25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/date_sold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView24"
+            android:textSize="@dimen/default_text_size"/>
+
+        <TextView
+            android:id="@+id/textView27"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/date_offer"
+            app:layout_constraintStart_toEndOf="@+id/textView24"
+            app:layout_constraintTop_toBottomOf="@+id/textView23"
+            android:textSize="@dimen/default_text_size"/>
+
+        <TextView
+            android:id="@+id/textView28"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/date_sold"
+            app:layout_constraintStart_toEndOf="@+id/textView25"
+            app:layout_constraintTop_toBottomOf="@+id/textView27"
+            android:textSize="@dimen/default_text_size"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/photo_recyclerview_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="128dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:contentDescription="@string/recyclerview_description"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/textView28" />
 
     <EditText
         android:id="@+id/editText"
@@ -186,33 +242,99 @@
         app:srcCompat="@drawable/baseline_hotel_black_24" />
 
         <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            app:srcCompat="@drawable/detail_attracting"
+            app:layout_constraintStart_toEndOf="@id/textView9"
+            app:layout_constraintTop_toBottomOf="@+id/editText" />
+
+        <TextView
+            android:id="@+id/textView29"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/search_attracting_ask"
+            app:layout_constraintStart_toEndOf="@id/textView9"
+            app:layout_constraintTop_toBottomOf="@+id/editText"
+            tools:text="@string/search_attracting_ask"
+            android:textSize="@dimen/default_text_size"/>
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/shop"
+            app:layout_constraintStart_toEndOf="@id/textView9"
+            app:layout_constraintTop_toBottomOf="@+id/textView29" />
+
+        <CheckBox
+            android:id="@+id/checkBox2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/school"
+            app:layout_constraintStart_toEndOf="@id/checkBox"
+            app:layout_constraintTop_toBottomOf="@+id/textView29"
+            tools:text="@string/school" />
+
+        <CheckBox
+            android:id="@+id/checkBox3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/museum"
+            app:layout_constraintStart_toEndOf="@id/textView9"
+            app:layout_constraintTop_toBottomOf="@+id/checkBox"
+            tools:text="@string/museum" />
+
+        <CheckBox
+            android:id="@+id/checkBox4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/park"
+            app:layout_constraintStart_toEndOf="@id/checkBox"
+            app:layout_constraintTop_toBottomOf="@+id/checkBox2"
+            tools:text="@string/park" />
+
+
+        <ImageView
             android:id="@+id/imageView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="328dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:contentDescription="@string/location_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText"
+            app:layout_constraintTop_toBottomOf="@+id/textView8"
             app:srcCompat="@drawable/baseline_room_black_24" />
 
         <TextView
             android:id="@+id/textView11"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="16dp"
             android:text="@string/location_title"
-            android:textSize="@dimen/default_text_size"
-            app:layout_constraintStart_toEndOf="@+id/imageView7"
-            app:layout_constraintTop_toBottomOf="@+id/editText"
+            android:textSize="@dimen/default_small_title_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView8"
             tools:text="@string/location_title" />
 
         <TextView
             android:id="@+id/textView18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="340dp"
+            android:layout_marginStart="48dp"
             android:layout_marginTop="8dp"
             android:text="@string/location_number"
             android:textSize="@dimen/default_text_size"
@@ -236,7 +358,7 @@
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="360dp"
+        android:layout_marginStart="48dp"
         android:layout_marginTop="8dp"
         android:text="@string/location_street2"
         android:textSize="@dimen/default_text_size"
@@ -248,7 +370,7 @@
             android:id="@+id/textView15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="360dp"
+            android:layout_marginStart="48dp"
             android:layout_marginTop="8dp"
             android:text="@string/location_zipcode"
             android:textSize="@dimen/default_text_size"
@@ -272,7 +394,7 @@
         android:id="@+id/textView17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="360dp"
+        android:layout_marginStart="48dp"
         android:layout_marginTop="8dp"
         android:text="@string/location_country"
         android:textSize="@dimen/default_text_size"
@@ -300,7 +422,7 @@
             android:text="@string/price_text"
             android:textSize="@dimen/default_text_size"
             app:layout_constraintStart_toEndOf="@+id/textView20"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+            app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
     <ImageView
         android:id="@+id/imageView6"
@@ -309,7 +431,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/textView17"
         app:srcCompat="@drawable/detail_price" />
 
     <com.google.android.gms.maps.MapView
@@ -321,7 +443,7 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/photo_recyclerview_container" />
+        app:layout_constraintTop_toBottomOf="@+id/checkBox4" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
