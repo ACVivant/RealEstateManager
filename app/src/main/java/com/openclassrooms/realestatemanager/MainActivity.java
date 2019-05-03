@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView  navigationView;
 
     //Fragments
-    final MapHouseFragment fragment2 = new MapHouseFragment();
     final ListHouseFragment fragment1 = new ListHouseFragment();
+    final DetailFragment fragment2 = new DetailFragment();
 
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragment1;
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     invalidateOptionsMenu();
                     return true;
 
-                case R.id.bottom_navigation_map:
+                case R.id.bottom_navigation_detail:
                     fm.beginTransaction().hide(active).show(fragment2).commit();
                     active = fragment2;
                     getSupportActionBar().setTitle(R.string.nav_title);

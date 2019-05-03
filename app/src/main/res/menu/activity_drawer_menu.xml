@@ -3,6 +3,17 @@
 xmlns:tools="http://schemas.android.com/tools"
 tools:showIn="navigation_view">
 
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_map"
+            android:icon="@drawable/menu_map"
+            android:title="@string/menu_map" />
+        <item
+            android:id="@+id/menu_search"
+            android:icon="@drawable/menu_search"
+            android:title="@string/menu_search" />
+    </group>
+
 <group android:checkableBehavior="single">
     <item
         android:id="@+id/menu_add"
@@ -12,10 +23,6 @@ tools:showIn="navigation_view">
         android:id="@+id/menu_update"
         android:icon="@drawable/menu_update"
         android:title="@string/menu_update" />
-    <item
-        android:id="@+id/menu_search"
-        android:icon="@drawable/menu_search"
-        android:title="@string/menu_search" />
 </group>
 
     <item

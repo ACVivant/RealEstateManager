@@ -7,7 +7,7 @@
 
     <!-- Bottom Nav Bar -->
     <string name="nav_title">"Nav title"</string>
-    <string name="nav_map">"Carte"</string>
+    <string name="nav_detail">"Fiche détaillée"</string>
     <string name="nav_list">"Liste"</string>
 
     <!-- Navigation drawer -->
@@ -21,6 +21,7 @@
     <string name="menu_update">"Modifier un bien"</string>
     <string name="menu_search">"Rechercher un bien"</string>
     <string name="menu_param">"Paramètres"</string>
+    <string name="menu_map">"Trouver les biens à proximité"</string>
 
     <!-- Detail layout-->
     <string name="recyclerview_title">"Photos"</string>
@@ -64,4 +65,7 @@
 
     <!-- List Recyclerview  -->
     <string name="house_type">"Type de bien"</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

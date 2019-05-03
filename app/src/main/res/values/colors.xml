@@ -7,4 +7,6 @@
     <color name="colorAccentDark">#9b0000</color>
     <color name="colorAccentLight">#ff5131</color>
 
+    <color name="colorAccentLightTransparent">#4Dff5131</color>
+
 </resources>

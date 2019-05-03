@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/devise"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorAccentLight"
                 android:textSize="@dimen/default_small_title_size"
                 android:paddingEnd="@dimen/default_mini_margin"/>
         <TextView
@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/price_text"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorAccentLight"
             android:textSize="@dimen/default_small_title_size"/>
         </LinearLayout>
     </LinearLayout>

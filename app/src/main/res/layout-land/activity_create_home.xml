@@ -345,7 +345,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/default_margin"
                 android:text="@string/dismiss"
-                android:background="@color/colorAccent"
+                android:background="@color/colorAccentLight"
                 android:textColor="@android:color/white"
                 android:padding="@dimen/default_mini_margin"/>
     </LinearLayout>
