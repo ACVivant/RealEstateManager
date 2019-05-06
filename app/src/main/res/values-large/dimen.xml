@@ -12,4 +12,6 @@
 
     <dimen name="nav_header_height">176dip</dimen>
     <dimen name="nav_header_vertical_spacing">15dip</dimen>
+
+    <dimen name="recyclerview_item_height">120dp</dimen>
 </resources>

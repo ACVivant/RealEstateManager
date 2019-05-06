@@ -71,6 +71,10 @@
     <string name="validation">"Valider"</string>
     <string name="add_photo">"Ajouter des photos"</string>
     <string name="dismiss">"Annuler"</string>
+    <string name="agency_informations">"Informations agence"</string>
+    <string name="agent_in_charge">"Agent responsable de la vente"</string>
+    <string name="date_example">"12/05/2019"</string>
+    <string name="agent_example">"Jules"</string>
 
     <!-- List Recyclerview  -->
     <string name="house_type">"Type de bien"</string>

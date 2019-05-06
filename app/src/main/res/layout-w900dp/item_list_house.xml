@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/list_recyclerview_item"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/recyclerview_item_height">l
+
+    <ImageView
+        android:id="@+id/list_recyclerview_item_picture"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/recyclerview_item_height"
+        android:src="@drawable/menu"
+        android:scaleType="centerCrop"
+        android:layout_weight="60"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="40"
+        android:orientation="vertical"
+        android:padding="@dimen/default_margin">
+
+            <TextView
+                android:id="@+id/list_recyclerview_item_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/house_type"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/default_small_title_size" />
+
+            <TextView
+                android:id="@+id/list_recyclerview_item_town"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/location_town"
+                android:textSize="@dimen/default_text_size" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/list_recyclerview_item_devise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/default_mini_margin"
+                android:text="@string/devise"
+                android:textColor="@color/colorAccentLight"
+                android:textSize="@dimen/default_small_title_size" />
+
+            <TextView
+                android:id="@+id/list_recyclerview_item_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/price_text"
+                android:textColor="@color/colorAccentLight"
+                android:textSize="@dimen/default_small_title_size" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

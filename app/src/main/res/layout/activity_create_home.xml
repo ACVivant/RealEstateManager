@@ -319,9 +319,141 @@
             android:hint="@string/location_country"/>
     </LinearLayout>
 
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/search_attracting_ask"
+            android:textSize="@dimen/default_text_size"
+            android:paddingTop="@dimen/default_margin"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:padding="5dp"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_margin="@dimen/default_margin"/>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/default_margin"
+        android:paddingEnd="@dimen/default_margin">
+
+        <CheckBox
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:text="@string/school"
+            android:textSize="@dimen/default_text_size"/>
+
+        <CheckBox
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:text="@string/shop"
+            android:textSize="@dimen/default_text_size"/>
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/default_margin"
+            android:paddingEnd="@dimen/default_margin">
+
+            <CheckBox
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:text="@string/park"
+                android:textSize="@dimen/default_text_size"/>
+
+            <CheckBox
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:text="@string/museum"
+                android:textSize="@dimen/default_text_size"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/agency_informations"
+            android:textSize="@dimen/default_text_size"
+            android:paddingTop="@dimen/default_margin"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:padding="5dp"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_margin="@dimen/default_margin"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/default_margin"
+            android:paddingEnd="@dimen/default_margin">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:text="@string/date_offer"
+                android:textSize="@dimen/default_text_size"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:textSize="@dimen/default_text_size"
+                android:hint="@string/date_example"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/default_margin"
+            android:paddingEnd="@dimen/default_margin">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:text="@string/date_sold"
+                android:textSize="@dimen/default_text_size"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:textSize="@dimen/default_text_size"
+                android:hint="@string/date_example"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/default_margin"
+            android:paddingEnd="@dimen/default_margin">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:text="@string/agent_in_charge"
+                android:textSize="@dimen/default_text_size"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:textSize="@dimen/default_text_size"
+                android:hint="@string/agent_example"/>
+        </LinearLayout>
+
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
