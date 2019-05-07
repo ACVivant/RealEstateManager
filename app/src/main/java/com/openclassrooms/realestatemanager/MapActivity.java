@@ -22,6 +22,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -38,6 +39,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
+    //Data (for test)
+    private double[] test_latitude = {49.23, 49.25, 49.23};
+    private double[] test_longitude = {2.88, 2.9, 2.91};
+    private String[] test_type = {"appartement", "manoir", "palace"};
+    private double[] test_price = {25000, 145000, 875400};
+    private String devise = "€";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +69,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
             mMap.setMyLocationEnabled(true); // icone GPS pour recentrer la carte
             mMap.getUiSettings().setZoomControlsEnabled(true); // zoom
+
+            for (int i=0; i< test_latitude.length; i++) {
+                addMarkers(new LatLng(test_latitude[i], test_longitude[i]), test_type[i], test_price[i], devise);
+            }
         }
     }
 
@@ -69,6 +80,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Log.d(TAG, "initMap: initializing map");
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(MapActivity.this);
+
     }
 
     private void getDeviceLocation() {
@@ -102,6 +114,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void moveCamera(LatLng latLng, float zoom) {
         Log.d(TAG, "moveCamera: moving the camera to lat: " + latLng.latitude +" lng: " + latLng.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
+
+    }
+
+    private void addMarkers(LatLng latLng, String type, double price, String devise) {
+        MarkerOptions options = new MarkerOptions()
+                .position(latLng)
+                .title(type + " " + price + devise);
+
+            mMap.addMarker(options);
 
     }
     //-----------------------------------------------
