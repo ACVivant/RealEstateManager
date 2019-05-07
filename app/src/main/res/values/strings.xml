@@ -1,4 +1,7 @@
 <resources>
+    <!--Keys-->
+    <string name="Google_Maps_API_Key">"AIzaSyDCGD3YBl9JssVJKfRm9yFM13SxOz8cSeQ"</string>
+
     <!-- welcome screen-->
     <string name="app_name">Real Estate Manager</string>
     <string name="app_slogan">"Le bien qu'il vous faut"</string>
@@ -48,8 +51,8 @@
     <string name="square_meter">"sq m"</string>
     <string name="devise">"€/$"</string>
     <string name="statut">"Statut"</string>
-    <string name="date_offer">"Date de mise en vente"</string>
-    <string name="date_sold">"Date de vente"</string>
+    <string name="date_offer">"Mise en vente"</string>
+    <string name="date_sold">"Vente"</string>
     <string name="school">"école"</string>
     <string name="shop">"commerces"</string>
     <string name="museum">"musées"</string>
@@ -72,7 +75,7 @@
     <string name="add_photo">"Ajouter des photos"</string>
     <string name="dismiss">"Annuler"</string>
     <string name="agency_informations">"Informations agence"</string>
-    <string name="agent_in_charge">"Agent responsable de la vente"</string>
+    <string name="agent_in_charge">"Responsable"</string>
     <string name="date_example">"12/05/2019"</string>
     <string name="agent_example">"Jules"</string>
 
@@ -80,7 +83,7 @@
     <string name="house_type">"Type de bien"</string>
 
     <!-- Search Activity -->
-    <string name="search_type_ask">"Sur quelle distance voulez-vous faire la recherche? (en mètres)"</string>
+    <string name="search_type_ask">"Type de bien"</string>
     <string-array name="search_type_answer">
         <item>appartement</item>
         <item>maison</item>
@@ -89,12 +92,31 @@
         <item>palace</item>
     </string-array>
 
-    <string name="search_price_mini_ask">"Prix mini"</string>
+    <string name="search_price_mini_ask">"Prix min"</string>
     <string name="search_price_max_ask">"Prix max"</string>
-    <string name="search_surface_mini_ask">"Surafce mini"</string>
-    <string name="search_surface_max_ask">"Surface max"</string>
-    <string name="search_room_ask">"Nombre de pièces minimum:"</string>
-    <string name="search_photo_ask">"Nombre de photos supérieur à "</string>
+    <string name="search_surface_mini_ask">"Surf. min"</string>
+    <string name="search_surface_max_ask">"Surf. max"</string>
+    <string name="search_room_ask">"Nbre de pièces min"</string>
+    <string name="search_bedroom_ask">"Nbre de chambres min"</string>
+    <string name="search_bathroom_ask">"Nbre de salles de bain min"</string>
+    <string name="search_photo_ask">"Nbre de photos supérieur à "</string>
     <string name="search_attracting_ask">"Points d'intérêt à proximité"</string>
+    <string name="search_max_date_ask">"Mis en vente avant le "</string>
+    <string name="search_min_date_ask">"Mis en vente après le "</string>
+    <string name="search_max_datesold_ask">"Vendu avant le "</string>
+    <string name="search_min_datesold_ask">"Vendu après le "</string>
+
+    <!-- Settings Activity -->
+    <string name="settings_devise_ask">"Devise"</string>
+    <string-array name="settings_devise_answer">
+        <item>€</item>
+        <item>$</item>
+    </string-array>
+
+    <!-- Map Activity-->
+    <string name="map_connection_error">"Nous ne pouvons pas nous connecter à Google Map"</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
 

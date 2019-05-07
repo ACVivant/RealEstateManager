@@ -64,6 +64,7 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
             @Override
             public void onClick(View v) {
                 Toast.makeText(mContext, townList.get(position), Toast.LENGTH_LONG).show();
+
             }
         });
     }

@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager;
 
 //import android.support.v7.app.AppCompatActivity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -24,6 +28,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+
+    private static final String TAG = "MainActivity";
+    private static final int ERROR_DIALOG_REQUEST = 9001;
 
     //Design
     Toolbar toolbar;
@@ -47,8 +54,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.configureToolbar();
         this.configureDrawerLayout();
         this.configureNavigationView();
-        this.configureBottomNavigationView();
+        //this.configureBottomNavigationView();
         this.configureFirstView();
+
+        if (isServiceOK()) {
+            init();
+        }
     }
 
     // ---------------------
@@ -79,22 +90,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // Configure first view
     private void configureFirstView() {
-        if (findViewById(R.id.frame_layout_map) == null) {
+        if (findViewById(R.id.frame_layout_detail) == null) {
             fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
             fm.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
         } else {
-            fm.beginTransaction().add(R.id.frame_layout_map, fragment2, "2").commit();
+            fm.beginTransaction().add(R.id.frame_layout_detail, fragment2, "2").commit();
             fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
         }
     }
 
-    private void configureBottomNavigationView() {
-        //We only add use bottom navigation in phone mode (If not found frame_layout_map)
-        if (findViewById(R.id.frame_layout_map) == null) {
+/*    private void configureBottomNavigationView() {
+        //We only add use bottom navigation in phone mode (If not found frame_layout_detail)
+        if (findViewById(R.id.frame_layout_detail) == null) {
             BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
             navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         }
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -150,12 +161,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
 
             case R.id.menu_update:
+                launchUpdate();
                 return true;
 
             case R.id.menu_search:
+                launchSearch();
                 return true;
 
             case R.id.menu_param:
+                launchSetting();
+                return true;
+
+            case R.id.menu_map:
+                launchMap();
                 return true;
         }
         return false;
@@ -169,9 +187,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
 
             case R.id.top_menu_update:
+                launchUpdate();
                 return true;
 
             case R.id.top_menu_search:
+                launchSearch();
                 return true;
         }
         return false;
@@ -182,10 +202,54 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
     }
 
+    private void launchSearch() {
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
+    }
+
+    private void launchSetting() {
+        Intent intent = new Intent(this, SettingActivity.class);
+        startActivity(intent);
+    }
+
+    private void launchUpdate() {
+        Intent intent = new Intent(this, UpdateActivity.class);
+        startActivity(intent);
+    }
+
+    private void launchMap() {
+        Intent intent = new Intent(this, MapActivity.class);
+        startActivity(intent);
+    }
+
+//--------------------------------------------------------
+// Verify connection to Map
+//-------------------------------------------------------
+public boolean isServiceOK() {
+    Log.d(TAG, "isServiceOK: Tracking GoogleServices version");
+
+    int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(MainActivity.this);
+
+    if (available == ConnectionResult.SUCCESS) {
+        // Everything is fine and the user ccan make map request
+        Log.d(TAG, "isServiceOK: GooglePlayServices is working");
+        return true;
+    } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
+        // an error occured but we can resolve it
+        Log.d(TAG, "isServiceOK: An error occured but we can fix it");
+        Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(MainActivity.this, available, ERROR_DIALOG_REQUEST);
+        dialog.show();
+    } else {
+        Toast.makeText(this, R.string.map_connection_error, Toast.LENGTH_LONG).show();
+    }
+    return false;
 }
 
+    private void init(){
 
+    }
 
+}
 //---------------------------------------------------------
 // A conserver
 //---------------------------------------------------------

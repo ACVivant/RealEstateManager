@@ -13,7 +13,7 @@ android:id="@+id/main_container">
     android:layout_height="match_parent"
     />
 <FrameLayout
-    android:id="@+id/frame_layout_map"
+    android:id="@+id/frame_layout_detail"
     android:layout_weight="70"
     android:layout_width="0px"
     android:layout_height="match_parent"
