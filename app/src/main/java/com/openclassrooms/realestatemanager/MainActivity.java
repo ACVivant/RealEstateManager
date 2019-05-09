@@ -31,18 +31,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private static final String TAG = "MainActivity";
     private static final int ERROR_DIALOG_REQUEST = 9001;
+    private static final String ID_FRAGMENT = "fragment_to_expose";
+    private static final String ID_PLACE = "id_of_place";
 
     //Design
-    Toolbar toolbar;
-    DrawerLayout drawerLayout;
-    NavigationView  navigationView;
+    private Toolbar toolbar;
+    private DrawerLayout drawerLayout;
+    private NavigationView  navigationView;
 
     //Fragments
     final ListHouseFragment fragment1 = new ListHouseFragment();
     final DetailFragment fragment2 = new DetailFragment();
 
     final FragmentManager fm = getSupportFragmentManager();
-    Fragment active = fragment1;
+    private Fragment active = fragment1;
+    private String fragmentToExpose;
+    private String fragmentToExposeFromMap;
+    private Bundle state;
+    private int homeToExpose;
 
     private int clic = 0;
 
@@ -55,11 +61,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.configureDrawerLayout();
         this.configureNavigationView();
         //this.configureBottomNavigationView();
-        this.configureFirstView();
 
-        if (isServiceOK()) {
-            init();
+        homeToExpose = getIntent().getIntExtra(ID_PLACE, 0);
+        fragmentToExposeFromMap = getIntent().getStringExtra(ID_FRAGMENT);
+        Log.d(TAG, "onCreate: fragment_id " + fragmentToExposeFromMap);
+        Log.d(TAG, "onCreate: homeToExpose " + homeToExpose);
+
+        if (fragmentToExposeFromMap == null) {
+
+            if (savedInstanceState == null) {
+                homeToExpose = 0;
+                Log.d(TAG, "onCreate: savedInstanceState null");
+                this.configureFirstView();
+            }
+
+            // Decide which fragment has to be shown (rotation)
+            if (savedInstanceState != null) {
+                Log.d(TAG, "onCreate: savedInstanceState non null");
+                this.configureView();
+            }
+        } else {
+            this.configureViewFromMapOrRecyclerView();
         }
+
+        isServiceOK();
     }
 
     // ---------------------
@@ -91,9 +116,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Configure first view
     private void configureFirstView() {
         if (findViewById(R.id.frame_layout_detail) == null) {
-            fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
-            fm.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
+                fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
+                fm.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
         } else {
+            fm.beginTransaction().add(R.id.frame_layout_detail, fragment2, "2").commit();
+            fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
+        }
+    }
+
+    // Configure view after rotation
+    private void configureView() {
+        if (findViewById(R.id.frame_layout_detail) == null) {
+            if (fragmentToExpose == "1") {
+                fm.beginTransaction().hide(fragment2).commit();
+                fm.beginTransaction().show(fragment1).commit();
+            } else {
+                fm.beginTransaction().hide(fragment1).commit();
+                fm.beginTransaction().show(fragment2).commit();
+                // Ajouter les infos pour afficher la bonne maison
+
+            }
+        }
+    }
+
+    // Configure view whn called by mapActivity
+    private void configureViewFromMapOrRecyclerView() {
+        if (findViewById(R.id.frame_layout_detail) == null) {
+            Log.d(TAG, "configureViewFromMap: mode telephone");
+           // fm.beginTransaction().hide(fragment1).commit();
+           // fm.beginTransaction().show(fragment2).commit();
+
+            fm.beginTransaction().add(R.id.main_container, fragment1, "1").hide(fragment1).commit();
+            fm.beginTransaction().add(R.id.main_container, fragment2, "2").commit();
+            // Ajouter les infos pour afficher la bonne maison}
+        } else {
+            Log.d(TAG, "configureViewFromMap: mode tablette");
             fm.beginTransaction().add(R.id.frame_layout_detail, fragment2, "2").commit();
             fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
         }
@@ -191,7 +248,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
 
             case R.id.top_menu_search:
-                launchSearch();
+                //launchSearch()
+                fm.beginTransaction().hide(fragment1).commit();
+                fm.beginTransaction().show(fragment2).commit();
+                active = fragment2;
                 return true;
         }
         return false;
@@ -245,10 +305,17 @@ public boolean isServiceOK() {
     return false;
 }
 
-    private void init(){
+//-------------------------------------------------------
+// Gère la rotation
+// ------------------------------------------------------
 
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        String idFragment = active.getTag();
+        outState.putString(ID_FRAGMENT, idFragment);
     }
-
 }
 //---------------------------------------------------------
 // A conserver
@@ -262,3 +329,9 @@ public boolean isServiceOK() {
         //this.textViewQuantity.setText(quantity);
         this.textViewQuantity.setText(String.valueOf(quantity));*/
 
+
+/*if (getIntent().getStringExtra(ID_FRAGMENT) != null) {
+        homeToExpose = getIntent().getStringExtra(ID_PLACE);
+        fragmentToExpose = getIntent().getStringExtra(ID_FRAGMENT);
+        Log.d(TAG, "onCreate: fragment_id " + fragmentToExpose);
+        Log.d(TAG, "onCreate: homeToExpose " + homeToExpose);}*/

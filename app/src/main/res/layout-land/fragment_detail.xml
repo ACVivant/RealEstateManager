@@ -91,7 +91,7 @@
         android:hint="@string/house_description"
         android:inputType="textMultiLine"
         android:textSize="@dimen/default_text_size"
-        app:layout_constraintEnd_toStartOf="@+id/mapView"
+        app:layout_constraintEnd_toStartOf="@+id/map_detail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/photo_recyclerview_container" />
 
@@ -434,8 +434,8 @@
         app:layout_constraintTop_toBottomOf="@+id/textView17"
         app:srcCompat="@drawable/detail_price" />
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView"
+        <com.google.android.gms.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="320dp"
         android:layout_height="240dp"
         android:layout_marginTop="8dp"
@@ -443,7 +443,8 @@
         app:layout_constraintStart_toStartOf="@id/imageView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBox4"
-        android:background="@color/colorAccent"/>
+            android:id="@+id/map_detail"
+            android:name="com.google.android.gms.maps.SupportMapFragment" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

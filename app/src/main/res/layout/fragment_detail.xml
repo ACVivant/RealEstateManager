@@ -461,8 +461,8 @@
             tools:text="@string/location_country"
             android:textSize="@dimen/default_text_size"/>
 
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/mapView"
+        <com.google.android.gms.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="193dp"
             android:layout_height="290dp"
             android:layout_marginEnd="16dp"
@@ -473,7 +473,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkBox4"
             app:layout_constraintStart_toEndOf="@id/textView13"
-            android:background="@color/colorAccentLight"/>
+            android:id="@+id/map_detail"
+            android:name="com.google.android.gms.maps.SupportMapFragment" />
 
         <TextView
             android:id="@+id/textView20"
@@ -486,7 +487,7 @@
             android:textSize="@dimen/default_small_title_size"
             app:layout_constraintTop_toBottomOf="@id/textView17"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/mapView"
+            app:layout_constraintEnd_toStartOf="@id/map_detail"
             tools:text="@string/price_title" />
 
         <TextView

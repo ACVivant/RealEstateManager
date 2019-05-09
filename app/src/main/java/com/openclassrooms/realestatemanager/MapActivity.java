@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,17 +35,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private static final float DEFAULT_ZOOM = 14f;
+    private static final String PLACE_ID = "id_of_place";
+    private static final String ID_FRAGMENT = "fragment_to_expose";
 
     //Variables
     private boolean mLocationPermissionGranted = false;
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
+    private Marker myMarker;
 
     //Data (for test)
     private double[] test_latitude = {49.23, 49.25, 49.23};
     private double[] test_longitude = {2.88, 2.9, 2.91};
     private String[] test_type = {"appartement", "manoir", "palace"};
     private double[] test_price = {25000, 145000, 875400};
+    private int[] test_id = {100, 101, 102};
     private String devise = "€";
 
     @Override
@@ -70,9 +76,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mMap.setMyLocationEnabled(true); // icone GPS pour recentrer la carte
             mMap.getUiSettings().setZoomControlsEnabled(true); // zoom
 
-            for (int i=0; i< test_latitude.length; i++) {
-                addMarkers(new LatLng(test_latitude[i], test_longitude[i]), test_type[i], test_price[i], devise);
-            }
+            addAllMarkers();
         }
     }
 
@@ -117,14 +121,43 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     }
 
-    private void addMarkers(LatLng latLng, String type, double price, String devise) {
+    //--------------------------------------------------------------------------------------------------------------------
+    //manages Markers
+    //--------------------------------------------------------------------------------------------------------------------
+
+    private void addAllMarkers() {
+        for (int i=0; i< test_latitude.length; i++) {
+            addMarkers(new LatLng(test_latitude[i], test_longitude[i]), test_type[i], test_price[i], devise, test_id[i]);
+        }
+
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                launchDetail(marker);
+            }
+        });
+    }
+
+    private Marker addMarkers(LatLng latLng, String type, double price, String devise, int placeId) {
         MarkerOptions options = new MarkerOptions()
                 .position(latLng)
                 .title(type + " " + price + devise);
 
-            mMap.addMarker(options);
+        myMarker = mMap.addMarker(options);
+        myMarker.setTag(placeId);
 
+            return myMarker;
     }
+
+    private void launchDetail(Marker marker ) {
+        int ref = (int) marker.getTag();
+        Intent WVIntent = new Intent(MapActivity.this, MainActivity.class);
+        //Id
+        WVIntent.putExtra(PLACE_ID, ref);
+        WVIntent.putExtra(ID_FRAGMENT, "2");
+        startActivity(WVIntent);
+    }
+
     //-----------------------------------------------
     // Permissions
     //------------------------------------------------

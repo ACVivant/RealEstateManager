@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,10 +31,13 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
     private ArrayList<String> typeList = new ArrayList<>();
     private ArrayList<String> townList = new ArrayList<>();
     private ArrayList<String> priceList = new ArrayList<>();
+    private ArrayList<Integer> idList = new ArrayList<>();
     private Context mContext;
+    private OnItemClickedListener mListener;
 
-    public ListRecyclerViewAdapter(Context context, ArrayList<String> picturesList, ArrayList<String> typeList, ArrayList<String> townList, ArrayList<String> priceList) {
+    public ListRecyclerViewAdapter(Context context, ArrayList<Integer> idList, ArrayList<String> picturesList, ArrayList<String> typeList, ArrayList<String> townList, ArrayList<String> priceList) {
         mContext = context;
+        this.idList = idList;
         this.picturesList = picturesList;
         this.typeList = typeList;
         this.townList = townList;
@@ -44,7 +48,7 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
     @Override
     public ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_house, parent, false);
-        ListViewHolder holder = new ListViewHolder(view);
+        ListViewHolder holder = new ListViewHolder(view, mListener);
         return holder;
     }
 
@@ -60,19 +64,29 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
         holder.town.setText(townList.get(position));
         holder.price.setText(priceList.get(position));
 
-        holder.itemContainer.setOnClickListener(new View.OnClickListener() {
+        int ref = idList.get(position);
+
+       /* holder.itemContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(mContext, townList.get(position), Toast.LENGTH_LONG).show();
-
             }
-        });
+        });*/
     }
 
     @Override
     public int getItemCount() {
         return typeList.size();
     }
+
+    public interface OnItemClickedListener{
+        void OnItemClicked(int position);
+    }
+
+    public void setOnItemClickedListener(OnItemClickedListener listener) {
+        mListener = listener;
+    }
+
 
     public class ListViewHolder extends RecyclerView.ViewHolder{
 
@@ -89,9 +103,23 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
         @BindView(R.id.list_recyclerview_item)
         LinearLayout itemContainer;
 
-        public ListViewHolder(View itemView) {
+        public int idHome;
+
+        public ListViewHolder(View itemView, final ListRecyclerViewAdapter.OnItemClickedListener listener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener!=null) {
+                        int position = getAdapterPosition();
+                        if (position!= RecyclerView.NO_POSITION) {
+                            listener.OnItemClicked(position);
+                        }
+                    }
+                }
+            });
         }
     }
 }
