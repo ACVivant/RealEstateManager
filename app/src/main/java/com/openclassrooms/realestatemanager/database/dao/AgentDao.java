@@ -1,10 +1,8 @@
 package com.openclassrooms.realestatemanager.database.dao;
 
-import com.openclassrooms.realestatemanager.models.Address;
 import com.openclassrooms.realestatemanager.models.Agent;
 
 import androidx.room.Insert;
-import androidx.room.Query;
 import androidx.room.Update;
 
 /**

@@ -33,6 +33,9 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
+
+    // TESTING
+    androidTestImplementation "android.arch.core:core-testing:1.1.1"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
@@ -66,4 +69,6 @@ dependencies {
 
     // PICASSO
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+
 }
