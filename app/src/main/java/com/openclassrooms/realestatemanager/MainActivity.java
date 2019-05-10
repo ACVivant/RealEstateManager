@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private int homeToExpose;
 
     private int clic = 0;
+    private boolean firstView1 = false;
+    private boolean firstView2 = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +83,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 this.configureView();
             }
         } else {
-            this.configureViewFromMapOrRecyclerView();
+            if (savedInstanceState == null) {
+                this.configureViewFromMapOrRecyclerView();
+            } else {
+                this.configureView();
+            }
         }
 
         isServiceOK();
@@ -115,17 +121,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // Configure first view
     private void configureFirstView() {
-        if (findViewById(R.id.frame_layout_detail) == null) {
+        Log.d(TAG, "configureFirstView");
+            if (findViewById(R.id.frame_layout_detail) == null) {
                 fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
                 fm.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
-        } else {
-            fm.beginTransaction().add(R.id.frame_layout_detail, fragment2, "2").commit();
-            fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
-        }
+            } else {
+                fm.beginTransaction().add(R.id.frame_layout_detail, fragment2, "2").commit();
+                fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
+            }
+            firstView2 = true;
     }
 
     // Configure view after rotation
     private void configureView() {
+        Log.d(TAG, "configureView");
         if (findViewById(R.id.frame_layout_detail) == null) {
             if (fragmentToExpose == "1") {
                 fm.beginTransaction().hide(fragment2).commit();
@@ -139,21 +148,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    // Configure view whn called by mapActivity
+    // Configure view when called by mapActivity
     private void configureViewFromMapOrRecyclerView() {
-        if (findViewById(R.id.frame_layout_detail) == null) {
-            Log.d(TAG, "configureViewFromMap: mode telephone");
-           // fm.beginTransaction().hide(fragment1).commit();
-           // fm.beginTransaction().show(fragment2).commit();
+        Log.d(TAG, "configureViewFromMapOrRecyclerView");
+            if (findViewById(R.id.frame_layout_detail) == null) {
+                Log.d(TAG, "configureViewFromMapOrRecyclerView: mode telephone");
+                //fm.beginTransaction().hide(fragment1).commit();
+                //fm.beginTransaction().show(fragment2).commit();
 
-            fm.beginTransaction().add(R.id.main_container, fragment1, "1").hide(fragment1).commit();
-            fm.beginTransaction().add(R.id.main_container, fragment2, "2").commit();
-            // Ajouter les infos pour afficher la bonne maison}
-        } else {
-            Log.d(TAG, "configureViewFromMap: mode tablette");
-            fm.beginTransaction().add(R.id.frame_layout_detail, fragment2, "2").commit();
-            fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
-        }
+                fm.beginTransaction().add(R.id.main_container, fragment1, "1").hide(fragment1).commit();
+                fm.beginTransaction().add(R.id.main_container, fragment2, "2").commit();
+                // Ajouter les infos pour afficher la bonne maison}
+            } else {
+                Log.d(TAG, "configureViewFromMapOrRecyclerView: mode tablette");
+                fm.beginTransaction().add(R.id.frame_layout_detail, fragment2, "2").commit();
+                fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
+            }
     }
 
 /*    private void configureBottomNavigationView() {

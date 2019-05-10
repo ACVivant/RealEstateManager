@@ -57,6 +57,7 @@
     <string name="shop">"commerces"</string>
     <string name="museum">"musées"</string>
     <string name="park">"parc"</string>
+    <string name="localisation">"Localisation</string>
 
     <!-- Create layout-->
     <string name="set_location_number">"Numéro"</string>

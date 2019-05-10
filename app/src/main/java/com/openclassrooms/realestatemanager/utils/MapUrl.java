@@ -1,8 +1,6 @@
-package com.openclassrooms.realestatemanager;
+package com.openclassrooms.realestatemanager.utils;
 
 import android.content.Context;
-
-import com.google.android.gms.common.ConnectionResult;
 
 /**
  * Created by Anne-Charlotte Vivant on 09/05/2019.
