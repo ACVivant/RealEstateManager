@@ -64,14 +64,6 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
         holder.town.setText(townList.get(position));
         holder.price.setText(priceList.get(position));
 
-        int ref = idList.get(position);
-
-       /* holder.itemContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(mContext, townList.get(position), Toast.LENGTH_LONG).show();
-            }
-        });*/
     }
 
     @Override
