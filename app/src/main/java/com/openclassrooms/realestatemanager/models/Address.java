@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey;
  * Created by Anne-Charlotte Vivant on 10/05/2019.
  */
 
-@Entity
+@Entity(tableName = "address")
 public class Address {
 
     @PrimaryKey(autoGenerate = true)
@@ -20,8 +20,6 @@ public class Address {
     private String zipcode;
     private String town;
     private String country;
-
-    public Address() {}
 
     public Address(String number, String street, String street2, String zipcode, String town, String country) {
         this.numberInStreet = number;

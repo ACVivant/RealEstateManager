@@ -5,6 +5,7 @@ import com.openclassrooms.realestatemanager.models.Status;
 
 import org.w3c.dom.Attr;
 
+import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -12,10 +13,11 @@ import androidx.room.Update;
 /**
  * Created by Anne-Charlotte Vivant on 10/05/2019.
  */
+@Dao
 public interface AttractingPointDao {
     @Insert
-    long insertAttractingPoint(AttractingPoint point);
+    void insertAttractingPoint(AttractingPoint point);
 
     @Update
-    int updateAttractingPoint(AttractingPoint point);
+    void updateAttractingPoint(AttractingPoint point);
 }

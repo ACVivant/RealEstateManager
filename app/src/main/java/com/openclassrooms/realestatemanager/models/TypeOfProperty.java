@@ -6,14 +6,12 @@ import androidx.room.PrimaryKey;
 /**
  * Created by Anne-Charlotte Vivant on 10/05/2019.
  */
-@Entity
+@Entity(tableName = "type_of_property")
 public class TypeOfProperty {
 
     @PrimaryKey(autoGenerate = true)
     private long typeId;
     private String typeText;
-
-    public TypeOfProperty() {}
 
     public TypeOfProperty(String text) {
         this.typeText = text;

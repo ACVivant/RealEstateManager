@@ -10,19 +10,20 @@ import androidx.room.PrimaryKey;
 /**
  * Created by Anne-Charlotte Vivant on 10/05/2019.
  */
-@Entity(foreignKeys = {
+@Entity(tableName = "property",
+        foreignKeys = {
         @ForeignKey(entity = TypeOfProperty.class,
         parentColumns = "typeId",
-        childColumns = "type"),
+        childColumns = "typeId"),
         @ForeignKey(entity = Status.class,
         parentColumns = "statusId",
-        childColumns = "status"),
+        childColumns = "statusId"),
         @ForeignKey(entity = Address.class,
         parentColumns = "addressId",
-        childColumns = "address"),
+        childColumns = "addressId"),
         @ForeignKey(entity = Agent.class,
         parentColumns = "agentId",
-        childColumns = "agent")
+        childColumns = "agentId")
 })
 public class Property {
     @PrimaryKey(autoGenerate = true)
@@ -32,18 +33,33 @@ public class Property {
     private int bedrooms;
     private int bathroom;
     private String description;
-    private Date upForSaleDate;
-    private Date soldOnDate;
+    private int upForSaleDate;
+    private int soldOnDate;
     private int surface;
 
     @Embedded
-    private TypeOfProperty type;
+    private TypeOfProperty typeId;
     @Embedded
-    public Address address;
+    public Address addressId;
     @Embedded
-    private Agent agent;
+    private Agent agentId;
     @Embedded
-    private Status status;
+    private Status statusId;
+
+    public Property(double price, int rooms, int bedrooms, int bathroom, String description, int upForSaleDate, int soldOnDate, int surface, TypeOfProperty typeId, Address addressId, Agent agentId, Status statusId) {
+        this.price = price;
+        this.rooms = rooms;
+        this.bedrooms = bedrooms;
+        this.bathroom = bathroom;
+        this.description = description;
+        this.upForSaleDate = upForSaleDate;
+        this.soldOnDate = soldOnDate;
+        this.surface = surface;
+        this.typeId = typeId;
+        this.addressId = addressId;
+        this.agentId = agentId;
+        this.statusId = statusId;
+    }
 
     // --- GETTER ---
     public long getPropertyId() {
@@ -64,26 +80,26 @@ public class Property {
     public String getDescription() {
         return description;
     }
-    public Date getUpForSaleDate() {
+    public int getUpForSaleDate() {
         return upForSaleDate;
     }
-    public Date getSoldOnDate() {
+    public int getSoldOnDate() {
         return soldOnDate;
     }
     public int getSurface() {
         return surface;
     }
-    public TypeOfProperty getType() {
-        return type;
+    public TypeOfProperty getTypeId() {
+        return typeId;
     }
-    public Address getAddress() {
-        return address;
+    public Address getAddressId() {
+        return addressId;
     }
-    public Agent getAgent() {
-        return agent;
+    public Agent getAgentId() {
+        return agentId;
     }
-    public Status getStatus() {
-        return status;
+    public Status getStatusId() {
+        return statusId;
     }
 
     // --- SETTER ---
@@ -105,27 +121,26 @@ public class Property {
     public void setDescription(String description) {
         this.description = description;
     }
-    public void setUpForSaleDate(Date upForSaleDate) {
+    public void setUpForSaleDate(int upForSaleDate) {
         this.upForSaleDate = upForSaleDate;
     }
-    public void setSoldOnDate(Date soldOnDate) {
+    public void setSoldOnDate(int soldOnDate) {
         this.soldOnDate = soldOnDate;
     }
     public void setSurface(int surface) {
         this.surface = surface;
     }
-    public void setType(TypeOfProperty type) {
-        this.type = type;
+    public void setTypeId(TypeOfProperty type) {
+        this.typeId = type;
     }
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setAddressId(Address address) {
+        this.addressId = address;
     }
-    public void setAgent(Agent agent) {
-        this.agent = agent;
+    public void setAgentId(Agent agent) {
+        this.agentId = agent;
     }
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setStatusId(Status status) {
+        this.statusId = status;
     }
-
 
 }

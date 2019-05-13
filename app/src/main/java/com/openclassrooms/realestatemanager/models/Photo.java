@@ -7,7 +7,8 @@ import androidx.room.PrimaryKey;
 /**
  * Created by Anne-Charlotte Vivant on 10/05/2019.
  */
-@Entity(foreignKeys = @ForeignKey(entity = Property.class,
+@Entity(tableName = "photo",
+        foreignKeys = @ForeignKey(entity = Property.class,
         parentColumns = "propertyId",
         childColumns = "property"))
 public class Photo {
@@ -17,8 +18,6 @@ public class Photo {
     private String photoText;
     private String photoUri;
     private long property;
-
-    public Photo () {}
 
     public Photo (String uri, String text, long property ) {
         this.photoUri = uri;

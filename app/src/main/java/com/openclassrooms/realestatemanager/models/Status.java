@@ -6,14 +6,12 @@ import androidx.room.PrimaryKey;
 /**
  * Created by Anne-Charlotte Vivant on 10/05/2019.
  */
-@Entity
+@Entity(tableName = "status")
 public class Status {
 
     @PrimaryKey(autoGenerate = true)
     private long statusId;
     private String statusText;
-
-    public Status() {}
 
     public Status(String text) {
         this.statusText = text;

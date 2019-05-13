@@ -20,5 +20,10 @@ import androidx.room.ForeignKey;
 public class AttractingPropertyJoin {
     public int attractingId;
     public int propertyId;
+
+    public AttractingPropertyJoin(int attractingId, int propertyId) {
+        this.attractingId = attractingId;
+        this.propertyId = propertyId;
+    }
 }
 
