@@ -40,8 +40,6 @@ public class Property {
     private TypeOfProperty type;
     @Embedded
     public Address address;
-    private Photo photo;
-    private AttractingPoint attractingPoint;
     @Embedded
     private Agent agent;
     @Embedded
@@ -80,12 +78,6 @@ public class Property {
     }
     public Address getAddress() {
         return address;
-    }
-    public Photo getPhoto() {
-        return photo;
-    }
-    public AttractingPoint getAttractingPoint() {
-        return attractingPoint;
     }
     public Agent getAgent() {
         return agent;
@@ -127,12 +119,6 @@ public class Property {
     }
     public void setAddress(Address address) {
         this.address = address;
-    }
-    public void setPhoto(Photo photo) {
-        this.photo = photo;
-    }
-    public void setAttractingPoint(AttractingPoint attractingPoint) {
-        this.attractingPoint = attractingPoint;
     }
     public void setAgent(Agent agent) {
         this.agent = agent;
