@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.database.dao;
 import com.openclassrooms.realestatemanager.models.Photo;
 import com.openclassrooms.realestatemanager.models.Status;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -18,5 +19,8 @@ public interface StatusDao {
 
     @Update
     void updateStatus(Status status);
+
+    @Query("SELECT * FROM status WHERE statusId = :statusId")
+    Status getStatusFromId(int statusId);
 
 }

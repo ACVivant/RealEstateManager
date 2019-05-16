@@ -2,6 +2,7 @@ package com.openclassrooms.realestatemanager.models;
 
 import java.util.Date;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -36,17 +37,20 @@ public class Property {
     private int upForSaleDate;
     private int soldOnDate;
     private int surface;
+    private String mainPhoto;
 
     @Embedded
-    private TypeOfProperty typeId;
+    private TypeOfProperty type;
     @Embedded
-    public Address addressId;
+    private Address address;
     @Embedded
-    private Agent agentId;
+    private Agent agent;
     @Embedded
-    private Status statusId;
+    private Status status;
 
-    public Property(double price, int rooms, int bedrooms, int bathroom, String description, int upForSaleDate, int soldOnDate, int surface, TypeOfProperty typeId, Address addressId, Agent agentId, Status statusId) {
+    public Property() {}
+
+    public Property(double price, int rooms, int bedrooms, int bathroom, String description, int upForSaleDate, int soldOnDate, int surface, TypeOfProperty type, Address address, Agent agent, Status status, String mainPhoto) {
         this.price = price;
         this.rooms = rooms;
         this.bedrooms = bedrooms;
@@ -55,10 +59,11 @@ public class Property {
         this.upForSaleDate = upForSaleDate;
         this.soldOnDate = soldOnDate;
         this.surface = surface;
-        this.typeId = typeId;
-        this.addressId = addressId;
-        this.agentId = agentId;
-        this.statusId = statusId;
+        this.type = type;
+        this.address = address;
+        this.agent = agent;
+        this.status = status;
+        this.mainPhoto = mainPhoto;
     }
 
     // --- GETTER ---
@@ -89,18 +94,19 @@ public class Property {
     public int getSurface() {
         return surface;
     }
-    public TypeOfProperty getTypeId() {
-        return typeId;
+    public TypeOfProperty getType() {
+        return type;
     }
-    public Address getAddressId() {
-        return addressId;
+    public Address getAddress() {
+        return address;
     }
-    public Agent getAgentId() {
-        return agentId;
+    public Agent getAgent() {
+        return agent;
     }
-    public Status getStatusId() {
-        return statusId;
+    public Status getStatus() {
+        return status;
     }
+    public String getMainPhoto() { return mainPhoto;}
 
     // --- SETTER ---
     public void setPropertyId(long id) {
@@ -130,17 +136,18 @@ public class Property {
     public void setSurface(int surface) {
         this.surface = surface;
     }
-    public void setTypeId(TypeOfProperty type) {
-        this.typeId = type;
+    public void setType(TypeOfProperty type) {
+        this.type = type;
     }
-    public void setAddressId(Address address) {
-        this.addressId = address;
+    public void setAddress(Address address) {
+        this.address = address;
     }
-    public void setAgentId(Agent agent) {
-        this.agentId = agent;
+    public void setAgent(Agent agent) {
+        this.agent = agent;
     }
-    public void setStatusId(Status status) {
-        this.statusId = status;
+    public void setStatus(Status status) {
+        this.status = status;
     }
+    public void setMainPhoto(String mainPhoto) {this.mainPhoto = mainPhoto;}
 
 }

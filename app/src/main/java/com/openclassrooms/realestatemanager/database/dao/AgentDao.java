@@ -2,8 +2,10 @@ package com.openclassrooms.realestatemanager.database.dao;
 
 import com.openclassrooms.realestatemanager.models.Agent;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.Query;
 import androidx.room.Update;
 
 /**
@@ -16,5 +18,8 @@ public interface AgentDao {
 
     @Update
     void updateAgent(Agent agent);
+
+    @Query("SELECT * FROM agent WHERE agentId = :agentId")
+    Agent getAgentFromId(int agentId);
 
 }

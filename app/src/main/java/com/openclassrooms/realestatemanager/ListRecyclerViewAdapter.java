@@ -12,8 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.openclassrooms.realestatemanager.models.Address;
+import com.openclassrooms.realestatemanager.models.Property;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -32,43 +36,45 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
     private ArrayList<String> townList = new ArrayList<>();
     private ArrayList<String> priceList = new ArrayList<>();
     private ArrayList<Integer> idList = new ArrayList<>();
+
     private Context mContext;
     private OnItemClickedListener mListener;
 
-    public ListRecyclerViewAdapter(Context context, ArrayList<Integer> idList, ArrayList<String> picturesList, ArrayList<String> typeList, ArrayList<String> townList, ArrayList<String> priceList) {
-        mContext = context;
-        this.idList = idList;
-        this.picturesList = picturesList;
-        this.typeList = typeList;
-        this.townList = townList;
-        this.priceList = priceList;
-    }
+    private List<Property> properties = new ArrayList<>();
 
     @NonNull
     @Override
     public ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_house, parent, false);
-        ListViewHolder holder = new ListViewHolder(view, mListener);
+        Log.d(TAG, "onCreateViewHolder: ListRecyclerViewAdapter");
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_house, parent, false);
+        ListViewHolder holder = new ListViewHolder(itemView, mListener);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
-        Log.d(TAG, "onBindViewHolder: Called.");
+        Log.d(TAG, "onBindViewHolder: ListRecyclerViewAdapter Called.");
 
-        Glide.with(mContext)
-                .load(picturesList.get(position))
-                .into(holder.picture);
+        Property currentProperty = properties.get(position);
 
-        holder.type.setText(typeList.get(position));
-        holder.town.setText(townList.get(position));
-        holder.price.setText(priceList.get(position));
+        //holder.type.setText(currentProperty.getType().getTypeText());
+        //holder.town.setText(currentProperty.getAddress().getTown());
+        holder.price.setText(String.valueOf(currentProperty.getPrice()));
+
+            String uriPhoto = currentProperty.getMainPhoto();
+            Picasso.get().load(uriPhoto).into(holder.picture);
 
     }
 
     @Override
     public int getItemCount() {
-        return typeList.size();
+        Log.d(TAG, "getItemCount: ListRecyclerViewAdapter " + properties.size());
+        return properties.size();
+    }
+
+    public void setProperties(List<Property> properties) {
+        this.properties = properties;
+        notifyDataSetChanged();
     }
 
     public interface OnItemClickedListener{

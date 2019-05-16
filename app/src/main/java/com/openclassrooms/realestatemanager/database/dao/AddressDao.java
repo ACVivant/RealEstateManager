@@ -2,7 +2,11 @@ package com.openclassrooms.realestatemanager.database.dao;
 
 import com.openclassrooms.realestatemanager.models.Address;
 
+import java.util.List;
+
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -19,6 +23,12 @@ public interface AddressDao {
     @Update
     void updateAddress(Address address);
 
-    @Query("DELETE FROM address WHERE addressId = :addressId")
-    int deleteAddress(int addressId);
+    @Delete
+    void deleteAddress(Address address);
+
+    @Query("SELECT * FROM address WHERE addressId = :addressId")
+    Address getAddressFromId(int addressId);
+
+    @Query("SELECT * FROM address ORDER BY addressId ASC")
+    LiveData<List<Address>> getAllAddresses();
 }

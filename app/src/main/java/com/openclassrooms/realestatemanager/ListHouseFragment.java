@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,8 +16,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.openclassrooms.realestatemanager.models.Property;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -33,6 +39,7 @@ public class ListHouseFragment extends Fragment {
     private ArrayList<String> priceList = new ArrayList<>();
     private ArrayList<Integer> idList = new ArrayList<>();
 
+    private PropertyViewModel propertyViewModel;
 
 
     View v;
@@ -47,12 +54,15 @@ public class ListHouseFragment extends Fragment {
         // Inflate the layout for this fragment
        v= inflater.inflate(R.layout.fragment_list_house, container, false);
 
-       initDemoData();
+       //initDemoData();
+
+        initRecyclerView();
+
 
         return v;
     }
 
-    private void initDemoData() {
+/*    private void initDemoData() {
         picturesUrlList.add("https://c1.staticflickr.com/5/4636/25316407448_de5fbf183d_o.jpg");
         typeList.add("Appartement");
         townList.add("Crépy-en-Valois");
@@ -107,10 +117,10 @@ public class ListHouseFragment extends Fragment {
         priceList.add("5423");
         idList.add(108);
 
-        initRecyclerView();
+        initRecyclerViewTest();
     }
 
-    private void initRecyclerView() {
+    private void initRecyclerViewTest() {
         Log.d(TAG, "initRecyclerView");
         RecyclerView recyclerView = v.findViewById(R.id.list_recyclerview_container);
         ListRecyclerViewAdapter adapter = new ListRecyclerViewAdapter(getContext(), idList, picturesUrlList, typeList, townList, priceList);
@@ -127,6 +137,26 @@ public class ListHouseFragment extends Fragment {
                 startActivity(WVIntent);
             }
         });
-    }
+    }*/
 
+    private void initRecyclerView() {
+        Log.d(TAG, "initRecyclerView");
+        RecyclerView recyclerView = v.findViewById(R.id.list_recyclerview_container);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
+
+        ListRecyclerViewAdapter adapter = new ListRecyclerViewAdapter();
+        recyclerView.setAdapter(adapter);
+
+        propertyViewModel = ViewModelProviders.of(this).get(PropertyViewModel.class);
+        propertyViewModel.getAllProperty().observe(this, new Observer<List<Property>>() {
+            @Override
+            public void onChanged(List<Property> properties) {
+                Log.d(TAG, "onChanged");
+                adapter.setProperties(properties);
+                Log.d(TAG, "onChanged: size " + properties.size());
+            }
+        });
+
+    }
 }

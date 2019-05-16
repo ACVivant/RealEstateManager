@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.database.dao;
 import com.openclassrooms.realestatemanager.models.Status;
 import com.openclassrooms.realestatemanager.models.TypeOfProperty;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -18,5 +19,8 @@ public interface TypeOfPropertyDao {
 
     @Update
     void updateType(TypeOfProperty type);
+
+    @Query("SELECT * FROM type_of_property WHERE typeId = :typeId")
+    TypeOfProperty getTypeFromId(int typeId);
 
 }

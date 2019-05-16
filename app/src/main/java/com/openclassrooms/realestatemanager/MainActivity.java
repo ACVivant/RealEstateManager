@@ -17,6 +17,9 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.openclassrooms.realestatemanager.models.Property;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -26,6 +29,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -54,6 +59,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private boolean firstView1 = false;
     private boolean firstView2 = false;
 
+    //ViewModel
+    private PropertyViewModel propertyViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +71,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.configureDrawerLayout();
         this.configureNavigationView();
         //this.configureBottomNavigationView();
+
+
 
         homeToExpose = getIntent().getIntExtra(ID_PLACE, 0);
         fragmentToExposeFromMap = getIntent().getStringExtra(ID_FRAGMENT);

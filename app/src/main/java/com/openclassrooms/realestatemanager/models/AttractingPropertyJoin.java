@@ -21,6 +21,8 @@ public class AttractingPropertyJoin {
     public int attractingId;
     public int propertyId;
 
+    public AttractingPropertyJoin() {}
+
     public AttractingPropertyJoin(int attractingId, int propertyId) {
         this.attractingId = attractingId;
         this.propertyId = propertyId;

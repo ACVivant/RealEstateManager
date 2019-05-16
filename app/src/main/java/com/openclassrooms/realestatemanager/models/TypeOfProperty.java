@@ -13,6 +13,8 @@ public class TypeOfProperty {
     private long typeId;
     private String typeText;
 
+    public TypeOfProperty() {}
+
     public TypeOfProperty(String text) {
         this.typeText = text;
     }

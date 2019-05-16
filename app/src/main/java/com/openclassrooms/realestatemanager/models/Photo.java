@@ -19,6 +19,8 @@ public class Photo {
     private String photoUri;
     private long property;
 
+    public Photo() {}
+
     public Photo (String uri, String text, long property ) {
         this.photoUri = uri;
         this.photoText = text;

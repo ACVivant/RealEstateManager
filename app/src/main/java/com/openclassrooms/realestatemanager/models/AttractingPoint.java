@@ -15,6 +15,8 @@ public class AttractingPoint {
     private long attractId;
     private String attractType;
 
+    public AttractingPoint() {}
+
     public AttractingPoint(String attractType) {
         this.attractType = attractType;
     }

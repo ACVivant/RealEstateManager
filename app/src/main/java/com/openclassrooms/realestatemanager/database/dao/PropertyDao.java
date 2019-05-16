@@ -78,6 +78,9 @@ public interface PropertyDao {
     @Query("SELECT * FROM property WHERE soldOnDate < :soldOn ORDER BY soldOnDate DESC")
     LiveData<List<Property>> getPropertyFromSoldOnDateBefore(int soldOn );
 
+    @Query("SELECT * FROM property ORDER BY price ASC")
+    LiveData<List<Property>> getAllProperty();
+
     @Insert
     void insertProperty(Property property);
 

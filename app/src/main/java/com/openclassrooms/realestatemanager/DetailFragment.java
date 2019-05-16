@@ -42,12 +42,12 @@ public class DetailFragment extends Fragment {
 
 
     private View v;
-    private GoogleMap mMap;
+    //private GoogleMap mMap;
     private Marker myHomeMarker;
 
     /* @BindView(R.id.map-detail)
 ImageView mMapView;;*/
- private ImageView mMapView;
+ private ImageView mMap;
 
     public DetailFragment() {
         // Required empty public constructor
@@ -61,7 +61,7 @@ ImageView mMapView;;*/
         // Inflate the layout for this fragment
         v= inflater.inflate(R.layout.fragment_detail, container, false);
 
-        mMapView = (ImageView) v.findViewById(R.id.map_detail);
+        mMap = (ImageView) v.findViewById(R.id.map_detail);
         //ButterKnife.bind(v); // Ca ne marche pas...
 
 
@@ -120,7 +120,7 @@ ImageView mMapView;;*/
         MapUrl mapUrl = new MapUrl();
         String srcMap = mapUrl.createUrl(number, street, zipcode, town, country, key);
         Log.d(TAG, "initStaticMap: " + srcMap);
-        Picasso.get().load(srcMap).into(mMapView);
+        Picasso.get().load(srcMap).into(mMap);
     }
 
 }

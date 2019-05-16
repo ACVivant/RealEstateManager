@@ -13,6 +13,8 @@ public class Status {
     private long statusId;
     private String statusText;
 
+    public Status() {}
+
     public Status(String text) {
         this.statusText = text;
     }

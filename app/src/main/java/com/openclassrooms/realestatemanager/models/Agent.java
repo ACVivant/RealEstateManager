@@ -10,15 +10,17 @@ import androidx.room.PrimaryKey;
 public class Agent {
 
     @PrimaryKey(autoGenerate = true)
-    private long agentId;
+    private int agentId;
     private String agentName;
+
+    public Agent() {}
 
     public Agent(String name) {
         this.agentName = name;
     }
 
     // --- GETTER ---
-    public long getAgentId() {
+    public int getAgentId() {
         return agentId;
     }
     public String getAgentName() {
@@ -26,7 +28,7 @@ public class Agent {
     }
 
     // --- SETTER ---
-    public void setAgentId(long agentId) {
+    public void setAgentId(int agentId) {
         this.agentId = agentId;
     }
     public void setAgentName(String name) {

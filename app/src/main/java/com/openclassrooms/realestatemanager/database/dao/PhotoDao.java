@@ -9,6 +9,7 @@ import java.util.List;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -22,13 +23,13 @@ public interface PhotoDao {
     @Query("SELECT * FROM photo WHERE property = :property ORDER BY photoText ASC")
     LiveData<List<Photo>> getPhotoFromProperty(int property );
 
-    @Query("DELETE FROM photo WHERE photoId = :photoId")
-    void deletePhoto(int photoId);
-
     @Insert
     void insertPhoto(Photo photo);
 
     @Update
     void updatePhoto(Photo photo);
+
+    @Delete
+    void deletePhoto(Photo photo);
 
 }
