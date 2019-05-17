@@ -31,7 +31,7 @@ public class TypeOfPropertyRepository {
             new UpdateTypeOfPropertyAsyncTask(typeDao).execute(type);
         }
 
-        public void getTypeOfProperty(int typeId) { typeDao.getTypeFromId(typeId);}
+        public TypeOfProperty getTypeFromId(int typeId) { return typeDao.getTypeFromId(typeId);}
 
         private static class InsertTypeOfPropertyAsyncTask extends AsyncTask<TypeOfProperty, Void, Void> {
             private TypeOfPropertyDao typeDao;

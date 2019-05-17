@@ -121,6 +121,7 @@ public abstract class RealEstateDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... voids) {
             Log.d(TAG, "doInBackground: prepopulate");
+
             agentDao.insertAgent(new Agent("Pierre Robes"));
             agentDao.insertAgent(new Agent("Inès Pairé"));
 
@@ -145,18 +146,18 @@ public abstract class RealEstateDatabase extends RoomDatabase {
             propertyDao.insertProperty(new Property(450000, 3, 1, 1,
                     "design, charme et localisation extraordinaire",
                     20181002, 20181005, 75,
-                    typeOfPropertyDao.getTypeFromId(0),
-                    addressDao.getAddressFromId(0),
-                    agentDao.getAgentFromId(0),
-                    statusDao.getStatusFromId(2),
+                    typeOfPropertyDao.getTypeFromId(1),
+                    addressDao.getAddressFromId(1),
+                    agentDao.getAgentFromId(1),
+                    statusDao.getStatusFromId(3),
                     "https://www.parklex.com/wp-content/uploads/2015/11/WoodviewMews-GeraghtyTaylorArchitects-London-UK-2015-Parklex-Facade-Gold-02.jpg?auto=compress,format&q=80&h=100&dpr=2"));
             propertyDao.insertProperty(new Property(578230, 5, 3, 2,
                     "Quelle surprise derrière cette façade de découvrir une maison si moderne et entièrement équipée",
                     20190305, ' ',253,
                     typeOfPropertyDao.getTypeFromId(2),
-                    addressDao.getAddressFromId(1),
-                    agentDao.getAgentFromId(0),
-                    statusDao.getStatusFromId(0),
+                    addressDao.getAddressFromId(2),
+                    agentDao.getAgentFromId(1),
+                    statusDao.getStatusFromId(1),
                     "http://espace-facades.fr/wp-content/uploads/sites/8/2018/09/ravalement-facade-maison-blagnac-avant.jpg?auto=compress,format&q=80&h=100&dpr=2"));
 
             photoDao.insertPhoto(new Photo("https://www.parklex.com/wp-content/uploads/2015/11/WoodviewMews-GeraghtyTaylorArchitects-London-UK-2015-Parklex-Facade-Gold-02.jpg?auto=compress,format&q=80&h=100&dpr=2","façade", 1));
@@ -169,10 +170,10 @@ public abstract class RealEstateDatabase extends RoomDatabase {
             photoDao.insertPhoto(new Photo( "https://www.ateliersjacob.com/imports/images/realisations/fr/cuisine-contemporaine/cuisine-contemporaine-1-1.jpg?auto=compress,format&q=80&h=100&dpr=2", "kitchen", 2));
             photoDao.insertPhoto(new Photo("https://www.petiteamelie.fr/media/wysiwyg/homepage-images/chambre-bebe-petite-amelie.jpg?auto=compress,format&q=80&h=100&dpr=2", "bedroom", 2));
 
-            attractingPropertyJoinDao.insertAttractingPropertyJoin(new AttractingPropertyJoin(1,0));
-            attractingPropertyJoinDao.insertAttractingPropertyJoin(new AttractingPropertyJoin(2,0));
-            attractingPropertyJoinDao.insertAttractingPropertyJoin(new AttractingPropertyJoin(1,1));
-            attractingPropertyJoinDao.insertAttractingPropertyJoin(new AttractingPropertyJoin(3,1));
+            attractingPropertyJoinDao.insertAttractingPropertyJoin(new AttractingPropertyJoin(1,1));   // attractingId commence à 1, propertyId commence à 1
+            attractingPropertyJoinDao.insertAttractingPropertyJoin(new AttractingPropertyJoin(2,1));
+            attractingPropertyJoinDao.insertAttractingPropertyJoin(new AttractingPropertyJoin(1,2));
+            attractingPropertyJoinDao.insertAttractingPropertyJoin(new AttractingPropertyJoin(3,2));
             return null;
         }
     }

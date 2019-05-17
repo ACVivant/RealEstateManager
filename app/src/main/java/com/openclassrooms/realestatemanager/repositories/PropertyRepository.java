@@ -112,6 +112,8 @@ public class PropertyRepository {
         return propertyDao.getAllProperty();
     }
 
+    public Property getPropertyFromId(int propertyId) { return propertyDao.getPropertyFromId(propertyId);}
+
 //----------------------------------------------------------------------------------------------------------
         private static class InsertPropertyAsyncTask extends AsyncTask<Property, Void, Void> {
             private PropertyDao propertyDao;

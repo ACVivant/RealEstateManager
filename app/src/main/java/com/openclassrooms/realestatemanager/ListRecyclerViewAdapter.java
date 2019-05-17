@@ -57,8 +57,8 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
 
         Property currentProperty = properties.get(position);
 
-        //holder.type.setText(currentProperty.getType().getTypeText());
-        //holder.town.setText(currentProperty.getAddress().getTown());
+        holder.type.setText(currentProperty.getType().getTypeText());
+        holder.town.setText(currentProperty.getAddress().getTown());
         holder.price.setText(String.valueOf(currentProperty.getPrice()));
 
             String uriPhoto = currentProperty.getMainPhoto();

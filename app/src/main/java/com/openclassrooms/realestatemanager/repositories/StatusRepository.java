@@ -27,7 +27,7 @@ public class StatusRepository {
             new UpdateStatusAsyncTask(statusDao).execute(status);
         }
 
-        public void getStatus(int statusId) { statusDao.getStatusFromId(statusId);}
+        public Status getStatusFromId(int statusId) { return statusDao.getStatusFromId(statusId);}
 
         private static class InsertStatusAsyncTask extends AsyncTask<Status, Void, Void> {
             private StatusDao statusDao;

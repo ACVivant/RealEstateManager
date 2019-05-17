@@ -4,8 +4,10 @@ import android.app.Application;
 import android.util.Log;
 
 import com.openclassrooms.realestatemanager.models.Address;
+import com.openclassrooms.realestatemanager.models.Agent;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.repositories.AddressRepository;
+import com.openclassrooms.realestatemanager.repositories.AgentRepository;
 import com.openclassrooms.realestatemanager.repositories.PropertyRepository;
 
 import java.util.List;
@@ -23,6 +25,8 @@ public class PropertyViewModel extends AndroidViewModel {
 
     private PropertyRepository propertyRepository;
     private LiveData<List<Property>> allProperties;
+
+    private AgentRepository agentRepository;
 
     public PropertyViewModel(@NonNull Application application) {
         super(application);

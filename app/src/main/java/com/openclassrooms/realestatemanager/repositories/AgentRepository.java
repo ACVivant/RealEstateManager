@@ -31,7 +31,9 @@ public class AgentRepository {
         new UpdateAgentAsyncTask(agentDao).execute(agent);
     }
 
-    public void getAgent(int agentId) { agentDao.getAgentFromId(agentId);}
+    public Agent getAgentFromId(int agentId) { return agentDao.getAgentFromId(agentId);}
+
+    public LiveData<List<Agent>> getAllAgent() {return agentDao.getAllAgent();}
 
     private static class InsertAgentAsyncTask extends AsyncTask<Agent, Void, Void> {
         private AgentDao agentDao;

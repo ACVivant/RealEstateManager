@@ -2,6 +2,8 @@ package com.openclassrooms.realestatemanager.database.dao;
 
 import com.openclassrooms.realestatemanager.models.Agent;
 
+import java.util.List;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -22,4 +24,6 @@ public interface AgentDao {
     @Query("SELECT * FROM agent WHERE agentId = :agentId")
     Agent getAgentFromId(int agentId);
 
+    @Query("SELECT * FROM agent ORDER BY agentName ASC")
+    LiveData<List<Agent>> getAllAgent();
 }

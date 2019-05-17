@@ -81,6 +81,9 @@ public interface PropertyDao {
     @Query("SELECT * FROM property ORDER BY price ASC")
     LiveData<List<Property>> getAllProperty();
 
+    @Query("SELECT * FROM property WHERE propertyId = :propertyId")
+    Property getPropertyFromId(int propertyId);
+
     @Insert
     void insertProperty(Property property);
 
