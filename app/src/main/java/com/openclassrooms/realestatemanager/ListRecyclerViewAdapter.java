@@ -13,7 +13,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.openclassrooms.realestatemanager.models.Address;
+import com.openclassrooms.realestatemanager.models.Agent;
 import com.openclassrooms.realestatemanager.models.Property;
+import com.openclassrooms.realestatemanager.models.TypeOfProperty;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -41,6 +43,8 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
     private OnItemClickedListener mListener;
 
     private List<Property> properties = new ArrayList<>();
+    private List<Agent> agents = new ArrayList<>();
+    private PropertyViewModel propertyViewModel;
 
     @NonNull
     @Override
@@ -63,7 +67,6 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
 
             String uriPhoto = currentProperty.getMainPhoto();
             Picasso.get().load(uriPhoto).into(holder.picture);
-
     }
 
     @Override
@@ -75,6 +78,10 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
     public void setProperties(List<Property> properties) {
         this.properties = properties;
         notifyDataSetChanged();
+    }
+
+    public void setAgents(List<Agent> agents) {
+        this.agents = agents;
     }
 
     public interface OnItemClickedListener{

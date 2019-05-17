@@ -23,6 +23,10 @@ public class PhotoRepository {
         photoDao = database.photoDao();
         allPhoto = photoDao.getPhotoFromProperty(idProperty);
     }
+    public PhotoRepository(Application application) {
+        RealEstateDatabase database = RealEstateDatabase.getInstance(application);
+        photoDao = database.photoDao();
+    }
 
     public void insertPhoto(Photo photo) {
         new InsertPhotoAsyncTask(photoDao).execute(photo);

@@ -33,6 +33,8 @@ public class TypeOfPropertyRepository {
 
         public TypeOfProperty getTypeFromId(int typeId) { return typeDao.getTypeFromId(typeId);}
 
+        public TypeOfProperty getTypeFromName(String typeName) { return typeDao.getTypeFromName(typeName);}
+
         private static class InsertTypeOfPropertyAsyncTask extends AsyncTask<TypeOfProperty, Void, Void> {
             private TypeOfPropertyDao typeDao;
 

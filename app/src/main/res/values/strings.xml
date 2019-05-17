@@ -79,6 +79,7 @@
     <string name="agent_in_charge">"Responsable"</string>
     <string name="date_example">"12/05/2019"</string>
     <string name="agent_example">"Jules"</string>
+    <string name="please_insert_agent">"La fiche ne peut pas être sauvegardée s'il n'y a pas le nom du responsable."</string>
 
     <!-- List Recyclerview  -->
     <string name="house_type">"Type de bien"</string>

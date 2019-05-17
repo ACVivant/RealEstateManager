@@ -21,12 +21,6 @@ import androidx.room.Update;
 @Dao
 public interface PropertyDao {
 
-    @Query("SELECT * FROM property WHERE agentName = :agentName ORDER BY soldOnDate DESC")
-    LiveData<List<Property>> getPropertyFromAgent(String agentName);
-
-    @Query("SELECT * FROM property WHERE typeText = :type ORDER BY soldOnDate DESC")
-    LiveData<List<Property>> getPropertyFromType(String type);
-
     @Query("SELECT * FROM property WHERE town = :town ORDER BY soldOnDate DESC")
     LiveData<List<Property>> getPropertyFromTown(String town);
 

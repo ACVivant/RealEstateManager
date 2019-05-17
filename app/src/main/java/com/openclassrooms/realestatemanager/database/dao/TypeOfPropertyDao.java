@@ -23,4 +23,6 @@ public interface TypeOfPropertyDao {
     @Query("SELECT * FROM type_of_property WHERE typeId = :typeId")
     TypeOfProperty getTypeFromId(int typeId);
 
+    @Query("SELECT * FROM type_of_property WHERE typeText = :typeName")
+    TypeOfProperty getTypeFromName(String typeName);
 }

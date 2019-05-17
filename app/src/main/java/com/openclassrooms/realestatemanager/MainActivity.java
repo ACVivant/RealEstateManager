@@ -17,11 +17,13 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.openclassrooms.realestatemanager.models.Address;
 import com.openclassrooms.realestatemanager.models.Property;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private static final String TAG = "MainActivity";
     private static final int ERROR_DIALOG_REQUEST = 9001;
+    public static final int CREATE_PROPERTY_REQUEST = 333;
     private static final String ID_FRAGMENT = "fragment_to_expose";
     private static final String ID_PLACE = "id_of_place";
 
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //ViewModel
     private PropertyViewModel propertyViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -279,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void launchCreate() {
         Intent intent = new Intent(this, CreateHomeActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, CREATE_PROPERTY_REQUEST);
     }
 
     private void launchSearch() {
@@ -335,6 +339,44 @@ public boolean isServiceOK() {
         super.onSaveInstanceState(outState);
         String idFragment = active.getTag();
         outState.putString(ID_FRAGMENT, idFragment);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CREATE_PROPERTY_REQUEST && resultCode == RESULT_OK) {
+            String type = data.getStringExtra(CreateHomeActivity.EXTRA_TYPE);
+            String description = data.getStringExtra(CreateHomeActivity.EXTRA_DESCRIPTION);
+            int price = data.getIntExtra(CreateHomeActivity.EXTRA_PRICE, 0);
+            int surface = data.getIntExtra(CreateHomeActivity.EXTRA_SURFACE, 0);
+            int rooms = data.getIntExtra(CreateHomeActivity.EXTRA_ROOMS, 0);
+            int bedrooms = data.getIntExtra(CreateHomeActivity.EXTRA_BEDROOMS,0);
+            int bathrooms = data.getIntExtra(CreateHomeActivity.EXTRA_BATHROOMS,0);
+            String number = data.getStringExtra(CreateHomeActivity.EXTRA_ADDRESS_NUMBER);
+            String street = data.getStringExtra(CreateHomeActivity.EXTRA_STREET);
+            String street2 = data.getStringExtra(CreateHomeActivity.EXTRA_STREET2);
+            String zipcode = data.getStringExtra(CreateHomeActivity.EXTRA_ZIPCODE);
+            String town = data.getStringExtra(CreateHomeActivity.EXTRA_TOWN);
+            String country = data.getStringExtra(CreateHomeActivity.EXTRA_COUNTRY);
+            Boolean school = data.getBooleanExtra(CreateHomeActivity.EXTRA_SCHOOL, false);
+            Boolean schop = data.getBooleanExtra(CreateHomeActivity.EXTRA_SHOP, false);
+            Boolean park = data.getBooleanExtra(CreateHomeActivity.EXTRA_PARK, false);
+            Boolean museum = data.getBooleanExtra(CreateHomeActivity.EXTRA_MUSEUM, false);
+            String upForSale = data.getStringExtra(CreateHomeActivity.EXTRA_UPFORSALE);
+            String soldOn = data.getStringExtra(CreateHomeActivity.EXTRA_SOLDON);
+            String agent = data.getStringExtra(CreateHomeActivity.EXTRA_AGENT);
+
+/*            Property newProperty = new Property(price, rooms, bedrooms, bathrooms, description, upForSale, soldOn, surface,
+                    //TYPE typeOfPropertyDao.getTypeFromName(type)
+                    new Address(number, street, street2, zipcode, town, country)),
+                    //AGENT
+                    // STATUS
+                    //PHOTO
+            )*/
+
+
+        }
     }
 }
 //---------------------------------------------------------

@@ -29,7 +29,7 @@ import androidx.room.PrimaryKey;
 public class Property {
     @PrimaryKey(autoGenerate = true)
     private long propertyId;
-    private double price;
+    private int price;
     private  int rooms;
     private int bedrooms;
     private int bathroom;
@@ -48,9 +48,15 @@ public class Property {
     @Embedded
     private Status status;
 
+ /*   @Embedded
+    private Address address;
+    private int typeId;
+    private int agentId;
+    private int statusId;*/
+
     public Property() {}
 
-    public Property(double price, int rooms, int bedrooms, int bathroom, String description, int upForSaleDate, int soldOnDate, int surface, TypeOfProperty type, Address address, Agent agent, Status status, String mainPhoto) {
+    public Property(int price, int rooms, int bedrooms, int bathroom, String description, int upForSaleDate, int soldOnDate, int surface, TypeOfProperty type, Address address, Agent agent, Status status, String mainPhoto) {
         this.price = price;
         this.rooms = rooms;
         this.bedrooms = bedrooms;
@@ -66,11 +72,27 @@ public class Property {
         this.mainPhoto = mainPhoto;
     }
 
+ /*   public Property(int price, int rooms, int bedrooms, int bathroom, String description, int upForSaleDate, int soldOnDate, int surface, int type, Address address, int agent, int status, String mainPhoto) {
+        this.price = price;
+        this.rooms = rooms;
+        this.bedrooms = bedrooms;
+        this.bathroom = bathroom;
+        this.description = description;
+        this.upForSaleDate = upForSaleDate;
+        this.soldOnDate = soldOnDate;
+        this.surface = surface;
+        this.typeId = type;
+        this.address = address;
+        this.agentId = agent;
+        this.statusId = status;
+        this.mainPhoto = mainPhoto;
+    }*/
+
     // --- GETTER ---
     public long getPropertyId() {
         return propertyId;
     }
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
     public int getRooms() {
@@ -106,13 +128,27 @@ public class Property {
     public Status getStatus() {
         return status;
     }
+
+ /*   public int getTypeId() {
+        return typeId;
+    }
+    public Address getAddress() {
+        return address;
+    }
+    public int getAgentId() {
+        return agentId;
+    }
+    public int getStatusId() {
+        return statusId;
+    }*/
+
     public String getMainPhoto() { return mainPhoto;}
 
     // --- SETTER ---
     public void setPropertyId(long id) {
         this.propertyId = id;
     }
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
     public void setRooms(int rooms) {
@@ -148,6 +184,20 @@ public class Property {
     public void setStatus(Status status) {
         this.status = status;
     }
+
+ /*   public void setTypeId(int type) {
+    this.typeId = type;
+}
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+    public void setAgentId(int agent) {
+        this.agentId = agent;
+    }
+    public void setStatusId(int status) {
+        this.statusId = status;
+    }*/
+
     public void setMainPhoto(String mainPhoto) {this.mainPhoto = mainPhoto;}
 
 }

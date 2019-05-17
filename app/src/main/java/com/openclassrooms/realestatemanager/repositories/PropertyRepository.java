@@ -32,14 +32,6 @@ public class PropertyRepository {
             new UpdatePropertyAsyncTask(propertyDao).execute(property);
         }
 
-        public LiveData<List<Property>> getPropertyFromAgent(String agentId) {
-            return propertyDao.getPropertyFromAgent(agentId);
-        }
-
-    public LiveData<List<Property>> getPropertyFromType(String type) {
-        return propertyDao.getPropertyFromType(type);
-    }
-
     public LiveData<List<Property>> getPropertyFromTown(String town) {
         return propertyDao.getPropertyFromTown(town);
     }
