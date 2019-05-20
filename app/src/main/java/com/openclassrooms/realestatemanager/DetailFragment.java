@@ -125,7 +125,7 @@ ImageView mMapView;;*/
         price = (TextView) v.findViewById(R.id.textView21);
 
         Bundle bundle = getArguments();
-        propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY);
+        propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY,1);
         //propertyId = 2; // pour les tests
 
         Log.d(TAG, "onCreateView: bundle " + propertyId);

@@ -35,6 +35,7 @@ public class ListHouseFragment extends Fragment {
     private static final String PLACE_ID = "id_of_place";
     private static final String ID_FRAGMENT = "fragment_to_expose";
     public static final String ID_PROPERTY = "property_selected";
+    public static final String DISPLAY_DETAIL = "display_detail_after_clic";
 
     private ArrayList<String> picturesUrlList = new ArrayList<>();
     private ArrayList<String> typeList = new ArrayList<>();
@@ -46,6 +47,8 @@ public class ListHouseFragment extends Fragment {
 
     private int propertyId = 0;
     public int propertySaved = 0;
+    private boolean useTablet;
+    private boolean displayDetail;
 
 
     View v;
@@ -61,6 +64,7 @@ public class ListHouseFragment extends Fragment {
        v= inflater.inflate(R.layout.fragment_list_house, container, false);
         Bundle bundle = getArguments();
         propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY);
+        useTablet = bundle.getBoolean(MainActivity.USE_TABLET);
 
        //initDemoData();
 
@@ -73,7 +77,7 @@ public class ListHouseFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         //Si on a un état sauvegardé on met a jour l'élément par défaut
         if (savedInstanceState != null) {
-            propertySaved = savedInstanceState.getInt(ID_PROPERTY, 0);
+                       propertySaved = savedInstanceState.getInt(ID_PROPERTY, 0);
         }
     }
 
@@ -83,13 +87,16 @@ public class ListHouseFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
 
-        ListRecyclerViewAdapter adapter = new ListRecyclerViewAdapter(propertyId);
+        ListRecyclerViewAdapter adapter = new ListRecyclerViewAdapter(propertyId, useTablet);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickedListener(new ListRecyclerViewAdapter.OnItemClickedListener() {
             @Override
             public void OnItemClicked(int position) {
+                displayDetail = true;
+
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 intent.putExtra(ID_PROPERTY, position+1);
+                intent.putExtra(DISPLAY_DETAIL, displayDetail);
                 startActivity(intent);
             }
         });

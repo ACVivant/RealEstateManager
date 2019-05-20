@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static final int CREATE_PROPERTY_REQUEST = 333;
     private static final String ID_FRAGMENT = "fragment_to_expose";
     private static final String ID_PLACE = "id_of_place";
+    public static final String USE_TABLET = "mobile_or_tablet";
 
     //Design
     private Toolbar toolbar;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String fragmentToExposeFromMap;
     private Bundle state;
     private int homeToExpose;
+    private boolean displayDetail = false;
 
     private int clic = 0;
     private boolean firstView1 = false;
@@ -77,6 +79,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //this.configureBottomNavigationView();
 
         homeToExpose = getIntent().getIntExtra(ListHouseFragment.ID_PROPERTY, 1);
+        displayDetail = getIntent().getBooleanExtra(ListHouseFragment.DISPLAY_DETAIL, false);
+
         fragmentToExposeFromMap = getIntent().getStringExtra(ID_FRAGMENT);
         Log.d(TAG, "onCreate: fragment_id " + fragmentToExposeFromMap);
         Log.d(TAG, "onCreate: homeToExpose " + homeToExpose);
@@ -133,17 +137,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Configure first view
     private void configureFirstView() {
         Log.d(TAG, "configureFirstView");
+        Bundle args = new Bundle();
+        args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
+
+
             if (findViewById(R.id.frame_layout_detail) == null) {
                 Log.d(TAG, "configureFirstView: mobile");
-                fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
-                fm.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
-            } else {
-                Log.d(TAG, "configureFirstView: tablette");
-                // Ajouter les infos de la maison par défaut
-                Bundle args = new Bundle();
-                args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
+
+                args.putBoolean(USE_TABLET, false);
                 fragment2.setArguments(args);
                 fragment1.setArguments(args);
+
+                if (!displayDetail) {
+                    fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
+                    fm.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
+                } else {
+                    fm.beginTransaction().add(R.id.main_container, fragment1, "1").hide(fragment1).commit();
+                    fm.beginTransaction().add(R.id.main_container, fragment2, "2").commit();
+                }
+            } else {
+
+                args.putBoolean(USE_TABLET, true);
+                fragment2.setArguments(args);
+                fragment1.setArguments(args);
+
+                Log.d(TAG, "configureFirstView: tablette");
 
                 fm.beginTransaction().add(R.id.frame_layout_detail, fragment2, "2").commit();
                 fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
@@ -154,19 +172,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // Configure view after rotation
     private void configureView() {
+        // Ajouter les infos pour afficher la bonne maison
+        Bundle args = new Bundle();
+        args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
+        Log.d(TAG, "configureView: bundle " + homeToExpose);
+        fragment2.setArguments(args);
+
         Log.d(TAG, "configureView");
         if (findViewById(R.id.frame_layout_detail) == null) {
-            if (fragmentToExpose.equals("1")) {
+            if (fragmentToExpose.equals("1")&& !displayDetail) {
                 fm.beginTransaction().hide(fragment2).commit();
                 fm.beginTransaction().show(fragment1).commit();
             } else {
-                // Ajouter les infos pour afficher la bonne maison
-                Bundle args = new Bundle();
-                homeToExpose = 5;
-                args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
-                Log.d(TAG, "configureView: bundle " + homeToExpose);
-                fragment2.setArguments(args);
-
                 fm.beginTransaction().hide(fragment1).commit();
                 fm.beginTransaction().show(fragment2).commit();
             }

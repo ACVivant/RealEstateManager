@@ -45,11 +45,12 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
     private List<Property> properties = new ArrayList<>();
     private List<Agent> agents = new ArrayList<>();
     private PropertyViewModel propertyViewModel;
-
+    private  boolean useTablet;
     private int propertySelected;
 
-    public ListRecyclerViewAdapter(int propertySelected) {
+    public ListRecyclerViewAdapter(int propertySelected, boolean useTablet) {
         this.propertySelected = propertySelected;
+        this.useTablet = useTablet;
     }
 
     @NonNull
@@ -75,10 +76,12 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
         String uriPhoto = currentProperty.getMainPhoto();
         Picasso.get().load(uriPhoto).into(holder.picture);
 
-        if (position == propertySelected-1) {
-           holder.itemBackground.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimaryLight));
-           holder.type.setTextColor(mContext.getResources().getColor(R.color.colorMyWhite));
-           holder.town.setTextColor(mContext.getResources().getColor(R.color.colorMyWhite));
+        if(useTablet) {
+            if (position == propertySelected - 1) {
+                holder.itemBackground.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimaryLight));
+                holder.type.setTextColor(mContext.getResources().getColor(R.color.colorMyWhite));
+                holder.town.setTextColor(mContext.getResources().getColor(R.color.colorMyWhite));
+            }
         }
     }
 
