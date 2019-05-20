@@ -23,6 +23,9 @@ public interface PhotoDao {
     @Query("SELECT * FROM photo WHERE property = :property ORDER BY photoText ASC")
     LiveData<List<Photo>> getPhotoFromProperty(int property );
 
+    @Query("SELECT * FROM photo ORDER BY property ASC")
+    LiveData<List<Photo>> getAllPhoto();
+
     @Insert
     void insertPhoto(Photo photo);
 

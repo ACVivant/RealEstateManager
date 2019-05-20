@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -33,6 +34,7 @@ public class ListHouseFragment extends Fragment {
     private static final String TAG = "ListHouseFragment";
     private static final String PLACE_ID = "id_of_place";
     private static final String ID_FRAGMENT = "fragment_to_expose";
+    public static final String ID_PROPERTY = "property_selected";
 
     private ArrayList<String> picturesUrlList = new ArrayList<>();
     private ArrayList<String> typeList = new ArrayList<>();
@@ -41,6 +43,8 @@ public class ListHouseFragment extends Fragment {
     private ArrayList<Integer> idList = new ArrayList<>();
 
     private PropertyViewModel propertyViewModel;
+
+    public int propertySelected = 0;
 
 
     View v;
@@ -63,6 +67,15 @@ public class ListHouseFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //Si on a un état sauvegardé on met a jour l'élément par défaut
+        if (savedInstanceState != null) {
+            propertySelected = savedInstanceState.getInt(ID_PROPERTY, 0);
+        }
+    }
+
     private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView");
         RecyclerView recyclerView = v.findViewById(R.id.list_recyclerview_container);
@@ -71,6 +84,11 @@ public class ListHouseFragment extends Fragment {
 
         ListRecyclerViewAdapter adapter = new ListRecyclerViewAdapter();
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickedListener(new ListRecyclerViewAdapter.OnItemClickedListener() {
+            @Override
+            public void OnItemClicked(int position) {
+            }
+        });
 
         propertyViewModel = ViewModelProviders.of(this).get(PropertyViewModel.class);
         propertyViewModel.getAllProperty().observe(this, new Observer<List<Property>>() {

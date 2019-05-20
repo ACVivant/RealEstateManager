@@ -50,6 +50,15 @@ public class Utils {
         return dateFormat.format(date);
     }
 
+    public static String convertStringToDate(String textDate){
+        if (textDate.length()==8) {
+            String formattedDate = textDate.substring(6) + "/" + textDate.substring(4, 6) + "/" + textDate.substring(0, 4);
+            return formattedDate;
+        } else {
+            return "N/A";
+        }
+    }
+
     /**
      * Vérification de la connexion réseau
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE

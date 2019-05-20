@@ -17,15 +17,18 @@ import androidx.lifecycle.LiveData;
 public class PhotoRepository {
     private PhotoDao photoDao;
     private LiveData<List<Photo>> allPhoto;
+    private LiveData<List<Photo>> allPhotoFromProperty;
 
     public PhotoRepository(Application application, int idProperty) {
         RealEstateDatabase database = RealEstateDatabase.getInstance(application);
         photoDao = database.photoDao();
-        allPhoto = photoDao.getPhotoFromProperty(idProperty);
+        allPhotoFromProperty = photoDao.getPhotoFromProperty(idProperty);
+        allPhoto = photoDao.getAllPhoto();
     }
     public PhotoRepository(Application application) {
         RealEstateDatabase database = RealEstateDatabase.getInstance(application);
         photoDao = database.photoDao();
+        allPhoto = photoDao.getAllPhoto();
     }
 
     public void insertPhoto(Photo photo) {
@@ -41,6 +44,9 @@ public class PhotoRepository {
     }
 
     public LiveData<List<Photo>> getPhotoFromProperty(int propertyId) {
+        return allPhotoFromProperty;
+    }
+    public LiveData<List<Photo>> getAllPhoto() {
         return allPhoto;
     }
 

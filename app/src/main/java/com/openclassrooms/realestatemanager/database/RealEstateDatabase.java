@@ -151,6 +151,7 @@ public abstract class RealEstateDatabase extends RoomDatabase {
             propertyDao.insertProperty(new Property(450000, 3, 1, 1,
                     "design, charme et localisation extraordinaire",
                     20181002, 20181005, 75,
+                    false, false, true, true,
                     typeOfPropertyDao.getTypeFromId(1),
                     addressDao.getAddressFromId(1),
                     agentDao.getAgentFromId(1),
@@ -160,6 +161,7 @@ public abstract class RealEstateDatabase extends RoomDatabase {
             propertyDao.insertProperty(new Property(578230, 5, 3, 2,
                     "Quelle surprise derrière cette façade de découvrir une maison si moderne et entièrement équipée",
                     20190305, ' ',253,
+                    true, false, true, false,
                     typeOfPropertyDao.getTypeFromId(3),
                     addressDao.getAddressFromId(2),
                     agentDao.getAgentFromId(1),
@@ -169,6 +171,7 @@ public abstract class RealEstateDatabase extends RoomDatabase {
             propertyDao.insertProperty(new Property(125480, 1, 1, 1,
                     "studio de charme",
                     20190505, ' ',27,
+                    false, false, false, true,
                     typeOfPropertyDao.getTypeFromId(1),
                     addressDao.getAddressFromId(3),
                     agentDao.getAgentFromId(1),
@@ -178,6 +181,7 @@ public abstract class RealEstateDatabase extends RoomDatabase {
             propertyDao.insertProperty(new Property(56230500, 32, 12, 12,
                     "palace, qu'en dire de plus?",
                     20190517, ' ',980,
+                    true, false, false, false,
                     typeOfPropertyDao.getTypeFromId(5),
                     addressDao.getAddressFromId(4),
                     agentDao.getAgentFromId(1),
@@ -187,6 +191,7 @@ public abstract class RealEstateDatabase extends RoomDatabase {
             propertyDao.insertProperty(new Property(153450, 2, 1, 1,
                     "un petit cocon",
                     20190501, ' ',25,
+                    true, true, true, true,
                     typeOfPropertyDao.getTypeFromId(1),
                     addressDao.getAddressFromId(5),
                     agentDao.getAgentFromId(1),
@@ -196,6 +201,7 @@ public abstract class RealEstateDatabase extends RoomDatabase {
             propertyDao.insertProperty(new Property(275490, 3, 2, 1,
                     "à saisir",
                     20190423, ' ',70,
+                    false, false, true, false,
                     typeOfPropertyDao.getTypeFromId(2),
                     addressDao.getAddressFromId(6),
                     agentDao.getAgentFromId(1),
@@ -205,6 +211,7 @@ public abstract class RealEstateDatabase extends RoomDatabase {
             propertyDao.insertProperty(new Property(562300, 2, 1, 1,
                     "un petit cocon",
                     201900517, ' ',120,
+                    true, true, false, false,
                     typeOfPropertyDao.getTypeFromId(3),
                     addressDao.getAddressFromId(7),
                     agentDao.getAgentFromId(1),
@@ -245,6 +252,7 @@ public abstract class RealEstateDatabase extends RoomDatabase {
             photoDao.insertPhoto(new Photo("https://www.turbulences-deco.fr/wp-content/uploads/2015/05/Chambre-blanche-et-rose-via-VTwonen.jpg?auto=compress,format&q=80&h=100&dpr=2", "bedroom", 2));
             photoDao.insertPhoto(new Photo( "https://www.ateliersjacob.com/imports/images/realisations/fr/cuisine-contemporaine/cuisine-contemporaine-1-1.jpg?auto=compress,format&q=80&h=100&dpr=2", "kitchen", 2));
             photoDao.insertPhoto(new Photo("https://www.petiteamelie.fr/media/wysiwyg/homepage-images/chambre-bebe-petite-amelie.jpg?auto=compress,format&q=80&h=100&dpr=2", "bedroom", 2));
+
             photoDao.insertPhoto(new Photo("https://upload.wikimedia.org/wikipedia/commons/3/3c/Fa%C3%A7ade_de_l%27immeuble_sis_au_57_rue_de_Bruxelles.JPG?auto=compress,format&q=80&h=100&dpr=2", "façade", 3));
             photoDao.insertPhoto(new Photo("https://s-ec.bstatic.com/images/hotel/max1024x768/962/96268673.jpg?auto=compress,format&q=80&h=100&dpr=2", "pièce principale", 3));
 
@@ -253,8 +261,8 @@ public abstract class RealEstateDatabase extends RoomDatabase {
             photoDao.insertPhoto(new Photo("http://www.iwishparis.com/wp-content/uploads/2016/03/orangerie-chateau-versailles-andre-le-notre-jcl.jpg?auto=compress,format&q=80&h=100&dpr=2", "jardin", 4));
             photoDao.insertPhoto(new Photo("http://www.nouveautourismeculturel.com/blog/wp-content/contenus/2012/08/Galerie-des-Glaces-.jpg?auto=compress,format&q=80&h=100&dpr=2", "salle à manger", 4));
 
-            photoDao.insertPhoto(new Photo("https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=2ahUKEwjv6YzxvaPiAhUvyoUKHbLABTIQjRx6BAgBEAU&url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Ffr%2Fstudio-rouffach.fr.html&psig=AOvVaw14wn_Y4JA3tB76iiipYsx3&ust=1558164627550088?auto=compress,format&q=80&h=100&dpr=2", "pièce principale", 5));
-            photoDao.insertPhoto(new Photo("https://www.expert-peinture.fr/wp-content/uploads/2015/09/5-conseils-pour-peindre-sa-fa%c3%a7ade-%c3%a0-la-perfection-.jpg?auto=compress,format&q=80&h=100&dpr=2", "pièce principale", 5));
+            photoDao.insertPhoto(new Photo("https://img-3.journaldesfemmes.fr/txQP63kltdw6VHa0PBklOLCpz-c=/910x607/smart/3ff469b4dd554cb185c1ac5ad0d045f5/ccmcms-jdf/10476574.jpg?auto=compress,format&q=80&h=100&dpr=2", "pièce principale", 5));
+            photoDao.insertPhoto(new Photo("https://www.expert-peinture.fr/wp-content/uploads/2015/09/5-conseils-pour-peindre-sa-fa%c3%a7ade-%c3%a0-la-perfection-.jpg?auto=compress,format&q=80&h=100&dpr=2", "façade", 5));
 
             photoDao.insertPhoto(new Photo("http://www.constructions-dantan.fr/docs/Entreprise/restauration/charpente_normandie.jpg?auto=compress,format&q=80&h=100&dpr=2", "façade", 6));
             photoDao.insertPhoto(new Photo("https://www.entre-hotes.com/images/chambres/insolite/chambre-7701.jpg?auto=compress,format&q=80&h=100&dpr=2", "chambre", 6));

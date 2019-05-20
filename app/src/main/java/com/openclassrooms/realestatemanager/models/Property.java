@@ -38,6 +38,10 @@ public class Property {
     private int soldOnDate;
     private int surface;
     private String mainPhoto;
+    private Boolean shop;
+    private Boolean school;
+    private Boolean museum;
+    private Boolean park;
 
     @Embedded
     private TypeOfProperty type;
@@ -56,7 +60,7 @@ public class Property {
 
     public Property() {}
 
-    public Property(int price, int rooms, int bedrooms, int bathroom, String description, int upForSaleDate, int soldOnDate, int surface, TypeOfProperty type, Address address, Agent agent, Status status, String mainPhoto) {
+    public Property(int price, int rooms, int bedrooms, int bathroom, String description, int upForSaleDate, int soldOnDate, int surface, Boolean shop, Boolean school, Boolean museum, Boolean park ,TypeOfProperty type, Address address, Agent agent, Status status, String mainPhoto) {
         this.price = price;
         this.rooms = rooms;
         this.bedrooms = bedrooms;
@@ -65,6 +69,10 @@ public class Property {
         this.upForSaleDate = upForSaleDate;
         this.soldOnDate = soldOnDate;
         this.surface = surface;
+        this.school = school;
+        this.shop = shop;
+        this.park = park;
+        this.museum = museum;
         this.type = type;
         this.address = address;
         this.agent = agent;
@@ -116,6 +124,10 @@ public class Property {
     public int getSurface() {
         return surface;
     }
+    public Boolean getShop() {return shop;}
+    public Boolean getSchool() {return school;}
+    public Boolean getPark() {return park;}
+    public Boolean getMuseum() {return museum;}
     public TypeOfProperty getType() {
         return type;
     }
@@ -172,6 +184,10 @@ public class Property {
     public void setSurface(int surface) {
         this.surface = surface;
     }
+    public void setShop(Boolean shop) { this.shop = shop;}
+    public void setSchool(Boolean school) { this.school = school;}
+    public void setMuseum(Boolean museum) { this.museum = museum;}
+    public void setPark(Boolean park) { this.park = park;}
     public void setType(TypeOfProperty type) {
         this.type = type;
     }

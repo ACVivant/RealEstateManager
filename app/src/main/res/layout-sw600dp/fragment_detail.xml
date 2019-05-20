@@ -80,7 +80,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView26" />
 
-        <EditText
+        <TextView
             android:id="@+id/editText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -89,7 +89,6 @@
             android:layout_marginEnd="16dp"
             android:ems="10"
             android:hint="@string/house_description"
-            android:inputType="textMultiLine"
             android:textSize="@dimen/default_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -330,7 +329,7 @@
             tools:text="@string/location_title" />
 
         <TextView
-            android:id="@+id/textView18"
+            android:id="@+id/textView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -349,7 +348,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/location_street"
         android:textSize="@dimen/default_text_size"
-        app:layout_constraintStart_toEndOf="@+id/textView18"
+        app:layout_constraintStart_toEndOf="@+id/textView12"
         app:layout_constraintTop_toBottomOf="@+id/textView11"
         tools:text="@string/location_street" />
 
@@ -360,7 +359,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/location_street2"
             android:textSize="@dimen/default_text_size"
-            app:layout_constraintStart_toStartOf="@+id/textView18"
+            app:layout_constraintStart_toStartOf="@+id/textView12"
             app:layout_constraintTop_toBottomOf="@+id/textView13"
             tools:text="@string/location_street2" />
 

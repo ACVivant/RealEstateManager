@@ -44,6 +44,8 @@ public class PropertyViewModel extends AndroidViewModel {
 
     private LiveData<List<Property>> allProperties;
     private LiveData<List<Address>>  allAddresses;
+    private LiveData<List<Photo>> allPhotos;
+    private LiveData<List<Photo>> allPhotosFromProperty;
 
     private Property currentProperty;
 
@@ -60,6 +62,7 @@ public class PropertyViewModel extends AndroidViewModel {
 
         allProperties = propertyRepository.getAllProperty();
         allAddresses = addressRepository.getAllAddresses();
+        allPhotos = photoRepository.getAllPhoto();
     }
 
     public void init(int propertyId) {
@@ -82,7 +85,6 @@ public class PropertyViewModel extends AndroidViewModel {
     }
 
     // For Address
-
     public void insertAddress(Address address) { addressRepository.insertAddress(address);}
     public void updateAddress(Address address) { addressRepository.updateAddress(address);}
     public void getAddressFromId(int addressId) { addressRepository.getAddressFromId(addressId);}
@@ -90,7 +92,6 @@ public class PropertyViewModel extends AndroidViewModel {
     public LiveData<List<Address>> getAllAddress() {return allAddresses;}
 
     // For Agent
-
     public void insertAgent(Agent agent) { agentRepository.insertAgent(agent);}
     public void updateAgent(Agent agent) { agentRepository.insertAgent(agent);}
     public Agent getAgentFromId(int agentId) {return agentRepository.getAgentFromId(agentId);}
@@ -109,6 +110,7 @@ public class PropertyViewModel extends AndroidViewModel {
     public void deletePhoto(Photo photo) { photoRepository.deletePhoto(photo);}
 
     public LiveData<List<Photo>> getPhotoFromProperty(int propertyId) {return photoRepository.getPhotoFromProperty(propertyId);}
+    public LiveData<List<Photo>> getAllPhotos() { return photoRepository.getAllPhoto();}
 
     // For Status
     public void insertStatus(Status status) {statusRepository.insertStatus(status);}
