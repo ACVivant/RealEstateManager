@@ -35,7 +35,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private static final float DEFAULT_ZOOM = 14f;
-    private static final String PLACE_ID = "id_of_place";
+    public static final String ID_PROPERTY = "property_selected";
     private static final String ID_FRAGMENT = "fragment_to_expose";
 
     //Variables
@@ -153,7 +153,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         int ref = (int) marker.getTag();
         Intent WVIntent = new Intent(MapActivity.this, MainActivity.class);
         //Id
-        WVIntent.putExtra(PLACE_ID, ref);
+        WVIntent.putExtra(ID_PROPERTY, ref);
         WVIntent.putExtra(ID_FRAGMENT, "2");
         startActivity(WVIntent);
     }

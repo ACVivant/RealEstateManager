@@ -126,8 +126,9 @@ ImageView mMapView;;*/
 
         Bundle bundle = getArguments();
         propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY);
-        propertyId = 2; // pour les tests
+        //propertyId = 2; // pour les tests
 
+        Log.d(TAG, "onCreateView: bundle " + propertyId);
         propertyViewModel = ViewModelProviders.of(this).get(PropertyViewModel.class);
         propertyViewModel.getAllProperty().observe(this, new Observer<List<Property>>() {
             @Override

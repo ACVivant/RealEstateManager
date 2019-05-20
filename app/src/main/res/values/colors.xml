@@ -8,5 +8,6 @@
     <color name="colorAccentLight">#ff5131</color>
 
     <color name="colorAccentLightTransparent">#4Dff5131</color>
+    <color name="colorMyWhite">#fff</color>
 
 </resources>

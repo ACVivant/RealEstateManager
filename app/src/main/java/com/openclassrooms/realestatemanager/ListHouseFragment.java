@@ -44,7 +44,8 @@ public class ListHouseFragment extends Fragment {
 
     private PropertyViewModel propertyViewModel;
 
-    public int propertySelected = 0;
+    private int propertyId = 0;
+    public int propertySaved = 0;
 
 
     View v;
@@ -58,12 +59,12 @@ public class ListHouseFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        v= inflater.inflate(R.layout.fragment_list_house, container, false);
+        Bundle bundle = getArguments();
+        propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY);
 
        //initDemoData();
 
         initRecyclerView();
-
-
         return v;
     }
 
@@ -72,7 +73,7 @@ public class ListHouseFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         //Si on a un état sauvegardé on met a jour l'élément par défaut
         if (savedInstanceState != null) {
-            propertySelected = savedInstanceState.getInt(ID_PROPERTY, 0);
+            propertySaved = savedInstanceState.getInt(ID_PROPERTY, 0);
         }
     }
 
@@ -82,11 +83,14 @@ public class ListHouseFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
 
-        ListRecyclerViewAdapter adapter = new ListRecyclerViewAdapter();
+        ListRecyclerViewAdapter adapter = new ListRecyclerViewAdapter(propertyId);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickedListener(new ListRecyclerViewAdapter.OnItemClickedListener() {
             @Override
             public void OnItemClicked(int position) {
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.putExtra(ID_PROPERTY, position+1);
+                startActivity(intent);
             }
         });
 

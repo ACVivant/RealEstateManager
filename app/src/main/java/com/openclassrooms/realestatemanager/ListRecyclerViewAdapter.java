@@ -46,12 +46,19 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
     private List<Agent> agents = new ArrayList<>();
     private PropertyViewModel propertyViewModel;
 
+    private int propertySelected;
+
+    public ListRecyclerViewAdapter(int propertySelected) {
+        this.propertySelected = propertySelected;
+    }
+
     @NonNull
     @Override
     public ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.d(TAG, "onCreateViewHolder: ListRecyclerViewAdapter");
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_house, parent, false);
         ListViewHolder holder = new ListViewHolder(itemView, mListener);
+        mContext = parent.getContext();
         return holder;
     }
 
@@ -65,8 +72,14 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
         holder.town.setText(currentProperty.getAddress().getTown());
         holder.price.setText(String.valueOf(currentProperty.getPrice()));
 
-            String uriPhoto = currentProperty.getMainPhoto();
-            Picasso.get().load(uriPhoto).into(holder.picture);
+        String uriPhoto = currentProperty.getMainPhoto();
+        Picasso.get().load(uriPhoto).into(holder.picture);
+
+        if (position == propertySelected-1) {
+           holder.itemBackground.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimaryLight));
+           holder.type.setTextColor(mContext.getResources().getColor(R.color.colorMyWhite));
+           holder.town.setTextColor(mContext.getResources().getColor(R.color.colorMyWhite));
+        }
     }
 
     @Override
@@ -107,6 +120,8 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
         TextView price;
         @BindView(R.id.list_recyclerview_item)
         LinearLayout itemContainer;
+        @BindView(R.id.list_recyclerview_background)
+        LinearLayout itemBackground;
 
         public int idHome;
 
