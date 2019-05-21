@@ -63,8 +63,8 @@ public class ListHouseFragment extends Fragment {
         // Inflate the layout for this fragment
        v= inflater.inflate(R.layout.fragment_list_house, container, false);
         Bundle bundle = getArguments();
-        propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY);
-        useTablet = bundle.getBoolean(MainActivity.USE_TABLET);
+        propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY, 0);
+        useTablet = bundle.getBoolean(MainActivity.USE_TABLET, false);
 
        //initDemoData();
 

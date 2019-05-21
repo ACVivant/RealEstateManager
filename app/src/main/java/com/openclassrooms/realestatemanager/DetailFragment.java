@@ -62,6 +62,7 @@ public class DetailFragment extends Fragment {
     TextView upForSaleDate;
     TextView soldOnDate;
     TextView description;
+    TextView type;
     TextView surface;
     TextView rooms;
     TextView bedrooms;
@@ -108,6 +109,7 @@ ImageView mMapView;;*/
         upForSaleDate = (TextView) v.findViewById(R.id.textView27);
         soldOnDate = (TextView) v.findViewById(R.id.textView28);
         description = (TextView) v.findViewById(R.id.editText);
+        type = (TextView) v.findViewById(R.id.textView22);
         surface = (TextView) v.findViewById(R.id.textView4);
         rooms = (TextView) v.findViewById(R.id.textView6);
         bedrooms = (TextView) v.findViewById(R.id.textView8);
@@ -126,7 +128,6 @@ ImageView mMapView;;*/
 
         Bundle bundle = getArguments();
         propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY,1);
-        //propertyId = 2; // pour les tests
 
         Log.d(TAG, "onCreateView: bundle " + propertyId);
         propertyViewModel = ViewModelProviders.of(this).get(PropertyViewModel.class);
@@ -140,7 +141,6 @@ ImageView mMapView;;*/
 
                 initStaticMap(currentAddress.getNumberInStreet(), currentAddress.getStreet(), currentAddress.getZipcode(), currentAddress.getTown(), currentAddress.getCountry(), key );
                 initTextData();
-
             }
         });
 
@@ -206,6 +206,7 @@ ImageView mMapView;;*/
         upForSaleDate.setText(Utils.convertStringToDate(String.valueOf(currentProperty.getUpForSaleDate())));
         soldOnDate.setText(Utils.convertStringToDate(String.valueOf(currentProperty.getSoldOnDate())));
         description.setText(String.valueOf(currentProperty.getDescription()));
+        type.setText(String.valueOf(currentProperty.getType().getTypeText()));
         surface.setText(String.valueOf(currentProperty.getSurface()));
         rooms.setText(String.valueOf(currentProperty.getRooms()));
         bedrooms.setText(String.valueOf(currentProperty.getBedrooms()));

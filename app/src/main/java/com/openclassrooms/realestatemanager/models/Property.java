@@ -28,7 +28,7 @@ import androidx.room.PrimaryKey;
 })
 public class Property {
     @PrimaryKey(autoGenerate = true)
-    private long propertyId;
+    private int propertyId;
     private int price;
     private  int rooms;
     private int bedrooms;
@@ -97,7 +97,7 @@ public class Property {
     }*/
 
     // --- GETTER ---
-    public long getPropertyId() {
+    public int getPropertyId() {
         return propertyId;
     }
     public int getPrice() {
@@ -157,7 +157,7 @@ public class Property {
     public String getMainPhoto() { return mainPhoto;}
 
     // --- SETTER ---
-    public void setPropertyId(long id) {
+    public void setPropertyId(int id) {
         this.propertyId = id;
     }
     public void setPrice(int price) {

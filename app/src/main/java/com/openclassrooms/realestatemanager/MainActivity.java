@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentToExposeFromMap = getIntent().getStringExtra(ID_FRAGMENT);
         Log.d(TAG, "onCreate: fragment_id " + fragmentToExposeFromMap);
         Log.d(TAG, "onCreate: homeToExpose " + homeToExpose);
+        Log.d(TAG, "onCreate: displayDetail " + displayDetail);
 
         if (fragmentToExposeFromMap == null) {
 
@@ -176,6 +177,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Bundle args = new Bundle();
         args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
         Log.d(TAG, "configureView: bundle " + homeToExpose);
+        fragment1.setArguments(args);
         fragment2.setArguments(args);
 
         Log.d(TAG, "configureView");
@@ -193,6 +195,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Configure view when called by mapActivity
     private void configureViewFromMapOrRecyclerView() {
         Log.d(TAG, "configureViewFromMapOrRecyclerView");
+        Bundle args = new Bundle();
+        args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
+        args.putBoolean(ListHouseFragment.DISPLAY_DETAIL, displayDetail);
+        Log.d(TAG, "configureView: bundle " + homeToExpose);
+        fragment1.setArguments(args);
+        fragment2.setArguments(args);
+
             if (findViewById(R.id.frame_layout_detail) == null) {
                 Log.d(TAG, "configureViewFromMapOrRecyclerView: mode telephone");
                 //fm.beginTransaction().hide(fragment1).commit();

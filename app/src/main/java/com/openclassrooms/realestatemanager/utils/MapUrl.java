@@ -37,8 +37,8 @@ public String extractSmallNameOfStreet(String input) { // Sinon GoogleMap est vr
 }
 
 public void createAddressUrlField(String number, String street, String zipcode, String town, String country) {
-    String allAdress = number + "," + extractSmallNameOfStreet(formatAddressFieldsForMap(street)) + ',' +zipcode + ',' + formatAddressFieldsForMap(town) + ',' + formatAddressFieldsForMap(country);
-    centerInfos = allAdress;
+    String allAddress = number + "," + extractSmallNameOfStreet(formatAddressFieldsForMap(street)) + ',' +zipcode + ',' + formatAddressFieldsForMap(town) + ',' + formatAddressFieldsForMap(country);
+    centerInfos = allAddress;
 }
 
 public String createUrl(String number, String street, String zipcode, String town, String country, String myKey) {
@@ -46,5 +46,10 @@ public String createUrl(String number, String street, String zipcode, String tow
     createAddressUrlField(number, street, zipcode, town, country);
     String url = base + size + sizeInfos + mapType + mapTypeInfos + marker + markerSize + markerSizeInfos + markerColor + markerColorInfos + centerInfos + language + lanquageInfos + key + keyInfos;
     return url;
+}
+
+public String createGeocoderUrl(String number, String street, String zipcode, String town, String country) {
+    String geocoderField = number + "+" + street + ",+" + zipcode + "+" + town + ",+" +country;
+    return  geocoderField;
 }
 }
