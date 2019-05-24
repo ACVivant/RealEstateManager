@@ -44,7 +44,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {
         if (modelClass.isAssignableFrom(PropertyViewModel.class)) {
-            return (T) new PropertyViewModel(propertyRepository, addressRepository, agentRepository, photoRepository, statusRepository, typeOfPropertyRepository, executor);
+            return (T) new PropertyViewModel(propertyRepository, agentRepository, photoRepository, statusRepository, typeOfPropertyRepository, executor);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

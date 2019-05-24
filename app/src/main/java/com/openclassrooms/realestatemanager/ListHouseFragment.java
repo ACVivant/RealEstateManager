@@ -70,7 +70,7 @@ public class ListHouseFragment extends Fragment {
         initRecyclerView();
         configureViewModel();
         getAllProperties();
-        getAllAddresses();
+        //getAllAddresses();
         getAllTypes();
 
         return v;
@@ -121,13 +121,13 @@ public class ListHouseFragment extends Fragment {
         this.adapter.setProperties(properties);
     }
 
-    private void getAllAddresses() {
+    /*private void getAllAddresses() {
         this.propertyViewModel.getAllAddress().observe(this, this::updateAddresses);
     }
 
     private void updateAddresses(List<Address> addresses){
         this.adapter.setAddresses(addresses);
-    }
+    }*/
 
     private void getAllTypes() {
         this.propertyViewModel.getAllTypes().observe(this, this::updateTypes);

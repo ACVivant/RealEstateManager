@@ -22,10 +22,6 @@ tools:showIn="navigation_view">
         android:id="@+id/menu_add"
         android:icon="@drawable/menu_add"
         android:title="@string/menu_add" />
-    <item
-        android:id="@+id/menu_update"
-        android:icon="@drawable/menu_update"
-        android:title="@string/menu_update" />
     </menu>
     </item>
 

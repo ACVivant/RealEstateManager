@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.openclassrooms.realestatemanager.injections.Injection;
+import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Address;
 import com.openclassrooms.realestatemanager.models.Agent;
 import com.openclassrooms.realestatemanager.models.Property;
@@ -153,6 +155,15 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     int intUpForSale;
     int intSoldOn;
 
+    String newPhotoUrl;
+
+    int agentId;
+    int statusId;
+    int addressId;
+    int typeId;
+
+    private Address myAddress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -190,7 +201,10 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         saveProperty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveProperty();
+                configureViewModel();
+                savePropertyData();
+                createProperty();
+                launchMainActivity();
             }
         });
 
@@ -209,9 +223,9 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         });
     }
 
-    private void saveProperty() {
-
+    private void savePropertyData() {
         newStatus = spinnerStatus.getSelectedItem().toString();
+        statusId = spinnerStatus.getSelectedItemPosition()+1;
 
         if(addressNumber.getText().toString().trim().isEmpty() ||
                 addressStreet.getText().toString().trim().isEmpty() ||
@@ -234,6 +248,7 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
             }
 
             newType = spinnerType.getSelectedItem().toString();
+            typeId = spinnerType.getSelectedItemPosition()+1;
 
             if (!surface.getText().toString().isEmpty()) {
                 newSurface = Integer.parseInt(surface.getText().toString());
@@ -278,6 +293,8 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
             if (!dateUpForSale.getText().toString().isEmpty()) {
                 newUpForSale = dateUpForSale.getText().toString();
                 intUpForSale = Utils.convertStringDateToIntDate(newUpForSale);
+                Log.d(TAG, "savePropertyData: enteredDate "+ newUpForSale);
+                Log.d(TAG, "savePropertyData: formattedDate " + intUpForSale);
             } else {
                 newUpForSale = "99/99/9999";
                 intUpForSale = Utils.convertStringDateToIntDate(newUpForSale);
@@ -292,31 +309,45 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
             }
 
             newAgent = spinnerAgent.getSelectedItem().toString();
+            agentId = spinnerAgent.getSelectedItemPosition()+1;
+            Log.d(TAG, "savePropertyData: agentId " +agentId);
 
             // En attendant de gérer les images
-            String newPhotoUrl = "https://www.wedemain.fr/photo/art/default/4860223-7252677.jpg?v=1351271929?auto=compress,format&q=80&h=100&dpr=2";
+            newPhotoUrl = "https://www.wedemain.fr/photo/art/default/4860223-7252677.jpg?v=1351271929?auto=compress,format&q=80&h=100&dpr=2";
 
-            propertyViewModel = ViewModelProviders.of(this).get(PropertyViewModel.class);
-
-            Address myAddress = new Address(newAddressNumber, newAddressStreet, newAddressStreet2, newZipcode, newTown, newCountry);
-            propertyViewModel.insertAddress(myAddress);
-/*            TypeOfProperty myType = propertyViewModel.getTypeOfPropertyFromName(newType);
-            Agent myAgent = propertyViewModel.getAgentFromName(newAgent);
-            Status myStatus = propertyViewModel.getStatusFromName(newStatus);
-
-            Property myProperty = new Property(newPrice, newRooms, newBedrooms, newBathrooms, newDescription, intUpForSale, intSoldOn, newSurface, nearShop, nearSchool, nearMuseum, nearPark, myType, myAddress, myAgent, myStatus,newPhotoUrl );
-            propertyViewModel.insertProperty(myProperty);*/
         }
+    }
+
+    private void createProperty(){
+        Log.d(TAG, "createProperty: statusId " +statusId);
+        Log.d(TAG, "createProperty: typeId " + typeId);
+        Log.d(TAG, "createProperty: agentId " +agentId);
+        Property myProperty = new Property(newPrice, newRooms, newBedrooms, newBathrooms, newDescription, intUpForSale, intSoldOn, newSurface, nearShop, nearSchool, nearMuseum, nearPark, typeId, agentId, statusId,newPhotoUrl,newAddressNumber, newAddressStreet, newAddressStreet2, newZipcode, newTown, newCountry );
+
+            propertyViewModel.insertProperty(myProperty);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
     }
+
+    private void configureViewModel(){
+        Log.d(TAG, "configureViewModel");
+        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
+        this.propertyViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PropertyViewModel.class);
+    }
+
+    private void launchMainActivity() {
+        Boolean displayDetail = false;
+        Intent intent = new Intent(CreateHomeActivity.this, MainActivity.class);
+        intent.putExtra(MapActivity.ID_FRAGMENT, "1");
+        intent.putExtra(ListHouseFragment.DISPLAY_DETAIL, displayDetail);
+        startActivity(intent);
+    }
+
+
 }

@@ -37,7 +37,7 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
     private OnItemClickedListener mListener;
 
     private List<Property> properties ;
-    private List<Address> addresses;
+    //private List<Address> addresses;
     private List<TypeOfProperty> types;
     private PropertyViewModel propertyViewModel;
     private  boolean useTablet;
@@ -47,7 +47,7 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
 
     public ListRecyclerViewAdapter(int propertySelected, boolean useTablet) {
         this.properties = new ArrayList<>();
-        this.addresses = new ArrayList<>();
+        //this.addresses = new ArrayList<>();
         this.types = new ArrayList<>();
         this.propertySelected = propertySelected;
         this.useTablet = useTablet;
@@ -68,12 +68,12 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
         Log.d(TAG, "onBindViewHolder: ListRecyclerViewAdapter Called.");
 
         Property currentProperty = properties.get(position);
-        Address currentAddress = addresses.get(currentProperty.getAddressId());
+        //Address currentAddress = addresses.get(currentProperty.getAddressId());
         TypeOfProperty currentType = types.get(currentProperty.getTypeId());
        // currentProperty.getTypeId();
 
         holder.type.setText(String.valueOf(currentType.getTypeText()));
-        holder.town.setText(String.valueOf(currentAddress.getTown()));
+        holder.town.setText(String.valueOf(currentProperty.getTown()));
         holder.price.setText(String.valueOf(currentProperty.getPrice()));
 
         String uriPhoto = currentProperty.getMainPhoto();
@@ -99,10 +99,10 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
         notifyDataSetChanged();
     }
 
-    public void setAddresses(List<Address> addresses) {
+/*    public void setAddresses(List<Address> addresses) {
         this.addresses = addresses;
         notifyDataSetChanged();
-    }
+    }*/
 
     public void setTypes(List<TypeOfProperty> types) {
         this.types = types;

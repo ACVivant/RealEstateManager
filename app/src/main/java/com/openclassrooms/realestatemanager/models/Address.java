@@ -13,7 +13,7 @@ import androidx.room.PrimaryKey;
 public class Address {
 
     @PrimaryKey(autoGenerate = true)
-    private long addressId;
+    private int addressId;
     private String numberInStreet;
     private String street;
     private String street2;
@@ -23,6 +23,14 @@ public class Address {
 
 
     public Address() {}
+
+    public Address(String numberInStreet, String street, String zipcode, String town, String country) {
+        this.numberInStreet = numberInStreet;
+        this.street = street;
+        this.zipcode = zipcode;
+        this.town = town;
+        this.country = country;
+    }
 
     public Address(String numberInStreet, String street, String street2, String zipcode, String town, String country) {
         this.numberInStreet = numberInStreet;
@@ -34,7 +42,7 @@ public class Address {
     }
 
     // --- GETTER ---
-    public long getAddressId() {
+    public int getAddressId() {
         return addressId;
     }
     public String getNumberInStreet() {
@@ -58,7 +66,7 @@ public class Address {
 
 
     // --- SETTER ---
-    public void setAddressId(long addressId) {
+    public void setAddressId(int addressId) {
         this.addressId = addressId;
     }
     public void setNumberInStreet(String numberInStreet) {

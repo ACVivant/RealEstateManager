@@ -58,6 +58,11 @@
     <string name="museum">"musées"</string>
     <string name="park">"parc"</string>
     <string name="localisation">"Localisation</string>
+    <string name="detail_update">" Mettre à jour "</string>
+    <string name="detail_before">" Précédent "</string>
+    <string name="detail_after">" Suivant "</string>
+    <string name="before_not_allowed">"Vous êtes déjà au début de la liste"</string>
+    <string name="after_not_allowed">"Vous êtes déjà à la fin de la liste"</string>
 
     <!-- Create layout-->
     <string name="set_location_number">"Numéro"</string>

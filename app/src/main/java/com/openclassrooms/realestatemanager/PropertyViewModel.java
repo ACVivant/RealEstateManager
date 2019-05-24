@@ -60,9 +60,9 @@ public class PropertyViewModel extends ViewModel {
     @Nullable
     private LiveData<List<TypeOfProperty>> allTypes;
 
-    public PropertyViewModel(PropertyRepository propertyRepository, AddressRepository addressRepository, AgentRepository agentRepository, PhotoRepository photoRepository, StatusRepository statusRepository, TypeOfPropertyRepository typeOfPropertyRepository, Executor executor) {
+    public PropertyViewModel(PropertyRepository propertyRepository, AgentRepository agentRepository, PhotoRepository photoRepository, StatusRepository statusRepository, TypeOfPropertyRepository typeOfPropertyRepository, Executor executor) {
         this.propertyRepository = propertyRepository;
-        this.addressRepository = addressRepository;
+        //this.addressRepository = addressRepository;
         this.agentRepository = agentRepository;
         //this.attractingPointRepository = attractingPointRepository;
         this.photoRepository = photoRepository;
@@ -78,12 +78,12 @@ public class PropertyViewModel extends ViewModel {
         currentProperty = propertyRepository.getPropertyFromId(propertyId);
     }
 
-    public void initAddressFromId(int addressId) {
+   /* public void initAddressFromId(int addressId) {
     if (this.currentAddress != null) {
         return;
     }
     currentAddress = addressRepository.getAddressFromId(addressId);
-    }
+    }*/
 
     public void initAgentFromId(int agentId) {
         if (this.currentAgent != null) {
@@ -146,7 +146,7 @@ public class PropertyViewModel extends ViewModel {
         });
     }
 
-    // For Address
+/*    // For Address
     public LiveData<List<Address>> getAllAddress() {return addressRepository.getAllAddresses();}
     // public LiveData<Address> getAddressFromId(int addressID){ return this.currentAddress; }
     public LiveData<Address> getAddressFromId(int addressId){ return addressRepository.getAddressFromId(addressId); }
@@ -161,7 +161,7 @@ public class PropertyViewModel extends ViewModel {
         executor.execute(() -> {
             addressRepository.updateAddress(address);
         });
-    }
+    }*/
 
     // For Agent
     //public LiveData<Agent> getAgentFromId(int agentId) {return this.currentAgent;}

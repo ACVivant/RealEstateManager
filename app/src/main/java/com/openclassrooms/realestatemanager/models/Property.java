@@ -19,9 +19,6 @@ import androidx.room.PrimaryKey;
         @ForeignKey(entity = Status.class,
         parentColumns = "statusId",
         childColumns = "statusId"),
-        @ForeignKey(entity = Address.class,
-        parentColumns = "addressId",
-        childColumns = "addressId"),
         @ForeignKey(entity = Agent.class,
         parentColumns = "agentId",
         childColumns = "agentId")
@@ -42,48 +39,20 @@ public class Property {
     private Boolean school;
     private Boolean museum;
     private Boolean park;
+    private String numberInStreet;
+    private String street;
+    private String street2;
+    private String zipcode;
+    private String town;
+    private String country;
 
-   /* @Embedded
-    private TypeOfProperty type;
-    @Embedded
-    private Address address;
-    @Embedded
-    private Agent agent;
-    @Embedded
-    private Status status;*/
-
-  // @Embedded
-    private int addressId;
-  //  @Embedded
     private int typeId;
-  //  @Embedded
     private int agentId;
- //   @Embedded
     private int statusId;
 
     public Property() {}
 
-/*    public Property(int price, int rooms, int bedrooms, int bathroom, String description, int upForSaleDate, int soldOnDate, int surface, Boolean shop, Boolean school, Boolean museum, Boolean park ,TypeOfProperty type, Address address, Agent agent, Status status, String mainPhoto) {
-        this.price = price;
-        this.rooms = rooms;
-        this.bedrooms = bedrooms;
-        this.bathroom = bathroom;
-        this.description = description;
-        this.upForSaleDate = upForSaleDate;
-        this.soldOnDate = soldOnDate;
-        this.surface = surface;
-        this.school = school;
-        this.shop = shop;
-        this.park = park;
-        this.museum = museum;
-        this.type = type;
-        this.address = address;
-        this.agent = agent;
-        this.status = status;
-        this.mainPhoto = mainPhoto;
-    }*/
-
-    public Property(int price, int rooms, int bedrooms, int bathroom, String description, int upForSaleDate, int soldOnDate, int surface, Boolean shop, Boolean school, Boolean museum, Boolean park ,int typeId, int addressId, int agentId, int statusId, String mainPhoto) {
+    public Property(int price, int rooms, int bedrooms, int bathroom, String description, int upForSaleDate, int soldOnDate, int surface, Boolean shop, Boolean school, Boolean museum, Boolean park ,int typeId, int agentId, int statusId, String mainPhoto, String numberInStreet, String street, String street2, String zipcode, String town, String country) {
         this.price = price;
         this.rooms = rooms;
         this.bedrooms = bedrooms;
@@ -97,10 +66,15 @@ public class Property {
         this.park = park;
         this.museum = museum;
         this.typeId = typeId;
-        this.addressId = addressId;
         this.agentId = agentId;
         this.statusId = statusId;
         this.mainPhoto = mainPhoto;
+        this.numberInStreet = numberInStreet;
+        this.street = street;
+        this.street2 = street2;
+        this.zipcode = zipcode;
+        this.town = town;
+        this.country = country;
     }
 
     // --- GETTER ---
@@ -135,24 +109,9 @@ public class Property {
     public Boolean getSchool() {return school;}
     public Boolean getPark() {return park;}
     public Boolean getMuseum() {return museum;}
-/*    public TypeOfProperty getType() {
-        return type;
-    }
-    public Address getAddress() {
-        return address;
-    }
-    public Agent getAgent() {
-        return agent;
-    }
-    public Status getStatus() {
-        return status;
-    }*/
 
     public int getTypeId() {
         return typeId;
-    }
-    public int getAddressId() {
-        return addressId;
     }
     public int getAgentId() {
         return agentId;
@@ -162,6 +121,13 @@ public class Property {
     }
 
     public String getMainPhoto() { return mainPhoto;}
+
+    public String getNumberInStreet() {return numberInStreet;}
+    public String getStreet() {return street;}
+    public String getStreet2() {return street2;}
+    public String getZipcode() {return zipcode;}
+    public String getTown() {return town;}
+    public String getCountry() {return country;}
 
     // --- SETTER ---
     public void setPropertyId(int id) {
@@ -195,25 +161,10 @@ public class Property {
     public void setSchool(Boolean school) { this.school = school;}
     public void setMuseum(Boolean museum) { this.museum = museum;}
     public void setPark(Boolean park) { this.park = park;}
-/*    public void setType(TypeOfProperty type) {
-        this.type = type;
-    }
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-    public void setAgent(Agent agent) {
-        this.agent = agent;
-    }
-    public void setStatus(Status status) {
-        this.status = status;
-    }*/
 
     public void setTypeId(int type) {
     this.typeId = type;
 }
-    public void setAddressId(int addressId) {
-        this.addressId = addressId;
-    }
     public void setAgentId(int agent) {
         this.agentId = agent;
     }
@@ -222,5 +173,12 @@ public class Property {
     }
 
     public void setMainPhoto(String mainPhoto) {this.mainPhoto = mainPhoto;}
+
+    public void setNumberInStreet(String numberInStreet) {this.numberInStreet = numberInStreet;}
+    public void setStreet(String street) {this.street = street;}
+    public void setStreet2(String street2) {this.street2 = street2;}
+    public void setZipcode(String zipcode) {this.zipcode = zipcode;}
+    public void setTown(String town) {this.town = town;}
+    public void setCountry(String country) {this.country = country;}
 
 }

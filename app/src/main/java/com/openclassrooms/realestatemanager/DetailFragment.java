@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -15,9 +16,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
@@ -73,6 +76,9 @@ public class DetailFragment extends Fragment {
     TextView town;
     TextView country;
     TextView price;
+    Button update;
+    Button before;
+    Button after;
 
     /* @BindView(R.id.map-detail)
 ImageView mMapView;;*/
@@ -82,7 +88,7 @@ ImageView mMapView;;*/
     private List<Photo> currentPhotos;
     private PropertyViewModel propertyViewModel;
     private Property currentProperty;
-    private Address currentAddress;
+    //private Address currentAddress;
     private TypeOfProperty currentType;
     private Status currentStatus;
     private Agent currentAgent;
@@ -90,6 +96,7 @@ ImageView mMapView;;*/
     private int statusId;
     private int typeId;
     private int agentId;
+    private int numberOfProperties;
 
     private String key;
 
@@ -132,12 +139,48 @@ ImageView mMapView;;*/
         town = (TextView) v.findViewById(R.id.textView16);
         country = (TextView) v.findViewById(R.id.textView17);
         price = (TextView) v.findViewById(R.id.textView21);
+        update = (Button) v.findViewById(R.id.update_detail_btn);
+        before = (Button) v.findViewById(R.id.before_detail_btn);
+        after = (Button) v.findViewById(R.id.after_detail_btn);
+
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchUpdateActivity();
+            }
+        });
+
+        before.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (propertyId==1){
+                    Toast.makeText(getContext(), R.string.before_not_allowed, Toast.LENGTH_LONG).show();
+                } else {
+                    launchDetailFragment(propertyId - 1);
+                }
+            }
+        });
+
+        after.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: propertyId " + propertyId);
+                Log.d(TAG, "onClick: properties.size " +numberOfProperties);
+                if (propertyId==numberOfProperties) {
+                    Toast.makeText(getContext(), R.string.after_not_allowed, Toast.LENGTH_LONG).show();
+                } else {
+                    launchDetailFragment(propertyId + 1);
+                }
+
+            }
+        });
 
         Bundle bundle = getArguments();
         propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY,1);
         Log.d(TAG, "onCreateView: propertyId " + propertyId);
 
         configureViewModel();
+        this.getAllProperties();
         this.getProperty(propertyId);
 
         return v;
@@ -146,7 +189,6 @@ ImageView mMapView;;*/
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
     }
 
 
@@ -179,7 +221,12 @@ ImageView mMapView;;*/
     private void updateProperty(Property property) {
         currentProperty = property;
         upForSaleDate.setText(Utils.convertStringToDate(String.valueOf(currentProperty.getUpForSaleDate())));
-        soldOnDate.setText(Utils.convertStringToDate(String.valueOf(currentProperty.getSoldOnDate())));
+        String soldOnDateText = Utils.convertStringToDate(String.valueOf(currentProperty.getSoldOnDate()));
+        if (soldOnDateText.equals("99/99/9999")) {
+            soldOnDate.setText("N/A");
+        }else{
+        soldOnDate.setText(soldOnDateText);
+        }
         description.setText(String.valueOf(currentProperty.getDescription()));
         surface.setText(String.valueOf(currentProperty.getSurface()));
         rooms.setText(String.valueOf(currentProperty.getRooms()));
@@ -192,13 +239,14 @@ ImageView mMapView;;*/
         price.setText(String.valueOf(currentProperty.getPrice()));
 
         agentId = currentProperty.getAgentId();
-        addressId = currentProperty.getAddressId();
+       // addressId = currentProperty.getAddressId();
         typeId = currentProperty.getTypeId();
         statusId = currentProperty.getStatusId();
 
         Log.d(TAG, "updateProperty: id " +propertyId + " " +addressId+ " " +typeId+ " " + statusId);
 
-        this.getAddress(addressId);
+       //this.getAddress(addressId);
+        setAddress();
         this.getStatus(statusId);
         this.getType(typeId);
 
@@ -206,26 +254,17 @@ ImageView mMapView;;*/
         this.getAllPhotosFromProperty(propertyId);
     }
 
-
-    private void getAddress(int id) {
-        this.propertyViewModel.getAddressFromId(id).observe(this, this::updateAddress);
-    }
-
-    private void updateAddress(Address address){
-        Log.d(TAG, "updateAddress: addressId " +addressId);
-        currentAddress = address;
-        Log.d(TAG, "updateAddress: number " + currentAddress.getNumberInStreet());
-        numberInStreet.setText(String.valueOf(currentAddress.getNumberInStreet()));
-        street.setText(String.valueOf(currentAddress.getStreet()));
-        if (currentAddress.getStreet2()!=null){
-        street2.setText(String.valueOf(currentAddress.getStreet2()));
+    private void setAddress(){
+        numberInStreet.setText(String.valueOf(currentProperty.getNumberInStreet()));
+        street.setText(String.valueOf(currentProperty.getStreet()));
+        if (currentProperty.getStreet2()!=null){
+            street2.setText(String.valueOf(currentProperty.getStreet2()));
         } else {street2.setVisibility(View.GONE);}
-        zipcode.setText(String.valueOf(currentAddress.getZipcode()));
-        town.setText(String.valueOf(currentAddress.getTown()));
-        country.setText(String.valueOf(currentAddress.getCountry()));
+        zipcode.setText(String.valueOf(currentProperty.getZipcode()));
+        town.setText(String.valueOf(currentProperty.getTown()));
+        country.setText(String.valueOf(currentProperty.getCountry()));
 
-        initStaticMap(currentAddress.getNumberInStreet(), currentAddress.getStreet(), currentAddress.getZipcode(), currentAddress.getTown(), currentAddress.getCountry(), key );
-
+        initStaticMap(currentProperty.getNumberInStreet(), currentProperty.getStreet(), currentProperty.getZipcode(), currentProperty.getTown(), currentProperty.getCountry(), key );
     }
 
     private void getType(int id) {
@@ -265,5 +304,29 @@ ImageView mMapView;;*/
     private void updatePhotoList(List<Photo> photos){
         currentPhotos = photos;
         this.adapter.setPhotos(photos);
+    }
+
+    private void getAllProperties(){
+        this.propertyViewModel.getAllProperty().observe(this, this::updatePropertyList);
+    }
+
+    private void updatePropertyList(List<Property> properties){
+        numberOfProperties = properties.size();
+    }
+
+    //-----------------------------------------------------------------------------------
+
+    private void launchUpdateActivity() {
+        Intent intent = new Intent(this.getActivity(), UpdateActivity.class);
+        startActivity(intent);
+    }
+
+    private void launchDetailFragment(int id) {
+        Boolean displayDetail = true;
+
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.putExtra(ListHouseFragment.ID_PROPERTY, id);
+        intent.putExtra(ListHouseFragment.DISPLAY_DETAIL, displayDetail);
+        startActivity(intent);
     }
 }

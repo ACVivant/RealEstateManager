@@ -166,71 +166,6 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesType4.put("typeText", "Château" );
                 db.insert("type_of_property", OnConflictStrategy.REPLACE, contentValuesType4);
 
-                ContentValues contentValuesAddress = new ContentValues();
-                contentValuesAddress.put("numberInStreet", "6");
-                contentValuesAddress.put("street", "rue Alexandre Dumas");
-                contentValuesAddress.put("street2", "Appt 5");
-                contentValuesAddress.put("zipcode", "60800");
-                contentValuesAddress.put("town", "Crépy-en-Valois");
-                contentValuesAddress.put("country", "France");
-                db.insert("address", OnConflictStrategy.REPLACE, contentValuesAddress);
-
-                ContentValues contentValuesAddress1 = new ContentValues();
-                contentValuesAddress1.put("numberInStreet", "10");
-                contentValuesAddress1.put("street", "rue de Soissons");
-                contentValuesAddress1.put("zipcode", "60800");
-                contentValuesAddress1.put("town", "Crépy-en-Valois");
-                contentValuesAddress1.put("country", "France");
-                db.insert("address", OnConflictStrategy.REPLACE, contentValuesAddress1);
-
-                ContentValues contentValuesAddress2 = new ContentValues();
-                contentValuesAddress2.put("numberInStreet", "12");
-                contentValuesAddress2.put("street", "rue Charles de Gaulle");
-                contentValuesAddress2.put("zipcode", "60800");
-                contentValuesAddress2.put("town", "Crépy-en-Valois");
-                contentValuesAddress2.put("country", "France");
-                db.insert("address", OnConflictStrategy.REPLACE, contentValuesAddress2);
-
-                ContentValues contentValuesAddress3 = new ContentValues();
-                contentValuesAddress3.put("numberInStreet", "5");
-                contentValuesAddress3.put("street", "rue Saint Denis");
-                contentValuesAddress3.put("zipcode", "60800");
-                contentValuesAddress3.put("town", "Crépy-en-Valois");
-                contentValuesAddress3.put("country", "France");
-                db.insert("address", OnConflictStrategy.REPLACE, contentValuesAddress3);
-
-                ContentValues contentValuesAddress4 = new ContentValues();
-                contentValuesAddress4.put("numberInStreet", "13");
-                contentValuesAddress4.put("street", "rue Saint Denis");
-                contentValuesAddress4.put("zipcode", "60800");
-                contentValuesAddress4.put("town", "Crépy-en-Valois");
-                contentValuesAddress4.put("country", "France");
-                db.insert("address", OnConflictStrategy.REPLACE, contentValuesAddress4);
-
-                ContentValues contentValuesAddress5 = new ContentValues();
-                contentValuesAddress5.put("numberInStreet", "13");
-                contentValuesAddress5.put("street", "rue de Vez");
-                contentValuesAddress5.put("zipcode", "60800");
-                contentValuesAddress5.put("town", "Crépy-en-Valois");
-                contentValuesAddress5.put("country", "France");
-                db.insert("address", OnConflictStrategy.REPLACE, contentValuesAddress5);
-
-                ContentValues contentValuesAddress6 = new ContentValues();
-                contentValuesAddress6.put("numberInStreet", "19");
-                contentValuesAddress6.put("street", "rue de Vez");
-                contentValuesAddress6.put("zipcode", "60800");
-                contentValuesAddress6.put("town", "Crépy-en-Valois");
-                contentValuesAddress6.put("country", "France");
-                db.insert("address", OnConflictStrategy.REPLACE, contentValuesAddress6);
-
-                ContentValues contentValuesAddress7 = new ContentValues();
-                contentValuesAddress7.put("numberInStreet", "4");
-                contentValuesAddress7.put("street", "rue de Soissons");
-                contentValuesAddress7.put("zipcode", "60800");
-                contentValuesAddress7.put("town", "Crépy-en-Valois");
-                contentValuesAddress7.put("country", "France");
-                db.insert("address", OnConflictStrategy.REPLACE, contentValuesAddress7);
-
                 ContentValues contentValuesProperty = new ContentValues();
                 contentValuesProperty.put("price", 450000);
                 contentValuesProperty.put("rooms", 3);
@@ -245,10 +180,15 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesProperty.put("museum", true);
                 contentValuesProperty.put("park", true);
                 contentValuesProperty.put("typeId", 1);
-                contentValuesProperty.put("addressId", 1);
                 contentValuesProperty.put("agentId", 1);
                 contentValuesProperty.put("statusId", 4);
                 contentValuesProperty.put("mainPhoto", "https://www.parklex.com/wp-content/uploads/2015/11/WoodviewMews-GeraghtyTaylorArchitects-London-UK-2015-Parklex-Facade-Gold-02.jpg?auto=compress,format&q=80&h=100&dpr=2");
+                contentValuesProperty.put("numberInStreet", "6");
+                contentValuesProperty.put("street", "rue Alexandre Dumas");
+                contentValuesProperty.put("street2", "Appt 5");
+                contentValuesProperty.put("zipcode", "60800");
+                contentValuesProperty.put("town", "Crépy-en-Valois");
+                contentValuesProperty.put("country", "France");
                 db.insert("property", OnConflictStrategy.REPLACE, contentValuesProperty);
 
                 ContentValues contentValuesProperty1 = new ContentValues();
@@ -265,10 +205,14 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesProperty1.put("museum", true);
                 contentValuesProperty1.put("park", false);
                 contentValuesProperty1.put("typeId", 2);
-                contentValuesProperty1.put("addressId", 2);
                 contentValuesProperty1.put("agentId", 1);
                 contentValuesProperty1.put("statusId", 2);
                 contentValuesProperty1.put("mainPhoto", "http://espace-facades.fr/wp-content/uploads/sites/8/2018/09/ravalement-facade-maison-blagnac-avant.jpg?auto=compress,format&q=80&h=100&dpr=2");
+                contentValuesProperty1.put("numberInStreet", "10");
+                contentValuesProperty1.put("street", "rue de Soissons");
+                contentValuesProperty1.put("zipcode", "60800");
+                contentValuesProperty1.put("town", "Crépy-en-Valois");
+                contentValuesProperty1.put("country", "France");
                 db.insert("property", OnConflictStrategy.REPLACE, contentValuesProperty1);
 
                 ContentValues contentValuesProperty2 = new ContentValues();
@@ -285,10 +229,14 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesProperty2.put("museum", true);
                 contentValuesProperty2.put("park", true);
                 contentValuesProperty2.put("typeId", 1);
-                contentValuesProperty2.put("addressId", 3);
                 contentValuesProperty2.put("agentId", 1);
                 contentValuesProperty2.put("statusId", 2);
                 contentValuesProperty2.put("mainPhoto", "https://upload.wikimedia.org/wikipedia/commons/3/3c/Fa%C3%A7ade_de_l%27immeuble_sis_au_57_rue_de_Bruxelles.JPG?auto=compress,format&q=80&h=100&dpr=2");
+                contentValuesProperty2.put("numberInStreet", "12");
+                contentValuesProperty2.put("street", "rue Charles de Gaulle");
+                contentValuesProperty2.put("zipcode", "60800");
+                contentValuesProperty2.put("town", "Crépy-en-Valois");
+                contentValuesProperty2.put("country", "France");
                 db.insert("property", OnConflictStrategy.REPLACE, contentValuesProperty2);
 
                 ContentValues contentValuesProperty3 = new ContentValues();
@@ -305,10 +253,14 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesProperty3.put("museum", false);
                 contentValuesProperty3.put("park", true);
                 contentValuesProperty3.put("typeId", 4);
-                contentValuesProperty3.put("addressId", 4);
                 contentValuesProperty3.put("agentId", 1);
                 contentValuesProperty3.put("statusId", 2);
                 contentValuesProperty3.put("mainPhoto", "https://images.musement.com/cover/0001/19/palace-of-versailles-skip-the-line-tickets-guided-visit-with-fountain-show-and-musical-gardens-by-train_header-18993.jpeg?auto=compress,format&q=80&h=100&dpr=2");
+                contentValuesProperty3.put("numberInStreet", "5");
+                contentValuesProperty3.put("street", "rue Saint Denis");
+                contentValuesProperty3.put("zipcode", "60800");
+                contentValuesProperty3.put("town", "Crépy-en-Valois");
+                contentValuesProperty3.put("country", "France");
                 db.insert("property", OnConflictStrategy.REPLACE, contentValuesProperty3);
 
                 ContentValues contentValuesProperty4 = new ContentValues();
@@ -325,10 +277,14 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesProperty4.put("museum", false);
                 contentValuesProperty4.put("park", false);
                 contentValuesProperty4.put("typeId", 1);
-                contentValuesProperty4.put("addressId", 5);
                 contentValuesProperty4.put("agentId", 1);
                 contentValuesProperty4.put("statusId", 2);
                 contentValuesProperty4.put("mainPhoto", "https://www.expert-peinture.fr/wp-content/uploads/2015/09/5-conseils-pour-peindre-sa-fa%c3%a7ade-%c3%a0-la-perfection-.jpg?auto=compress,format&q=80&h=100&dpr=2");
+                contentValuesProperty4.put("numberInStreet", "13");
+                contentValuesProperty4.put("street", "rue Saint Denis");
+                contentValuesProperty4.put("zipcode", "60800");
+                contentValuesProperty4.put("town", "Crépy-en-Valois");
+                contentValuesProperty4.put("country", "France");
                 db.insert("property", OnConflictStrategy.REPLACE, contentValuesProperty4);
 
                 ContentValues contentValuesProperty5 = new ContentValues();
@@ -345,10 +301,14 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesProperty5.put("museum", false);
                 contentValuesProperty5.put("park", false);
                 contentValuesProperty5.put("typeId", 1);
-                contentValuesProperty5.put("addressId", 6);
                 contentValuesProperty5.put("agentId", 1);
                 contentValuesProperty5.put("statusId", 2);
                 contentValuesProperty5.put("mainPhoto", "http://www.constructions-dantan.fr/docs/Entreprise/restauration/charpente_normandie.jpg?auto=compress,format&q=80&h=100&dpr=2");
+                contentValuesProperty5.put("numberInStreet", "13");
+                contentValuesProperty5.put("street", "rue de Vez");
+                contentValuesProperty5.put("zipcode", "60800");
+                contentValuesProperty5.put("town", "Crépy-en-Valois");
+                contentValuesProperty5.put("country", "France");
                 db.insert("property", OnConflictStrategy.REPLACE, contentValuesProperty5);
 
                 ContentValues contentValuesProperty6 = new ContentValues();
@@ -365,10 +325,14 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesProperty6.put("museum", false);
                 contentValuesProperty6.put("park", false);
                 contentValuesProperty6.put("typeId", 2);
-                contentValuesProperty6.put("addressId", 7);
                 contentValuesProperty6.put("agentId", 1);
                 contentValuesProperty6.put("statusId", 2);
                 contentValuesProperty6.put("mainPhoto", "https://inhabitat.com/wp-content/blogs.dir/1/files/2016/01/Bergeron-Centre-for-Engineering-Excellence-by-ZAS-Architects-3.jpg?auto=compress,format&q=80&h=100&dpr=2");
+                contentValuesProperty6.put("numberInStreet", "19");
+                contentValuesProperty6.put("street", "rue de Vez");
+                contentValuesProperty6.put("zipcode", "60800");
+                contentValuesProperty6.put("town", "Crépy-en-Valois");
+                contentValuesProperty6.put("country", "France");
                 db.insert("property", OnConflictStrategy.REPLACE, contentValuesProperty6);
 
                 ContentValues contentValuesPhoto = new ContentValues();

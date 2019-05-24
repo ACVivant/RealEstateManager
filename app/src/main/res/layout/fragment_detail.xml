@@ -532,5 +532,51 @@
     android:id="@+id/map_detail"
     android:src="@drawable/menu"/>
 
+        <Button
+            android:id="@+id/before_detail_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/default_margin"
+            android:layout_marginVertical="@dimen/default_large_margin"
+            android:paddingHorizontal="@dimen/default_margin"
+            app:layout_constraintTop_toBottomOf="@+id/map_detail"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/detail_before"
+            android:padding="@dimen/default_mini_margin"
+            android:background="@color/colorAccentLight"
+            android:textColor="@android:color/white"
+            />
+
+        <Button
+            android:id="@+id/update_detail_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/default_margin"
+            android:layout_marginVertical="@dimen/default_large_margin"
+            android:paddingHorizontal="@dimen/default_margin"
+            app:layout_constraintTop_toBottomOf="@+id/map_detail"
+            app:layout_constraintStart_toEndOf="@+id/before_detail_btn"
+            app:layout_constraintEnd_toStartOf="@+id/after_detail_btn"
+            android:text="@string/detail_update"
+            android:padding="@dimen/default_mini_margin"
+            android:background="@color/colorPrimaryLight"
+            android:textColor="@android:color/white"
+            />
+
+        <Button
+            android:id="@+id/after_detail_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/default_margin"
+            android:layout_marginVertical="@dimen/default_large_margin"
+            android:paddingHorizontal="@dimen/default_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/map_detail"
+            android:text="@string/detail_after"
+            android:padding="@dimen/default_mini_margin"
+            android:background="@color/colorAccentLight"
+            android:textColor="@android:color/white"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

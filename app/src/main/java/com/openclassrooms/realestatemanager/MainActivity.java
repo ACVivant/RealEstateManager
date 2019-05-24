@@ -278,10 +278,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 launchCreate();
                 return true;
 
-            case R.id.menu_update:
-                launchUpdate();
-                return true;
-
             case R.id.menu_search:
                 launchSearch();
                 return true;
@@ -302,10 +298,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.top_menu_add:
                 launchCreate();
-                return true;
-
-            case R.id.top_menu_update:
-                launchUpdate();
                 return true;
 
             case R.id.top_menu_search:

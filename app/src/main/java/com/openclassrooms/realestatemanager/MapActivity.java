@@ -55,7 +55,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private static final float DEFAULT_ZOOM = 14f;
     public static final String ID_PROPERTY = "property_selected";
-    private static final String ID_FRAGMENT = "fragment_to_expose";
+    public static final String ID_FRAGMENT = "fragment_to_expose";
 
     //Variables
     private boolean mLocationPermissionGranted = false;
@@ -219,17 +219,34 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             currentPropertyId = currentProperty.getPropertyId();
             Log.d(TAG, "updatePropertyList: currentPropertyId " + currentPropertyId);
 
+            tab_latitude[i] = setPropertyLatLng(new Address(currentProperty.getNumberInStreet(), currentProperty.getStreet(), currentProperty.getStreet2(), currentProperty.getZipcode(), currentProperty.getTown(), currentProperty.getCountry())).latitude;
+            tab_longitude[i] = setPropertyLatLng(new Address(currentProperty.getNumberInStreet(), currentProperty.getStreet(), currentProperty.getStreet2(), currentProperty.getZipcode(), currentProperty.getTown(), currentProperty.getCountry())).longitude;
+
             // Comment faire pour que la boucle attende les résultats de getType et getAddress avant de boucler?
             getType(currentProperty.getTypeId());
             tab_type[i]=currentTypeText;
 
-            getAddress(currentProperty.getAddressId());
+/*            getAddress(currentProperty.getAddressId());
             tab_latitude[i]=currentLat;
-            tab_longitude[i]=currentLng;
+            tab_longitude[i]=currentLng;*/
         }
     }
 
-    private void getAddress(int id) {
+    public LatLng setPropertyLatLng(Address address) {
+        try {
+            currentLat = geocoder(address).latitude;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            currentLng = geocoder(address).longitude;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new LatLng(currentLat, currentLng);
+    }
+
+   /* private void getAddress(int id) {
         this.propertyViewModel.getAddressFromId(id).observe(this, this::updateAddress);
     }
 
@@ -247,7 +264,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
 
         Log.d(TAG, "updateAddress: addressIndex " + addressIndex);
-    }
+    }*/
 
     private void getType(int id) {
         Log.d(TAG, "getType");
@@ -266,13 +283,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void addAlMarkers() {
         Log.d(TAG, "addAllMarkers");
 
-        // commenté en attendant une bonne sychronisation
-        /*for (int i=0; i< tab_latitude.length; i++) {
-            addMarkers(new LatLng(tab_latitude[i], tab_longitude[i]), tab_type[i], tab_price[i], devise, tab_id[i]);
-        }*/
-
-        addMarker(new LatLng(49.235, 2.899), "maison", tab_price[1], devise, tab_id[1]);
-        addMarker(new LatLng(49.23, 2.899), "loft", tab_price[0], devise, tab_id[0]);
+        // le type n'est pas le bon à cause du pb de synchronisation
+        for (int i=0; i< tab_latitude.length; i++) {
+            addMarker(new LatLng(tab_latitude[i], tab_longitude[i]), tab_type[i], tab_price[i], devise, tab_id[i]);
+        }
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
