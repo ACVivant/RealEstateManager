@@ -30,6 +30,29 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/default_margin"
+            android:paddingEnd="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:text="@string/create_status"
+                android:textSize="@dimen/default_text_size"/>
+
+            <Spinner
+                android:id="@+id/create_spinner_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:textSize="@dimen/default_text_size" />
+        </LinearLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="50"
                 android:text="@string/search_type_ask"
-                android:textSize="@dimen/default_text_size"/>
+                android:textSize="@dimen/default_text_size" />
 
             <Spinner
                 android:id="@+id/create_spinner_type"
@@ -489,14 +512,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="50"
                 android:text="@string/agent_in_charge"
-                android:textSize="@dimen/default_text_size" />
+                android:textSize="@dimen/default_text_size"/>
 
-            <EditText
-                android:id="@+id/create_insert_mandatory"
+            <Spinner
+                android:id="@+id/create_spinner_agent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="50"
-                android:hint="@string/agent_example"
                 android:textSize="@dimen/default_text_size" />
         </LinearLayout>
 

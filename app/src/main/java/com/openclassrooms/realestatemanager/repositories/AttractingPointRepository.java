@@ -1,11 +1,7 @@
 package com.openclassrooms.realestatemanager.repositories;
 
-import android.app.Application;
-import android.os.AsyncTask;
-
-import com.openclassrooms.realestatemanager.database.RealEstateDatabase;
-import com.openclassrooms.realestatemanager.database.dao.AttractingPointDao;
-import com.openclassrooms.realestatemanager.models.AttractingPoint;
+import com.openclassrooms.realestatemanager.nesertplusariennormalement.AttractingPointDao;
+import com.openclassrooms.realestatemanager.nesertplusariennormalement.AttractingPoint;
 
 /**
  * Created by Anne-Charlotte Vivant on 13/05/2019.
@@ -14,7 +10,14 @@ import com.openclassrooms.realestatemanager.models.AttractingPoint;
 public class AttractingPointRepository {
     private AttractingPointDao attractingPointDao;
 
-    public AttractingPointRepository(Application application) {
+    public AttractingPointRepository(AttractingPointDao attractingPointDao) {this.attractingPointDao = attractingPointDao;}
+
+    public void insertAttractingPoint(AttractingPoint attractingPoint) {attractingPointDao.insertAttractingPoint(attractingPoint);}
+
+    public void updateAttractingPoint(AttractingPoint attractingPoint) {attractingPointDao.updateAttractingPoint(attractingPoint);}
+
+
+    /*public AttractingPointRepository(Application application) {
         RealEstateDatabase database = RealEstateDatabase.getInstance(application);
         attractingPointDao = database.attractingPointDao();
     }
@@ -53,5 +56,5 @@ public class AttractingPointRepository {
             attractingPointDao.updateAttractingPoint(attractingPoints[0]);
             return null;
         }
-    }
+    }*/
 }

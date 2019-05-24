@@ -16,7 +16,25 @@ import androidx.lifecycle.LiveData;
  */
 public class PhotoRepository {
     private PhotoDao photoDao;
-    private LiveData<List<Photo>> allPhoto;
+
+    public PhotoRepository(PhotoDao photoDao) {this.photoDao = photoDao;}
+
+    public void insertPhoto(Photo photo) {photoDao.insertPhoto(photo);}
+
+    public void updatePhoto(Photo photo) {photoDao.updatePhoto(photo);}
+
+    public void deletePhoto(Photo photo) {photoDao.deletePhoto(photo);}
+
+    // --- GET ---
+
+    public LiveData<List<Photo>> getPhotoFromPropertyId(int propertyId) { return this.photoDao.getPhotoFromProperty(propertyId);}
+
+    public LiveData<List<Photo>> getAllPhoto() {
+        return this.photoDao.getAllPhoto();
+    }
+
+
+  /*  private LiveData<List<Photo>> allPhoto;
     private LiveData<List<Photo>> allPhotoFromProperty;
 
     public PhotoRepository(Application application, int idProperty) {
@@ -90,7 +108,5 @@ public class PhotoRepository {
             photoDao.deletePhoto(photos[0]);
             return null;
         }
-    }
-
-
+    }*/
 }

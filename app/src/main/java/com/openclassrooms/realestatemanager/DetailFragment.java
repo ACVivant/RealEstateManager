@@ -21,9 +21,14 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
+import com.openclassrooms.realestatemanager.injections.Injection;
+import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Address;
+import com.openclassrooms.realestatemanager.models.Agent;
 import com.openclassrooms.realestatemanager.models.Photo;
 import com.openclassrooms.realestatemanager.models.Property;
+import com.openclassrooms.realestatemanager.models.Status;
+import com.openclassrooms.realestatemanager.models.TypeOfProperty;
 import com.openclassrooms.realestatemanager.utils.MapUrl;
 import com.openclassrooms.realestatemanager.utils.Utils;
 import com.squareup.picasso.Picasso;
@@ -43,22 +48,12 @@ public class DetailFragment extends Fragment {
     private static final String TAG = "DetailFragment";
     private static final float DEFAULT_ZOOM = 13f;
 
-    // Demo data
-    private ArrayList<String> photoUrlList = new ArrayList<>();
-    private ArrayList<String> textList = new ArrayList<>();
-/*    String number = "6";
-    String street = "Alexandre Dumas";
-    String zipcode = "60800";
-    String town = "Crépy-en-Valois";
-    String country = "France";*/
-
     // Real data
     private int propertyId = 0;
 
     private View v;
-    //private GoogleMap mMap;
-    private Marker myHomeMarker;
 
+    TextView status;
     TextView upForSaleDate;
     TextView soldOnDate;
     TextView description;
@@ -83,14 +78,22 @@ public class DetailFragment extends Fragment {
 ImageView mMapView;;*/
     private ImageView mMap;
 
-    private List<Property> properties = new ArrayList<>();
+    private List<Property> properties;
+    private List<Photo> currentPhotos;
     private PropertyViewModel propertyViewModel;
     private Property currentProperty;
     private Address currentAddress;
-
-    private List<Photo> photos = new ArrayList<>();
+    private TypeOfProperty currentType;
+    private Status currentStatus;
+    private Agent currentAgent;
+    private int addressId;
+    private int statusId;
+    private int typeId;
+    private int agentId;
 
     private String key;
+
+    private PhotoRecyclerViewAdapter adapter;
 
     public DetailFragment() {
         // Required empty public constructor
@@ -106,6 +109,10 @@ ImageView mMapView;;*/
         mMap = (ImageView) v.findViewById(R.id.map_detail);
         //ButterKnife.bind(v); // Ca ne marche pas...
 
+        properties = new ArrayList<>();
+        currentPhotos = new ArrayList<>();
+
+        status = (TextView) v.findViewById(R.id.textView23);
         upForSaleDate = (TextView) v.findViewById(R.id.textView27);
         soldOnDate = (TextView) v.findViewById(R.id.textView28);
         description = (TextView) v.findViewById(R.id.editText);
@@ -128,50 +135,10 @@ ImageView mMapView;;*/
 
         Bundle bundle = getArguments();
         propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY,1);
+        Log.d(TAG, "onCreateView: propertyId " + propertyId);
 
-        Log.d(TAG, "onCreateView: bundle " + propertyId);
-        propertyViewModel = ViewModelProviders.of(this).get(PropertyViewModel.class);
-        propertyViewModel.getAllProperty().observe(this, new Observer<List<Property>>() {
-            @Override
-            public void onChanged(List<Property> properties) {
-                Log.d(TAG, "onChanged");
-
-                currentProperty = properties.get(propertyId-1); // ici propertyId correspond à la position dans la liste récupérée suite au getAllProperty
-                currentAddress = currentProperty.getAddress();
-
-                initStaticMap(currentAddress.getNumberInStreet(), currentAddress.getStreet(), currentAddress.getZipcode(), currentAddress.getTown(), currentAddress.getCountry(), key );
-                initTextData();
-            }
-        });
-
-        propertyViewModel.getAllPhotos().observe(this, new Observer<List<Photo>>() {
-            @Override
-            public void onChanged(List<Photo> photos) {
-                for (int i=0; i<photos.size(); i++) {
-                    if(photos.get(i).getProperty()== propertyId) {
-                        photoUrlList.add(photos.get(i).getPhotoUri());
-                        textList.add(photos.get(i).getPhotoText());
-                    }
-                }
-                initPhotosRecyclerView();
-            }
-        });
-
-
-        // Pourquoi ça ne fonctionne pas?
-/*        Log.d(TAG, "onCreateView: propertyId pour les photos " + propertyId);
-        propertyViewModel.getPhotoFromProperty(propertyId).observe(this, new Observer<List<Photo>>() {
-            @Override
-            public void onChanged(List<Photo> photos) {
-                Log.d(TAG, "onChanged: photos.size " + photos.size());
-                for (int i=0; i<photos.size(); i++) {
-                    photoUrlList.add(photos.get(i).getPhotoUri());
-                    textList.add(photos.get(i).getPhotoText());
-                }
-                initPhotosRecyclerView();
-            }
-        });*/
-
+        configureViewModel();
+        this.getProperty(propertyId);
 
         return v;
     }
@@ -182,57 +149,6 @@ ImageView mMapView;;*/
 
     }
 
-    private void initDemoData() {
-        photoUrlList.add("https://c1.staticflickr.com/5/4636/25316407448_de5fbf183d_o.jpg");
-        textList.add("Façade");
-
-        photoUrlList.add("https://i.redd.it/tpsnoz5bzo501.jpg");
-        textList.add("Cuisine");
-
-        photoUrlList.add("https://i.redd.it/qn7f9oqu7o501.jpg");
-        textList.add("Chambre 1");
-
-        photoUrlList.add("https://i.redd.it/j6myfqglup501.jpg");
-        textList.add("Chambre 2");
-
-        photoUrlList.add("https://i.redd.it/0h2gm1ix6p501.jpg");
-        textList.add("Salon");
-
-        photoUrlList.add("https://i.redd.it/k98uzl68eh501.jpg");
-        textList.add("Salle de bain");
-    }
-
-    private void initTextData() {
-        upForSaleDate.setText(Utils.convertStringToDate(String.valueOf(currentProperty.getUpForSaleDate())));
-        soldOnDate.setText(Utils.convertStringToDate(String.valueOf(currentProperty.getSoldOnDate())));
-        description.setText(String.valueOf(currentProperty.getDescription()));
-        type.setText(String.valueOf(currentProperty.getType().getTypeText()));
-        surface.setText(String.valueOf(currentProperty.getSurface()));
-        rooms.setText(String.valueOf(currentProperty.getRooms()));
-        bedrooms.setText(String.valueOf(currentProperty.getBedrooms()));
-        bathrooms.setText(String.valueOf(currentProperty.getBathroom()));
-        shops.setChecked(currentProperty.getShop());
-        schools.setChecked(currentProperty.getSchool());
-        museum.setChecked(currentProperty.getMuseum());
-        park.setChecked(currentProperty.getPark());
-        numberInStreet.setText(String.valueOf(currentAddress.getNumberInStreet()));
-        street.setText(String.valueOf(currentAddress.getStreet()));
-        street2.setText(String.valueOf(currentAddress.getStreet2()));
-        zipcode.setText(String.valueOf(currentAddress.getZipcode()));
-        town.setText(String.valueOf(currentAddress.getTown()));
-        country.setText(String.valueOf(currentAddress.getCountry()));
-        price.setText(String.valueOf(currentProperty.getPrice()));
-}
-
-    private void initPhotosRecyclerView() {
-        Log.d(TAG, "initPhotosRecyclerView");
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView recyclerView = v.findViewById(R.id.photo_recyclerview_container);
-        PhotoRecyclerViewAdapter adapter = new PhotoRecyclerViewAdapter(getContext(), photoUrlList, textList);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(layoutManager);
-    }
 
     //------------------------------------------------------------------
     // Map
@@ -245,7 +161,109 @@ ImageView mMapView;;*/
         Picasso.get().load(srcMap).into(mMap);
     }
 
-    private void updatePropertyDetail(List<Property> allProperties){
+    //------------------------------------------------------------------
+    // ViewModel
+    //------------------------------------------------------------------
 
+
+    private void configureViewModel(){
+        Log.d(TAG, "configureViewModel");
+        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getContext());
+        this.propertyViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PropertyViewModel.class);
+    }
+
+    private void getProperty(int id){
+        this.propertyViewModel.getPropertyFromId(id).observe(this, this::updateProperty);
+    }
+
+    private void updateProperty(Property property) {
+        currentProperty = property;
+        upForSaleDate.setText(Utils.convertStringToDate(String.valueOf(currentProperty.getUpForSaleDate())));
+        soldOnDate.setText(Utils.convertStringToDate(String.valueOf(currentProperty.getSoldOnDate())));
+        description.setText(String.valueOf(currentProperty.getDescription()));
+        surface.setText(String.valueOf(currentProperty.getSurface()));
+        rooms.setText(String.valueOf(currentProperty.getRooms()));
+        bedrooms.setText(String.valueOf(currentProperty.getBedrooms()));
+        bathrooms.setText(String.valueOf(currentProperty.getBathroom()));
+        shops.setChecked(currentProperty.getShop());
+        schools.setChecked(currentProperty.getSchool());
+        museum.setChecked(currentProperty.getMuseum());
+        park.setChecked(currentProperty.getPark());
+        price.setText(String.valueOf(currentProperty.getPrice()));
+
+        agentId = currentProperty.getAgentId();
+        addressId = currentProperty.getAddressId();
+        typeId = currentProperty.getTypeId();
+        statusId = currentProperty.getStatusId();
+
+        Log.d(TAG, "updateProperty: id " +propertyId + " " +addressId+ " " +typeId+ " " + statusId);
+
+        this.getAddress(addressId);
+        this.getStatus(statusId);
+        this.getType(typeId);
+
+        this.initPhotosRecyclerView();
+        this.getAllPhotosFromProperty(propertyId);
+    }
+
+
+    private void getAddress(int id) {
+        this.propertyViewModel.getAddressFromId(id).observe(this, this::updateAddress);
+    }
+
+    private void updateAddress(Address address){
+        Log.d(TAG, "updateAddress: addressId " +addressId);
+        currentAddress = address;
+        Log.d(TAG, "updateAddress: number " + currentAddress.getNumberInStreet());
+        numberInStreet.setText(String.valueOf(currentAddress.getNumberInStreet()));
+        street.setText(String.valueOf(currentAddress.getStreet()));
+        if (currentAddress.getStreet2()!=null){
+        street2.setText(String.valueOf(currentAddress.getStreet2()));
+        } else {street2.setVisibility(View.GONE);}
+        zipcode.setText(String.valueOf(currentAddress.getZipcode()));
+        town.setText(String.valueOf(currentAddress.getTown()));
+        country.setText(String.valueOf(currentAddress.getCountry()));
+
+        initStaticMap(currentAddress.getNumberInStreet(), currentAddress.getStreet(), currentAddress.getZipcode(), currentAddress.getTown(), currentAddress.getCountry(), key );
+
+    }
+
+    private void getType(int id) {
+        this.propertyViewModel.getTypeFromId(id).observe(this, this::updateType);
+    }
+
+    private void updateType(TypeOfProperty typeOfProperty){
+        currentType = typeOfProperty;
+        Log.d(TAG, "updateType: typeId " + typeId);
+        type.setText(String.valueOf(currentType.getTypeText()));
+    }
+
+    private void getStatus(int id) {
+        this.propertyViewModel.getStatusFromId(id).observe(this, this::updateStatus);
+    }
+
+    private void updateStatus(Status stat){
+        currentStatus = stat;
+        status.setText(currentStatus.getStatusText());
+    }
+
+    private void initPhotosRecyclerView() {
+        Log.d(TAG, "initPhotosRecyclerView");
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView recyclerView = v.findViewById(R.id.photo_recyclerview_container);
+        adapter = new PhotoRecyclerViewAdapter(getContext());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(layoutManager);
+
+    }
+
+    private void getAllPhotosFromProperty(int id){
+        this.propertyViewModel.getPhotoFromProperty(id).observe(this, this::updatePhotoList);
+    }
+
+    private void updatePhotoList(List<Photo> photos){
+        currentPhotos = photos;
+        this.adapter.setPhotos(photos);
     }
 }

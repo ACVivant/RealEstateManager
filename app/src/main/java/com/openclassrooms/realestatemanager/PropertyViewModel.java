@@ -1,12 +1,8 @@
 package com.openclassrooms.realestatemanager;
 
-import android.app.Application;
-import android.util.Log;
-
 import com.openclassrooms.realestatemanager.models.Address;
 import com.openclassrooms.realestatemanager.models.Agent;
-import com.openclassrooms.realestatemanager.models.AttractingPoint;
-import com.openclassrooms.realestatemanager.models.AttractingPropertyJoin;
+import com.openclassrooms.realestatemanager.nesertplusariennormalement.AttractingPoint;
 import com.openclassrooms.realestatemanager.models.Photo;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.models.Status;
@@ -14,21 +10,252 @@ import com.openclassrooms.realestatemanager.models.TypeOfProperty;
 import com.openclassrooms.realestatemanager.repositories.AddressRepository;
 import com.openclassrooms.realestatemanager.repositories.AgentRepository;
 import com.openclassrooms.realestatemanager.repositories.AttractingPointRepository;
-import com.openclassrooms.realestatemanager.repositories.AttractingPropertyJoinRepository;
 import com.openclassrooms.realestatemanager.repositories.PhotoRepository;
 import com.openclassrooms.realestatemanager.repositories.PropertyRepository;
 import com.openclassrooms.realestatemanager.repositories.StatusRepository;
 import com.openclassrooms.realestatemanager.repositories.TypeOfPropertyRepository;
 
 import java.util.List;
+import java.util.concurrent.Executor;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 /**
  * Created by Anne-Charlotte Vivant on 16/05/2019.
  */
+public class PropertyViewModel extends ViewModel {
+
+    // REPOSITORIES
+    private PropertyRepository propertyRepository;
+    private AddressRepository addressRepository;
+    private AgentRepository agentRepository;
+    private AttractingPointRepository attractingPointRepository;
+    //private AttractingPropertyJoinRepository attractingPropertyJoinRepository;
+    private PhotoRepository photoRepository;
+    private StatusRepository statusRepository;
+    private TypeOfPropertyRepository typeOfPropertyRepository;
+    private final Executor executor;
+
+    // DATA
+    @Nullable
+    private LiveData<Property> currentProperty;
+    @Nullable
+    private LiveData<Address> currentAddress;
+    @Nullable
+    private LiveData<Agent> currentAgent;
+    @Nullable
+    private LiveData<Status> currentStatus;
+    @Nullable
+    private LiveData<TypeOfProperty> currentType;
+    @Nullable
+    private LiveData<List<Property>> allProperties;
+    @Nullable
+    private LiveData<List<Address>> allAddresses;
+    @Nullable
+    private LiveData<List<Photo>> allPhotos;
+    @Nullable
+    private LiveData<List<Photo>> allPhotosFromProperty;
+    @Nullable
+    private LiveData<List<TypeOfProperty>> allTypes;
+
+    public PropertyViewModel(PropertyRepository propertyRepository, AddressRepository addressRepository, AgentRepository agentRepository, PhotoRepository photoRepository, StatusRepository statusRepository, TypeOfPropertyRepository typeOfPropertyRepository, Executor executor) {
+        this.propertyRepository = propertyRepository;
+        this.addressRepository = addressRepository;
+        this.agentRepository = agentRepository;
+        //this.attractingPointRepository = attractingPointRepository;
+        this.photoRepository = photoRepository;
+        this.statusRepository = statusRepository;
+        this.typeOfPropertyRepository = typeOfPropertyRepository;
+        this.executor = executor;
+    }
+
+    public void initPropertyFromId(int propertyId) {
+        if (this.currentProperty != null) {
+            return;
+        }
+        currentProperty = propertyRepository.getPropertyFromId(propertyId);
+    }
+
+    public void initAddressFromId(int addressId) {
+    if (this.currentAddress != null) {
+        return;
+    }
+    currentAddress = addressRepository.getAddressFromId(addressId);
+    }
+
+    public void initAgentFromId(int agentId) {
+        if (this.currentAgent != null) {
+            return;
+        }
+        currentAgent = agentRepository.getAgentFromId(agentId);
+    }
+
+    public void initAgentFromName(String agentName) {
+        if (this.currentAgent != null) {
+            return;
+        }
+        currentAgent = agentRepository.getAgentFromName(agentName);
+    }
+
+    public void initStatusFromId(int statusId) {
+        if (this.currentStatus != null) {
+            return;
+        }
+        currentStatus = statusRepository.getStatusFromId(statusId);
+    }
+
+    public void initStatusFromName(String statusName) {
+        if (this.currentStatus != null) {
+            return;
+        }
+        currentStatus = statusRepository.getStatusFromName(statusName);
+    }
+
+    public void initTypeFromId(int typeId) {
+        if (this.currentType != null) {
+            return;
+        }
+        currentType = typeOfPropertyRepository.getTypeFromId(typeId);
+    }
+
+    public void initTypeFromName(String typeName) {
+        if (this.currentType != null) {
+            return;
+        }
+        currentType = typeOfPropertyRepository.getTypeFromName(typeName);
+    }
+
+    // For Property
+   // public LiveData<Property> getPropertyFromId(int propertyId) { return this.currentProperty;  }
+    public LiveData<Property> getPropertyFromId(int propertyId) { return propertyRepository.getPropertyFromId(propertyId);  }
+    public LiveData<List<Property>> getAllProperty(){
+        return propertyRepository.getAllProperty();
+    }
+
+    public void insertProperty(Property property) {
+        executor.execute(() -> {
+            propertyRepository.insertProperty(property);
+        });
+    }
+
+    public void updateProperty(Property property) {
+        executor.execute(() -> {
+            propertyRepository.updateProperty(property);
+        });
+    }
+
+    // For Address
+    public LiveData<List<Address>> getAllAddress() {return addressRepository.getAllAddresses();}
+    // public LiveData<Address> getAddressFromId(int addressID){ return this.currentAddress; }
+    public LiveData<Address> getAddressFromId(int addressId){ return addressRepository.getAddressFromId(addressId); }
+
+    public void insertAddress(Address address) {
+        executor.execute(() -> {
+            addressRepository.insertAddress(address);
+        });
+    }
+
+    public void updateAddress(Address address) {
+        executor.execute(() -> {
+            addressRepository.updateAddress(address);
+        });
+    }
+
+    // For Agent
+    //public LiveData<Agent> getAgentFromId(int agentId) {return this.currentAgent;}
+    public LiveData<Agent> getAgentFromId(int agentId) {
+        return agentRepository.getAgentFromId(agentId);
+    }
+
+    public LiveData<Agent> getAgentFromName() {
+        return this.currentAgent;
+    }
+
+    public void insertAgent(Agent agent) {
+        executor.execute(() -> {
+            agentRepository.insertAgent(agent);
+        });
+    }
+
+    public void updateAgent(Agent agent) {
+        executor.execute(() -> {
+            agentRepository.updateAgent(agent);
+        });
+    }
+
+/*    // For AttractingPoint
+    public void insertAttractingPoint(AttractingPoint attractingPoint) {
+        executor.execute(() -> {
+            attractingPointRepository.insertAttractingPoint(attractingPoint);
+        });
+    }
+
+    public void updateAttractingPoint(AttractingPoint attractingPoint) {
+        executor.execute(() -> {
+            attractingPointRepository.updateAttractingPoint(attractingPoint);
+        });
+    }*/
+
+    // For Photo
+    public LiveData<List<Photo>> getPhotoFromProperty(int propertyId) {return this.photoRepository.getPhotoFromPropertyId(propertyId);}
+    public LiveData<List<Photo>> getAllPhotos() { return this.getAllPhotos();}
+
+    public void insertPhoto(Photo photo) {
+        executor.execute(() -> {
+            photoRepository.insertPhoto(photo);
+        });
+    }
+
+    public void updatePhoto(Photo photo) {
+        executor.execute(() -> {
+            photoRepository.updatePhoto(photo);
+        });
+    }
+
+    public void deletePhoto(Photo photo) {
+        executor.execute(() -> {
+            photoRepository.deletePhoto(photo);
+        });
+    }
+
+    // For Status
+    // public LiveData<Status> getStatusFromId(int statusId) {return this.currentStatus;}
+    public LiveData<Status> getStatusFromId(int statusId) {return statusRepository.getStatusFromId(statusId);}
+    public LiveData<Status> getStatusFromName(String statusName) {return this.currentStatus;}
+
+    public void insertStatus(Status status) {
+        executor.execute(() -> {
+            statusRepository.insertStatus(status);
+        });
+    }
+
+    public void updateStatus(Status status) {
+        executor.execute(() -> {
+            statusRepository.updateStatus(status);
+        });
+    }
+
+    // For TypeOfProperty
+    public LiveData<List<TypeOfProperty>> getAllTypes() {return typeOfPropertyRepository.getAllType();}
+    //public LiveData<TypeOfProperty> getTypeFromId(int typeId) {return this.currentType;}
+    public LiveData<TypeOfProperty> getTypeFromId(int typeId) {return typeOfPropertyRepository.getTypeFromId(typeId);}
+    public LiveData<TypeOfProperty> getTypeFromName(String typeName) {return this.currentType;}
+
+    public void insertTypeOfProperty(TypeOfProperty type) {
+        executor.execute(() -> {
+            typeOfPropertyRepository.insertTypeOfProperty(type);
+        });
+    }
+
+    public void updateTypeOfProperty(TypeOfProperty type) {
+        executor.execute(() -> {
+            typeOfPropertyRepository.updateTypeOfProperty(type);
+        });
+    }
+
+/*
 public class PropertyViewModel extends AndroidViewModel {
 
     private static final String TAG = "PropertyViewModel";
@@ -65,13 +292,6 @@ public class PropertyViewModel extends AndroidViewModel {
         allPhotos = photoRepository.getAllPhoto();
     }
 
-    public void init(int propertyId) {
-        if (this.currentProperty != null) {
-            return;
-        }
-        currentProperty = propertyRepository.getPropertyFromId(propertyId);
-    }
-
     // For Property
     public void insertProperty(Property property){
         propertyRepository.insertProperty(property);
@@ -94,7 +314,9 @@ public class PropertyViewModel extends AndroidViewModel {
     // For Agent
     public void insertAgent(Agent agent) { agentRepository.insertAgent(agent);}
     public void updateAgent(Agent agent) { agentRepository.insertAgent(agent);}
-    public Agent getAgentFromId(int agentId) {return agentRepository.getAgentFromId(agentId);}
+    public LiveData<Agent> getAgentFromId(int agentId) {return agentRepository.getAgentFromId(agentId);}
+    public LiveData<Agent> getAgentFromName(String agentName) {return agentRepository.getAgentFromName(agentName);}
+
 
     // For AttractingPoint
     public void insertAttractingPoint(AttractingPoint attractingPoint) { attractingPointRepository.insertAttractingPoint(attractingPoint);}
@@ -115,12 +337,14 @@ public class PropertyViewModel extends AndroidViewModel {
     // For Status
     public void insertStatus(Status status) {statusRepository.insertStatus(status);}
     public void updateStatus(Status status) {statusRepository.updateStatus(status);}
-    public Status getStatusFromId(int statusId) {return statusRepository.getStatusFromId(statusId);}
+    public LiveData<Status> getStatusFromId(int statusId) {return statusRepository.getStatusFromId(statusId);}
+    public LiveData<Status> getStatusFromName(String statusName) {return statusRepository.getStatusFromName(statusName);}
 
     // For TypeOfProperty
     public void insertTypeOfProperty(TypeOfProperty type) {typeOfPropertyRepository.insertTypeOfProperty(type);}
     public void updateTypeOfProperty(TypeOfProperty type) {typeOfPropertyRepository.updateTypeOfProperty(type);}
-    public TypeOfProperty getTypeOfPropertyFromId(int typeId) {return typeOfPropertyRepository.getTypeFromId(typeId);}
-    public TypeOfProperty getTypeOfPropertyFromName(String typeName) {return typeOfPropertyRepository.getTypeFromName(typeName);}
+    public LiveData<TypeOfProperty> getTypeOfPropertyFromId(int typeId) {return typeOfPropertyRepository.getTypeFromId(typeId);}
+    public LiveData<TypeOfProperty> getTypeOfPropertyFromName(String typeName) {return typeOfPropertyRepository.getTypeFromName(typeName);}
+*/
 
 }

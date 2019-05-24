@@ -1,11 +1,7 @@
 package com.openclassrooms.realestatemanager.repositories;
 
-import android.app.Application;
-import android.os.AsyncTask;
-
-import com.openclassrooms.realestatemanager.database.RealEstateDatabase;
-import com.openclassrooms.realestatemanager.database.dao.AttractingPropertyJoinDao;
-import com.openclassrooms.realestatemanager.models.AttractingPropertyJoin;
+import com.openclassrooms.realestatemanager.nesertplusariennormalement.AttractingPropertyJoinDao;
+import com.openclassrooms.realestatemanager.nesertplusariennormalement.AttractingPropertyJoin;
 
 /**
  * Created by Anne-Charlotte Vivant on 14/05/2019.
@@ -13,7 +9,16 @@ import com.openclassrooms.realestatemanager.models.AttractingPropertyJoin;
 public class AttractingPropertyJoinRepository {
     private AttractingPropertyJoinDao attractingPropertyJoinDao;
 
-    public AttractingPropertyJoinRepository(Application application) {
+    public AttractingPropertyJoinRepository(AttractingPropertyJoinDao attractingPropertyJoinDao) {this.attractingPropertyJoinDao = attractingPropertyJoinDao;}
+
+    public void insertAttractingPropertyJoin(AttractingPropertyJoin attractingPropertyJoin) {attractingPropertyJoinDao.insertAttractingPropertyJoin(attractingPropertyJoin);}
+
+    public void updateAttractingPropertyJoin(AttractingPropertyJoin attractingPropertyJoin) {attractingPropertyJoinDao.updateAttractingPropertyJoin(attractingPropertyJoin);}
+
+    public void deleteAttractingPropertyJoin(AttractingPropertyJoin attractingPropertyJoin) {attractingPropertyJoinDao.deleteAttractingPropertyJoin(attractingPropertyJoin);}
+
+
+   /* public AttractingPropertyJoinRepository(Application application) {
         RealEstateDatabase database = RealEstateDatabase.getInstance(application);
         attractingPropertyJoinDao = database.attractingPropertyJoinDao();
     }
@@ -70,5 +75,5 @@ public class AttractingPropertyJoinRepository {
             attractingPropertyJoinDao.deleteAttractingPropertyJoin(attractingPropertyJoins[0]);
             return null;
         }
-    }
+    }*/
 }

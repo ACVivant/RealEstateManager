@@ -57,6 +57,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:paddingStart="@dimen/default_margin"
+            android:paddingEnd="@dimen/default_margin"
+            android:paddingTop="@dimen/default_mini_margin">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:text="@string/create_status"
+                android:textSize="@dimen/default_text_size"/>
+
+            <Spinner
+                android:id="@+id/create_spinner_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:textSize="@dimen/default_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:paddingEnd="@dimen/default_margin">
 
             <TextView
@@ -490,28 +513,28 @@
                     android:inputType="date"/>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/default_margin"
-                android:paddingEnd="@dimen/default_margin">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:text="@string/agent_in_charge"
-                    android:textSize="@dimen/default_text_size"/>
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/default_margin"
+                    android:paddingEnd="@dimen/default_margin">
 
-                <EditText
-                    android:id="@+id/create_insert_mandatory"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:textSize="@dimen/default_text_size"
-                    android:hint="@string/agent_example"/>
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:text="@string/agent_in_charge"
+                        android:textSize="@dimen/default_text_size"/>
+
+                    <Spinner
+                        android:id="@+id/create_spinner_agent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:textSize="@dimen/default_text_size" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout

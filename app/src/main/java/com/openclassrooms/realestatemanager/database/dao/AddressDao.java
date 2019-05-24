@@ -27,7 +27,7 @@ public interface AddressDao {
     void deleteAddress(Address address);
 
     @Query("SELECT * FROM address WHERE addressId = :addressId")
-    Address getAddressFromId(int addressId);
+    LiveData<Address> getAddressFromId(int addressId);
 
     @Query("SELECT * FROM address ORDER BY addressId ASC")
     LiveData<List<Address>> getAllAddresses();

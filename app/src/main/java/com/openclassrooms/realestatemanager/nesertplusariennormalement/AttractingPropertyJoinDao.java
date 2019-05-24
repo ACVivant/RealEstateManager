@@ -1,7 +1,6 @@
-package com.openclassrooms.realestatemanager.database.dao;
+package com.openclassrooms.realestatemanager.nesertplusariennormalement;
 
-import com.openclassrooms.realestatemanager.models.AttractingPoint;
-import com.openclassrooms.realestatemanager.models.AttractingPropertyJoin;
+import com.openclassrooms.realestatemanager.nesertplusariennormalement.AttractingPropertyJoin;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

@@ -22,7 +22,10 @@ public interface AgentDao {
     void updateAgent(Agent agent);
 
     @Query("SELECT * FROM agent WHERE agentId = :agentId")
-    Agent getAgentFromId(int agentId);
+    LiveData<Agent> getAgentFromId(int agentId);
+
+    @Query("SELECT * FROM agent WHERE agentName = :agentName")
+    LiveData<Agent> getAgentFromName(String agentName);
 
     @Query("SELECT * FROM agent ORDER BY agentName ASC")
     LiveData<List<Agent>> getAllAgent();

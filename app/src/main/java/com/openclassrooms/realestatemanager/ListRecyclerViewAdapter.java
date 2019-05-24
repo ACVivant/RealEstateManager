@@ -33,22 +33,22 @@ import butterknife.ButterKnife;
 public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerViewAdapter.ListViewHolder> {
     private static final String TAG = "ListRecyclerViewAdapter";
 
-    private ArrayList<String> picturesList = new ArrayList<>();
-    private ArrayList<String> typeList = new ArrayList<>();
-    private ArrayList<String> townList = new ArrayList<>();
-    private ArrayList<String> priceList = new ArrayList<>();
-    private ArrayList<Integer> idList = new ArrayList<>();
-
     private Context mContext;
     private OnItemClickedListener mListener;
 
-    private List<Property> properties = new ArrayList<>();
-    private List<Agent> agents = new ArrayList<>();
+    private List<Property> properties ;
+    private List<Address> addresses;
+    private List<TypeOfProperty> types;
     private PropertyViewModel propertyViewModel;
     private  boolean useTablet;
     private int propertySelected;
 
+    String townText;
+
     public ListRecyclerViewAdapter(int propertySelected, boolean useTablet) {
+        this.properties = new ArrayList<>();
+        this.addresses = new ArrayList<>();
+        this.types = new ArrayList<>();
         this.propertySelected = propertySelected;
         this.useTablet = useTablet;
     }
@@ -68,9 +68,12 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
         Log.d(TAG, "onBindViewHolder: ListRecyclerViewAdapter Called.");
 
         Property currentProperty = properties.get(position);
+        Address currentAddress = addresses.get(currentProperty.getAddressId());
+        TypeOfProperty currentType = types.get(currentProperty.getTypeId());
+       // currentProperty.getTypeId();
 
-        holder.type.setText(currentProperty.getType().getTypeText());
-        holder.town.setText(currentProperty.getAddress().getTown());
+        holder.type.setText(String.valueOf(currentType.getTypeText()));
+        holder.town.setText(String.valueOf(currentAddress.getTown()));
         holder.price.setText(String.valueOf(currentProperty.getPrice()));
 
         String uriPhoto = currentProperty.getMainPhoto();
@@ -96,8 +99,14 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
         notifyDataSetChanged();
     }
 
-    public void setAgents(List<Agent> agents) {
-        this.agents = agents;
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+        notifyDataSetChanged();
+    }
+
+    public void setTypes(List<TypeOfProperty> types) {
+        this.types = types;
+        notifyDataSetChanged();
     }
 
     public interface OnItemClickedListener{
@@ -108,6 +117,7 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
         mListener = listener;
     }
 
+    //-------------------------------------------------------------------------------------------------------
 
     public class ListViewHolder extends RecyclerView.ViewHolder{
 
@@ -144,5 +154,6 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
                 }
             });
         }
+
     }
 }

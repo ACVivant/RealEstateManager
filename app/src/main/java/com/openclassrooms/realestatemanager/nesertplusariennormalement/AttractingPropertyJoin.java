@@ -1,4 +1,7 @@
-package com.openclassrooms.realestatemanager.models;
+package com.openclassrooms.realestatemanager.nesertplusariennormalement;
+
+import com.openclassrooms.realestatemanager.models.Property;
+import com.openclassrooms.realestatemanager.nesertplusariennormalement.AttractingPoint;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;

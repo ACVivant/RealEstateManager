@@ -21,11 +21,11 @@ import androidx.room.Update;
 @Dao
 public interface PropertyDao {
 
-    @Query("SELECT * FROM property WHERE town = :town ORDER BY soldOnDate DESC")
+/*    @Query("SELECT * FROM property WHERE town = :town ORDER BY soldOnDate DESC")
     LiveData<List<Property>> getPropertyFromTown(String town);
 
     @Query("SELECT * FROM property WHERE zipcode = :zipcode ORDER BY soldOnDate DESC")
-    LiveData<List<Property>> getPropertyFromZipCode(String zipcode);
+    LiveData<List<Property>> getPropertyFromZipCode(String zipcode);*/
 
     @Query("SELECT * FROM property WHERE price BETWEEN  :minPrice AND :maxPrice ORDER BY price ASC")
     LiveData<List<Property>> getPropertyFromPrice(int minPrice, int maxPrice );
@@ -76,7 +76,7 @@ public interface PropertyDao {
     LiveData<List<Property>> getAllProperty();
 
     @Query("SELECT * FROM property WHERE propertyId = :propertyId")
-    Property getPropertyFromId(int propertyId);
+    LiveData<Property> getPropertyFromId(int propertyId);
 
     @Insert
     void insertProperty(Property property);

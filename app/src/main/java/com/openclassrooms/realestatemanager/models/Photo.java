@@ -10,21 +10,21 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "photo",
         foreignKeys = @ForeignKey(entity = Property.class,
         parentColumns = "propertyId",
-        childColumns = "property"))
+        childColumns = "propertyId"))
 public class Photo {
 
     @PrimaryKey(autoGenerate = true)
     private long photoId;
     private String photoText;
     private String photoUri;
-    private long property;
+    private long propertyId;
 
     public Photo() {}
 
-    public Photo (String uri, String text, long property ) {
+    public Photo (String uri, String text, long propertyId ) {
         this.photoUri = uri;
         this.photoText = text;
-        this.property = property;
+        this.propertyId = propertyId;
     }
 
     // ---- GETTER ---
@@ -37,8 +37,8 @@ public class Photo {
     public String getPhotoUri() {
         return photoUri;
     }
-    public long getProperty() {
-        return property;
+    public long getPropertyId() {
+        return propertyId;
     }
 
     // --- SETTER ---
@@ -51,7 +51,7 @@ public class Photo {
     public void setPhotoUri(String photoUri) {
         this.photoUri = photoUri;
     }
-    public void setProperty(long property) {
-        this.property = property;
+    public void setPropertyId(long propertyId) {
+        this.propertyId = propertyId;
     }
 }

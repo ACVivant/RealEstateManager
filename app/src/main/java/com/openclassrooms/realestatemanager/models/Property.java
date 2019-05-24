@@ -43,24 +43,27 @@ public class Property {
     private Boolean museum;
     private Boolean park;
 
-    @Embedded
+   /* @Embedded
     private TypeOfProperty type;
     @Embedded
     private Address address;
     @Embedded
     private Agent agent;
     @Embedded
-    private Status status;
+    private Status status;*/
 
- /*   @Embedded
-    private Address address;
+  // @Embedded
+    private int addressId;
+  //  @Embedded
     private int typeId;
+  //  @Embedded
     private int agentId;
-    private int statusId;*/
+ //   @Embedded
+    private int statusId;
 
     public Property() {}
 
-    public Property(int price, int rooms, int bedrooms, int bathroom, String description, int upForSaleDate, int soldOnDate, int surface, Boolean shop, Boolean school, Boolean museum, Boolean park ,TypeOfProperty type, Address address, Agent agent, Status status, String mainPhoto) {
+/*    public Property(int price, int rooms, int bedrooms, int bathroom, String description, int upForSaleDate, int soldOnDate, int surface, Boolean shop, Boolean school, Boolean museum, Boolean park ,TypeOfProperty type, Address address, Agent agent, Status status, String mainPhoto) {
         this.price = price;
         this.rooms = rooms;
         this.bedrooms = bedrooms;
@@ -78,9 +81,9 @@ public class Property {
         this.agent = agent;
         this.status = status;
         this.mainPhoto = mainPhoto;
-    }
+    }*/
 
- /*   public Property(int price, int rooms, int bedrooms, int bathroom, String description, int upForSaleDate, int soldOnDate, int surface, int type, Address address, int agent, int status, String mainPhoto) {
+    public Property(int price, int rooms, int bedrooms, int bathroom, String description, int upForSaleDate, int soldOnDate, int surface, Boolean shop, Boolean school, Boolean museum, Boolean park ,int typeId, int addressId, int agentId, int statusId, String mainPhoto) {
         this.price = price;
         this.rooms = rooms;
         this.bedrooms = bedrooms;
@@ -89,12 +92,16 @@ public class Property {
         this.upForSaleDate = upForSaleDate;
         this.soldOnDate = soldOnDate;
         this.surface = surface;
-        this.typeId = type;
-        this.address = address;
-        this.agentId = agent;
-        this.statusId = status;
+        this.school = school;
+        this.shop = shop;
+        this.park = park;
+        this.museum = museum;
+        this.typeId = typeId;
+        this.addressId = addressId;
+        this.agentId = agentId;
+        this.statusId = statusId;
         this.mainPhoto = mainPhoto;
-    }*/
+    }
 
     // --- GETTER ---
     public int getPropertyId() {
@@ -128,7 +135,7 @@ public class Property {
     public Boolean getSchool() {return school;}
     public Boolean getPark() {return park;}
     public Boolean getMuseum() {return museum;}
-    public TypeOfProperty getType() {
+/*    public TypeOfProperty getType() {
         return type;
     }
     public Address getAddress() {
@@ -139,20 +146,20 @@ public class Property {
     }
     public Status getStatus() {
         return status;
-    }
+    }*/
 
- /*   public int getTypeId() {
+    public int getTypeId() {
         return typeId;
     }
-    public Address getAddress() {
-        return address;
+    public int getAddressId() {
+        return addressId;
     }
     public int getAgentId() {
         return agentId;
     }
     public int getStatusId() {
         return statusId;
-    }*/
+    }
 
     public String getMainPhoto() { return mainPhoto;}
 
@@ -188,7 +195,7 @@ public class Property {
     public void setSchool(Boolean school) { this.school = school;}
     public void setMuseum(Boolean museum) { this.museum = museum;}
     public void setPark(Boolean park) { this.park = park;}
-    public void setType(TypeOfProperty type) {
+/*    public void setType(TypeOfProperty type) {
         this.type = type;
     }
     public void setAddress(Address address) {
@@ -199,20 +206,20 @@ public class Property {
     }
     public void setStatus(Status status) {
         this.status = status;
-    }
+    }*/
 
- /*   public void setTypeId(int type) {
+    public void setTypeId(int type) {
     this.typeId = type;
 }
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
     }
     public void setAgentId(int agent) {
         this.agentId = agent;
     }
     public void setStatusId(int status) {
         this.statusId = status;
-    }*/
+    }
 
     public void setMainPhoto(String mainPhoto) {this.mainPhoto = mainPhoto;}
 

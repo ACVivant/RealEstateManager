@@ -7,14 +7,28 @@ import com.openclassrooms.realestatemanager.database.RealEstateDatabase;
 import com.openclassrooms.realestatemanager.database.dao.StatusDao;
 import com.openclassrooms.realestatemanager.models.Status;
 
+import androidx.lifecycle.LiveData;
+
 /**
  * Created by Anne-Charlotte Vivant on 13/05/2019.
  */
 public class StatusRepository {
 
-        private StatusDao statusDao;
+    private StatusDao statusDao;
 
-        public StatusRepository(Application application) {
+    public StatusRepository(StatusDao statusDao) {this.statusDao = statusDao;}
+
+    public void insertStatus(Status status) {statusDao.insertStatus(status);}
+
+    public void updateStatus(Status status) {statusDao.updateStatus(status);}
+
+    public LiveData<Status> getStatusFromId(int statusId) { return statusDao.getStatusFromId(statusId);}
+
+    public LiveData<Status> getStatusFromName(String statusName) { return statusDao.getStatusFromName(statusName);}
+
+
+
+      /*  public StatusRepository(Application application) {
             RealEstateDatabase database = RealEstateDatabase.getInstance(application);
             statusDao = database.statusDao();
         }
@@ -27,7 +41,9 @@ public class StatusRepository {
             new UpdateStatusAsyncTask(statusDao).execute(status);
         }
 
-        public Status getStatusFromId(int statusId) { return statusDao.getStatusFromId(statusId);}
+        public LiveData<Status> getStatusFromId(int statusId) { return statusDao.getStatusFromId(statusId);}
+
+    public LiveData<Status> getStatusFromName(String statusName) { return statusDao.getStatusFromName(statusName);}
 
         private static class InsertStatusAsyncTask extends AsyncTask<Status, Void, Void> {
             private StatusDao statusDao;
@@ -55,5 +71,5 @@ public class StatusRepository {
                 statusDao.updateStatus(statuses[0]);
                 return null;
             }
-        }
+        }*/
 }

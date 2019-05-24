@@ -21,6 +21,8 @@ public interface StatusDao {
     void updateStatus(Status status);
 
     @Query("SELECT * FROM status WHERE statusId = :statusId")
-    Status getStatusFromId(int statusId);
+    LiveData<Status> getStatusFromId(int statusId);
 
+    @Query("SELECT * FROM status WHERE statusText = :statusName")
+    LiveData<Status> getStatusFromName(String statusName);
 }

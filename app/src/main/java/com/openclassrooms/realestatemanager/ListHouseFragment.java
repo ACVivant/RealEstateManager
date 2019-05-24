@@ -19,8 +19,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.openclassrooms.realestatemanager.injections.Injection;
+import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
+import com.openclassrooms.realestatemanager.models.Address;
 import com.openclassrooms.realestatemanager.models.Agent;
 import com.openclassrooms.realestatemanager.models.Property;
+import com.openclassrooms.realestatemanager.models.TypeOfProperty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,13 +41,8 @@ public class ListHouseFragment extends Fragment {
     public static final String ID_PROPERTY = "property_selected";
     public static final String DISPLAY_DETAIL = "display_detail_after_clic";
 
-    private ArrayList<String> picturesUrlList = new ArrayList<>();
-    private ArrayList<String> typeList = new ArrayList<>();
-    private ArrayList<String> townList = new ArrayList<>();
-    private ArrayList<String> priceList = new ArrayList<>();
-    private ArrayList<Integer> idList = new ArrayList<>();
-
     private PropertyViewModel propertyViewModel;
+    private ListRecyclerViewAdapter adapter;
 
     private int propertyId = 0;
     public int propertySaved = 0;
@@ -52,6 +51,7 @@ public class ListHouseFragment extends Fragment {
 
 
     View v;
+
     public ListHouseFragment() {
         // Required empty public constructor
     }
@@ -60,15 +60,19 @@ public class ListHouseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView");
         // Inflate the layout for this fragment
        v= inflater.inflate(R.layout.fragment_list_house, container, false);
         Bundle bundle = getArguments();
         propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY, 0);
         useTablet = bundle.getBoolean(MainActivity.USE_TABLET, false);
 
-       //initDemoData();
-
         initRecyclerView();
+        configureViewModel();
+        getAllProperties();
+        getAllAddresses();
+        getAllTypes();
+
         return v;
     }
 
@@ -77,17 +81,18 @@ public class ListHouseFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         //Si on a un état sauvegardé on met a jour l'élément par défaut
         if (savedInstanceState != null) {
-                       propertySaved = savedInstanceState.getInt(ID_PROPERTY, 0);
+            propertySaved = savedInstanceState.getInt(ID_PROPERTY, 0);
         }
     }
 
+
     private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView");
+
+        this.adapter = new ListRecyclerViewAdapter(propertyId, useTablet);
         RecyclerView recyclerView = v.findViewById(R.id.list_recyclerview_container);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
-
-        ListRecyclerViewAdapter adapter = new ListRecyclerViewAdapter(propertyId, useTablet);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickedListener(new ListRecyclerViewAdapter.OnItemClickedListener() {
             @Override
@@ -100,16 +105,36 @@ public class ListHouseFragment extends Fragment {
                 startActivity(intent);
             }
         });
+    }
 
-        propertyViewModel = ViewModelProviders.of(this).get(PropertyViewModel.class);
-        propertyViewModel.getAllProperty().observe(this, new Observer<List<Property>>() {
-            @Override
-            public void onChanged(List<Property> properties) {
-                Log.d(TAG, "onChanged");
-                adapter.setProperties(properties);
-                Log.d(TAG, "onChanged: size " + properties.size());
-            }
-        });
+    private void configureViewModel(){
+        Log.d(TAG, "configureViewModel");
+        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getContext());
+        this.propertyViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PropertyViewModel.class);
+    }
 
+    private void getAllProperties(){
+        this.propertyViewModel.getAllProperty().observe(this, this::updatePropertyList);
+    }
+
+        private void updatePropertyList(List<Property> properties){
+        this.adapter.setProperties(properties);
+    }
+
+    private void getAllAddresses() {
+        this.propertyViewModel.getAllAddress().observe(this, this::updateAddresses);
+    }
+
+    private void updateAddresses(List<Address> addresses){
+        this.adapter.setAddresses(addresses);
+    }
+
+    private void getAllTypes() {
+        this.propertyViewModel.getAllTypes().observe(this, this::updateTypes);
+    }
+
+    private void updateTypes(List<TypeOfProperty> types){
+        this.adapter.setTypes(types);
     }
 }
+

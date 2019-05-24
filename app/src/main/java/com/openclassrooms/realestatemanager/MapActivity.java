@@ -12,11 +12,12 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -32,7 +33,12 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.openclassrooms.realestatemanager.database.dao.AddressDao;
+import com.openclassrooms.realestatemanager.injections.Injection;
+import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
+import com.openclassrooms.realestatemanager.models.Address;
 import com.openclassrooms.realestatemanager.models.Property;
+import com.openclassrooms.realestatemanager.models.TypeOfProperty;
 import com.openclassrooms.realestatemanager.utils.MapUrl;
 
 import java.io.IOException;
@@ -76,6 +82,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private List<Property> properties = new ArrayList<>();
     private Property currentProperty;
     private PropertyViewModel propertyViewModel;
+    private TypeOfProperty currentType;
+    private Address currentAddress;
+    private List<TypeOfProperty> allTypes;
+    private List<Address> allAddresses;
+    private int currentPropertyId;
+    private String currentTypeText;
+    private double currentLat;
+    private double currentLng;
+    private int currentPrice;
+    private int typeIndex;
+    private int addressIndex;
     /*private double[] tab_latitude ;
     private double[] tab_longitude ;
     private String[] tab_type ;
@@ -85,17 +102,23 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     //clic
     private boolean displayDetail;
+    Handler handlerUI = new Handler();
+    int compteur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         getLocationPermission();
+
         try {
             getData();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        //allAddresses = new ArrayList<>();
+        //allTypes = new ArrayList<>();
     }
 
     @Override
@@ -113,8 +136,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
             mMap.setMyLocationEnabled(true); // icone GPS pour recentrer la carte
             mMap.getUiSettings().setZoomControlsEnabled(true); // zoom
-
-            addAllMarkers();
         }
     }
 
@@ -139,6 +160,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                             Log.d(TAG, "onComplete: location found");
                             Location currentLocation = (Location) task.getResult();
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),DEFAULT_ZOOM);
+                            addAlMarkers();
 
                         } else {
                             Log.d(TAG, "onComplete: current location is null");
@@ -164,70 +186,93 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     //--------------------------------------------------------------------------------------------------------------------
     public void getData() throws IOException {
         Log.d(TAG, "getData");
-        propertyViewModel = ViewModelProviders.of(this).get(PropertyViewModel.class);
-        final Observer<List<Property>> dataObserver = new Observer<List<Property>>() {
-            @Override
-            public void onChanged(List<Property> properties) {   // OnChnaged n'est jamais appelé... Pourquoi????
-                Log.d(TAG, "onChanged properties.size " + properties.size());
+        configureViewModel();
+        this.getAllProperties();
+    }
 
-                tab_id = new int[properties.size()];
-                tab_type = new String[properties.size()];
-                tab_price = new int[properties.size()];
-                tab_latitude = new double[properties.size()];
-                tab_longitude = new double[properties.size()];
+    private void configureViewModel(){
+        Log.d(TAG, "configureViewModel");
+        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
+        this.propertyViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PropertyViewModel.class);
+    }
 
-                for (int i=0; i<properties.size(); i++) {
-                    currentProperty = properties.get(i);
-                    tab_price[i] = currentProperty.getPrice();
-                    tab_type[i] = currentProperty.getType().getTypeText();
-                    tab_id[i] = currentProperty.getPropertyId();
+    private void getAllProperties(){
+        this.propertyViewModel.getAllProperty().observe(this, this::updatePropertyList);
+    }
 
-                    com.openclassrooms.realestatemanager.models.Address currentAddress = currentProperty.getAddress();
-                    try {
-                        tab_latitude[i] = geocoder(currentAddress.getNumberInStreet(), currentAddress.getStreet(), currentAddress.getZipcode(), currentAddress.getTown(), currentAddress.getCountry()).latitude;
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        tab_longitude[i] = geocoder(currentAddress.getNumberInStreet(), currentAddress.getStreet(), currentAddress.getZipcode(), currentAddress.getTown(), currentAddress.getCountry()).longitude;
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        };
-        propertyViewModel.getAllProperty().observe(this, dataObserver);
+    private void updatePropertyList(List<Property> properties){
+        tab_id = new int[properties.size()];
+        tab_type = new String[properties.size()];
+        tab_price = new int[properties.size()];
+        tab_latitude = new double[properties.size()];
+        tab_longitude = new double[properties.size()];
 
-        // Pour pouvoir continuer tant que le pb de OnChanged n'est pas réglé
-        tab_latitude[0] = geocoder("6", "rue Alexandre Dumas",  "60800", "Crépy-en-Valois", "France").latitude;
-        tab_latitude[1] = geocoder("10", "rue de Soissons",  "60800", "Crépy-en-Valois", "France").latitude;
-        tab_latitude[2] = geocoder("12", "rue Charles de Gaulle", "60800", "Crépy-en-Valois", "France").latitude;
-        tab_latitude[3] = geocoder("5", "rue Saint Denis",  "60800", "Crépy-en-Valois", "France").latitude;
-        tab_latitude[4] = geocoder("13", "rue Saint Denis",  "60800", "Crépy-en-Valois", "France").latitude;
-        tab_latitude[5] = geocoder("13", "rue de Vez",  "60800", "Crépy-en-Valois", "France").latitude;
-        tab_latitude[6] = geocoder("19", "rue de Vez",  "60800", "Crépy-en-Valois", "France").latitude;
+        for (int i=0; i<properties.size(); i++) {
+            //int i=2;
+            currentProperty = properties.get(i);
 
-        tab_longitude[0] = geocoder("6", "rue Alexandre Dumas",  "60800", "Crépy-en-Valois", "France").longitude;
-        tab_longitude[1] = geocoder("10", "rue de Soissons",  "60800", "Crépy-en-Valois", "France").longitude;
-        tab_longitude[2] = geocoder("12", "rue Charles de Gaulle", "60800", "Crépy-en-Valois", "France").longitude;
-        tab_longitude[3] = geocoder("5", "rue Saint Denis",  "60800", "Crépy-en-Valois", "France").longitude;
-        tab_longitude[4] = geocoder("13", "rue Saint Denis",  "60800", "Crépy-en-Valois", "France").longitude;
-        tab_longitude[5] = geocoder("13", "rue de Vez",  "60800", "Crépy-en-Valois", "France").longitude;
-        tab_longitude[6] = geocoder("19", "rue de Vez",  "60800", "Crépy-en-Valois", "France").longitude;
+            currentPrice = currentProperty.getPrice();
+            tab_price[i] = currentPrice;
+            Log.d(TAG, "updatePropertyList: currentPrice " + currentPrice);
 
+            tab_id[i] = currentProperty.getPropertyId();
+            currentPropertyId = currentProperty.getPropertyId();
+            Log.d(TAG, "updatePropertyList: currentPropertyId " + currentPropertyId);
+
+            // Comment faire pour que la boucle attende les résultats de getType et getAddress avant de boucler?
+            getType(currentProperty.getTypeId());
+            tab_type[i]=currentTypeText;
+
+            getAddress(currentProperty.getAddressId());
+            tab_latitude[i]=currentLat;
+            tab_longitude[i]=currentLng;
+        }
+    }
+
+    private void getAddress(int id) {
+        this.propertyViewModel.getAddressFromId(id).observe(this, this::updateAddress);
+    }
+
+    private void updateAddress(Address address){
+        this.currentAddress = address;
+        try {
+            currentLat = geocoder(currentAddress).latitude;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            currentLng = geocoder(currentAddress).longitude;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Log.d(TAG, "updateAddress: addressIndex " + addressIndex);
+    }
+
+    private void getType(int id) {
+        Log.d(TAG, "getType");
+        this.propertyViewModel.getTypeFromId(id).observe(this, this::updateType);
+    }
+
+    private void updateType(TypeOfProperty typeOfProperty){
+        this.currentType = typeOfProperty;
+        this.currentTypeText = currentType.getTypeText();
     }
 
     //--------------------------------------------------------------------------------------------------------------------
     //manages Markers
     //--------------------------------------------------------------------------------------------------------------------
 
-    private void addAllMarkers() {
+    private void addAlMarkers() {
         Log.d(TAG, "addAllMarkers");
 
-
-        for (int i=0; i< tab_latitude.length; i++) {
+        // commenté en attendant une bonne sychronisation
+        /*for (int i=0; i< tab_latitude.length; i++) {
             addMarkers(new LatLng(tab_latitude[i], tab_longitude[i]), tab_type[i], tab_price[i], devise, tab_id[i]);
-        }
+        }*/
+
+        addMarker(new LatLng(49.235, 2.899), "maison", tab_price[1], devise, tab_id[1]);
+        addMarker(new LatLng(49.23, 2.899), "loft", tab_price[0], devise, tab_id[0]);
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
@@ -237,15 +282,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
     }
 
-    private Marker addMarkers(LatLng latLng, String type, int price, String devise, int propertyId) {
+    private Marker addMarker(LatLng latLng, String type, int price, String devise, int propertyId) {
         Log.d(TAG, "addMarkers");
         MarkerOptions options = new MarkerOptions()
                 .position(latLng)
-                .title(type + " " + price + devise);
+                .title(type + " " + price + devise + " " + propertyId);
 
         myMarker = mMap.addMarker(options);
         myMarker.setTag(propertyId);
-
             return myMarker;
     }
 
@@ -265,25 +309,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     // Geocoder
     //------------------------------------------------
 
-    public LatLng geocoder(String number, String street, String zipcode, String town, String country ) throws IOException {
+    public LatLng geocoder(Address currentAddress) throws IOException {
         MapUrl mapUrl = new MapUrl();
-        //String location =mapUrl.createGeocoderUrl("6", "rue Alexandre Dumas","60800", "Crépy-en-Valois", "France" );
-        String location =mapUrl.createGeocoderUrl(number, street,zipcode, town, country );
+        String location =mapUrl.createGeocoderUrl(currentAddress.getNumberInStreet(), currentAddress.getStreet(),currentAddress.getZipcode(), currentAddress.getTown(), currentAddress.getCountry() );
         Geocoder gc = new Geocoder(this);
-        List<Address> list = gc.getFromLocationName(location, 1);
-        Address add = list.get(0);
+        List<android.location.Address> list = gc.getFromLocationName(location,1);
+        android.location.Address add = list.get(0);
         String locality = add.getLocality();
         double lat = add.getLatitude();
         double lng = add.getLongitude();
-
-        Log.d(TAG, "geocoder: locality " + locality);
-        Log.d(TAG, "geocoder: latitude " + lat);
-        Log.d(TAG, "geocoder: longitude " + lng);
-
         LatLng coord = new LatLng(lat, lng);
         return coord;
     }
-
 
     //-----------------------------------------------
     // Permissions

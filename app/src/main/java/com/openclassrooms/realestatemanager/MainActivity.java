@@ -320,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void launchCreate() {
         Intent intent = new Intent(this, CreateHomeActivity.class);
-        startActivityForResult(intent, CREATE_PROPERTY_REQUEST);
+        startActivity(intent);
     }
 
     private void launchSearch() {
@@ -376,44 +376,6 @@ public boolean isServiceOK() {
         super.onSaveInstanceState(outState);
         String idFragment = active.getTag();
         outState.putString(ID_FRAGMENT, idFragment);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == CREATE_PROPERTY_REQUEST && resultCode == RESULT_OK) {
-            String type = data.getStringExtra(CreateHomeActivity.EXTRA_TYPE);
-            String description = data.getStringExtra(CreateHomeActivity.EXTRA_DESCRIPTION);
-            int price = data.getIntExtra(CreateHomeActivity.EXTRA_PRICE, 0);
-            int surface = data.getIntExtra(CreateHomeActivity.EXTRA_SURFACE, 0);
-            int rooms = data.getIntExtra(CreateHomeActivity.EXTRA_ROOMS, 0);
-            int bedrooms = data.getIntExtra(CreateHomeActivity.EXTRA_BEDROOMS,0);
-            int bathrooms = data.getIntExtra(CreateHomeActivity.EXTRA_BATHROOMS,0);
-            String number = data.getStringExtra(CreateHomeActivity.EXTRA_ADDRESS_NUMBER);
-            String street = data.getStringExtra(CreateHomeActivity.EXTRA_STREET);
-            String street2 = data.getStringExtra(CreateHomeActivity.EXTRA_STREET2);
-            String zipcode = data.getStringExtra(CreateHomeActivity.EXTRA_ZIPCODE);
-            String town = data.getStringExtra(CreateHomeActivity.EXTRA_TOWN);
-            String country = data.getStringExtra(CreateHomeActivity.EXTRA_COUNTRY);
-            Boolean school = data.getBooleanExtra(CreateHomeActivity.EXTRA_SCHOOL, false);
-            Boolean schop = data.getBooleanExtra(CreateHomeActivity.EXTRA_SHOP, false);
-            Boolean park = data.getBooleanExtra(CreateHomeActivity.EXTRA_PARK, false);
-            Boolean museum = data.getBooleanExtra(CreateHomeActivity.EXTRA_MUSEUM, false);
-            String upForSale = data.getStringExtra(CreateHomeActivity.EXTRA_UPFORSALE);
-            String soldOn = data.getStringExtra(CreateHomeActivity.EXTRA_SOLDON);
-            String agent = data.getStringExtra(CreateHomeActivity.EXTRA_AGENT);
-
-/*            Property newProperty = new Property(price, rooms, bedrooms, bathrooms, description, upForSale, soldOn, surface,
-                    //TYPE typeOfPropertyDao.getTypeFromName(type)
-                    new Address(number, street, street2, zipcode, town, country)),
-                    //AGENT
-                    // STATUS
-                    //PHOTO
-            )*/
-
-
-        }
     }
 }
 //---------------------------------------------------------

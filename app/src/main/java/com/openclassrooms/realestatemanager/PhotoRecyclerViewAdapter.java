@@ -12,8 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.openclassrooms.realestatemanager.models.Photo;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,21 +31,22 @@ public class PhotoRecyclerViewAdapter extends RecyclerView.Adapter<PhotoRecycler
     private static final String TAG = "PhotoRecyclerViewAdapte";
 
     //Variables
-    private ArrayList<String> photoList = new ArrayList<>();
-    private ArrayList<String> textList = new ArrayList<>();
     private Context mContext;
+    private List<Photo> photos;
 
-    public PhotoRecyclerViewAdapter(Context context, ArrayList<String> photoList, ArrayList<String> textList ) {
-        mContext = context;
-        this.photoList = photoList;
-        this.textList = textList;
-    }
+
+public PhotoRecyclerViewAdapter(Context context) {
+    mContext = context;
+    this.photos = new ArrayList<>();
+
+}
 
     @NonNull
     @Override
     public PhotoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_picture, parent, false);
         PhotoViewHolder holder = new PhotoViewHolder(view);
+        mContext = parent.getContext();
         return holder;
     }
 
@@ -50,24 +54,34 @@ public class PhotoRecyclerViewAdapter extends RecyclerView.Adapter<PhotoRecycler
     public void onBindViewHolder(@NonNull PhotoViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: Called.");
 
+        Photo currentPhoto = photos.get(position);
+
         Glide.with(mContext)
-                .load(photoList.get(position))
+                .load(currentPhoto.getPhotoUri())
                 .into(holder.picture);
 
-        holder.type.setText(textList.get(position));
+        holder.type.setText(currentPhoto.getPhotoText());
 
         holder.itemContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, textList.get(position), Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, currentPhoto.getPhotoText(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return photoList.size();
+    return photos.size();
+        //return photoList.size();
     }
+
+    public void setPhotos(List<Photo> photos) {
+        this.photos = photos;
+        notifyDataSetChanged();
+    }
+
+    //---------------------------------------------------------------------------------------------------
 
     public class PhotoViewHolder extends RecyclerView.ViewHolder{
 
@@ -83,4 +97,8 @@ public class PhotoRecyclerViewAdapter extends RecyclerView.Adapter<PhotoRecycler
             ButterKnife.bind(this, itemView);
         }
     }
+
+
+
+
 }

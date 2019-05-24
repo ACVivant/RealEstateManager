@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.models;
+package com.openclassrooms.realestatemanager.nesertplusariennormalement;
 
 import java.util.jar.Attributes;
 

@@ -17,7 +17,91 @@ import androidx.lifecycle.LiveData;
  */
 public class PropertyRepository {
         private PropertyDao propertyDao;
-        private LiveData<List<Property>> listProperty;
+
+    public PropertyRepository(PropertyDao propertyDao) {this.propertyDao = propertyDao;}
+
+    public void insertProperty(Property property) {propertyDao.insertProperty(property);}
+
+    public void updateProperty(Property property) {propertyDao.updateProperty(property);}
+
+    // --- GET ---
+
+/*    public LiveData<List<Property>> getPropertyFromTown(String town) { return this.propertyDao.getPropertyFromTown(town);}
+
+    public LiveData<List<Property>> getPropertyFromZipCode(String zipcode) {
+        return propertyDao.getPropertyFromZipCode(zipcode);
+    }*/
+
+    public LiveData<List<Property>> getPropertyFromPrice(int minPrice, int maxPrice) {
+        return propertyDao.getPropertyFromPrice(minPrice, maxPrice);
+    }
+
+    public LiveData<List<Property>> getPropertyFromPriceMin(int minPrice) {
+        return propertyDao.getPropertyFromPriceMin(minPrice);
+    }
+
+    public LiveData<List<Property>> getPropertyFromPriceMax(int maxPrice) {
+        return propertyDao.getPropertyFromPriceMax(maxPrice);
+    }
+
+    public LiveData<List<Property>> getPropertyFromSurface(int minSurf, int maxSurf) {
+        return propertyDao.getPropertyFromSurface(minSurf, maxSurf);
+    }
+
+    public LiveData<List<Property>> getPropertyFromSurfaceMin(int minSurf) {
+        return propertyDao.getPropertyFromSurfaceMin(minSurf);
+    }
+
+    public LiveData<List<Property>> getPropertyFromSurfMax(int maxSurf ) {
+        return propertyDao.getPropertyFromSurfMax(maxSurf);
+    }
+
+    public LiveData<List<Property>> getPropertyFromRooms(int minRooms ) {
+        return propertyDao.getPropertyFromRooms(minRooms);
+    }
+
+    public LiveData<List<Property>> getPropertyFromBedrooms(int minBedrooms ) {
+        return propertyDao.getPropertyFromBedrooms(minBedrooms);
+    }
+
+    public LiveData<List<Property>> getPropertyFromBathrooms(int minBathrooms ) {
+        return propertyDao.getPropertyFromBathrooms(minBathrooms);
+    }
+
+    public LiveData<List<Property>> getPropertyFromUpForSaleBetween(int minUpForSale, int maxUpForSale ) {
+        return propertyDao.getPropertyFromUpForSaleBetween(minUpForSale,maxUpForSale);
+    }
+
+    public LiveData<List<Property>> getPropertyFromUpForSaleDateAfter(int upforsale ) {
+        return propertyDao.getPropertyFromUpForSaleDateAfter(upforsale);
+    }
+
+    public LiveData<List<Property>> getPropertyFromUpForSaleDateBefore(int upforsale) {
+        return propertyDao.getPropertyFromUpForSaleDateBefore(upforsale);
+    }
+
+    public LiveData<List<Property>> getPropertyFromSoldOnBetween(int minSoldOn, int maxSoldOn) {
+        return propertyDao.getPropertyFromSoldOnBetween(minSoldOn,maxSoldOn);
+    }
+
+    public LiveData<List<Property>> getPropertyFromSoldOnDateAfter(int soldOn) {
+        return propertyDao.getPropertyFromSoldOnDateAfter(soldOn);
+    }
+
+    public LiveData<List<Property>> getPropertyFromSoldOnDateBefore(int soldOn) {
+        return propertyDao.getPropertyFromSoldOnDateBefore(soldOn);
+    }
+
+    public LiveData<List<Property>> getAllProperty() {
+        return propertyDao.getAllProperty();
+    }
+
+    public LiveData<Property> getPropertyFromId(int propertyId) { return propertyDao.getPropertyFromId(propertyId);}
+
+
+
+
+       /* private LiveData<List<Property>> listProperty;
 
         public PropertyRepository(Application application) {
             RealEstateDatabase database = RealEstateDatabase.getInstance(application);
@@ -104,7 +188,7 @@ public class PropertyRepository {
         return propertyDao.getAllProperty();
     }
 
-    public Property getPropertyFromId(int propertyId) { return propertyDao.getPropertyFromId(propertyId);}
+    public LiveData<Property> getPropertyFromId(int propertyId) { return propertyDao.getPropertyFromId(propertyId);}
 
 //----------------------------------------------------------------------------------------------------------
         private static class InsertPropertyAsyncTask extends AsyncTask<Property, Void, Void> {
@@ -133,5 +217,5 @@ public class PropertyRepository {
                 propertyDao.updateProperty(properties[0]);
                 return null;
             }
-        }
+        }*/
 }

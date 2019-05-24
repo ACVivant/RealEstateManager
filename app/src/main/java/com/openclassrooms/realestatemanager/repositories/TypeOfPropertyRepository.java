@@ -18,7 +18,21 @@ public class TypeOfPropertyRepository {
 
         private TypeOfPropertyDao typeDao;
 
-        public TypeOfPropertyRepository(Application application) {
+    public TypeOfPropertyRepository(TypeOfPropertyDao statusDao) {this.typeDao = statusDao;}
+
+    public void insertTypeOfProperty(TypeOfProperty type) {typeDao.insertType(type);}
+
+    public void updateTypeOfProperty(TypeOfProperty type) {typeDao.updateType(type);}
+
+    public LiveData<TypeOfProperty> getTypeFromId(int typeId) { return typeDao.getTypeFromId(typeId);}
+
+    public LiveData<TypeOfProperty> getTypeFromName(String typeName) { return typeDao.getTypeFromName(typeName);}
+
+    public LiveData<List<TypeOfProperty>> getAllType() {
+        return typeDao.getAllTypes();
+    }
+
+       /* public TypeOfPropertyRepository(Application application) {
             RealEstateDatabase database = RealEstateDatabase.getInstance(application);
             typeDao = database.typeOfPropertyDao();
         }
@@ -31,9 +45,9 @@ public class TypeOfPropertyRepository {
             new UpdateTypeOfPropertyAsyncTask(typeDao).execute(type);
         }
 
-        public TypeOfProperty getTypeFromId(int typeId) { return typeDao.getTypeFromId(typeId);}
+        public LiveData<TypeOfProperty> getTypeFromId(int typeId) { return typeDao.getTypeFromId(typeId);}
 
-        public TypeOfProperty getTypeFromName(String typeName) { return typeDao.getTypeFromName(typeName);}
+        public LiveData<TypeOfProperty> getTypeFromName(String typeName) { return typeDao.getTypeFromName(typeName);}
 
         private static class InsertTypeOfPropertyAsyncTask extends AsyncTask<TypeOfProperty, Void, Void> {
             private TypeOfPropertyDao typeDao;
@@ -62,5 +76,5 @@ public class TypeOfPropertyRepository {
                 return null;
             }
         }
-
+*/
 }

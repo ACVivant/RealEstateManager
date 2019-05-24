@@ -20,10 +20,10 @@ import androidx.room.Update;
 @Dao
 public interface PhotoDao {
 
-    @Query("SELECT * FROM photo WHERE property = :property ORDER BY photoText ASC")
+    @Query("SELECT * FROM photo WHERE propertyId = :property ORDER BY photoText ASC")
     LiveData<List<Photo>> getPhotoFromProperty(int property );
 
-    @Query("SELECT * FROM photo ORDER BY property ASC")
+    @Query("SELECT * FROM photo ORDER BY propertyId ASC")
     LiveData<List<Photo>> getAllPhoto();
 
     @Insert

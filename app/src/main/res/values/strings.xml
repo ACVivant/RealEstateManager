@@ -9,7 +9,7 @@
     <string name="welcome_picture">"photo d'accueil"</string>
 
     <!-- Bottom Nav Bar -->
-    <string name="nav_title">"Nav title"</string>
+    <string name="nav_title">"My Real Estate Manager"</string>
     <string name="nav_detail">"Fiche détaillée"</string>
     <string name="nav_list">"Liste"</string>
 
@@ -79,8 +79,21 @@
     <string name="agent_in_charge">"Responsable"</string>
     <string name="date_example">"12/05/2019"</string>
     <string name="agent_example">"Jules"</string>
-    <string name="please_insert_agent">"La fiche ne peut pas être sauvegardée s'il n'y a pas le nom du responsable."</string>
+    <string name="please_insert_address">"La fiche ne peut pas être sauvegardée si l'addresse n'est pas renseignée."</string>
+    <string name="create_status">"Statut"</string>
 
+    <string-array name="create_agent_name">
+    <item>Jules</item>
+    <item>Marcelina</item>
+    <item>Victoire</item>
+</string-array>
+
+    <string-array name="create_status_array">
+        <item>En cours de création</item>
+        <item>En vente</item>
+        <item>En cours de négociation</item>
+        <item>Vendu</item>
+    </string-array>
     <!-- List Recyclerview  -->
     <string name="house_type">"Type de bien"</string>
 

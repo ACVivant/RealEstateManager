@@ -16,9 +16,25 @@ import androidx.lifecycle.LiveData;
  */
 public class AgentRepository {
     private AgentDao agentDao;
-    private LiveData<Agent> agent;
+   // private LiveData<Agent> agent;
 
-    public AgentRepository(Application application) {
+    public AgentRepository(AgentDao agentDao) {this.agentDao = agentDao;}
+
+    public void insertAgent(Agent agent) {agentDao.insertAgent(agent);}
+
+    public void updateAgent(Agent agent) {agentDao.updateAgent(agent);}
+
+    // --- GET ---
+
+    public LiveData<Agent> getAgentFromId(int agentId) { return this.agentDao.getAgentFromId(agentId);}
+
+    public LiveData<Agent> getAgentFromName(String agentName) { return this.agentDao.getAgentFromName(agentName);}
+
+    public LiveData<List<Agent>> getAllAgent() {
+        return this.agentDao.getAllAgent();
+    }
+
+    /*public AgentRepository(Application application) {
         RealEstateDatabase database = RealEstateDatabase.getInstance(application);
         agentDao = database.agentDao();
     }
@@ -31,7 +47,9 @@ public class AgentRepository {
         new UpdateAgentAsyncTask(agentDao).execute(agent);
     }
 
-    public Agent getAgentFromId(int agentId) { return agentDao.getAgentFromId(agentId);}
+    public LiveData<Agent> getAgentFromId(int agentId) { return agentDao.getAgentFromId(agentId);}
+
+    public LiveData<Agent> getAgentFromName(String agentName) { return agentDao.getAgentFromName(agentName);}
 
     public LiveData<List<Agent>> getAllAgent() {return agentDao.getAllAgent();}
 
@@ -62,5 +80,5 @@ public class AgentRepository {
             return null;
         }
     }
-
+*/
 }
