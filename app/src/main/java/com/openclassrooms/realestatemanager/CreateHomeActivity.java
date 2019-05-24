@@ -32,47 +32,6 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
 
     private static final String TAG = "CreateHomeActivity";
 
-    public static final String EXTRA_TYPE =
-            "com.openclassrooms.realestatemanager.EXTRA_TYPE";
-    public static final String EXTRA_DESCRIPTION =
-            "com.openclassrooms.realestatemanager.EXTRA_DESCRIPTION";
-    public static final String EXTRA_PRICE =
-            "com.openclassrooms.realestatemanager.EXTRA_PRICE";
-    public static final String EXTRA_SURFACE =
-            "com.openclassrooms.realestatemanager.EXTRA_SURFACE";
-    public static final String EXTRA_ROOMS =
-            "com.openclassrooms.realestatemanager.EXTRA_ROOMS";
-    public static final String EXTRA_BEDROOMS =
-            "com.openclassrooms.realestatemanager.EXTRA_BEDROOMS";
-    public static final String EXTRA_BATHROOMS =
-            "com.openclassrooms.realestatemanager.EXTRA_BATHROOMS";
-    public static final String EXTRA_ADDRESS_NUMBER =
-            "com.openclassrooms.realestatemanager.EXTRA_ADDRESS_NUMBER";
-    public static final String EXTRA_STREET =
-            "com.openclassrooms.realestatemanager.EXTRA_STREET";
-    public static final String EXTRA_STREET2 =
-            "com.openclassrooms.realestatemanager.EXTRA_STREET2";
-    public static final String EXTRA_ZIPCODE =
-            "com.openclassrooms.realestatemanager.EXTRA_ZIPCODE";
-    public static final String EXTRA_TOWN =
-            "com.openclassrooms.realestatemanager.EXTRA_TOWN";
-    public static final String EXTRA_COUNTRY =
-            "com.openclassrooms.realestatemanager.EXTRA_COUNTRY";
-    public static final String EXTRA_SCHOOL =
-            "com.openclassrooms.realestatemanager.EXTRA_SCHOOL";
-    public static final String EXTRA_SHOP =
-            "com.openclassrooms.realestatemanager.EXTRA_SHOP";
-    public static final String EXTRA_PARK =
-            "com.openclassrooms.realestatemanager.EXTRA_PARK";
-    public static final String EXTRA_MUSEUM =
-            "com.openclassrooms.realestatemanager.EXTRA_MUSEUM";
-    public static final String EXTRA_UPFORSALE =
-            "com.openclassrooms.realestatemanager.EXTRA_UPFORSALE";
-    public static final String EXTRA_SOLDON =
-            "com.openclassrooms.realestatemanager.EXTRA_SOLDON";
-    public static final String EXTRA_AGENT =
-            "com.openclassrooms.realestatemanager.EXTRA_AGENT";
-
     @BindView(R.id.create_spinner_status)
     Spinner spinnerStatus;
     @BindView(R.id.create_spinner_type)
@@ -175,7 +134,7 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     }
 
     private void configureView() {
-        spinnerStatus = (Spinner) findViewById(R.id.create_spinner_status);
+       // spinnerStatus = (Spinner) findViewById(R.id.create_spinner_status);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.create_status_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
@@ -183,7 +142,7 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         spinnerStatus.setAdapter(adapter);
         spinnerStatus.setOnItemSelectedListener(this);
 
-        spinnerType = (Spinner) findViewById(R.id.create_spinner_type);
+        //spinnerType = (Spinner) findViewById(R.id.create_spinner_type);
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this,
                 R.array.search_type_answer, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
@@ -191,7 +150,7 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         spinnerType.setAdapter(adapter1);
         spinnerType.setOnItemSelectedListener(this);
 
-        spinnerAgent = (Spinner) findViewById(R.id.create_spinner_agent);
+        //spinnerAgent = (Spinner) findViewById(R.id.create_spinner_agent);
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
                 R.array.create_agent_name, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -318,6 +318,7 @@ ImageView mMapView;;*/
 
     private void launchUpdateActivity() {
         Intent intent = new Intent(this.getActivity(), UpdateActivity.class);
+        intent.putExtra(ListHouseFragment.ID_PROPERTY, propertyId);
         startActivity(intent);
     }
 
