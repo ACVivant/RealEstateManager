@@ -192,8 +192,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fm.beginTransaction().hide(fragment1).commit();
                 fm.beginTransaction().show(fragment2).commit();
             }
-
-
         }
     }
 
