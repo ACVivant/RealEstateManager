@@ -303,7 +303,6 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     private void launchMainActivity() {
         Boolean displayDetail = false;
         Intent intent = new Intent(CreateHomeActivity.this, MainActivity.class);
-        intent.putExtra(MapActivity.ID_FRAGMENT, "1");
         intent.putExtra(ListHouseFragment.DISPLAY_DETAIL, displayDetail);
         startActivity(intent);
     }

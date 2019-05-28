@@ -174,7 +174,7 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
         saveProperty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                configureViewModel();
+                //configureViewModel();
                 savePropertyData();
                 updateProperty();
                 launchMainActivity();
@@ -192,9 +192,6 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
 
     }
 
-    private void launchSavedData() {
-        this.getProperty(propertyId);
-    }
     private void savePropertyData() {
         newStatus = spinnerStatus.getSelectedItem().toString();
         statusId = spinnerStatus.getSelectedItemPosition()+1;
@@ -247,6 +244,8 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
             }
 
             newAddressNumber = addressNumber.getText().toString();
+            Log.d(TAG, "savePropertyData: number " + newAddressNumber);
+
             if (!addressStreet.getText().toString().isEmpty()) {
                 newAddressStreet = addressStreet.getText().toString();
             } else {
@@ -287,29 +286,71 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
         }
     }
 
+    private void launchSavedData() {
+        this.getProperty(propertyId);
+    }
+
     private void getProperty(int id){
         this.propertyViewModel.getPropertyFromId(id).observe(this, this::loadProperty);
     }
 
     private void loadProperty(Property property) {
         currentProperty = property;
-        dateUpForSale.setText(Utils.convertStringToDate(String.valueOf(currentProperty.getUpForSaleDate())));
+
+        String upForSaleDateText = Utils.convertStringToDate(String.valueOf(currentProperty.getSoldOnDate()));
+        if (upForSaleDateText.equals("99/99/9999")) {
+            dateUpForSale.setText("");
+        } else {
+            dateUpForSale.setText(upForSaleDateText);
+        }
+
         String soldOnDateText = Utils.convertStringToDate(String.valueOf(currentProperty.getSoldOnDate()));
         if (soldOnDateText.equals("99/99/9999")) {
             dateSoldOn.setText("");
         }else{
             dateSoldOn.setText(soldOnDateText);
         }
-        descriptionText.setText(String.valueOf(currentProperty.getDescription()));
-        surface.setText(String.valueOf(currentProperty.getSurface()));
-        rooms.setText(String.valueOf(currentProperty.getRooms()));
-        bedrooms.setText(String.valueOf(currentProperty.getBedrooms()));
-        bathrooms.setText(String.valueOf(currentProperty.getBathroom()));
+
+        if (!String.valueOf(currentProperty.getDescription()).equals("")) {
+            descriptionText.setText(String.valueOf(currentProperty.getDescription()));
+        } else {
+            descriptionText.setText("");
+        }
+
+        if (!String.valueOf(currentProperty.getSurface()).equals("")) {
+            surface.setText(String.valueOf(currentProperty.getSurface()));
+        } else {
+            surface.setText("");
+        }
+
+        if (!String.valueOf(currentProperty.getRooms()).equals("")) {
+            rooms.setText(String.valueOf(currentProperty.getRooms()));
+        } else {
+            rooms.setText("");
+        }
+
+        if (!String.valueOf(currentProperty.getBedrooms()).equals("")) {
+            bedrooms.setText(String.valueOf(currentProperty.getBedrooms()));
+        } else {
+            bedrooms.setText("");
+        }
+
+        if (!String.valueOf(currentProperty.getBathroom()).equals("")) {
+            bathrooms.setText(String.valueOf(currentProperty.getBathroom()));
+        } else {
+            bathrooms.setText("");
+        }
+
         checkboxShop.setChecked(currentProperty.getShop());
         checkboxSchool.setChecked(currentProperty.getSchool());
         checkboxMuseum.setChecked(currentProperty.getMuseum());
         checkboxPark.setChecked(currentProperty.getPark());
-        price.setText(String.valueOf(currentProperty.getPrice()));
+
+        if (!String.valueOf(currentProperty.getPrice()).equals("")) {
+            price.setText(String.valueOf(currentProperty.getPrice()));
+        } else {
+            price.setText("");
+        }
 
         agentId = currentProperty.getAgentId();
         typeId = currentProperty.getTypeId();
@@ -328,8 +369,11 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
 
     private void setAddress(){
         addressNumber.setText(String.valueOf(currentProperty.getNumberInStreet()));
+        Log.d(TAG, "setAddress: number " + String.valueOf(currentProperty.getNumberInStreet()));
         addressStreet.setText(String.valueOf(currentProperty.getStreet()));
-        addressStreet2.setText(String.valueOf(currentProperty.getStreet2()));
+        if (!String.valueOf(currentProperty.getStreet2()).equals("")) {
+            addressStreet2.setText(String.valueOf(currentProperty.getStreet2()));
+        } else {addressStreet2.setText("");}
         addressZipcode.setText(String.valueOf(currentProperty.getZipcode()));
         addressTown.setText(String.valueOf(currentProperty.getTown()));
         addressCountry.setText(String.valueOf(currentProperty.getCountry()));
@@ -367,6 +411,7 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
         Log.d(TAG, "createProperty: statusId " +statusId);
         Log.d(TAG, "createProperty: typeId " + typeId);
         Log.d(TAG, "createProperty: agentId " +agentId);
+        Log.d(TAG, "updateProperty: number " +newAddressNumber);
         Property myProperty = new Property(newPrice, newRooms, newBedrooms, newBathrooms, newDescription, intUpForSale, intSoldOn, newSurface, nearShop, nearSchool, nearMuseum, nearPark, typeId, agentId, statusId,newPhotoUrl,newAddressNumber, newAddressStreet, newAddressStreet2, newZipcode, newTown, newCountry );
 
         propertyViewModel.updateProperty(myProperty);
@@ -382,7 +427,6 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
     private void launchMainActivity() {
         Boolean displayDetail = false;
         Intent intent = new Intent(UpdateActivity.this, MainActivity.class);
-        intent.putExtra(MapActivity.ID_FRAGMENT, "1");
         intent.putExtra(ListHouseFragment.DISPLAY_DETAIL, displayDetail);
         startActivity(intent);
     }

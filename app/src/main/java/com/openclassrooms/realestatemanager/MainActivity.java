@@ -182,13 +182,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Log.d(TAG, "configureView");
         if (findViewById(R.id.frame_layout_detail) == null) {
-            if (fragmentToExpose.equals("1")&& !displayDetail) {
-                fm.beginTransaction().hide(fragment2).commit();
-                fm.beginTransaction().show(fragment1).commit();
-            } else {
+
+            if (fragmentToExposeFromMap!=null) {
+                if (fragmentToExposeFromMap.equals("1") || displayDetail) {
+                    fm.beginTransaction().hide(fragment2).commit();
+                    fm.beginTransaction().show(fragment1).commit();
+                }
+            }else {
                 fm.beginTransaction().hide(fragment1).commit();
                 fm.beginTransaction().show(fragment2).commit();
             }
+
+
         }
     }
 

@@ -95,7 +95,7 @@
             android:textSize="@dimen/default_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView30" />
+            app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
         <TextView
             android:id="@+id/textView3"
@@ -480,6 +480,19 @@
             android:background="@color/colorPrimaryLight"
             android:textColor="@android:color/white"
             android:padding="5dp"/>
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/house_type"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView30"
+            tools:text="@string/house_type"
+            android:textSize="@dimen/default_text_size"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/textView31"
