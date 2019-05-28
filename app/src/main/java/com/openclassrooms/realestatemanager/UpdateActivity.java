@@ -408,11 +408,13 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void updateProperty(){
+        Log.d(TAG, "updateProperty: id " + propertyId);
         Log.d(TAG, "createProperty: statusId " +statusId);
         Log.d(TAG, "createProperty: typeId " + typeId);
         Log.d(TAG, "createProperty: agentId " +agentId);
         Log.d(TAG, "updateProperty: number " +newAddressNumber);
         Property myProperty = new Property(newPrice, newRooms, newBedrooms, newBathrooms, newDescription, intUpForSale, intSoldOn, newSurface, nearShop, nearSchool, nearMuseum, nearPark, typeId, agentId, statusId,newPhotoUrl,newAddressNumber, newAddressStreet, newAddressStreet2, newZipcode, newTown, newCountry );
+        myProperty.setPropertyId(propertyId);
 
         propertyViewModel.updateProperty(myProperty);
         Toast.makeText(this, "Le bien a été mis à jour", Toast.LENGTH_LONG).show();

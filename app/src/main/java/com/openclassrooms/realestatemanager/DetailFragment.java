@@ -257,7 +257,8 @@ ImageView mMapView;;*/
     private void setAddress(){
         numberInStreet.setText(String.valueOf(currentProperty.getNumberInStreet()));
         street.setText(String.valueOf(currentProperty.getStreet()));
-        if (currentProperty.getStreet2()!=null){
+        Log.d(TAG, "setAddress: address2 " + currentProperty.getStreet2());
+        if (!currentProperty.getStreet2().equals("null")){
             street2.setText(String.valueOf(currentProperty.getStreet2()));
         } else {street2.setVisibility(View.GONE);}
         zipcode.setText(String.valueOf(currentProperty.getZipcode()));

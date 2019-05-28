@@ -2,6 +2,7 @@ package com.openclassrooms.realestatemanager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
@@ -17,6 +18,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -33,6 +35,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.openclassrooms.realestatemanager.database.dao.AddressDao;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
@@ -47,7 +50,7 @@ import java.util.List;
 
 import static com.openclassrooms.realestatemanager.ListHouseFragment.DISPLAY_DETAIL;
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback{
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener{
 
     private static final String TAG = "MapActivity";
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
@@ -62,6 +65,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private Marker myMarker;
+    private Toolbar toolbar;
+    private NavigationView  navigationView;
 
     //Data (for test)
     private double[] test_latitude = {49.23, 49.25, 49.23};
@@ -109,6 +114,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+        configureToolbar();
         getLocationPermission();
 
         try {
@@ -120,6 +126,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         //allAddresses = new ArrayList<>();
         //allTypes = new ArrayList<>();
     }
+
+    private void configureToolbar(){
+        // Get the toolbar view inside the activity layout
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // Sets the Toolbar
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -222,7 +237,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             tab_latitude[i] = setPropertyLatLng(new Address(currentProperty.getNumberInStreet(), currentProperty.getStreet(), currentProperty.getStreet2(), currentProperty.getZipcode(), currentProperty.getTown(), currentProperty.getCountry())).latitude;
             tab_longitude[i] = setPropertyLatLng(new Address(currentProperty.getNumberInStreet(), currentProperty.getStreet(), currentProperty.getStreet2(), currentProperty.getZipcode(), currentProperty.getTown(), currentProperty.getCountry())).longitude;
 
-            // Comment faire pour que la boucle attende les résultats de getType et getAddress avant de boucler?
+            // Comment faire pour que la boucle attende les résultats de getType avant de boucler?
             getType(currentProperty.getTypeId());
             tab_type[i]=currentTypeText;
 
@@ -379,4 +394,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        return false;
+    }
 }
