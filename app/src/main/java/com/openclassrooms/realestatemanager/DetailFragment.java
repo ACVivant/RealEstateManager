@@ -97,6 +97,10 @@ ImageView mMapView;;*/
     private int typeId;
     private int agentId;
     private int numberOfProperties;
+    private boolean fromFilter = false;
+    private ArrayList<Integer> filteredResultsArray = new ArrayList<>();
+    private int position;
+    private int newPosition;
 
     private String key;
 
@@ -153,10 +157,21 @@ ImageView mMapView;;*/
         before.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (propertyId==1){
-                    Toast.makeText(getContext(), R.string.before_not_allowed, Toast.LENGTH_LONG).show();
+                if(!fromFilter) {
+                    Log.d(TAG, "onClick: not fromFilter");
+                    if (propertyId == 1) {
+                        Toast.makeText(getContext(), R.string.before_not_allowed, Toast.LENGTH_LONG).show();
+                    } else {
+                        launchDetailFragment(propertyId - 1);
+                    }
                 } else {
-                    launchDetailFragment(propertyId - 1);
+                    Log.d(TAG, "onClick: fromFilter");
+                    if(propertyId == filteredResultsArray.get(0)) {
+                        Toast.makeText(getContext(), R.string.before_not_allowed, Toast.LENGTH_LONG).show();
+                    } else {
+                        newPosition = position-1;
+                        launchDetailFragment(filteredResultsArray.get(position -1));
+                    }
                 }
             }
         });
@@ -166,10 +181,19 @@ ImageView mMapView;;*/
             public void onClick(View v) {
                 Log.d(TAG, "onClick: propertyId " + propertyId);
                 Log.d(TAG, "onClick: properties.size " +numberOfProperties);
-                if (propertyId==numberOfProperties) {
-                    Toast.makeText(getContext(), R.string.after_not_allowed, Toast.LENGTH_LONG).show();
-                } else {
-                    launchDetailFragment(propertyId + 1);
+                if (!fromFilter) {
+                    if (propertyId == numberOfProperties) {
+                        Toast.makeText(getContext(), R.string.after_not_allowed, Toast.LENGTH_LONG).show();
+                    } else {
+                        launchDetailFragment(propertyId + 1);
+                    }
+                }else {
+                    if(propertyId == filteredResultsArray.get(filteredResultsArray.size())) {
+                        Toast.makeText(getContext(), R.string.after_not_allowed, Toast.LENGTH_LONG).show();
+                    } else {
+                        newPosition = position+1;
+                        launchDetailFragment(filteredResultsArray.get(position +1));
+                    }
                 }
 
             }
@@ -177,6 +201,14 @@ ImageView mMapView;;*/
 
         Bundle bundle = getArguments();
         propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY,1);
+        Log.d(TAG, "onCreateView: id " + propertyId);
+        fromFilter = bundle.getBoolean(ListFilteredPropertiesFragment.FROM_FILTER, false);
+        Log.d(TAG, "onCreateView: fromFilter " + fromFilter);
+        if (fromFilter) {
+            filteredResultsArray = bundle.getIntegerArrayList(SearchActivity.ID_FILTERED);
+            position = bundle.getInt(ListFilteredPropertiesFragment.POSITON_IN_FILTER, 1);
+            Log.d(TAG, "onCreateView: position " + position);
+        }
         Log.d(TAG, "onCreateView: propertyId " + propertyId);
 
         configureViewModel();
@@ -243,7 +275,7 @@ ImageView mMapView;;*/
         typeId = currentProperty.getTypeId();
         statusId = currentProperty.getStatusId();
 
-        Log.d(TAG, "updateProperty: id " +propertyId + " " +addressId+ " " +typeId+ " " + statusId);
+        Log.d(TAG, "updateProperty: id " +propertyId + " " +typeId+ " " + statusId);
 
        //this.getAddress(addressId);
         setAddress();
@@ -258,7 +290,8 @@ ImageView mMapView;;*/
         numberInStreet.setText(String.valueOf(currentProperty.getNumberInStreet()));
         street.setText(String.valueOf(currentProperty.getStreet()));
         Log.d(TAG, "setAddress: address2 " + currentProperty.getStreet2());
-        if (!currentProperty.getStreet2().equals("null")){
+        if(currentProperty.getStreet2()!= null){
+//        if (!currentProperty.getStreet2().equals("null")){
             street2.setText(String.valueOf(currentProperty.getStreet2()));
         } else {street2.setVisibility(View.GONE);}
         zipcode.setText(String.valueOf(currentProperty.getZipcode()));
@@ -329,6 +362,11 @@ ImageView mMapView;;*/
         Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.putExtra(ListHouseFragment.ID_PROPERTY, id);
         intent.putExtra(ListHouseFragment.DISPLAY_DETAIL, displayDetail);
+        if (fromFilter) {
+            intent.putExtra(ListFilteredPropertiesFragment.FROM_FILTER, true);
+            intent.putExtra(ListFilteredPropertiesFragment.POSITON_IN_FILTER, newPosition);
+            intent.putExtra(SearchActivity.ID_FILTERED, filteredResultsArray);
+        }
         startActivity(intent);
     }
 }

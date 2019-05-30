@@ -51,6 +51,7 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
         this.types = new ArrayList<>();
         this.propertySelected = propertySelected;
         this.useTablet = useTablet;
+        Log.d(TAG, "ListRecyclerViewAdapter: constructor");
     }
 
     @NonNull
@@ -68,10 +69,9 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
         Log.d(TAG, "onBindViewHolder: ListRecyclerViewAdapter Called.");
 
         Property currentProperty = properties.get(position);
-        //Address currentAddress = addresses.get(currentProperty.getAddressId());
-        TypeOfProperty currentType = types.get(currentProperty.getTypeId());
-       // currentProperty.getTypeId();
-
+        TypeOfProperty currentType = types.get(currentProperty.getTypeId()-1);
+        Log.d(TAG, "onBindViewHolder: typeText " + currentProperty.getTypeId());
+        Log.d(TAG, "onBindViewHolder: typeId " + currentType.getTypeText());
         holder.type.setText(String.valueOf(currentType.getTypeText()));
         holder.town.setText(String.valueOf(currentProperty.getTown()));
         holder.price.setText(String.valueOf(currentProperty.getPrice()));
@@ -97,16 +97,14 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
     public void setProperties(List<Property> properties) {
         this.properties = properties;
         notifyDataSetChanged();
+        Log.d(TAG, "setProperties");
+        Log.d(TAG, "setProperties: properties.size " + properties.size());
     }
-
-/*    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
-        notifyDataSetChanged();
-    }*/
 
     public void setTypes(List<TypeOfProperty> types) {
         this.types = types;
         notifyDataSetChanged();
+        Log.d(TAG, "setTypes");
     }
 
     public interface OnItemClickedListener{

@@ -7,6 +7,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.room.Dao;
+import androidx.room.Query;
+import androidx.room.Transaction;
 import okhttp3.internal.Util;
 
 import android.Manifest;
@@ -79,6 +82,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private double[] tab_latitude = {1,2,3,4,5,6,7} ;
     private double[] tab_longitude = {1,2,3,4,5,6,7} ;
     private String[] tab_type = {"maison", "appartement", "manoir", "appartement", "palace", "appartement", "maison"} ;
+    private int[] tab_room = {1,2,3,4,5,6,7};
     private int[] tab_price = {450000, 578230, 125480, 56230500, 153450, 275490, 562300} ;
     private int[] tab_id = {1,2,3,4,5,6,7} ;
     private String devise = "€";
@@ -122,9 +126,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        //allAddresses = new ArrayList<>();
-        //allTypes = new ArrayList<>();
     }
 
     private void configureToolbar(){
@@ -217,35 +218,31 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private void updatePropertyList(List<Property> properties){
         tab_id = new int[properties.size()];
-        tab_type = new String[properties.size()];
+        tab_room = new int[properties.size()];
         tab_price = new int[properties.size()];
         tab_latitude = new double[properties.size()];
         tab_longitude = new double[properties.size()];
 
         for (int i=0; i<properties.size(); i++) {
-            //int i=2;
-            currentProperty = properties.get(i);
-
-            currentPrice = currentProperty.getPrice();
-            tab_price[i] = currentPrice;
-            Log.d(TAG, "updatePropertyList: currentPrice " + currentPrice);
-
-            tab_id[i] = currentProperty.getPropertyId();
-            currentPropertyId = currentProperty.getPropertyId();
-            Log.d(TAG, "updatePropertyList: currentPropertyId " + currentPropertyId);
-
-            tab_latitude[i] = setPropertyLatLng(new Address(currentProperty.getNumberInStreet(), currentProperty.getStreet(), currentProperty.getStreet2(), currentProperty.getZipcode(), currentProperty.getTown(), currentProperty.getCountry())).latitude;
-            tab_longitude[i] = setPropertyLatLng(new Address(currentProperty.getNumberInStreet(), currentProperty.getStreet(), currentProperty.getStreet2(), currentProperty.getZipcode(), currentProperty.getTown(), currentProperty.getCountry())).longitude;
-
-            // Comment faire pour que la boucle attende les résultats de getType avant de boucler?
-            getType(currentProperty.getTypeId());
-            tab_type[i]=currentTypeText;
-
-/*            getAddress(currentProperty.getAddressId());
-            tab_latitude[i]=currentLat;
-            tab_longitude[i]=currentLng;*/
+            loadMarkerInfos(properties.get(i), i);
         }
     }
+
+    public void loadMarkerInfos(Property currentProperty, int i) {
+        currentPrice = currentProperty.getPrice();
+        tab_price[i] = currentPrice;
+        Log.d(TAG, "updatePropertyList: currentPrice " + currentPrice);
+
+        tab_id[i] = currentProperty.getPropertyId();
+        currentPropertyId = currentProperty.getPropertyId();
+        Log.d(TAG, "updatePropertyList: currentPropertyId " + currentPropertyId);
+
+        tab_room[i] = currentProperty.getRooms();
+
+        tab_latitude[i] = setPropertyLatLng(new Address(currentProperty.getNumberInStreet(), currentProperty.getStreet(), currentProperty.getStreet2(), currentProperty.getZipcode(), currentProperty.getTown(), currentProperty.getCountry())).latitude;
+        tab_longitude[i] = setPropertyLatLng(new Address(currentProperty.getNumberInStreet(), currentProperty.getStreet(), currentProperty.getStreet2(), currentProperty.getZipcode(), currentProperty.getTown(), currentProperty.getCountry())).longitude;
+    }
+
 
     public LatLng setPropertyLatLng(Address address) {
         try {
@@ -260,26 +257,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
         return new LatLng(currentLat, currentLng);
     }
-
-   /* private void getAddress(int id) {
-        this.propertyViewModel.getAddressFromId(id).observe(this, this::updateAddress);
-    }
-
-    private void updateAddress(Address address){
-        this.currentAddress = address;
-        try {
-            currentLat = geocoder(currentAddress).latitude;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            currentLng = geocoder(currentAddress).longitude;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Log.d(TAG, "updateAddress: addressIndex " + addressIndex);
-    }*/
 
     private void getType(int id) {
         Log.d(TAG, "getType");
@@ -300,7 +277,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         // le type n'est pas le bon à cause du pb de synchronisation
         for (int i=0; i< tab_latitude.length; i++) {
-            addMarker(new LatLng(tab_latitude[i], tab_longitude[i]), tab_type[i], tab_price[i], devise, tab_id[i]);
+            addMarker(new LatLng(tab_latitude[i], tab_longitude[i]), tab_room[i], tab_price[i], devise, tab_id[i]);
         }
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
@@ -311,11 +288,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
     }
 
-    private Marker addMarker(LatLng latLng, String type, int price, String devise, int propertyId) {
+    private Marker addMarker(LatLng latLng, int room, int price, String devise, int propertyId) {
         Log.d(TAG, "addMarkers");
         MarkerOptions options = new MarkerOptions()
                 .position(latLng)
-                .title(type + " " + price + devise + " " + propertyId);
+                .title(room + " pièces: " + price + devise);
 
         myMarker = mMap.addMarker(options);
         myMarker.setTag(propertyId);

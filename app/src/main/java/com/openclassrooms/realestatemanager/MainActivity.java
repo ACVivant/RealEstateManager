@@ -20,6 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.openclassrooms.realestatemanager.models.Address;
 import com.openclassrooms.realestatemanager.models.Property;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -59,6 +60,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Bundle state;
     private int homeToExpose;
     private boolean displayDetail = false;
+    private boolean filteredResults = false;
+    private int[] filteredResultsArray;
+    private String searchQuery;
+    private int position;
 
     private int clic = 0;
     private boolean firstView1 = false;
@@ -80,6 +85,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         homeToExpose = getIntent().getIntExtra(ListHouseFragment.ID_PROPERTY, 1);
         displayDetail = getIntent().getBooleanExtra(ListHouseFragment.DISPLAY_DETAIL, false);
+
+/*        filteredResults = getIntent().getBooleanExtra(ListFilteredPropertiesFragment.FROM_FILTER, false);
+        if (filteredResults) {
+            filteredResultsArray = getIntent().getIntArrayExtra(SearchActivity.ID_FILTERED);
+            position = getIntent().getIntExtra(ListFilteredPropertiesFragment.POSITON_IN_FILTER, 1);
+        }*/
 
         fragmentToExposeFromMap = getIntent().getStringExtra(ID_FRAGMENT);
         Log.d(TAG, "onCreate: fragment_id " + fragmentToExposeFromMap);
@@ -139,7 +150,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void configureFirstView() {
         Log.d(TAG, "configureFirstView");
         Bundle args = new Bundle();
-        args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
+            args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
+/*            args.putBoolean(SearchActivity.RESULTS_FILTERED, filteredResults);
+            if (filteredResults) {
+                args.putIntArray(SearchActivity.ID_FILTERED, filteredResultsArray);
+            }*/
 
 
             if (findViewById(R.id.frame_layout_detail) == null) {
@@ -176,6 +191,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Ajouter les infos pour afficher la bonne maison
         Bundle args = new Bundle();
         args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
+
+/*        args.putBoolean(SearchActivity.RESULTS_FILTERED, filteredResults);
+        if (filteredResults) {
+            args.putIntArray(SearchActivity.ID_FILTERED, filteredResultsArray);
+        }*/
+
         Log.d(TAG, "configureView: bundle " + homeToExpose);
         fragment1.setArguments(args);
         fragment2.setArguments(args);
@@ -304,10 +325,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
 
             case R.id.top_menu_search:
-                //launchSearch()
-                fm.beginTransaction().hide(fragment1).commit();
-                fm.beginTransaction().show(fragment2).commit();
-                active = fragment2;
+                launchSearch();
                 return true;
         }
         return false;

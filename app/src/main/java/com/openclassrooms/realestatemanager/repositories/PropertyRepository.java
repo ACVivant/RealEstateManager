@@ -11,6 +11,7 @@ import java.security.Policy;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 /**
  * Created by Anne-Charlotte Vivant on 13/05/2019.
@@ -98,7 +99,7 @@ public class PropertyRepository {
 
     public LiveData<Property> getPropertyFromId(int propertyId) { return propertyDao.getPropertyFromId(propertyId);}
 
-
+    public LiveData<List<Property>> getFilteredProperties(SupportSQLiteQuery query) {return propertyDao.getFilteredProperties(query);}
 
 
        /* private LiveData<List<Property>> listProperty;

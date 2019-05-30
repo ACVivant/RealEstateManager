@@ -11,7 +11,10 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RawQuery;
+import androidx.room.Transaction;
 import androidx.room.Update;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 /**
  * Created by Anne-Charlotte Vivant on 10/05/2019.
@@ -20,6 +23,9 @@ import androidx.room.Update;
 // Comment rédiger les Query pour les AttractingPoint
 @Dao
 public interface PropertyDao {
+
+    @RawQuery (observedEntities = Property.class)
+    LiveData<List<Property>> getFilteredProperties(SupportSQLiteQuery query);
 
 /*    @Query("SELECT * FROM property WHERE town = :town ORDER BY soldOnDate DESC")
     LiveData<List<Property>> getPropertyFromTown(String town);

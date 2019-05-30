@@ -88,10 +88,19 @@
     <string name="create_status">"Statut"</string>
 
     <string-array name="create_agent_name">
-    <item>Jules</item>
-    <item>Marcelina</item>
-    <item>Victoire</item>
-</string-array>
+        <item>Jules</item>
+        <item>Marcelina</item>
+        <item>Victoire</item>
+    </string-array>
+
+    <string-array name="filter_agent_ask">
+        <item>Jules</item>
+        <item>Marcelina</item>
+        <item>Victoire</item>
+        <item>Tous</item>
+    </string-array>
+
+    <string name="all">Tous</string>
 
     <string-array name="create_status_array">
         <item>En cours de création</item>
@@ -99,17 +108,35 @@
         <item>En cours de négociation</item>
         <item>Vendu</item>
     </string-array>
+
+    <string-array name="filter_status_ask">
+        <item>En cours de création</item>
+        <item>En vente</item>
+        <item>En cours de négociation</item>
+        <item>Vendu</item>
+        <item>Tous</item>
+    </string-array>
+
     <!-- List Recyclerview  -->
     <string name="house_type">"Type de bien"</string>
 
     <!-- Search Activity -->
     <string name="search_type_ask">"Type de bien"</string>
     <string-array name="search_type_answer">
-        <item>appartement</item>
-        <item>maison</item>
-        <item>manoir</item>
-        <item>château</item>
-        <item>palace</item>
+        <item>Appartement</item>
+        <item>Loft</item>
+        <item>Maison</item>
+        <item>Manoir</item>
+        <item>Château</item>
+    </string-array>
+
+    <string-array name="filter_type_ask">
+        <item>Appartement</item>
+        <item>Loft</item>
+        <item>Maison</item>
+        <item>Manoir</item>
+        <item>Château</item>
+        <item>Tous</item>
     </string-array>
 
     <string name="search_price_mini_ask">"Prix min"</string>

@@ -35,13 +35,17 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ListHouseFragment extends Fragment {
+public class ListFilteredPropertiesFragment extends Fragment {
 
-    private static final String TAG = "ListHouseFragment";
+    // A mettre à jour avec les données de ResultSearchActivity passées par SearchActivity
+
+    private static final String TAG = "ListFilteredPropertiesF";
     private static final String PLACE_ID = "id_of_place";
     private static final String ID_FRAGMENT = "fragment_to_expose";
     public static final String ID_PROPERTY = "property_selected";
     public static final String DISPLAY_DETAIL = "display_detail_after_clic";
+    public static final String FROM_FILTER = "from_filtered_results";
+    public static final String POSITON_IN_FILTER = "position_of_property_in_filtered_results";
 
     private PropertyViewModel propertyViewModel;
     private ListRecyclerViewAdapter adapter;
@@ -52,13 +56,14 @@ public class ListHouseFragment extends Fragment {
     private boolean displayDetail;
     private boolean filteredResults;
     private String searchQuery;
+    private List<Property> listFilteredProperty = new ArrayList<>();
 
     private ArrayList<Integer> filteredResultsArray = new ArrayList<>();
 
 
     View v;
 
-    public ListHouseFragment() {
+    public ListFilteredPropertiesFragment() {
         // Required empty public constructor
     }
 
@@ -68,17 +73,19 @@ public class ListHouseFragment extends Fragment {
                              Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView");
         // Inflate the layout for this fragment
-       v= inflater.inflate(R.layout.fragment_list_house, container, false);
+        v= inflater.inflate(R.layout.fragment_list_house, container, false);
         Bundle bundle = getArguments();
         propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY, 0);
         useTablet = bundle.getBoolean(MainActivity.USE_TABLET, false);
-       // filteredResults = bundle.getBoolean(SearchActivity.RESULTS_FILTERED, false);
-       // if (filteredResults) {searchQuery = bundle.getString(SearchActivity.SEARCH_QUERY);}
+        filteredResultsArray = bundle.getIntegerArrayList(SearchActivity.ID_FILTERED);
+        // filteredResults = bundle.getBoolean(SearchActivity.RESULTS_FILTERED, false);
+        // if (filteredResults) {searchQuery = bundle.getString(SearchActivity.SEARCH_QUERY);}
 
         initRecyclerView();
         configureViewModel();
-        getAllProperties();
+        getFilteredProperties();
         getAllTypes();
+        //setFilteredProperties();
 
         return v;
     }
@@ -101,19 +108,24 @@ public class ListHouseFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
 
-            recyclerView.setAdapter(adapter);
-            adapter.setOnItemClickedListener(new ListRecyclerViewAdapter.OnItemClickedListener() {
-                @Override
-                public void OnItemClicked(int position) {
-                    displayDetail = true;
+        recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickedListener(new ListRecyclerViewAdapter.OnItemClickedListener() {
+            @Override
+            public void OnItemClicked(int position) {
+                displayDetail = true;
 
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    intent.putExtra(ID_PROPERTY, position + 1);
-                    intent.putExtra(DISPLAY_DETAIL, displayDetail);
-                    intent.putExtra(ListFilteredPropertiesFragment.FROM_FILTER, false);
-                    startActivity(intent);
-                }
-            });
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                //intent.putExtra(ID_PROPERTY, position + 1);
+                intent.putExtra(ID_PROPERTY, filteredResultsArray.get(position));
+                intent.putExtra(DISPLAY_DETAIL, displayDetail);
+                intent.putExtra(SearchActivity.ID_FILTERED, filteredResultsArray);
+                intent.putExtra(FROM_FILTER, true);
+                intent.putExtra(POSITON_IN_FILTER, position);
+                Log.d(TAG, "OnItemClicked: position " + position);
+                Log.d(TAG, "OnItemClicked: id " + filteredResultsArray.get(position));
+                startActivity(intent);
+            }
+        });
     }
 
     private void configureViewModel(){
@@ -122,20 +134,30 @@ public class ListHouseFragment extends Fragment {
         this.propertyViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PropertyViewModel.class);
     }
 
-    private void getAllProperties(){
-        this.propertyViewModel.getAllProperty().observe(this, this::updatePropertyList);
+    private void getFilteredProperties(){
+        for (int i=0; i<filteredResultsArray.size(); i++) {
+            this.propertyViewModel.getPropertyFromId(filteredResultsArray.get(i)).observe(this, this::updatePropertyList);
+            Log.d(TAG, "getFilteredProperties: property n°" + i);
+        }
     }
 
-        private void updatePropertyList(List<Property> properties){
-        this.adapter.setProperties(properties);
+    private void updatePropertyList(Property property) {
+        listFilteredProperty.add(property);
+        this.adapter.setProperties(listFilteredProperty);
     }
 
-        private void getAllTypes() {
+    private void getAllTypes() {
         this.propertyViewModel.getAllTypes().observe(this, this::updateTypes);
     }
 
     private void updateTypes(List<TypeOfProperty> types){
         this.adapter.setTypes(types);
     }
+
+    private void setFilteredProperties() {
+        Log.d(TAG, "setFilteredProperties");
+        this.adapter.setProperties(listFilteredProperty);
+    }
 }
+
 
