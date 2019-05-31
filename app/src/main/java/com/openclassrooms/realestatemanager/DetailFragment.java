@@ -98,6 +98,7 @@ ImageView mMapView;;*/
     private int agentId;
     private int numberOfProperties;
     private boolean fromFilter = false;
+    private boolean filteredResults;
     private ArrayList<Integer> filteredResultsArray = new ArrayList<>();
     private int position;
     private int newPosition;
@@ -147,6 +148,20 @@ ImageView mMapView;;*/
         before = (Button) v.findViewById(R.id.before_detail_btn);
         after = (Button) v.findViewById(R.id.after_detail_btn);
 
+        Bundle bundle = getArguments();
+        propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY,1);
+        Log.d(TAG, "onCreateView: id " + propertyId);
+        filteredResults = bundle.getBoolean(SearchActivity.RESULTS_FILTERED, false);
+        //fromFilter = bundle.getBoolean(ListFilteredPropertiesFragment.FROM_FILTER, false);
+        //Log.d(TAG, "onCreateView: fromFilter " + fromFilter);
+        Log.d(TAG, "onCreateView: filteredResults " +filteredResults);
+        if (filteredResults) {
+            filteredResultsArray = bundle.getIntegerArrayList(SearchActivity.ID_FILTERED);
+            position = bundle.getInt(ListFilteredPropertiesFragment.POSITON_IN_FILTER, 1);
+            Log.d(TAG, "onCreateView: position " + position);
+        }
+        Log.d(TAG, "onCreateView: propertyId " + propertyId);
+
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,20 +172,22 @@ ImageView mMapView;;*/
         before.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!fromFilter) {
-                    Log.d(TAG, "onClick: not fromFilter");
+                Log.d(TAG, "onClick: filteredResults " + filteredResults);
+                if(!filteredResults) {
+                    Log.d(TAG, "onClick: not filteredResults");
                     if (propertyId == 1) {
                         Toast.makeText(getContext(), R.string.before_not_allowed, Toast.LENGTH_LONG).show();
                     } else {
-                        launchDetailFragment(propertyId - 1);
+                        launchMainActivityDetail(propertyId - 1);
                     }
                 } else {
-                    Log.d(TAG, "onClick: fromFilter");
+                    Log.d(TAG, "onClick: filteredResults");
                     if(propertyId == filteredResultsArray.get(0)) {
                         Toast.makeText(getContext(), R.string.before_not_allowed, Toast.LENGTH_LONG).show();
                     } else {
+                        Log.d(TAG, "onClick: position " +position);
                         newPosition = position-1;
-                        launchDetailFragment(filteredResultsArray.get(position -1));
+                        launchResultSearchActivityDetail(filteredResultsArray.get(position -1));
                     }
                 }
             }
@@ -181,35 +198,26 @@ ImageView mMapView;;*/
             public void onClick(View v) {
                 Log.d(TAG, "onClick: propertyId " + propertyId);
                 Log.d(TAG, "onClick: properties.size " +numberOfProperties);
-                if (!fromFilter) {
+                if (!filteredResults) {
                     if (propertyId == numberOfProperties) {
                         Toast.makeText(getContext(), R.string.after_not_allowed, Toast.LENGTH_LONG).show();
                     } else {
-                        launchDetailFragment(propertyId + 1);
+                        launchMainActivityDetail(propertyId + 1);
                     }
                 }else {
-                    if(propertyId == filteredResultsArray.get(filteredResultsArray.size())) {
+                    Log.d(TAG, "onClick: filteredResults.size " + (filteredResultsArray.size()));
+                    if(propertyId == filteredResultsArray.get(filteredResultsArray.size()-1)) {
                         Toast.makeText(getContext(), R.string.after_not_allowed, Toast.LENGTH_LONG).show();
                     } else {
+                        Log.d(TAG, "onClick: position " + position);
                         newPosition = position+1;
-                        launchDetailFragment(filteredResultsArray.get(position +1));
+                        launchResultSearchActivityDetail(filteredResultsArray.get(newPosition));
                     }
                 }
 
             }
         });
 
-        Bundle bundle = getArguments();
-        propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY,1);
-        Log.d(TAG, "onCreateView: id " + propertyId);
-        fromFilter = bundle.getBoolean(ListFilteredPropertiesFragment.FROM_FILTER, false);
-        Log.d(TAG, "onCreateView: fromFilter " + fromFilter);
-        if (fromFilter) {
-            filteredResultsArray = bundle.getIntegerArrayList(SearchActivity.ID_FILTERED);
-            position = bundle.getInt(ListFilteredPropertiesFragment.POSITON_IN_FILTER, 1);
-            Log.d(TAG, "onCreateView: position " + position);
-        }
-        Log.d(TAG, "onCreateView: propertyId " + propertyId);
 
         configureViewModel();
         this.getAllProperties();
@@ -356,17 +364,35 @@ ImageView mMapView;;*/
         startActivity(intent);
     }
 
-    private void launchDetailFragment(int id) {
+    private void launchMainActivityDetail(int id) {
         Boolean displayDetail = true;
 
         Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.putExtra(ListHouseFragment.ID_PROPERTY, id);
         intent.putExtra(ListHouseFragment.DISPLAY_DETAIL, displayDetail);
-        if (fromFilter) {
+        if (filteredResults) {
             intent.putExtra(ListFilteredPropertiesFragment.FROM_FILTER, true);
             intent.putExtra(ListFilteredPropertiesFragment.POSITON_IN_FILTER, newPosition);
             intent.putExtra(SearchActivity.ID_FILTERED, filteredResultsArray);
+            Log.d(TAG, "launchMainActivityDetail: newPostition " + newPosition);
+            Log.d(TAG, "launchMainActivityDetail: newId " + filteredResultsArray.get(newPosition));
         }
+        startActivity(intent);
+    }
+
+    private void launchResultSearchActivityDetail(int id) {
+        Boolean displayDetail = true;
+
+        Intent intent = new Intent(getActivity(), ResultSearchActivity.class);
+        intent.putExtra(ListHouseFragment.ID_PROPERTY, id);
+        intent.putExtra(ListHouseFragment.DISPLAY_DETAIL, displayDetail);
+            intent.putExtra(ListFilteredPropertiesFragment.FROM_FILTER, true);
+            intent.putExtra(SearchActivity.RESULTS_FILTERED, true);
+            intent.putExtra(ListFilteredPropertiesFragment.POSITON_IN_FILTER, newPosition);
+            intent.putExtra(SearchActivity.ID_FILTERED, filteredResultsArray);
+            Log.d(TAG, "launchResultSearchActivityDetail: newPosition " + newPosition);
+            Log.d(TAG, "launchResultSearchActivityDetail: newId " + filteredResultsArray.get(newPosition));
+
         startActivity(intent);
     }
 }

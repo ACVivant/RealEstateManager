@@ -83,18 +83,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.configureNavigationView();
         //this.configureBottomNavigationView();
 
+        // id de la propriété à exposer
         homeToExpose = getIntent().getIntExtra(ListHouseFragment.ID_PROPERTY, 1);
+        // on a besoin du fragment détail et pas de la liste
         displayDetail = getIntent().getBooleanExtra(ListHouseFragment.DISPLAY_DETAIL, false);
-
-/*        filteredResults = getIntent().getBooleanExtra(ListFilteredPropertiesFragment.FROM_FILTER, false);
-        if (filteredResults) {
-            filteredResultsArray = getIntent().getIntArrayExtra(SearchActivity.ID_FILTERED);
-            position = getIntent().getIntExtra(ListFilteredPropertiesFragment.POSITON_IN_FILTER, 1);
-        }*/
-
+        // On vient de MapActivity
         fragmentToExposeFromMap = getIntent().getStringExtra(ID_FRAGMENT);
+
         Log.d(TAG, "onCreate: fragment_id " + fragmentToExposeFromMap);
-        Log.d(TAG, "onCreate: homeToExpose " + homeToExpose);
+        Log.d(TAG, "onCreate: homeToExpose id " + homeToExpose);
         Log.d(TAG, "onCreate: displayDetail " + displayDetail);
 
         if (fragmentToExposeFromMap == null) {

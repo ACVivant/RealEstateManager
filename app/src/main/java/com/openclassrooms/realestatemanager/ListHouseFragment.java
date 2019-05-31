@@ -107,6 +107,7 @@ public class ListHouseFragment extends Fragment {
                 public void OnItemClicked(int position) {
                     displayDetail = true;
 
+                    Log.d(TAG, "OnItemClicked");
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     intent.putExtra(ID_PROPERTY, position + 1);
                     intent.putExtra(DISPLAY_DETAIL, displayDetail);

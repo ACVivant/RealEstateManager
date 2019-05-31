@@ -78,7 +78,7 @@ public class ListFilteredPropertiesFragment extends Fragment {
         propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY, 0);
         useTablet = bundle.getBoolean(MainActivity.USE_TABLET, false);
         filteredResultsArray = bundle.getIntegerArrayList(SearchActivity.ID_FILTERED);
-        // filteredResults = bundle.getBoolean(SearchActivity.RESULTS_FILTERED, false);
+        filteredResults = bundle.getBoolean(SearchActivity.RESULTS_FILTERED, false);
         // if (filteredResults) {searchQuery = bundle.getString(SearchActivity.SEARCH_QUERY);}
 
         initRecyclerView();
@@ -114,12 +114,12 @@ public class ListFilteredPropertiesFragment extends Fragment {
             public void OnItemClicked(int position) {
                 displayDetail = true;
 
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                //intent.putExtra(ID_PROPERTY, position + 1);
+                Intent intent = new Intent(getActivity(), ResultSearchActivity.class);
                 intent.putExtra(ID_PROPERTY, filteredResultsArray.get(position));
                 intent.putExtra(DISPLAY_DETAIL, displayDetail);
                 intent.putExtra(SearchActivity.ID_FILTERED, filteredResultsArray);
-                intent.putExtra(FROM_FILTER, true);
+                //intent.putExtra(FROM_FILTER, true);
+                intent.putExtra(SearchActivity.RESULTS_FILTERED, true);
                 intent.putExtra(POSITON_IN_FILTER, position);
                 Log.d(TAG, "OnItemClicked: position " + position);
                 Log.d(TAG, "OnItemClicked: id " + filteredResultsArray.get(position));

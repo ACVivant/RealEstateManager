@@ -37,7 +37,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 public class ResultSearchActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "ResultSearchActivity";
     private static final int ERROR_DIALOG_REQUEST = 9001;
     public static final int CREATE_PROPERTY_REQUEST = 333;
     private static final String ID_FRAGMENT = "fragment_to_expose";
@@ -63,6 +63,8 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
     private boolean filteredResults = false;
     private ArrayList<Integer> filteredResultsArray = new ArrayList<>();
     private String searchQuery;
+    private int position;
+
 
     private int clic = 0;
     private boolean firstView1 = false;
@@ -83,10 +85,14 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
         //this.configureBottomNavigationView();
 
         filteredResultsArray = getIntent().getIntegerArrayListExtra(SearchActivity.ID_FILTERED);
+        position = getIntent().getIntExtra(ListFilteredPropertiesFragment.POSITON_IN_FILTER, 0);
+        Log.d(TAG, "onCreate: position " +position);
         Log.d(TAG, "onCreate: filteredResuls " + filteredResultsArray.size());
-        homeToExpose =filteredResultsArray.get(0);
+        homeToExpose =filteredResultsArray.get(position);
+        displayDetail = getIntent().getBooleanExtra(ListHouseFragment.DISPLAY_DETAIL, false);
+        filteredResults = getIntent().getBooleanExtra(SearchActivity.RESULTS_FILTERED, true);
 
-        Log.d(TAG, "onCreate: homeToExpose " + homeToExpose);
+        Log.d(TAG, "onCreate: homeToExpose id " + homeToExpose);
 
 
             if (savedInstanceState == null) {
@@ -132,8 +138,9 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
         Log.d(TAG, "configureFirstView");
         Bundle args = new Bundle();
         args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
-        //args.putBoolean(SearchActivity.RESULTS_FILTERED, filteredResults);
+        args.putBoolean(SearchActivity.RESULTS_FILTERED, filteredResults);
         args.putIntegerArrayList(SearchActivity.ID_FILTERED, filteredResultsArray);
+        args.putInt(ListFilteredPropertiesFragment.POSITON_IN_FILTER, position);
         //    if(filteredResults) {args.putString(SearchActivity.SEARCH_QUERY, searchQuery);}
 
         if (findViewById(R.id.frame_layout_detail) == null) {
@@ -144,8 +151,13 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
             fragment1.setArguments(args);
 
 
+            if (!displayDetail) {
                 fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
                 fm.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
+            } else {
+                fm.beginTransaction().add(R.id.main_container, fragment1, "1").hide(fragment1).commit();
+                fm.beginTransaction().add(R.id.main_container, fragment2, "2").commit();
+            }
 
         } else {
 
@@ -167,8 +179,9 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
         // Ajouter les infos pour afficher la bonne maison
         Bundle args = new Bundle();
         args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
-       // args.putBoolean(SearchActivity.RESULTS_FILTERED, filteredResults);
+        args.putBoolean(SearchActivity.RESULTS_FILTERED, filteredResults);
         args.putIntegerArrayList(SearchActivity.ID_FILTERED, filteredResultsArray);
+        args.putInt(ListFilteredPropertiesFragment.POSITON_IN_FILTER, position);
         //  if(filteredResults) {args.putString(SearchActivity.SEARCH_QUERY, searchQuery);}
         Log.d(TAG, "configureView: bundle " + homeToExpose);
         fragment1.setArguments(args);
@@ -176,6 +189,11 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
 
         Log.d(TAG, "configureView");
         if (findViewById(R.id.frame_layout_detail) == null) {
+            if (fragmentToExposeFromMap.equals("1") || displayDetail) {
+                fm.beginTransaction().hide(fragment2).commit();
+                fm.beginTransaction().show(fragment1).commit();
+            }
+            } else {
                 fm.beginTransaction().hide(fragment1).commit();
                 fm.beginTransaction().show(fragment2).commit();
             }

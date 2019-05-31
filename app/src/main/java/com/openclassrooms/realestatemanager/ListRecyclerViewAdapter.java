@@ -69,9 +69,16 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
         Log.d(TAG, "onBindViewHolder: ListRecyclerViewAdapter Called.");
 
         Property currentProperty = properties.get(position);
+        // Parfois ça bug ici. Parce qu'on n'attend pas le résultat de getType?
+    /*    2019-05-31 17:29:24.853 24668-24668/com.openclassrooms.realestatemanager E/AndroidRuntime: FATAL EXCEPTION: main
+        Process: com.openclassrooms.realestatemanager, PID: 24668
+        java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
+        at java.util.ArrayList.get(ArrayList.java:437)
+        at com.openclassrooms.realestatemanager.ListRecyclerViewAdapter.onBindViewHolder(ListRecyclerViewAdapter.java:73)*/
+
         TypeOfProperty currentType = types.get(currentProperty.getTypeId()-1);
-        Log.d(TAG, "onBindViewHolder: typeText " + currentProperty.getTypeId());
-        Log.d(TAG, "onBindViewHolder: typeId " + currentType.getTypeText());
+        Log.d(TAG, "onBindViewHolder: typeId " + currentProperty.getTypeId());
+        Log.d(TAG, "onBindViewHolder: typeText " + currentType.getTypeText());
         holder.type.setText(String.valueOf(currentType.getTypeText()));
         holder.town.setText(String.valueOf(currentProperty.getTown()));
         holder.price.setText(String.valueOf(currentProperty.getPrice()));
