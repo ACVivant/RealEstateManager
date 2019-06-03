@@ -117,6 +117,11 @@
         <item>Tous</item>
     </string-array>
 
+    <string name="photo_permission_allowed">"L'accès aux photos est autorisé."</string>
+    <string name="photo_permission_denied">"L'accès aux photos est refusé."</string>
+    <string name="no_photo">"Aucune photo n'a été choisie"</string>
+    <string name="add_main_photo">"Ajouter la photo principale"</string>
+
     <!-- List Recyclerview  -->
     <string name="house_type">"Type de bien"</string>
 

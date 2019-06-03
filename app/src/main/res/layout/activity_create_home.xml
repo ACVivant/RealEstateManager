@@ -230,6 +230,39 @@
                 android:inputType="number"/>
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/default_margin"
+            android:paddingEnd="@dimen/default_margin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_main_photo"
+                android:textSize="@dimen/default_text_size"
+                android:layout_gravity="center_vertical"/>
+
+            <ImageButton
+                android:id="@+id/add_main_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/default_margin"
+                app:srcCompat="@drawable/ic_action_add"
+                android:tint="@color/colorAccent"
+                android:background="@android:color/white"/>
+
+            <!-- IMAGE CHOSEN PREVIEW -->
+            <ImageView
+                android:id="@+id/create_main_photo_preview"
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:layout_margin="@dimen/default_margin" />
+
+        </LinearLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

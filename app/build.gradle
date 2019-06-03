@@ -82,5 +82,7 @@ dependencies {
     // PICASSO
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    //EASY PERMISSIONS
+    implementation 'pub.devrel:easypermissions:3.0.0'
 
 }

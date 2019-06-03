@@ -4,9 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
+import android.Manifest;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,9 +19,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Address;
@@ -42,6 +51,10 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     EditText price;
     @BindView(R.id.create_insert_surface)
     EditText surface;
+    @BindView(R.id.add_main_photo)
+    ImageButton addMainPhoto;
+    @BindView(R.id.create_main_photo_preview)
+    ImageView mainPhotoPreview;
 
     @BindView(R.id.create_insert_rooms)
     EditText rooms;
@@ -114,14 +127,20 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     int intUpForSale;
     int intSoldOn;
 
-    String newPhotoUrl;
+
 
     int agentId;
     int statusId;
-    int addressId;
     int typeId;
 
     private Address myAddress;
+
+    // 1 - STATIC DATA FOR PICTURE
+    private static final String PERMS = Manifest.permission.READ_EXTERNAL_STORAGE;
+    private static final int RC_IMAGE_PERMS = 100;
+    private Uri uriImageSelected;
+    private String newPhotoUrl;
+    private static final int RC_CHOOSE_PHOTO = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,9 +186,17 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
             }
         });
 
+        addMainPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addMainPhoto();
+            }
+        });
+
         addPhotos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+             //   addPhoto();
 
             }
         });
@@ -307,5 +334,52 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         startActivity(intent);
     }
 
+    //--------------------------------------------------------------------------------------------------
+    // Photos
+    //--------------------------------------------------------------------------------------------------
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 6 - Calling the appropriate method after activity result
+        this.handleResponse(requestCode, resultCode, data);
+    }
+
+    @AfterPermissionGranted(RC_IMAGE_PERMS)
+    private void addMainPhoto() {
+        this.chooseImageFromPhone();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        //Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    private void chooseImageFromPhone(){
+        if (!EasyPermissions.hasPermissions(this, PERMS)) {
+            EasyPermissions.requestPermissions(this, getString(R.string.photo_permission_denied), RC_IMAGE_PERMS, PERMS);
+            return;
+        }
+        // Launch an "Selection Image" Activity
+        Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, RC_CHOOSE_PHOTO);
+    }
+
+    private void handleResponse(int requestCode, int resultCode, Intent data){
+        if (requestCode == RC_CHOOSE_PHOTO) {
+            if (resultCode == RESULT_OK) { //SUCCESS
+                this.uriImageSelected = data.getData();
+                newPhotoUrl = uriImageSelected.toString();
+                Glide.with(this) //SHOWING PREVIEW OF IMAGE
+                        .load(this.uriImageSelected)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(this.mainPhotoPreview);
+            } else {
+                Toast.makeText(this, getString(R.string.no_photo), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
 }
