@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/default_margin"
+        android:paddingEnd="@dimen/default_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/search_photo"
+            android:textSize="@dimen/default_text_size"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/default_margin"/>
+
+        <ImageButton
+            android:id="@+id/search_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/default_margin"
+            app:srcCompat="@drawable/ic_library_photo"
+            android:tint="@color/colorAccent"
+            android:background="@android:color/white"/>
+
+        <!-- IMAGE CHOSEN PREVIEW -->
+        <ImageView
+            android:id="@+id/dialog_add_photo_preview"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_margin="@dimen/default_margin" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/default_margin"
+        android:paddingEnd="@dimen/default_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/take_photo"
+            android:textSize="@dimen/default_text_size"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/default_margin"/>
+
+        <ImageButton
+            android:id="@+id/take_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/default_margin"
+            app:srcCompat="@drawable/ic_take_photo"
+            android:tint="@color/colorAccent"
+            android:background="@android:color/white"/>
+
+        <!-- IMAGE CHOSEN PREVIEW -->
+        <ImageView
+            android:id="@+id/dialog_take_photo_preview"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_margin="@dimen/default_margin" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/default_margin"
+        android:paddingEnd="@dimen/default_margin">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:text="@string/add_main_photo_description"
+            android:textSize="@dimen/default_text_size" />
+
+        <EditText
+            android:id="@+id/create_photo_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:hint="@string/add_main_photo_description_short"
+            android:textSize="@dimen/default_text_size"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:paddingVertical="@dimen/default_margin">
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

@@ -121,6 +121,16 @@
     <string name="photo_permission_denied">"L'accès aux photos est refusé."</string>
     <string name="no_photo">"Aucune photo n'a été choisie"</string>
     <string name="add_main_photo">"Ajouter la photo principale"</string>
+    <string name="search_photo">"Chercher une photo"</string>
+    <string name="take_photo">"Prendre une photo"</string>
+    <string name="main_photo">"Photo principale"</string>
+    <string name="add_more_photo">"Ajouter d'autres photos"</string>
+    <string name="more_photo">"Autres photos"</string>
+    <string name="add_main_photo_description">"Légende de la photo"</string>
+    <string name="add_main_photo_description_short">"Légende"</string>
+
+    <string name="add_photo_close">"Valider"</string>
+    <string name="add_photo_more">"Continuer"</string>
 
     <!-- List Recyclerview  -->
     <string name="house_type">"Type de bien"</string>
