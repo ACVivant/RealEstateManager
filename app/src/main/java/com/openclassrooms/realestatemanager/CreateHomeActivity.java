@@ -146,6 +146,7 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     int agentId;
     int statusId;
     int typeId;
+    long propertyId;
 
     private Address myAddress;
 
@@ -319,15 +320,13 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         }
     }
 
-
-
     private void createProperty() {
         Log.d(TAG, "createProperty: statusId " + statusId);
         Log.d(TAG, "createProperty: typeId " + typeId);
         Log.d(TAG, "createProperty: agentId " + agentId);
         Property myProperty = new Property(newPrice, newRooms, newBedrooms, newBathrooms, newDescription, intUpForSale, intSoldOn, newSurface, nearShop, nearSchool, nearMuseum, nearPark, typeId, agentId, statusId, mainPhotoUri, newAddressNumber, newAddressStreet, newAddressStreet2, newZipcode, newTown, newCountry);
 
-        propertyViewModel.insertProperty(myProperty);
+       propertyViewModel.insertProperty(myProperty);
     }
 
     @Override
@@ -456,10 +455,10 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
 
     private void createPhotos() {
         // Comment est-ce que je récupère l'id du bien en cours de création?
-       /* propertyViewModel.insertPhoto(new Photo(mainPhotoUri, mainPhotoLegend, propertyId));
+        propertyViewModel.insertPhoto(new Photo(mainPhotoUri, mainPhotoLegend, propertyId));
 
         for (int i=0; i<photosList.size(); i++) {
-            propertyViewModel.insertPhoto(new Photo(photosList.get(i), legendList.get(i), proertyId));
-        }*/
+            propertyViewModel.insertPhoto(new Photo(photosList.get(i), legendList.get(i), propertyId));
+        }
     }
 }

@@ -251,6 +251,10 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
             case R.id.top_menu_search:
                 launchSearch();
                 return true;
+
+            case R.id.top_menu_home:
+                launchMain();
+                return true;
         }
         return false;
     }
@@ -277,6 +281,11 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
 
     private void launchMap() {
         Intent intent = new Intent(this, MapActivity.class);
+        startActivity(intent);
+    }
+
+    private void launchMain() {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

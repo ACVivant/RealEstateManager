@@ -248,6 +248,7 @@
                 android:background="@android:color/white"/>
 
             <TextView
+                android:id="@+id/create_add_main_photo_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/add_main_photo"
@@ -285,6 +286,7 @@
                 android:background="@android:color/white"/>
 
             <TextView
+                android:id="@+id/create_add_others_photo_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/add_more_photo"

@@ -27,6 +27,7 @@
     <string name="menu_search">"Filtres"</string>
     <string name="menu_param">"Paramètres"</string>
     <string name="menu_map">"Carte"</string>
+    <string name="menu_home">"Accueil"</string>
 
     <!-- Detail layout-->
     <string name="recyclerview_title">"Photos"</string>
@@ -121,6 +122,8 @@
     <string name="photo_permission_denied">"L'accès aux photos est refusé."</string>
     <string name="no_photo">"Aucune photo n'a été choisie"</string>
     <string name="add_main_photo">"Ajouter la photo principale"</string>
+    <string name="modify_main_photo">"Changer la photo principale"</string>
+    <string name="modify_others_photo">"Modifier les autres photos"</string>
     <string name="search_photo">"Chercher une photo"</string>
     <string name="take_photo">"Prendre une photo"</string>
     <string name="main_photo">"Photo principale"</string>

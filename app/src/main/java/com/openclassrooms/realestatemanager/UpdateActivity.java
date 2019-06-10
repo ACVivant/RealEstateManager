@@ -47,6 +47,11 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
     @BindView(R.id.create_insert_surface)
     EditText surface;
 
+    @BindView(R.id.create_add_main_photo_text)
+    TextView addMainPhotoText;
+    @BindView(R.id.create_add_others_photo_text)
+    TextView addOthersPhotosText;
+
     @BindView(R.id.create_insert_rooms)
     EditText rooms;
     @BindView(R.id.create_insert_bedrooms)
@@ -85,8 +90,6 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
 
     @BindView(R.id.save_new_property)
     Button saveProperty;
-    @BindView(R.id.save_new_property_add_photos)
-    Button addPhotos;
     @BindView(R.id.reset_new_property)
     Button resetProperty;
 
@@ -146,6 +149,9 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     public void configureView() {
+        addMainPhotoText.setText(R.string.modify_main_photo);
+        addOthersPhotosText.setText(R.string.modify_others_photo);
+
         // spinnerStatus = (Spinner) findViewById(R.id.create_spinner_status);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.create_status_array, android.R.layout.simple_spinner_item);

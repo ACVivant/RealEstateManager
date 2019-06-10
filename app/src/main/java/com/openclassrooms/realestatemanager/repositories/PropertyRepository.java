@@ -21,7 +21,7 @@ public class PropertyRepository {
 
     public PropertyRepository(PropertyDao propertyDao) {this.propertyDao = propertyDao;}
 
-    public void insertProperty(Property property) {propertyDao.insertProperty(property);}
+    public long insertProperty(Property property) {return propertyDao.insertProperty(property); }
 
     public void updateProperty(Property property) {propertyDao.updateProperty(property);}
 

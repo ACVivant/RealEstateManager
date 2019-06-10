@@ -16,7 +16,6 @@ import com.openclassrooms.realestatemanager.models.Address;
 import com.openclassrooms.realestatemanager.models.Agent;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.models.TypeOfProperty;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +83,10 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
         holder.price.setText(String.valueOf(currentProperty.getPrice()));
 
         String uriPhoto = currentProperty.getMainPhoto();
-        Picasso.get().load(uriPhoto).into(holder.picture);
+       // Picasso.get().load(uriPhoto).into(holder.picture);
+        Glide.with(mContext)
+                .load(uriPhoto)
+                .into(holder.picture);
 
         if(useTablet) {
             if (position == propertySelected - 1) {

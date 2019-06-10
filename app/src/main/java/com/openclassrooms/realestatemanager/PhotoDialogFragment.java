@@ -222,6 +222,7 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
                 this.uriImageSelected = data.getData();
                 photoURI = uriImageSelected;
                 newPhotoUrl = uriImageSelected.toString();
+                Log.d(TAG, "handleResponse: uri " + newPhotoUrl);
 
                 Glide.with(this) //SHOWING PREVIEW OF IMAGE
                         .load(this.uriImageSelected)
