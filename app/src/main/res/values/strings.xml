@@ -181,7 +181,9 @@
     <!-- Map Activity-->
     <string name="map_connection_error">"Nous ne pouvons pas nous connecter à Google Map"</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Notification-->
+    <string name="channel_description">"Channel notification de Real Estate Manager"</string>
+    <string name="notification_title">"Bravo!"</string>
+    <string name="notification_message">"Le nouveau bien a été créé."</string>
 </resources>
 

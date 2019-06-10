@@ -1,6 +1,8 @@
 package com.openclassrooms.realestatemanager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -8,6 +10,7 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import android.Manifest;
+import android.app.Notification;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,6 +45,7 @@ import java.util.ArrayList;
 public class CreateHomeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, PhotoDialogFragment.DialogListener {
 
     private PropertyViewModel propertyViewModel;
+    private NotificationManagerCompat notificationManager;
 
     private static final String TAG = "CreateHomeActivity";
     public static final String MAIN_PHOTO_REQUEST = "Create_main_photo";
@@ -166,6 +170,8 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_home);
         ButterKnife.bind(this);
+
+        notificationManager = NotificationManagerCompat.from(this);
 
         configureView();
 
@@ -327,6 +333,8 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         Property myProperty = new Property(newPrice, newRooms, newBedrooms, newBathrooms, newDescription, intUpForSale, intSoldOn, newSurface, nearShop, nearSchool, nearMuseum, nearPark, typeId, agentId, statusId, mainPhotoUri, newAddressNumber, newAddressStreet, newAddressStreet2, newZipcode, newTown, newCountry);
 
        propertyViewModel.insertProperty(myProperty);
+
+       sendNotification();
     }
 
     @Override
@@ -460,5 +468,18 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         for (int i=0; i<photosList.size(); i++) {
             propertyViewModel.insertPhoto(new Photo(photosList.get(i), legendList.get(i), propertyId));
         }
+    }
+
+    private void sendNotification() {
+        Notification notification = new NotificationCompat.Builder(this, RemApp.CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_home)
+                .setContentTitle(getResources().getString(R.string.notification_title))
+                .setContentText(getResources().getString(R.string.notification_message))
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .build();
+
+        notificationManager.notify(1, notification);
+
     }
 }

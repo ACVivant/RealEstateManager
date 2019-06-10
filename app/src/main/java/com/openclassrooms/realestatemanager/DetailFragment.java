@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 import com.openclassrooms.realestatemanager.injections.Injection;
@@ -34,8 +35,6 @@ import com.openclassrooms.realestatemanager.models.Status;
 import com.openclassrooms.realestatemanager.models.TypeOfProperty;
 import com.openclassrooms.realestatemanager.utils.MapUrl;
 import com.openclassrooms.realestatemanager.utils.Utils;
-import com.squareup.picasso.Picasso;
-
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -240,7 +239,10 @@ ImageView mMapView;;*/
         MapUrl mapUrl = new MapUrl();
         String srcMap = mapUrl.createUrl(number, street, zipcode, town, country, key);
         Log.d(TAG, "initStaticMap: " + srcMap);
-        Picasso.get().load(srcMap).into(mMap);
+        //Picasso.get().load(srcMap).into(mMap);
+        Glide.with(getContext())
+                .load(srcMap)
+                .into(mMap);
     }
 
     //------------------------------------------------------------------
