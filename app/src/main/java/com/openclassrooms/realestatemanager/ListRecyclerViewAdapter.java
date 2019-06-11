@@ -78,12 +78,13 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
         TypeOfProperty currentType = types.get(currentProperty.getTypeId()-1);
         Log.d(TAG, "onBindViewHolder: typeId " + currentProperty.getTypeId());
         Log.d(TAG, "onBindViewHolder: typeText " + currentType.getTypeText());
+        Log.d(TAG, "onBindViewHolder: propertyId " +currentProperty.getPropertyId());
         holder.type.setText(String.valueOf(currentType.getTypeText()));
         holder.town.setText(String.valueOf(currentProperty.getTown()));
         holder.price.setText(String.valueOf(currentProperty.getPrice()));
 
+
         String uriPhoto = currentProperty.getMainPhoto();
-       // Picasso.get().load(uriPhoto).into(holder.picture);
         Glide.with(mContext)
                 .load(uriPhoto)
                 .into(holder.picture);
@@ -117,7 +118,8 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
     }
 
     public interface OnItemClickedListener{
-        void OnItemClicked(int position);
+        //void OnItemClicked(int position);
+        void OnItemClicked(int propertyId);
     }
 
     public void setOnItemClickedListener(OnItemClickedListener listener) {
@@ -154,8 +156,12 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
                 public void onClick(View v) {
                     if(listener!=null) {
                         int position = getAdapterPosition();
+                        int propertyId = properties.get(position).getPropertyId();
+                        Log.d(TAG, "onClick: position " + position);
+                        Log.d(TAG, "onClick: id " + propertyId);
                         if (position!= RecyclerView.NO_POSITION) {
-                            listener.OnItemClicked(position);
+                           // listener.OnItemClicked(position);
+                            listener.OnItemClicked(propertyId);
                         }
                     }
                 }

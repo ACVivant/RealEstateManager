@@ -83,8 +83,8 @@ public class ListFilteredPropertiesFragment extends Fragment {
 
         initRecyclerView();
         configureViewModel();
-        getFilteredProperties();
         getAllTypes();
+        getFilteredProperties();
         //setFilteredProperties();
 
         return v;
@@ -111,18 +111,17 @@ public class ListFilteredPropertiesFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickedListener(new ListRecyclerViewAdapter.OnItemClickedListener() {
             @Override
-            public void OnItemClicked(int position) {
+            //public void OnItemClicked(int position) {
+                public void OnItemClicked(int propertyId) {
                 displayDetail = true;
 
                 Intent intent = new Intent(getActivity(), ResultSearchActivity.class);
-                intent.putExtra(ID_PROPERTY, filteredResultsArray.get(position));
+                intent.putExtra(ID_PROPERTY, propertyId);
                 intent.putExtra(DISPLAY_DETAIL, displayDetail);
                 intent.putExtra(SearchActivity.ID_FILTERED, filteredResultsArray);
                 //intent.putExtra(FROM_FILTER, true);
                 intent.putExtra(SearchActivity.RESULTS_FILTERED, true);
-                intent.putExtra(POSITON_IN_FILTER, position);
-                Log.d(TAG, "OnItemClicked: position " + position);
-                Log.d(TAG, "OnItemClicked: id " + filteredResultsArray.get(position));
+                Log.d(TAG, "OnItemClicked: id " + propertyId);
                 startActivity(intent);
             }
         });
