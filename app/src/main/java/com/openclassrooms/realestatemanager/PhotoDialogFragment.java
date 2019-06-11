@@ -73,6 +73,7 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
     String currentPhotoPath;
     Uri photoURI;
     private String whichRequest;
+    String photoLegend;
 
 
 
@@ -124,12 +125,13 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String photoLegend="";
+
                         if (legend.getText()==null ||photoURI.toString().isEmpty()) {
-                            photoLegend = legend.getText().toString();
                             Toast.makeText(getContext(), "Il faut choisir une photo et une légende", Toast.LENGTH_LONG).show();
                         } else {
+                            photoLegend = legend.getText().toString();
                             if (whichRequest.equals(CreateHomeActivity.OTHERS_PHOTO_REQUEST)) {
+                                Log.d(TAG, "onClick: photoLegend " + photoLegend);
                                 listener.applyOthersPhoto(photoURI.toString(), photoLegend);
                             }
                             if (whichRequest.equals(CreateHomeActivity.MAIN_PHOTO_REQUEST)) {

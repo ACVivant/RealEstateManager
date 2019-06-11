@@ -16,10 +16,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Agent;
@@ -29,9 +34,10 @@ import com.openclassrooms.realestatemanager.models.Status;
 import com.openclassrooms.realestatemanager.models.TypeOfProperty;
 import com.openclassrooms.realestatemanager.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class UpdateActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class UpdateActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, PhotoDialogFragment.DialogListener  {
     private static final String TAG = "UpdateActivity";
 
     private PropertyViewModel propertyViewModel;
@@ -47,10 +53,24 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
     @BindView(R.id.create_insert_surface)
     EditText surface;
 
+    @BindView(R.id.create_all_others_photos)
+    LinearLayout photoLayout;
     @BindView(R.id.create_add_main_photo_text)
     TextView addMainPhotoText;
     @BindView(R.id.create_add_others_photo_text)
     TextView addOthersPhotosText;
+    @BindView(R.id.add_more_photo)
+    ImageButton addPhotos;
+    @BindView(R.id.create_photo_more_preview1)
+    ImageView photo1;
+    @BindView(R.id.create_photo_more_preview2)
+    ImageView photo2;
+    @BindView(R.id.create_photo_more_preview3)
+    ImageView photo3;
+    @BindView(R.id.create_photo_more_preview4)
+    ImageView photo4;
+    @BindView(R.id.number_photo_more)
+    TextView numberPhotos;
 
     @BindView(R.id.create_insert_rooms)
     EditText rooms;
@@ -133,7 +153,13 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
     private int agentId;
     private int numberOfProperties;
     private int propertyId;
+    private List<Photo> currentPhotos;
 
+    private ArrayList<String> newPhotosList = new ArrayList<>();
+    private ArrayList<String> newLegendList = new ArrayList<>();
+
+    private PhotoRecyclerViewAdapter adapter;
+    private View v;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,6 +201,13 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
         spinnerAgent.setAdapter(adapter2);
         spinnerAgent.setOnItemSelectedListener(this);
 
+        addPhotos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog(CreateHomeActivity.OTHERS_PHOTO_REQUEST);
+            }
+        });
+
         resetProperty.setVisibility(View.GONE);
 
         saveProperty.setOnClickListener(new View.OnClickListener() {
@@ -196,6 +229,16 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    private void initPhotosRecyclerView() {
+        Log.d(TAG, "initPhotosRecyclerView");
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView recyclerView = findViewById(R.id.update_photo_recyclerview_container);
+        adapter = new PhotoRecyclerViewAdapter(this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     private void savePropertyData() {
@@ -267,7 +310,7 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
             nearPark = checkboxPark.isChecked();
             nearMuseum = checkboxMuseum.isChecked();
 
-            if (!dateUpForSale.getText().toString().isEmpty()) {
+            if (dateUpForSale.getText().toString().length()==10) {
                 newUpForSale = dateUpForSale.getText().toString();
                 intUpForSale = Utils.convertStringDateToIntDate(newUpForSale);
                 Log.d(TAG, "savePropertyData: enteredDate "+ newUpForSale);
@@ -277,7 +320,8 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
                 intUpForSale = Utils.convertStringDateToIntDate(newUpForSale);
             }
 
-            if (!dateSoldOn.getText().toString().isEmpty()) {
+            Log.d(TAG, "savePropertyData: length date " + dateSoldOn.getText().toString().length());
+            if (dateSoldOn.getText().toString().length()==10) {
                 newSoldOn = dateSoldOn.getText().toString();
                 intSoldOn = Utils.convertStringDateToIntDate(newSoldOn);
             } else {
@@ -371,6 +415,8 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
         this.getStatus(statusId);
         this.getType(typeId);
         this.getAgent(agentId);
+        this.initPhotosRecyclerView();
+        this.getAllPhotosFromProperty(propertyId);
     }
 
     private void setAddress(){
@@ -424,6 +470,20 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
 
         propertyViewModel.updateProperty(myProperty);
         Toast.makeText(this, "Le bien a été mis à jour", Toast.LENGTH_LONG).show();
+
+        for (int i=0; i<newPhotosList.size(); i++) {
+            Log.d(TAG, "updateProperty: legend " + newLegendList.get(i));
+            propertyViewModel.insertPhoto(new Photo(newPhotosList.get(i), newLegendList.get(i), propertyId));
+        }
+    }
+
+    private void getAllPhotosFromProperty(int id){
+        this.propertyViewModel.getPhotoFromProperty(id).observe(this, this::updatePhotoList);
+    }
+
+    private void updatePhotoList(List<Photo> photos){
+        currentPhotos = photos;
+        this.adapter.setPhotos(photos);
     }
 
     private void configureViewModel(){
@@ -437,5 +497,57 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
         Intent intent = new Intent(UpdateActivity.this, MainActivity.class);
         intent.putExtra(ListHouseFragment.DISPLAY_DETAIL, displayDetail);
         startActivity(intent);
+    }
+
+    private void openDialog(String which) {
+        PhotoDialogFragment dialog = new PhotoDialogFragment();
+        Bundle args = new Bundle();
+        args.putString(CreateHomeActivity.WHICH_REQUEST, which);
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), "dialog");
+    }
+
+    @Override
+    public void applyOthersPhoto(String photoUri, String photoLegend) {
+        newPhotosList.add(photoUri);
+        newLegendList.add(photoLegend);
+        setPreviewPhotos();
+    }
+
+    @Override
+    public void applyMainPhoto(String photoUri, String photoLegend) {
+
+    }
+
+    private void setPreviewPhotos() {
+        numberPhotos.setText(String.valueOf(newPhotosList.size()));
+
+        if (newPhotosList.size() > 0) {
+            Glide.with(this) //SHOWING PREVIEW OF IMAGE
+                    .load(this.newPhotosList.get(0))
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(this.photo1);
+
+            if (newPhotosList.size() > 1) {
+                Glide.with(this) //SHOWING PREVIEW OF IMAGE
+                        .load(this.newPhotosList.get(1))
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(this.photo2);
+
+                if (newPhotosList.size() > 2) {
+                    Glide.with(this) //SHOWING PREVIEW OF IMAGE
+                            .load(this.newPhotosList.get(2))
+                            .apply(RequestOptions.circleCropTransform())
+                            .into(this.photo3);
+
+                    if (newPhotosList.size() > 3) {
+                        Glide.with(this) //SHOWING PREVIEW OF IMAGE
+                                .load(this.newPhotosList.get(3))
+                                .apply(RequestOptions.circleCropTransform())
+                                .into(this.photo4);
+                    }
+                }
+            }
+        }
     }
 }

@@ -230,6 +230,26 @@
                 android:inputType="number"/>
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:background="@color/colorPrimary"
+            android:padding="5dp"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/default_text_size"
+            android:text="@string/recyclerview_title"
+            tools:text="@string/recyclerview_title" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/update_photo_recyclerview_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/recyclerview_description"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -298,6 +318,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/create_all_others_photos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -329,19 +350,25 @@
                 android:id="@+id/create_photo_more_preview1"
                 android:layout_width="50dip"
                 android:layout_height="50dip"
-                android:layout_margin="@dimen/default_margin" />
+                android:layout_margin="@dimen/default_mini_margin" />
 
             <ImageView
                 android:id="@+id/create_photo_more_preview2"
                 android:layout_width="50dip"
                 android:layout_height="50dip"
-                android:layout_margin="@dimen/default_margin" />
+                android:layout_margin="@dimen/default_mini_margin" />
 
             <ImageView
-                android:id="@+id/create_photo_more_preview3"
+            android:id="@+id/create_photo_more_preview3"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_margin="@dimen/default_mini_margin" />
+
+            <ImageView
+                android:id="@+id/create_photo_more_preview4"
                 android:layout_width="50dip"
                 android:layout_height="50dip"
-                android:layout_margin="@dimen/default_margin" />
+                android:layout_margin="@dimen/default_mini_margin" />
         </LinearLayout>
 
         <TextView
@@ -586,8 +613,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="50"
                 android:hint="@string/date_example"
-                android:textSize="@dimen/default_text_size"
-                android:inputType="date"/>
+                android:textSize="@dimen/default_text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -610,8 +636,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="50"
                 android:hint="@string/date_example"
-                android:textSize="@dimen/default_text_size"
-                android:inputType="date"/>
+                android:textSize="@dimen/default_text_size" />
         </LinearLayout>
 
         <LinearLayout

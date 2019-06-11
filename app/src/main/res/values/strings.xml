@@ -9,7 +9,7 @@
     <string name="welcome_picture">"photo d'accueil"</string>
 
     <!-- Bottom Nav Bar -->
-    <string name="nav_title">"My Real Estate Manager"</string>
+    <string name="nav_title">"Real Estate Manager"</string>
     <string name="nav_detail">"Fiche détaillée"</string>
     <string name="nav_list">"Liste"</string>
 
@@ -35,20 +35,20 @@
     <string name="description_title">"Description"</string>
     <string name="house_description">"Description du bien"</string>
     <string name="surface_title">"Surface"</string>
-    <string name="surface_text">"75"</string>
+    <string name="surface_text">"0"</string>
     <string name="room_title">"Pièces"</string>
-    <string name="room_text">"4"</string>
+    <string name="room_text">"0"</string>
     <string name="bedroom_title">"Chambres"</string>
-    <string name="bedroom_text">"2"</string>
+    <string name="bedroom_text">"0"</string>
     <string name="bathroom_title">"Salles de bain"</string>
-    <string name="bathroom_text">"1"</string>
+    <string name="bathroom_text">"0"</string>
     <string name="location_title">"Adresse"</string>
-    <string name="location_number">"5"</string>
-    <string name="location_street">" rue de la Pompe"</string>
-    <string name="location_street2">"Appt 5"</string>
-    <string name="location_zipcode">"60150"</string>
-    <string name="location_town">"Parici"</string>
-    <string name="location_country">"France"</string>
+    <string name="location_number">"numéro"</string>
+    <string name="location_street">" nom de la rue"</string>
+    <string name="location_street2">"complément"</string>
+    <string name="location_zipcode">"code postal"</string>
+    <string name="location_town">"Ville"</string>
+    <string name="location_country">"Pays"</string>
     <string name="square_meter">"sq m"</string>
     <string name="devise">"€/$"</string>
     <string name="statut">"Statut"</string>
@@ -123,7 +123,7 @@
     <string name="no_photo">"Aucune photo n'a été choisie"</string>
     <string name="add_main_photo">"Ajouter la photo principale"</string>
     <string name="modify_main_photo">"Changer la photo principale"</string>
-    <string name="modify_others_photo">"Modifier les autres photos"</string>
+    <string name="modify_others_photo">"Ajouter une autre photo"</string>
     <string name="search_photo">"Chercher une photo"</string>
     <string name="take_photo">"Prendre une photo"</string>
     <string name="main_photo">"Photo principale"</string>
@@ -185,5 +185,8 @@
     <string name="channel_description">"Channel notification de Real Estate Manager"</string>
     <string name="notification_title">"Bravo!"</string>
     <string name="notification_message">"Le nouveau bien a été créé."</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
 
