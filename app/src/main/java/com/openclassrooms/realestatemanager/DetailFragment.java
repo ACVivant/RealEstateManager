@@ -49,6 +49,7 @@ public class DetailFragment extends Fragment {
 
     private static final String TAG = "DetailFragment";
     private static final float DEFAULT_ZOOM = 13f;
+    public static final String FROM_DETAIL_REQUEST = "fromDetailActivity";
 
     // Real data
     private int propertyId = 0;
@@ -335,7 +336,7 @@ ImageView mMapView;;*/
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = v.findViewById(R.id.photo_recyclerview_container);
-        adapter = new PhotoRecyclerViewAdapter(getContext());
+        adapter = new PhotoRecyclerViewAdapter(getContext(), FROM_DETAIL_REQUEST);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
 

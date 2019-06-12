@@ -84,11 +84,13 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
         this.configureNavigationView();
         //this.configureBottomNavigationView();
 
+
         filteredResultsArray = getIntent().getIntegerArrayListExtra(SearchActivity.ID_FILTERED);
         position = getIntent().getIntExtra(ListFilteredPropertiesFragment.POSITON_IN_FILTER, 0);
         Log.d(TAG, "onCreate: position " +position);
-        Log.d(TAG, "onCreate: filteredResuls " + filteredResultsArray.size());
-        homeToExpose =filteredResultsArray.get(position);
+        Log.d(TAG, "onCreate: filteredResults " + filteredResultsArray.size());
+        //homeToExpose =filteredResultsArray.get(position);
+        homeToExpose = getIntent().getIntExtra(ListFilteredPropertiesFragment.ID_PROPERTY, 1);
         displayDetail = getIntent().getBooleanExtra(ListHouseFragment.DISPLAY_DETAIL, false);
         filteredResults = getIntent().getBooleanExtra(SearchActivity.RESULTS_FILTERED, true);
 

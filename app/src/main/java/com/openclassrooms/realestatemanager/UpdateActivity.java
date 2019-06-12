@@ -37,8 +37,9 @@ import com.openclassrooms.realestatemanager.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpdateActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, PhotoDialogFragment.DialogListener  {
+public class UpdateActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, PhotoDialogFragment.DialogListener, PhotoRecyclerViewAdapter.DeletePhotoListener  {
     private static final String TAG = "UpdateActivity";
+    public static final String  FROM_UPDATE_REQUEST = "fromUpadateActivity";
 
     private PropertyViewModel propertyViewModel;
 
@@ -55,12 +56,16 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
 
     @BindView(R.id.create_all_others_photos)
     LinearLayout photoLayout;
+    @BindView(R.id.add_main_photo)
+    ImageButton updateMainPhoto;
     @BindView(R.id.create_add_main_photo_text)
     TextView addMainPhotoText;
     @BindView(R.id.create_add_others_photo_text)
     TextView addOthersPhotosText;
     @BindView(R.id.add_more_photo)
     ImageButton addPhotos;
+    @BindView(R.id.create_main_photo_preview)
+    ImageView mainPhotoPreview;
     @BindView(R.id.create_photo_more_preview1)
     ImageView photo1;
     @BindView(R.id.create_photo_more_preview2)
@@ -154,12 +159,17 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
     private int numberOfProperties;
     private int propertyId;
     private List<Photo> currentPhotos;
+    private List<Long> photoToDeleteList = new ArrayList<>();
+    private Photo myPhotoToDelete;
 
     private ArrayList<String> newPhotosList = new ArrayList<>();
     private ArrayList<String> newLegendList = new ArrayList<>();
 
     private PhotoRecyclerViewAdapter adapter;
     private View v;
+
+    private String newMainPhotoUri;
+    private String newMainLegend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,11 +218,21 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
             }
         });
 
+        updateMainPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog(CreateHomeActivity.MAIN_PHOTO_REQUEST);
+            }
+        });
+
         resetProperty.setVisibility(View.GONE);
+
+
 
         saveProperty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "onClick: valider");
                 //configureViewModel();
                 savePropertyData();
                 updateProperty();
@@ -236,7 +256,7 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = findViewById(R.id.update_photo_recyclerview_container);
-        adapter = new PhotoRecyclerViewAdapter(this);
+        adapter = new PhotoRecyclerViewAdapter(this, FROM_UPDATE_REQUEST);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
     }
@@ -411,6 +431,11 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
 
         Log.d(TAG, "updateProperty: id " +propertyId + " " +typeId+ " " + statusId);
 
+        Glide.with(this) //SHOWING PREVIEW OF IMAGE
+                .load(this.currentProperty.getMainPhoto())
+                .apply(RequestOptions.circleCropTransform())
+                .into(this.mainPhotoPreview);
+
         setAddress();
         this.getStatus(statusId);
         this.getType(typeId);
@@ -465,6 +490,11 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
         Log.d(TAG, "createProperty: typeId " + typeId);
         Log.d(TAG, "createProperty: agentId " +agentId);
         Log.d(TAG, "updateProperty: number " +newAddressNumber);
+
+        if (newMainPhotoUri!=null) {
+            newPhotoUrl = newMainPhotoUri;
+        }
+
         Property myProperty = new Property(newPrice, newRooms, newBedrooms, newBathrooms, newDescription, intUpForSale, intSoldOn, newSurface, nearShop, nearSchool, nearMuseum, nearPark, typeId, agentId, statusId,newPhotoUrl,newAddressNumber, newAddressStreet, newAddressStreet2, newZipcode, newTown, newCountry );
         myProperty.setPropertyId(propertyId);
 
@@ -475,6 +505,16 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
             Log.d(TAG, "updateProperty: legend " + newLegendList.get(i));
             propertyViewModel.insertPhoto(new Photo(newPhotosList.get(i), newLegendList.get(i), propertyId));
         }
+
+        if (photoToDeleteList!=null) {
+            for (int i = 0; i < photoToDeleteList.size(); i++) {
+
+                Log.d(TAG, "updateProperty: boucle delete photos");
+                Log.d(TAG, "updateProperty: id to delete " + photoToDeleteList.get(i));
+                getPhotosToDelete(photoToDeleteList.get(i));
+            }
+        }
+
     }
 
     private void getAllPhotosFromProperty(int id){
@@ -484,6 +524,16 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
     private void updatePhotoList(List<Photo> photos){
         currentPhotos = photos;
         this.adapter.setPhotos(photos);
+    }
+
+    private void getPhotosToDelete(long id){
+        this.propertyViewModel.getPhotoFromId(id).observe(this, this::updatePhotoDeleteList);
+    }
+
+    private void updatePhotoDeleteList(Photo photos){
+        myPhotoToDelete = photos;
+        propertyViewModel.deletePhoto(myPhotoToDelete);
+        Log.d(TAG, "updatePhotoDeleteList: delete photo");
     }
 
     private void configureViewModel(){
@@ -516,7 +566,16 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
 
     @Override
     public void applyMainPhoto(String photoUri, String photoLegend) {
+        newMainPhotoUri= photoUri;
+        newMainLegend = photoLegend;
+        setMainPhoto();
+    }
 
+    private void setMainPhoto() {
+        Glide.with(this) //SHOWING PREVIEW OF IMAGE
+                .load(this.newMainPhotoUri)
+                .apply(RequestOptions.circleCropTransform())
+                .into(this.mainPhotoPreview);
     }
 
     private void setPreviewPhotos() {
@@ -549,5 +608,10 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
                 }
             }
         }
+    }
+
+    @Override
+    public void photoToDelete(long photoId) {
+        photoToDeleteList.add(photoId);
     }
 }

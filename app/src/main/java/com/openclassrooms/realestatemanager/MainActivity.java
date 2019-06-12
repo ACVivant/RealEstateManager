@@ -35,7 +35,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PhotoRecyclerViewAdapter.DeletePhotoListener{
 
     private static final String TAG = "MainActivity";
     private static final int ERROR_DIALOG_REQUEST = 9001;
@@ -388,6 +388,11 @@ public boolean isServiceOK() {
         super.onSaveInstanceState(outState);
         String idFragment = active.getTag();
         outState.putString(ID_FRAGMENT, idFragment);
+    }
+
+    @Override
+    public void photoToDelete(long photoId) {
+
     }
 }
 //---------------------------------------------------------

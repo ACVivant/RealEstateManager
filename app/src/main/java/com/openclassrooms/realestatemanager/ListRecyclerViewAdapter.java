@@ -145,8 +145,6 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
         @BindView(R.id.list_recyclerview_background)
         LinearLayout itemBackground;
 
-        public int idHome;
-
         public ListViewHolder(View itemView, final ListRecyclerViewAdapter.OnItemClickedListener listener) {
             super(itemView);
             ButterKnife.bind(this, itemView);

@@ -242,13 +242,42 @@
             android:text="@string/recyclerview_title"
             tools:text="@string/recyclerview_title" />
 
+    <LinearLayout
+        android:id="@+id/delete_photo_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/default_margin"
+        android:paddingEnd="@dimen/default_margin">
+
+        <ImageButton
+            android:id="@+id/delete_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/default_margin"
+            app:srcCompat="@drawable/ic_delete"
+            android:tint="@color/colorAccent"
+            android:background="@android:color/white"/>
+
+        <TextView
+            android:id="@+id/create_delete_photo_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_photo"
+            android:textSize="@dimen/default_text_size"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/default_margin"/>
+    </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/update_photo_recyclerview_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/recyclerview_description"
             android:orientation="horizontal"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/default_margin"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -285,8 +314,6 @@
                 android:layout_margin="@dimen/default_margin" />
 
         </LinearLayout>
-
-
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -60,7 +60,7 @@ public class Utils {
     }
 
     public static int convertStringDateToIntDate(String textDate){
-        String formattedDate = textDate.substring(6) + textDate.substring(3,4) + textDate.substring(0,1);
+        String formattedDate = textDate.substring(6) + textDate.substring(3,5) + textDate.substring(0,2);
         int intDate = Integer.parseInt(formattedDate);
         return intDate;
     }

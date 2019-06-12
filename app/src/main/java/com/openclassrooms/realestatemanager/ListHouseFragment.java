@@ -70,7 +70,7 @@ public class ListHouseFragment extends Fragment {
         // Inflate the layout for this fragment
        v= inflater.inflate(R.layout.fragment_list_house, container, false);
         Bundle bundle = getArguments();
-        propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY, 0);
+        propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY, 1);
         useTablet = bundle.getBoolean(MainActivity.USE_TABLET, false);
        // filteredResults = bundle.getBoolean(SearchActivity.RESULTS_FILTERED, false);
        // if (filteredResults) {searchQuery = bundle.getString(SearchActivity.SEARCH_QUERY);}
@@ -88,7 +88,7 @@ public class ListHouseFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         //Si on a un état sauvegardé on met a jour l'élément par défaut
         if (savedInstanceState != null) {
-            propertySaved = savedInstanceState.getInt(ID_PROPERTY, 0);
+            propertySaved = savedInstanceState.getInt(ID_PROPERTY, 1);
         }
     }
 
@@ -109,7 +109,7 @@ public class ListHouseFragment extends Fragment {
 
                     Log.d(TAG, "OnItemClicked");
                     Intent intent = new Intent(getActivity(), MainActivity.class);
-                    intent.putExtra(ID_PROPERTY, position + 1);
+                    intent.putExtra(ID_PROPERTY, position);
                     intent.putExtra(DISPLAY_DETAIL, displayDetail);
                     intent.putExtra(ListFilteredPropertiesFragment.FROM_FILTER, false);
                     startActivity(intent);

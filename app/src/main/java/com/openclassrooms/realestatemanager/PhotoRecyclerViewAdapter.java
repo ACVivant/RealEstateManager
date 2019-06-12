@@ -1,6 +1,10 @@
 package com.openclassrooms.realestatemanager;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,15 +34,20 @@ import butterknife.ButterKnife;
 public class PhotoRecyclerViewAdapter extends RecyclerView.Adapter<PhotoRecyclerViewAdapter.PhotoViewHolder> {
 
     private static final String TAG = "PhotoRecyclerViewAdapte";
+    public static final String PHOTO_URI = "photoUri";
+    public static final String PHOTO_ID = "photoId";
 
     //Variables
     private Context mContext;
     private List<Photo> photos;
+    private String which;
+    private DeletePhotoListener listener;
 
 
-public PhotoRecyclerViewAdapter(Context context) {
+public PhotoRecyclerViewAdapter(Context context, String which) {
     mContext = context;
     this.photos = new ArrayList<>();
+    this.which = which;
 
 }
 
@@ -47,6 +57,12 @@ public PhotoRecyclerViewAdapter(Context context) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_picture, parent, false);
         PhotoViewHolder holder = new PhotoViewHolder(view);
         mContext = parent.getContext();
+        try {
+            listener = (DeletePhotoListener) mContext;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(mContext.toString() + "must implement DeletePhotoListener");
+        }
+
         return holder;
     }
 
@@ -65,7 +81,14 @@ public PhotoRecyclerViewAdapter(Context context) {
         holder.itemContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, currentPhoto.getPhotoText(), Toast.LENGTH_LONG).show();
+                if (which.equals(DetailFragment.FROM_DETAIL_REQUEST)) {
+                    Toast.makeText(mContext, currentPhoto.getPhotoText() + " " + currentPhoto.getPhotoId(), Toast.LENGTH_LONG).show();
+                } else {
+                    if (which.equals(UpdateActivity.FROM_UPDATE_REQUEST)) {
+                        Toast.makeText(mContext, "Voulez-vous supprimer la photo?", Toast.LENGTH_LONG).show();
+                        openDeleteDialog(holder, currentPhoto, currentPhoto.getPhotoUri(), currentPhoto.getPhotoId());
+                    }
+                }
             }
         });
     }
@@ -79,6 +102,39 @@ public PhotoRecyclerViewAdapter(Context context) {
     public void setPhotos(List<Photo> photos) {
         this.photos = photos;
         notifyDataSetChanged();
+    }
+
+    private void openDeleteDialog(PhotoViewHolder holder, Photo currentPhoto, String Uri, long photoId) {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+        alertDialog.setTitle("Warning");
+        alertDialog.setMessage("Vous allez supprimer cette photo");
+        alertDialog.setPositiveButton("Confirmer", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(mContext, "Confirmation", Toast.LENGTH_LONG).show();
+                holder.picture.setImageResource(R.drawable.ic_delete);
+                holder.picture.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
+
+                listener.photoToDelete(photoId);
+
+            }
+        });
+        alertDialog.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(mContext, "Annulation", Toast.LENGTH_LONG).show();
+                // DO SOMETHING HERE
+
+            }
+        });
+
+        AlertDialog dialog = alertDialog.create();
+        dialog.show();
+    }
+
+    public interface DeletePhotoListener{
+        void photoToDelete(long photoId);
     }
 
     //---------------------------------------------------------------------------------------------------

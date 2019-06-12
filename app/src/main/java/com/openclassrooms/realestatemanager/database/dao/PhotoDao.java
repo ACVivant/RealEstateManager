@@ -35,4 +35,7 @@ public interface PhotoDao {
     @Delete
     void deletePhoto(Photo photo);
 
+    @Query("SELECT * FROM photo WHERE photoId = :photoId")
+    LiveData<Photo> getPhotoFromId(long photoId);
+
 }

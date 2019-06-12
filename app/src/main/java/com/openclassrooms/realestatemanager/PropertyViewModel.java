@@ -163,6 +163,7 @@ public class PropertyViewModel extends ViewModel {
     }
 
     // For Photo
+    public LiveData<Photo> getPhotoFromId(long photoId) { return photoRepository.getPhotoFromId(photoId);  }
     public LiveData<List<Photo>> getPhotoFromProperty(int propertyId) {return this.photoRepository.getPhotoFromPropertyId(propertyId);}
     public LiveData<List<Photo>> getAllPhotos() { return this.getAllPhotos();}
 

@@ -91,6 +91,14 @@ tools:context=".SearchActivity">
             android:layout_weight="20"
             android:text="@string/devise"
             android:textSize="@dimen/default_text_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/default_margin"
+        android:paddingEnd="@dimen/default_margin">
 
         <TextView
             android:layout_width="match_parent"
@@ -143,7 +151,14 @@ tools:context=".SearchActivity">
             android:layout_weight="20"
             android:text="@string/square_meter"
             android:textSize="@dimen/default_text_size" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/default_margin"
+        android:paddingEnd="@dimen/default_margin">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

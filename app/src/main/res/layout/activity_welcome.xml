@@ -19,6 +19,7 @@ tools:context=".WelcomeActivity">
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:paddingTop="@dimen/default_large_margin"
+        android:layout_marginHorizontal="@dimen/default_margin"
         android:text="@string/app_name"
         android:textAlignment="center"
         android:textColor="@color/colorAccentLight"

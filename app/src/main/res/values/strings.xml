@@ -124,6 +124,7 @@
     <string name="add_main_photo">"Ajouter la photo principale"</string>
     <string name="modify_main_photo">"Changer la photo principale"</string>
     <string name="modify_others_photo">"Ajouter une autre photo"</string>
+    <string name="delete_photo">"Supprimer une photo"</string>
     <string name="search_photo">"Chercher une photo"</string>
     <string name="take_photo">"Prendre une photo"</string>
     <string name="main_photo">"Photo principale"</string>

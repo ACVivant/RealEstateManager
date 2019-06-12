@@ -4,8 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -24,12 +33,14 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.openclassrooms.realestatemanager.database.dao.PropertyDao;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Address;
@@ -38,19 +49,26 @@ import com.openclassrooms.realestatemanager.models.Photo;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.models.Status;
 import com.openclassrooms.realestatemanager.models.TypeOfProperty;
+import com.openclassrooms.realestatemanager.repositories.PropertyRepository;
 import com.openclassrooms.realestatemanager.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 public class CreateHomeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, PhotoDialogFragment.DialogListener {
 
     private PropertyViewModel propertyViewModel;
+    private PropertyRepository propertyRepository;
+    private PropertyDao propertyDao;
+
+
     private NotificationManagerCompat notificationManager;
 
     private static final String TAG = "CreateHomeActivity";
     public static final String MAIN_PHOTO_REQUEST = "Create_main_photo";
     public static final String OTHERS_PHOTO_REQUEST = "Create_others_photos";
     public static final String WHICH_REQUEST = "Create_main_orothers_photos";
+
 
     @BindView(R.id.create_spinner_status)
     Spinner spinnerStatus;
@@ -62,6 +80,8 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     EditText price;
     @BindView(R.id.create_insert_surface)
     EditText surface;
+    @BindView(R.id.update_photo_recyclerview_container)
+    RecyclerView photosRecyclerView;
     @BindView(R.id.add_main_photo)
     ImageButton addMainPhoto;
     @BindView(R.id.create_main_photo_preview)
@@ -72,10 +92,14 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     ImageView photo2;
     @BindView(R.id.create_photo_more_preview3)
     ImageView photo3;
+    @BindView(R.id.create_photo_more_preview4)
+    ImageView photo4;
     @BindView(R.id.add_more_photo)
     ImageButton addPhotos;
     @BindView(R.id.number_photo_more)
     TextView numberPhotos;
+    @BindView(R.id.delete_photo_layout)
+    LinearLayout deletePhotoLayout;
 
     @BindView(R.id.create_insert_rooms)
     EditText rooms;
@@ -165,6 +189,7 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     private String mainPhotoUri;
     private String mainPhotoLegend;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -174,10 +199,13 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         notificationManager = NotificationManagerCompat.from(this);
 
         configureView();
-
     }
 
     private void configureView() {
+
+        photosRecyclerView.setVisibility(View.GONE);
+        deletePhotoLayout.setVisibility(View.GONE);
+
         // spinnerStatus = (Spinner) findViewById(R.id.create_spinner_status);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.create_status_array, android.R.layout.simple_spinner_item);
@@ -207,8 +235,8 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
                 configureViewModel();
                 savePropertyData();
                 createProperty();
-                createPhotos();
-                launchMainActivity();
+                //createPhotos();
+                launchMainActivityDetail();
             }
         });
 
@@ -230,7 +258,7 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         resetProperty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                launchMainActivity();
             }
         });
     }
@@ -302,19 +330,23 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
             nearPark = checkboxPark.isChecked();
             nearMuseum = checkboxMuseum.isChecked();
 
-            if (!dateUpForSale.getText().toString().isEmpty()) {
+            if (dateSoldOn.getText().toString().length()==10) {
                 newUpForSale = dateUpForSale.getText().toString();
                 intUpForSale = Utils.convertStringDateToIntDate(newUpForSale);
-                Log.d(TAG, "savePropertyData: enteredDate " + newUpForSale);
-                Log.d(TAG, "savePropertyData: formattedDate " + intUpForSale);
+                Log.d(TAG, "savePropertyData: upForSale enteredDate " + newUpForSale);
+                Log.d(TAG, "savePropertyData: upForSale formattedDate " + intUpForSale);
             } else {
                 newUpForSale = "99/99/9999";
                 intUpForSale = Utils.convertStringDateToIntDate(newUpForSale);
+                Log.d(TAG, "savePropertyData: enteredDate " + newUpForSale);
+                Log.d(TAG, "savePropertyData: formattedDate " + intUpForSale);
             }
 
-            if (!dateSoldOn.getText().toString().isEmpty()) {
+            if (dateSoldOn.getText().toString().length()==10) {
                 newSoldOn = dateSoldOn.getText().toString();
                 intSoldOn = Utils.convertStringDateToIntDate(newSoldOn);
+                Log.d(TAG, "savePropertyData: soldOn enteredDate " + newUpForSale);
+                Log.d(TAG, "savePropertyData: soldOn formattedDate " + intUpForSale);
             } else {
                 newSoldOn = "99/99/9999";
                 intSoldOn = Utils.convertStringDateToIntDate(newSoldOn);
@@ -327,14 +359,79 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     }
 
     private void createProperty() {
-        Log.d(TAG, "createProperty: statusId " + statusId);
-        Log.d(TAG, "createProperty: typeId " + typeId);
-        Log.d(TAG, "createProperty: agentId " + agentId);
+
+        Log.d(TAG, "createProperty: called");
+        
         Property myProperty = new Property(newPrice, newRooms, newBedrooms, newBathrooms, newDescription, intUpForSale, intSoldOn, newSurface, nearShop, nearSchool, nearMuseum, nearPark, typeId, agentId, statusId, mainPhotoUri, newAddressNumber, newAddressStreet, newAddressStreet2, newZipcode, newTown, newCountry);
 
-       propertyViewModel.insertProperty(myProperty);
+        Observable<Property> propertyObservable = Observable
+                .fromCallable(new Callable<Property>() {
+                    @Override
+                    public Property call() throws Exception {
+                        //propertyViewModel.insertProperty(myProperty);
+                        //propertyRepository.insertProperty(myProperty);
+                        propertyId = propertyDao.insertProperty(myProperty);
+                        Log.d(TAG, "call: propertyId " + propertyId);
+                        return myProperty;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
 
-       sendNotification();
+        //'long com.openclassrooms.realestatemanager.database.dao.PropertyDao.insertProperty(com.openclassrooms.realestatemanager.models.Property)' on a null object reference
+        // onError: Attempt to invoke virtual method 'long com.openclassrooms.realestatemanager.repositories.PropertyRepository.insertProperty(com.openclassrooms.realestatemanager.models.Property)' on a null object reference
+        /*2019-06-11 10:11:22.898 4197-4225/? E/WindowManager: RemoteException occurs on reporting focusChanged, w=Window{4d0b13e u0 com.openclassrooms.realestatemanager/com.openclassrooms.realestatemanager.CreateHomeActivity}
+    android.os.DeadObjectException
+        at android.os.BinderProxy.transactNative(Native Method)
+        at android.os.BinderProxy.transact(Binder.java:1143)
+        at android.view.IWindow$Stub$Proxy.windowFocusChanged(IWindow.java:500)
+        at com.android.server.wm.WindowState.reportFocusChangedSerialized(WindowState.java:3943)
+        at com.android.server.wm.WindowManagerService$H.handleMessage(WindowManagerService.java:5455)
+        at android.os.Handler.dispatchMessage(Handler.java:106)
+        at android.os.Looper.loop(Looper.java:214)
+        at android.os.HandlerThread.run(HandlerThread.java:65)
+        at com.android.server.ServiceThread.run(ServiceThread.java:44)*/
+
+        propertyObservable.subscribe(new Observer<Property>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                Log.d(TAG, "onSubscribe: called");
+
+            }
+
+            @Override
+            public void onNext(Property property) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.d(TAG, "onError: " + e.getMessage());
+
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "onComplete: called");
+                Log.d(TAG, "onComplete: propertyId " +propertyId);
+                createPhotos();
+
+            }
+        });
+
+
+/*        propertyObservable.subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(@NonNull Object o) throws Exception {
+                        // the o will be Long[].size => numbers of inserted records.
+
+                    }
+                });*/
+
+
+       //propertyViewModel.insertProperty(myProperty);
+
+
     }
 
     @Override
@@ -349,6 +446,13 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         Log.d(TAG, "configureViewModel");
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
         this.propertyViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PropertyViewModel.class);
+    }
+
+    private void launchMainActivityDetail() {
+        Boolean displayDetail = false;
+        Intent intent = new Intent(CreateHomeActivity.this, MainActivity.class);
+        intent.putExtra(ListHouseFragment.DISPLAY_DETAIL, displayDetail);
+        startActivity(intent);
     }
 
     private void launchMainActivity() {
@@ -442,6 +546,13 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
                             .load(this.photosList.get(2))
                             .apply(RequestOptions.circleCropTransform())
                             .into(this.photo3);
+
+                    if (photosList.size() > 3) {
+                        Glide.with(this) //SHOWING PREVIEW OF IMAGE
+                                .load(this.photosList.get(3))
+                                .apply(RequestOptions.circleCropTransform())
+                                .into(this.photo4);
+                    }
                 }
             }
         }
@@ -468,6 +579,8 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         for (int i=0; i<photosList.size(); i++) {
             propertyViewModel.insertPhoto(new Photo(photosList.get(i), legendList.get(i), propertyId));
         }
+
+        sendNotification();
     }
 
     private void sendNotification() {

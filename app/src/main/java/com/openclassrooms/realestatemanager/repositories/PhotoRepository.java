@@ -29,6 +29,8 @@ public class PhotoRepository {
 
     public LiveData<List<Photo>> getPhotoFromPropertyId(int propertyId) { return this.photoDao.getPhotoFromProperty(propertyId);}
 
+    public LiveData<Photo> getPhotoFromId(long photoId) { return photoDao.getPhotoFromId(photoId);}
+
     public LiveData<List<Photo>> getAllPhoto() {
         return this.photoDao.getAllPhoto();
     }
