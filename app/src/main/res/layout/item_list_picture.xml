@@ -31,7 +31,8 @@
                 android:layout_alignBottom="@+id/photo_recyclerview_picture"
                 android:text="@string/house_type"
                 android:padding="@dimen/default_mini_margin"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:gravity="center_horizontal"/>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 

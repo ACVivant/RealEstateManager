@@ -18,13 +18,16 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.openclassrooms.realestatemanager.models.Photo;
 
+import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.PrimaryKey;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -43,6 +46,8 @@ public class PhotoRecyclerViewAdapter extends RecyclerView.Adapter<PhotoRecycler
     private String which;
     private DeletePhotoListener listener;
 
+    private View view;
+
 
 public PhotoRecyclerViewAdapter(Context context, String which) {
     mContext = context;
@@ -54,7 +59,7 @@ public PhotoRecyclerViewAdapter(Context context, String which) {
     @NonNull
     @Override
     public PhotoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_picture, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_picture, parent, false);
         PhotoViewHolder holder = new PhotoViewHolder(view);
         mContext = parent.getContext();
         try {
@@ -82,10 +87,9 @@ public PhotoRecyclerViewAdapter(Context context, String which) {
             @Override
             public void onClick(View v) {
                 if (which.equals(DetailFragment.FROM_DETAIL_REQUEST)) {
-                    Toast.makeText(mContext, currentPhoto.getPhotoText() + " " + currentPhoto.getPhotoId(), Toast.LENGTH_LONG).show();
+                    openBigPhoto(Uri.parse(currentPhoto.getPhotoUri()), currentPhoto.getPhotoText());
                 } else {
                     if (which.equals(UpdateActivity.FROM_UPDATE_REQUEST)) {
-                        Toast.makeText(mContext, "Voulez-vous supprimer la photo?", Toast.LENGTH_LONG).show();
                         openDeleteDialog(holder, currentPhoto, currentPhoto.getPhotoUri(), currentPhoto.getPhotoId());
                     }
                 }
@@ -112,7 +116,6 @@ public PhotoRecyclerViewAdapter(Context context, String which) {
         alertDialog.setPositiveButton("Confirmer", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(mContext, "Confirmation", Toast.LENGTH_LONG).show();
                 holder.picture.setImageResource(R.drawable.ic_delete);
                 holder.picture.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
 
@@ -123,14 +126,38 @@ public PhotoRecyclerViewAdapter(Context context, String which) {
         alertDialog.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(mContext, "Annulation", Toast.LENGTH_LONG).show();
-                // DO SOMETHING HERE
+                dialog.dismiss();
 
             }
         });
 
         AlertDialog dialog = alertDialog.create();
         dialog.show();
+    }
+
+    public void openBigPhoto(Uri photoUri, String legend) {
+
+        View alertLayout =LayoutInflater.from(mContext).inflate(R.layout.display_photo_dialog, null);
+        final ImageView photoView = alertLayout.findViewById(R.id.bigPhotoImg);
+        photoView.setImageURI(photoUri);
+        final TextView photoLegend = alertLayout.findViewById(R.id.bigPhotoLegend);
+        photoLegend.setText(legend);
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(mContext);
+        // this is set the view from XML inside AlertDialog
+        alert.setView(alertLayout);
+        // disallow cancel of AlertDialog on click of back button and outside touch
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = alert.create();
+        dialog.show();
+
     }
 
     public interface DeletePhotoListener{
