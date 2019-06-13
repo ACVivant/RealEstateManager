@@ -50,7 +50,7 @@
     <string name="location_town">"Ville"</string>
     <string name="location_country">"Pays"</string>
     <string name="square_meter">"sq m"</string>
-    <string name="devise">"€/$"</string>
+    <string name="devise">"€"</string>
     <string name="statut">"Statut"</string>
     <string name="date_offer">"Mise en vente"</string>
     <string name="date_sold">"Vente"</string>
@@ -173,7 +173,10 @@
     <string name="search_min_datesold_ask">"Vendu après le "</string>
 
     <!-- Settings Activity -->
-    <string name="settings_devise_ask">"Devise"</string>
+    <string name="settings_devise_ask">"Convertisseur"</string>
+    <string name="settings_euros">"Euros"</string>
+    <string name="settings_dollars">"Dollars"</string>
+    <string name="convert_devise">"Convertir"</string>
     <string-array name="settings_devise_answer">
         <item>€</item>
         <item>$</item>
@@ -187,7 +190,5 @@
     <string name="notification_title">"Bravo!"</string>
     <string name="notification_message">"Le nouveau bien a été créé."</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
 

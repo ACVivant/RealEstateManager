@@ -35,7 +35,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-public class ResultSearchActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class ResultSearchActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,PhotoRecyclerViewAdapter.DeletePhotoListener{
 
     private static final String TAG = "ResultSearchActivity";
     private static final int ERROR_DIALOG_REQUEST = 9001;
@@ -82,7 +82,6 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
         this.configureToolbar();
         this.configureDrawerLayout();
         this.configureNavigationView();
-        //this.configureBottomNavigationView();
 
 
         filteredResultsArray = getIntent().getIntegerArrayListExtra(SearchActivity.ID_FILTERED);
@@ -301,5 +300,10 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
         super.onSaveInstanceState(outState);
         String idFragment = active.getTag();
         outState.putString(ID_FRAGMENT, idFragment);
+    }
+
+    @Override
+    public void photoToDelete(long photoId) {
+
     }
 }

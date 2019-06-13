@@ -23,7 +23,6 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
 
     private final AddressRepository addressRepository;
     private final AgentRepository agentRepository;
-    //private final AttractingPointRepository attractingPointRepository;
     private final PhotoRepository photoRepository;
     private final PropertyRepository propertyRepository;
     private final StatusRepository statusRepository;
@@ -33,7 +32,6 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     public ViewModelFactory(PropertyRepository propertyRepository, AddressRepository addressRepository, AgentRepository agentRepository, PhotoRepository photoRepository,  StatusRepository statusRepository, TypeOfPropertyRepository typeOfPropertyRepository, Executor executor) {
         this.addressRepository = addressRepository;
         this.agentRepository = agentRepository;
-        //this.attractingPointRepository = attractingPointRepository;
         this.photoRepository = photoRepository;
         this.propertyRepository = propertyRepository;
         this.statusRepository = statusRepository;

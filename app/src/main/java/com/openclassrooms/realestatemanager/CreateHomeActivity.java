@@ -206,7 +206,6 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         photosRecyclerView.setVisibility(View.GONE);
         deletePhotoLayout.setVisibility(View.GONE);
 
-        // spinnerStatus = (Spinner) findViewById(R.id.create_spinner_status);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.create_status_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
@@ -214,7 +213,6 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         spinnerStatus.setAdapter(adapter);
         spinnerStatus.setOnItemSelectedListener(this);
 
-        //spinnerType = (Spinner) findViewById(R.id.create_spinner_type);
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this,
                 R.array.search_type_answer, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
@@ -222,7 +220,6 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         spinnerType.setAdapter(adapter1);
         spinnerType.setOnItemSelectedListener(this);
 
-        //spinnerAgent = (Spinner) findViewById(R.id.create_spinner_agent);
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
                 R.array.create_agent_name, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -258,7 +255,7 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         resetProperty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                launchMainActivity();
+                CreateHomeActivity.this.finish();
             }
         });
     }
@@ -469,7 +466,6 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // 6 - Calling the appropriate method after activity result
         this.handleResponse(requestCode, resultCode, data);
     }
 

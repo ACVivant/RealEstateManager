@@ -42,47 +42,83 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingStart="@dimen/default_margin"
-        android:paddingEnd="@dimen/default_margin">
+        android:paddingEnd="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:text="@string/settings_devise_ask"
+            android:text="@string/settings_dollars"
             android:textSize="@dimen/default_text_size"/>
 
-        <Spinner
-            android:id="@+id/spinner_devise"
+        <EditText
+            android:id="@+id/convert_dollars"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:textSize="@dimen/default_text_size" />
+            android:textSize="@dimen/default_text_size"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$"
+            android:textSize="@dimen/default_text_size"/>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="@dimen/default_large_margin">
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/default_margin">
 
-        <Button
+        <ImageButton
+            android:id="@+id/convert_btn1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/validation"
-            android:background="@color/colorPrimaryLight"
-            android:textColor="@android:color/white"
-            android:padding="@dimen/default_margin"/>
+            app:srcCompat="@drawable/ic_convert1"
+            android:backgroundTint="@color/colorPrimary"
+            android:tint="@color/colorMyWhite"/>
 
-        <Button
+        <ImageButton
+            android:id="@+id/convert_btn2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_margin"
-            android:text="@string/dismiss"
-            android:background="@color/colorAccentLight"
-            android:textColor="@android:color/white"
-            android:padding="@dimen/default_margin"
-            android:layout_marginBottom="@dimen/default_margin"/>
+            app:srcCompat="@drawable/ic_convert2"
+            android:backgroundTint="@color/colorAccent"
+            android:tint="@color/colorMyWhite"
+            />
     </LinearLayout>
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/default_margin"
+    android:paddingEnd="@dimen/default_margin">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="50"
+        android:text="@string/settings_euros"
+        android:textSize="@dimen/default_text_size"/>
+
+    <EditText
+        android:id="@+id/convert_euros"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="50"
+        android:textSize="@dimen/default_text_size"
+        android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="€"
+            android:textSize="@dimen/default_text_size" />
+</LinearLayout>
 
 </LinearLayout>

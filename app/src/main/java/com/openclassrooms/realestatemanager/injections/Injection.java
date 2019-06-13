@@ -29,11 +29,6 @@ public class Injection {
         return new AgentRepository(database.agentDao());
     }
 
-/*    public static AttractingPointRepository provideAttractingPointRepository(Context context) {
-        RealEstateDatabase database = RealEstateDatabase.getInstance(context);
-        return new AttractingPointRepository(database.attractingPointDao());
-    }*/
-
     public static PhotoRepository providePhotoRepository(Context context) {
         RealEstateDatabase database = RealEstateDatabase.getInstance(context);
         return new PhotoRepository(database.photoDao());
@@ -59,7 +54,6 @@ public class Injection {
     public static ViewModelFactory provideViewModelFactory(Context context) {
         AddressRepository addressRepository = provideAddressRepository(context);
         AgentRepository agentRepository = provideAgentRepository(context);
-        //AttractingPointRepository attractingPointRepository = provideAttractingPointRepository(context);
         PhotoRepository photoRepository = providePhotoRepository(context);
         PropertyRepository propertyRepository = providePropertyRepository(context);
         StatusRepository statusRepository = provideStatusRepository(context);

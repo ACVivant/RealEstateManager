@@ -126,7 +126,6 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     private  void configureSpinner() {
-        // spinnerStatus = (Spinner) findViewById(R.id.create_spinner_status);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.filter_status_ask, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
@@ -134,7 +133,6 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
         spinnerStatus.setAdapter(adapter);
         spinnerStatus.setOnItemSelectedListener(this);
 
-        //spinnerType = (Spinner) findViewById(R.id.create_spinner_type);
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this,
                 R.array.filter_type_ask, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
@@ -142,7 +140,6 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
         spinnerType.setAdapter(adapter1);
         spinnerType.setOnItemSelectedListener(this);
 
-        //spinnerAgent = (Spinner) findViewById(R.id.create_spinner_agent);
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
                 R.array.filter_agent_ask, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -205,8 +202,9 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
             }
 
             queryString += " price > ?";
-            int minPrice = (int)  Integer.parseInt(priceMin.getText().toString()) ;
-            queryString += minPrice;
+            int minPrice = Integer.parseInt(priceMin.getText().toString()) ;
+            //queryString += minPrice;
+            args.add(minPrice);
             containsCondition = true;
         }
 
@@ -219,7 +217,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
             }
 
             queryString += " price < ? ";
-            int maxPrice = (int)  Integer.parseInt(priceMax.getText().toString()) ;
+            int maxPrice = Integer.parseInt(priceMax.getText().toString()) ;
             args.add(maxPrice);
             containsCondition = true;
         }
@@ -464,10 +462,12 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
 
         for (int i=0; i<properties.size(); i++) {
             Log.d(TAG, "updatePropertyList: " + properties.get(i).getPrice());
+            Log.d(TAG, "updatePropertyList:  " + properties.get(i).getSurface());
+            Log.d(TAG, "updatePropertyList: " + properties.get(i).getPropertyId());
             filteredId.add(properties.get(i).getPropertyId());
         }
 
-        Log.d(TAG, "updatePropertyList: filteredId " + filteredId.size());
+        Log.d(TAG, "updatePropertyList: filteredId.size " + filteredId.size());
         Intent intent = new Intent(this, ResultSearchActivity.class);
         intent.putExtra(RESULTS_FILTERED, true);
         intent.putExtra(SEARCH_QUERY, queryString);

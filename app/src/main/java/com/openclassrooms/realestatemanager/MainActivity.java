@@ -249,7 +249,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //Inflate the menu and add it to the top Toolbar
-        getMenuInflater().inflate(R.menu.top_toolbar_menu, menu);
+        getMenuInflater().inflate(R.menu.top_toolbar_main_menu, menu);
         return true;
     }
 
@@ -265,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     // Actions from bottom bar
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+/*    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
@@ -289,7 +289,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             return false;
         }
-    };
+    };*/
 
     // Actions from navigation drawer
     @Override

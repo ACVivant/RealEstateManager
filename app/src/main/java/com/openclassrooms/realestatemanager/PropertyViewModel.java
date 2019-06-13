@@ -33,7 +33,6 @@ public class PropertyViewModel extends ViewModel {
     private AddressRepository addressRepository;
     private AgentRepository agentRepository;
     private AttractingPointRepository attractingPointRepository;
-    //private AttractingPropertyJoinRepository attractingPropertyJoinRepository;
     private PhotoRepository photoRepository;
     private StatusRepository statusRepository;
     private TypeOfPropertyRepository typeOfPropertyRepository;
@@ -120,7 +119,6 @@ public class PropertyViewModel extends ViewModel {
     }
 
     // For Property
-   // public LiveData<Property> getPropertyFromId(int propertyId) { return this.currentProperty;  }
     public LiveData<Property> getPropertyFromId(int propertyId) { return propertyRepository.getPropertyFromId(propertyId);  }
     public LiveData<List<Property>> getAllProperty(){
         return propertyRepository.getAllProperty();
@@ -141,7 +139,6 @@ public class PropertyViewModel extends ViewModel {
     public LiveData<List<Property>> getFilteredProperties(SupportSQLiteQuery query) { return propertyRepository.getFilteredProperties(query);}
 
     // For Agent
-    //public LiveData<Agent> getAgentFromId(int agentId) {return this.currentAgent;}
     public LiveData<Agent> getAgentFromId(int agentId) {
         return agentRepository.getAgentFromId(agentId);
     }
@@ -186,7 +183,6 @@ public class PropertyViewModel extends ViewModel {
     }
 
     // For Status
-    // public LiveData<Status> getStatusFromId(int statusId) {return this.currentStatus;}
     public LiveData<Status> getStatusFromId(int statusId) {return statusRepository.getStatusFromId(statusId);}
     public LiveData<Status> getStatusFromName(String statusName) {return this.currentStatus;}
 
@@ -204,7 +200,6 @@ public class PropertyViewModel extends ViewModel {
 
     // For TypeOfProperty
     public LiveData<List<TypeOfProperty>> getAllTypes() {return typeOfPropertyRepository.getAllType();}
-    //public LiveData<TypeOfProperty> getTypeFromId(int typeId) {return this.currentType;}
     public LiveData<TypeOfProperty> getTypeFromId(int typeId) {return typeOfPropertyRepository.getTypeFromId(typeId);}
     public LiveData<TypeOfProperty> getTypeFromName(String typeName) {return this.currentType;}
 

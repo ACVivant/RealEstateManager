@@ -225,7 +225,12 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
             }
         });
 
-        resetProperty.setVisibility(View.GONE);
+        resetProperty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UpdateActivity.this.finish();
+            }
+        });
 
 
 
