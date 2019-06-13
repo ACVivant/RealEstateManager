@@ -1,8 +1,11 @@
 package com.openclassrooms.realestatemanager;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +25,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiFunction;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -127,7 +131,6 @@ public PhotoRecyclerViewAdapter(Context context, String which) {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-
             }
         });
 
@@ -136,12 +139,16 @@ public PhotoRecyclerViewAdapter(Context context, String which) {
     }
 
     public void openBigPhoto(Uri photoUri, String legend) {
-
         View alertLayout =LayoutInflater.from(mContext).inflate(R.layout.display_photo_dialog, null);
         final ImageView photoView = alertLayout.findViewById(R.id.bigPhotoImg);
-        photoView.setImageURI(photoUri);
+
+        Glide.with(mContext)
+                .load(photoUri)
+                .into(photoView);
+
         final TextView photoLegend = alertLayout.findViewById(R.id.bigPhotoLegend);
         photoLegend.setText(legend);
+
 
         AlertDialog.Builder alert = new AlertDialog.Builder(mContext);
         // this is set the view from XML inside AlertDialog

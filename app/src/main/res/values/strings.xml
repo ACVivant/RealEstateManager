@@ -110,6 +110,8 @@
         <item>Vendu</item>
     </string-array>
 
+    <string name="status_sold">"Vendu"</string>
+
     <string-array name="filter_status_ask">
         <item>En cours de création</item>
         <item>En vente</item>

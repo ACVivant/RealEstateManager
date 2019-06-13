@@ -30,7 +30,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
  */
 
 
-
 @Database(entities =
         {Address.class, Agent.class, AttractingPoint.class, Photo.class, Property.class, Status.class, TypeOfProperty.class},
         version = 1,
@@ -38,6 +37,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 public abstract class RealEstateDatabase extends RoomDatabase {
 
     private static final String TAG = "RealEstateDatabase";
+
     // --- SINGLETON ---
     private static RealEstateDatabase INSTANCE;
 
@@ -48,9 +48,6 @@ public abstract class RealEstateDatabase extends RoomDatabase {
     public abstract PropertyDao propertyDao();
     public abstract StatusDao statusDao();
     public abstract TypeOfPropertyDao typeOfPropertyDao();
-
-    // --- INSTANCE ---
-
 
     // --- INSTANCE ---
     public static RealEstateDatabase getInstance(Context context) {

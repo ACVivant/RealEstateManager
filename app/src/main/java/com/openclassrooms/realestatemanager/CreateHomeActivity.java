@@ -40,6 +40,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.openclassrooms.realestatemanager.database.RealEstateDatabase;
 import com.openclassrooms.realestatemanager.database.dao.PropertyDao;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
@@ -188,6 +189,7 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     private ArrayList<String> legendList = new ArrayList<>();
     private String mainPhotoUri;
     private String mainPhotoLegend;
+    private int mCreate_status_array;
 
 
     @Override
@@ -327,7 +329,7 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
             nearPark = checkboxPark.isChecked();
             nearMuseum = checkboxMuseum.isChecked();
 
-            if (dateSoldOn.getText().toString().length()==10) {
+            if (dateUpForSale.getText().toString().length()==10) {
                 newUpForSale = dateUpForSale.getText().toString();
                 intUpForSale = Utils.convertStringDateToIntDate(newUpForSale);
                 Log.d(TAG, "savePropertyData: upForSale enteredDate " + newUpForSale);
@@ -351,84 +353,63 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
 
             newAgent = spinnerAgent.getSelectedItem().toString();
             agentId = spinnerAgent.getSelectedItemPosition() + 1;
-            Log.d(TAG, "savePropertyData: agentId " + agentId);
         }
     }
 
     private void createProperty() {
-
         Log.d(TAG, "createProperty: called");
-        
-        Property myProperty = new Property(newPrice, newRooms, newBedrooms, newBathrooms, newDescription, intUpForSale, intSoldOn, newSurface, nearShop, nearSchool, nearMuseum, nearPark, typeId, agentId, statusId, mainPhotoUri, newAddressNumber, newAddressStreet, newAddressStreet2, newZipcode, newTown, newCountry);
 
-        Observable<Property> propertyObservable = Observable
-                .fromCallable(new Callable<Property>() {
-                    @Override
-                    public Property call() throws Exception {
-                        //propertyViewModel.insertProperty(myProperty);
-                        //propertyRepository.insertProperty(myProperty);
-                        propertyId = propertyDao.insertProperty(myProperty);
-                        Log.d(TAG, "call: propertyId " + propertyId);
-                        return myProperty;
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        if(newStatus.equals(R.string.status_sold)&& newSoldOn.equals("99/99/9999")) {
+            Toast.makeText(this, "Il faut entrer une date de vente", Toast.LENGTH_LONG).show();
+        } else {
 
-        //'long com.openclassrooms.realestatemanager.database.dao.PropertyDao.insertProperty(com.openclassrooms.realestatemanager.models.Property)' on a null object reference
-        // onError: Attempt to invoke virtual method 'long com.openclassrooms.realestatemanager.repositories.PropertyRepository.insertProperty(com.openclassrooms.realestatemanager.models.Property)' on a null object reference
-        /*2019-06-11 10:11:22.898 4197-4225/? E/WindowManager: RemoteException occurs on reporting focusChanged, w=Window{4d0b13e u0 com.openclassrooms.realestatemanager/com.openclassrooms.realestatemanager.CreateHomeActivity}
-    android.os.DeadObjectException
-        at android.os.BinderProxy.transactNative(Native Method)
-        at android.os.BinderProxy.transact(Binder.java:1143)
-        at android.view.IWindow$Stub$Proxy.windowFocusChanged(IWindow.java:500)
-        at com.android.server.wm.WindowState.reportFocusChangedSerialized(WindowState.java:3943)
-        at com.android.server.wm.WindowManagerService$H.handleMessage(WindowManagerService.java:5455)
-        at android.os.Handler.dispatchMessage(Handler.java:106)
-        at android.os.Looper.loop(Looper.java:214)
-        at android.os.HandlerThread.run(HandlerThread.java:65)
-        at com.android.server.ServiceThread.run(ServiceThread.java:44)*/
+            RealEstateDatabase database = RealEstateDatabase.getInstance(this);
+            PropertyRepository propertyRepository=  new PropertyRepository(database.propertyDao());
 
-        propertyObservable.subscribe(new Observer<Property>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                Log.d(TAG, "onSubscribe: called");
+            Property myProperty = new Property(newPrice, newRooms, newBedrooms, newBathrooms, newDescription, intUpForSale, intSoldOn, newSurface, nearShop, nearSchool, nearMuseum, nearPark, typeId, agentId, statusId, mainPhotoUri, newAddressNumber, newAddressStreet, newAddressStreet2, newZipcode, newTown, newCountry);
 
-            }
+            Observable<Property> propertyObservable = Observable
+                    .fromCallable(new Callable<Property>() {
+                        @Override
+                        public Property call() throws Exception {
+                            //propertyViewModel.insertProperty(myProperty);
+                            propertyRepository.insertProperty(myProperty);
+                            //propertyId = propertyDao.insertProperty(myProperty);
+                            Log.d(TAG, "call: propertyId " + propertyId);
+                            return myProperty;
+                        }
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread());
 
-            @Override
-            public void onNext(Property property) {
+            propertyObservable.subscribe(new Observer<Property>() {
+                @Override
+                public void onSubscribe(Disposable d) {
+                    Log.d(TAG, "onSubscribe: called");
 
-            }
+                }
 
-            @Override
-            public void onError(Throwable e) {
-                Log.d(TAG, "onError: " + e.getMessage());
+                @Override
+                public void onNext(Property property) {
 
-            }
+                }
 
-            @Override
-            public void onComplete() {
-                Log.d(TAG, "onComplete: called");
-                Log.d(TAG, "onComplete: propertyId " +propertyId);
-                createPhotos();
+                @Override
+                public void onError(Throwable e) {
+                    Log.d(TAG, "onError: " + e.getMessage());
 
-            }
-        });
+                }
 
+                @Override
+                public void onComplete() {
+                    Log.d(TAG, "onComplete: called");
+                    Log.d(TAG, "onComplete: propertyId " + propertyId);
+                    //createPhotos();
 
-/*        propertyObservable.subscribe(new Consumer<Object>() {
-                    @Override
-                    public void accept(@NonNull Object o) throws Exception {
-                        // the o will be Long[].size => numbers of inserted records.
+                }
+            });
 
-                    }
-                });*/
-
-
-       //propertyViewModel.insertProperty(myProperty);
-
-
+        }
     }
 
     @Override
