@@ -46,6 +46,7 @@ import com.openclassrooms.realestatemanager.models.Address;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.models.TypeOfProperty;
 import com.openclassrooms.realestatemanager.utils.MapUrl;
+import com.openclassrooms.realestatemanager.utils.Utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -113,18 +114,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private boolean displayDetail;
     Handler handlerUI = new Handler();
     int compteur;
+    private boolean internet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         configureToolbar();
-        getLocationPermission();
-
-        try {
-            getData();
-        } catch (IOException e) {
-            e.printStackTrace();
+        getInternetConnexion();
+        if (internet) {
+            getLocationPermission();
+        } else {
+            Toast.makeText(this, "Vous n'êtes pas connecté à internet", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -136,6 +137,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    private boolean getInternetConnexion() {
+        internet = Utils.isInternetAvailable(this);
+        return  internet;
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -153,6 +158,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mMap.setMyLocationEnabled(true); // icone GPS pour recentrer la carte
             mMap.getUiSettings().setZoomControlsEnabled(true); // zoom
         }
+
+
     }
 
     private void initMap() {
@@ -176,7 +183,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                             Log.d(TAG, "onComplete: location found");
                             Location currentLocation = (Location) task.getResult();
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),DEFAULT_ZOOM);
-                            addAlMarkers();
+
+                           // addAlMarkers();
 
                         } else {
                             Log.d(TAG, "onComplete: current location is null");
@@ -195,6 +203,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Log.d(TAG, "moveCamera: moving the camera to lat: " + latLng.latitude +" lng: " + latLng.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
 
+        Toast.makeText(this, "chargement des données", Toast.LENGTH_LONG).show();
+
+        addAlMarkers();
     }
 
     //--------------------------------------------------------------------------------------------------------------------
@@ -241,6 +252,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         tab_latitude[i] = setPropertyLatLng(new Address(currentProperty.getNumberInStreet(), currentProperty.getStreet(), currentProperty.getStreet2(), currentProperty.getZipcode(), currentProperty.getTown(), currentProperty.getCountry())).latitude;
         tab_longitude[i] = setPropertyLatLng(new Address(currentProperty.getNumberInStreet(), currentProperty.getStreet(), currentProperty.getStreet2(), currentProperty.getZipcode(), currentProperty.getTown(), currentProperty.getCountry())).longitude;
+
+        addMarker(new LatLng(tab_latitude[i], tab_longitude[i]), tab_room[i], tab_price[i], devise, tab_id[i]);
     }
 
 
@@ -258,16 +271,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         return new LatLng(currentLat, currentLng);
     }
 
-    private void getType(int id) {
-        Log.d(TAG, "getType");
-        this.propertyViewModel.getTypeFromId(id).observe(this, this::updateType);
-    }
-
-    private void updateType(TypeOfProperty typeOfProperty){
-        this.currentType = typeOfProperty;
-        this.currentTypeText = currentType.getTypeText();
-    }
-
     //--------------------------------------------------------------------------------------------------------------------
     //manages Markers
     //--------------------------------------------------------------------------------------------------------------------
@@ -275,10 +278,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void addAlMarkers() {
         Log.d(TAG, "addAllMarkers");
 
-        // le type n'est pas le bon à cause du pb de synchronisation
-        for (int i=0; i< tab_latitude.length; i++) {
-            addMarker(new LatLng(tab_latitude[i], tab_longitude[i]), tab_room[i], tab_price[i], devise, tab_id[i]);
+        try {
+            getData();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+      /*  for (int i=0; i< tab_latitude.length; i++) {
+            addMarker(new LatLng(tab_latitude[i], tab_longitude[i]), tab_room[i], tab_price[i], devise, tab_id[i]);
+        }*/
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override

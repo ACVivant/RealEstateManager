@@ -77,8 +77,8 @@ public class ListHouseFragment extends Fragment {
 
         initRecyclerView();
         configureViewModel();
-        getAllProperties();
         getAllTypes();
+        getAllProperties();
 
         return v;
     }

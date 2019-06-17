@@ -28,9 +28,13 @@ tools:showIn="navigation_view">
     <item android:title="@string/drawer_title_settings">
         <menu>
     <item
-        android:id="@+id/menu_param"
-        android:icon="@drawable/menu_param"
-        android:title="@string/menu_param" />
-        </menu>
+        android:id="@+id/menu_convert"
+        android:icon="@drawable/menu_price"
+        android:title="@string/menu_convert" />
+    <item
+        android:id="@+id/menu_credit"
+        android:icon="@drawable/menu_credit"
+        android:title="@string/menu_credit" />
+</menu>
     </item>
 </menu>

@@ -303,12 +303,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 launchSearch();
                 return true;
 
-            case R.id.menu_param:
+            case R.id.menu_convert:
                 launchSetting();
                 return true;
 
             case R.id.menu_map:
                 launchMap();
+                return true;
+
+            case R.id.menu_credit:
+                launchCredit();
                 return true;
         }
         return false;
@@ -353,6 +357,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
     }
 
+    private void launchCredit() {
+        Intent intent = new Intent(this, CreditActivity.class);
+        startActivity(intent);
+    }
 
 
 //--------------------------------------------------------

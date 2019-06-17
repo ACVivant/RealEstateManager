@@ -231,7 +231,7 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
                 launchSearch();
                 return true;
 
-            case R.id.menu_param:
+            case R.id.menu_convert:
                 launchSetting();
                 return true;
 

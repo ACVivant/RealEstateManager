@@ -17,7 +17,7 @@
     <string name="navigation_drawer_open">"Ouvrir le menu"</string>
     <string name="navigation_drawer_close">"Fermer le menu"</string>
     <string name="title_3">"Real \nEstate \nManager"</string>
-    <string name="drawer_title_settings">"Personnalisation"</string>
+    <string name="drawer_title_settings">"Outils"</string>
     <string name="drawer_title_search">"Recherche"</string>
     <string name="drawer_title_update">"Mise à jour"</string>
 
@@ -26,6 +26,8 @@
     <string name="menu_update">"Modifier un bien"</string>
     <string name="menu_search">"Filtres"</string>
     <string name="menu_param">"Paramètres"</string>
+    <string name="menu_convert">"Conversion"</string>
+    <string name="menu_credit">"Calcul de coût de crédit"</string>
     <string name="menu_map">"Carte"</string>
     <string name="menu_home">"Accueil"</string>
 
@@ -191,6 +193,16 @@
     <string name="channel_description">"Channel notification de Real Estate Manager"</string>
     <string name="notification_title">"Bravo!"</string>
     <string name="notification_message">"Le nouveau bien a été créé."</string>
+
+    <!-- Credit Activity-->
+    <string name="credit_title">"Simulateur coût de crédit"</string>
+    <string name="credit_input">"Apport"</string>
+    <string name="credit_length">"Durée en années"</string>
+    <string name="credit_interest">"Taux"</string>
+    <string name="credit_month">"Mensualités"</string>
+    <string name="credit_cost">"Coût total du crédit"</string>
+    <string name="credit_capital">"Capital remboursé chaque mois"</string>
+
 
 </resources>
 
