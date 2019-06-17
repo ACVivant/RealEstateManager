@@ -170,6 +170,7 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
 
     private String newMainPhotoUri;
     private String newMainLegend;
+    private int nbrePhotos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -231,8 +232,6 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
                 UpdateActivity.this.finish();
             }
         });
-
-
 
         saveProperty.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -372,6 +371,8 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
     private void loadProperty(Property property) {
         currentProperty = property;
 
+        nbrePhotos = currentProperty.getNbrePhotos();
+
         String upForSaleDateText = Utils.convertStringToDate(String.valueOf(currentProperty.getSoldOnDate()));
         if (upForSaleDateText.equals("99/99/9999")) {
             dateUpForSale.setText("");
@@ -500,7 +501,7 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
             newPhotoUrl = newMainPhotoUri;
         }
 
-        Property myProperty = new Property(newPrice, newRooms, newBedrooms, newBathrooms, newDescription, intUpForSale, intSoldOn, newSurface, nearShop, nearSchool, nearMuseum, nearPark, typeId, agentId, statusId,newPhotoUrl,newAddressNumber, newAddressStreet, newAddressStreet2, newZipcode, newTown, newCountry );
+        Property myProperty = new Property(newPrice, newRooms, newBedrooms, newBathrooms, newDescription, intUpForSale, intSoldOn, newSurface, nearShop, nearSchool, nearMuseum, nearPark, typeId, agentId, statusId,newPhotoUrl, nbrePhotos,newAddressNumber, newAddressStreet, newAddressStreet2, newZipcode, newTown, newCountry );
         myProperty.setPropertyId(propertyId);
 
         propertyViewModel.updateProperty(myProperty);
@@ -518,6 +519,7 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
                 Log.d(TAG, "updateProperty: id to delete " + photoToDeleteList.get(i));
                 getPhotosToDelete(photoToDeleteList.get(i));
             }
+            nbrePhotos-= photoToDeleteList.size();
         }
 
     }
@@ -566,11 +568,12 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
     public void applyOthersPhoto(String photoUri, String photoLegend) {
         newPhotosList.add(photoUri);
         newLegendList.add(photoLegend);
+        nbrePhotos+=1;
         setPreviewPhotos();
     }
 
     @Override
-    public void applyMainPhoto(String photoUri, String photoLegend) {
+    public void applyMainPhoto(String photoUri, String photoLegend, boolean main) {
         newMainPhotoUri= photoUri;
         newMainLegend = photoLegend;
         setMainPhoto();

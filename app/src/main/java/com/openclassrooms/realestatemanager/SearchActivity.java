@@ -111,7 +111,6 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
                 Log.d(TAG, "onClick");
                 createQuery();
                 getFilteredProperties();
-                launchResultActivity();
             }
         });
 
@@ -292,6 +291,21 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
             containsCondition = true;
         }
 
+        if(!photos.getText().toString().trim().isEmpty()){
+            if (containsCondition) {
+                queryString += " AND ";
+            } else {
+                queryString += " WHERE ";
+                containsCondition = true;
+            }
+
+            queryString += " nbrePhotos > ?";
+            int minPhotos = (int)  Integer.parseInt(photos.getText().toString()) ;
+            Log.d(TAG, "createQuery: minPhotos " + minPhotos);
+            args.add(minPhotos+1);
+            containsCondition = true;
+        }
+
         if(!zipcode.getText().toString().trim().isEmpty()){
             if (containsCondition) {
                 queryString += " AND ";
@@ -446,32 +460,32 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
         Log.d(TAG, "createQuery: args " + args);
     }
 
-    private void launchResultActivity() {
 
-    }
 
     private void getFilteredProperties(){
         SimpleSQLiteQuery query = new SimpleSQLiteQuery(queryString, args.toArray());
         this.propertyViewModel.getFilteredProperties(query).observe(this, this::updatePropertyList);
     }
 
-    private void updatePropertyList(List<Property> properties){
+    private void updatePropertyList(List<Property> properties) {
         Log.d(TAG, "launchResultActivity: result.size " + properties.size());
 
-       ArrayList<Integer> filteredId = new ArrayList<Integer>();
+        ArrayList<Integer> filteredId = new ArrayList<Integer>();
 
-        for (int i=0; i<properties.size(); i++) {
+        for (int i = 0; i < properties.size(); i++) {
             Log.d(TAG, "updatePropertyList: " + properties.get(i).getPrice());
             Log.d(TAG, "updatePropertyList:  " + properties.get(i).getSurface());
             Log.d(TAG, "updatePropertyList: " + properties.get(i).getPropertyId());
             filteredId.add(properties.get(i).getPropertyId());
         }
+        launchResultActivity( queryString, filteredId);
+           }
 
-        Log.d(TAG, "updatePropertyList: filteredId.size " + filteredId.size());
+    private void launchResultActivity(String query, ArrayList<Integer> tabId) {
         Intent intent = new Intent(this, ResultSearchActivity.class);
         intent.putExtra(RESULTS_FILTERED, true);
-        intent.putExtra(SEARCH_QUERY, queryString);
-        intent.putExtra(ID_FILTERED, filteredId);
+        intent.putExtra(SEARCH_QUERY, query);
+        intent.putExtra(ID_FILTERED, tabId);
         startActivity(intent);
     }
 

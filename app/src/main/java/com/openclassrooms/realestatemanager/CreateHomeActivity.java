@@ -178,6 +178,8 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     long propertyId;
 
     private Address myAddress;
+    private boolean  mainPhotoOk;
+    private int nbrePhotos=0;
 
     // 1 - STATIC DATA FOR PICTURE
     private static final String PERMS = Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -273,86 +275,89 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
                 addressCountry.getText().toString().trim().isEmpty()) {
             Toast.makeText(this, "Il faut entrer l'adrese du bien", Toast.LENGTH_LONG).show();
         } else {
-
-            if (!descriptionText.getText().toString().isEmpty()) {
-                newDescription = descriptionText.getText().toString();
+            if (!mainPhotoOk) {
+                Toast.makeText(this, "Il faut définir une photo principale", Toast.LENGTH_LONG).show();
             } else {
-                newDescription = "N/A";
+                if (!descriptionText.getText().toString().isEmpty()) {
+                    newDescription = descriptionText.getText().toString();
+                } else {
+                    newDescription = "N/A";
+                }
+
+                if (!price.getText().toString().isEmpty()) {
+                    newPrice = Integer.parseInt(price.getText().toString());
+                } else {
+                    newPrice = 0;
+                }
+
+                newType = spinnerType.getSelectedItem().toString();
+                typeId = spinnerType.getSelectedItemPosition() + 1;
+
+                if (!surface.getText().toString().isEmpty()) {
+                    newSurface = Integer.parseInt(surface.getText().toString());
+                } else {
+                    newSurface = 0;
+                }
+
+                if (!rooms.getText().toString().isEmpty()) {
+                    newRooms = Integer.parseInt(rooms.getText().toString());
+                } else {
+                    newRooms = 999;
+                }
+
+                if (!bedrooms.getText().toString().isEmpty()) {
+                    newBedrooms = Integer.parseInt(bedrooms.getText().toString());
+                } else {
+                    newBedrooms = 999;
+                }
+
+                if (!bathrooms.getText().toString().isEmpty()) {
+                    newBathrooms = Integer.parseInt(bathrooms.getText().toString());
+                } else {
+                    newBathrooms = 999;
+                }
+
+                newAddressNumber = addressNumber.getText().toString();
+                if (!addressStreet.getText().toString().isEmpty()) {
+                    newAddressStreet = addressStreet.getText().toString();
+                } else {
+                    newAddressStreet = " ";
+                }
+                newAddressStreet2 = addressStreet2.getText().toString();
+                newZipcode = addressZipcode.getText().toString();
+                newTown = addressTown.getText().toString();
+                newCountry = addressCountry.getText().toString();
+
+                nearSchool = checkboxSchool.isChecked();
+                nearShop = checkboxShop.isChecked();
+                nearPark = checkboxPark.isChecked();
+                nearMuseum = checkboxMuseum.isChecked();
+
+                if (dateUpForSale.getText().toString().length() == 10) {
+                    newUpForSale = dateUpForSale.getText().toString();
+                    intUpForSale = Utils.convertStringDateToIntDate(newUpForSale);
+                    Log.d(TAG, "savePropertyData: upForSale enteredDate " + newUpForSale);
+                    Log.d(TAG, "savePropertyData: upForSale formattedDate " + intUpForSale);
+                } else {
+                    newUpForSale = "99/99/9999";
+                    intUpForSale = Utils.convertStringDateToIntDate(newUpForSale);
+                    Log.d(TAG, "savePropertyData: enteredDate " + newUpForSale);
+                    Log.d(TAG, "savePropertyData: formattedDate " + intUpForSale);
+                }
+
+                if (dateSoldOn.getText().toString().length() == 10) {
+                    newSoldOn = dateSoldOn.getText().toString();
+                    intSoldOn = Utils.convertStringDateToIntDate(newSoldOn);
+                    Log.d(TAG, "savePropertyData: soldOn enteredDate " + newUpForSale);
+                    Log.d(TAG, "savePropertyData: soldOn formattedDate " + intUpForSale);
+                } else {
+                    newSoldOn = "99/99/9999";
+                    intSoldOn = Utils.convertStringDateToIntDate(newSoldOn);
+                }
+
+                newAgent = spinnerAgent.getSelectedItem().toString();
+                agentId = spinnerAgent.getSelectedItemPosition() + 1;
             }
-
-            if (!price.getText().toString().isEmpty()) {
-                newPrice = Integer.parseInt(price.getText().toString());
-            } else {
-                newPrice = 0;
-            }
-
-            newType = spinnerType.getSelectedItem().toString();
-            typeId = spinnerType.getSelectedItemPosition() + 1;
-
-            if (!surface.getText().toString().isEmpty()) {
-                newSurface = Integer.parseInt(surface.getText().toString());
-            } else {
-                newSurface = 0;
-            }
-
-            if (!rooms.getText().toString().isEmpty()) {
-                newRooms = Integer.parseInt(rooms.getText().toString());
-            } else {
-                newRooms = 999;
-            }
-
-            if (!bedrooms.getText().toString().isEmpty()) {
-                newBedrooms = Integer.parseInt(bedrooms.getText().toString());
-            } else {
-                newBedrooms = 999;
-            }
-
-            if (!bathrooms.getText().toString().isEmpty()) {
-                newBathrooms = Integer.parseInt(bathrooms.getText().toString());
-            } else {
-                newBathrooms = 999;
-            }
-
-            newAddressNumber = addressNumber.getText().toString();
-            if (!addressStreet.getText().toString().isEmpty()) {
-                newAddressStreet = addressStreet.getText().toString();
-            } else {
-                newAddressStreet = " ";
-            }
-            newAddressStreet2 = addressStreet2.getText().toString();
-            newZipcode = addressZipcode.getText().toString();
-            newTown = addressTown.getText().toString();
-            newCountry = addressCountry.getText().toString();
-
-            nearSchool = checkboxSchool.isChecked();
-            nearShop = checkboxShop.isChecked();
-            nearPark = checkboxPark.isChecked();
-            nearMuseum = checkboxMuseum.isChecked();
-
-            if (dateUpForSale.getText().toString().length()==10) {
-                newUpForSale = dateUpForSale.getText().toString();
-                intUpForSale = Utils.convertStringDateToIntDate(newUpForSale);
-                Log.d(TAG, "savePropertyData: upForSale enteredDate " + newUpForSale);
-                Log.d(TAG, "savePropertyData: upForSale formattedDate " + intUpForSale);
-            } else {
-                newUpForSale = "99/99/9999";
-                intUpForSale = Utils.convertStringDateToIntDate(newUpForSale);
-                Log.d(TAG, "savePropertyData: enteredDate " + newUpForSale);
-                Log.d(TAG, "savePropertyData: formattedDate " + intUpForSale);
-            }
-
-            if (dateSoldOn.getText().toString().length()==10) {
-                newSoldOn = dateSoldOn.getText().toString();
-                intSoldOn = Utils.convertStringDateToIntDate(newSoldOn);
-                Log.d(TAG, "savePropertyData: soldOn enteredDate " + newUpForSale);
-                Log.d(TAG, "savePropertyData: soldOn formattedDate " + intUpForSale);
-            } else {
-                newSoldOn = "99/99/9999";
-                intSoldOn = Utils.convertStringDateToIntDate(newSoldOn);
-            }
-
-            newAgent = spinnerAgent.getSelectedItem().toString();
-            agentId = spinnerAgent.getSelectedItemPosition() + 1;
         }
     }
 
@@ -363,7 +368,7 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
             Toast.makeText(this, "Il faut entrer une date de vente", Toast.LENGTH_LONG).show();
         } else {
 
-            Property myProperty = new Property(newPrice, newRooms, newBedrooms, newBathrooms, newDescription, intUpForSale, intSoldOn, newSurface, nearShop, nearSchool, nearMuseum, nearPark, typeId, agentId, statusId, mainPhotoUri, newAddressNumber, newAddressStreet, newAddressStreet2, newZipcode, newTown, newCountry);
+            Property myProperty = new Property(newPrice, newRooms, newBedrooms, newBathrooms, newDescription, intUpForSale, intSoldOn, newSurface, nearShop, nearSchool, nearMuseum, nearPark, typeId, agentId, statusId, mainPhotoUri, nbrePhotos, newAddressNumber, newAddressStreet, newAddressStreet2, newZipcode, newTown, newCountry);
 
             Observable<Property> propertyObservable = Observable
                     .fromCallable(new Callable<Property>() {
@@ -531,13 +536,16 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     public void applyOthersPhoto(String photoUri, String photoLegend) {
         photosList.add(photoUri);
         legendList.add(photoLegend);
+        nbrePhotos+=1;
         setPreviewPhotos();
     }
 
     @Override
-    public void applyMainPhoto(String photoUri, String photoLegend) {
+    public void applyMainPhoto(String photoUri, String photoLegend, boolean main) {
         mainPhotoUri = photoUri;
         mainPhotoLegend = photoLegend;
+        mainPhotoOk = main;
+        nbrePhotos+=1;
         setMainPhoto();
     }
 

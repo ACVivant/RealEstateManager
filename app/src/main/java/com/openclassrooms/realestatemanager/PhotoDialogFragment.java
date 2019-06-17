@@ -135,7 +135,7 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
                                 listener.applyOthersPhoto(photoURI.toString(), photoLegend);
                             }
                             if (whichRequest.equals(CreateHomeActivity.MAIN_PHOTO_REQUEST)) {
-                                listener.applyMainPhoto(photoURI.toString(), photoLegend);
+                                listener.applyMainPhoto(photoURI.toString(), photoLegend, true);
                             }
                         }
                     }
@@ -273,6 +273,6 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
 
     public interface DialogListener{
         void applyOthersPhoto(String photoUri, String photoLegend);
-        void applyMainPhoto(String photoUri, String photoLegend);
+        void applyMainPhoto(String photoUri, String photoLegend, boolean main);
     }
 }

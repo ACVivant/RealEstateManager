@@ -45,6 +45,7 @@ public class Property {
     private String zipcode;
     private String town;
     private String country;
+    private int nbrePhotos;
 
     private int typeId;
     private int agentId;
@@ -52,7 +53,7 @@ public class Property {
 
     public Property() {}
 
-    public Property(int price, int rooms, int bedrooms, int bathroom, String description, int upForSaleDate, int soldOnDate, int surface, Boolean shop, Boolean school, Boolean museum, Boolean park ,int typeId, int agentId, int statusId, String mainPhoto, String numberInStreet, String street, String street2, String zipcode, String town, String country) {
+    public Property(int price, int rooms, int bedrooms, int bathroom, String description, int upForSaleDate, int soldOnDate, int surface, Boolean shop, Boolean school, Boolean museum, Boolean park ,int typeId, int agentId, int statusId, String mainPhoto, int nbrePhotos, String numberInStreet, String street, String street2, String zipcode, String town, String country) {
         this.price = price;
         this.rooms = rooms;
         this.bedrooms = bedrooms;
@@ -69,6 +70,7 @@ public class Property {
         this.agentId = agentId;
         this.statusId = statusId;
         this.mainPhoto = mainPhoto;
+        this.nbrePhotos = nbrePhotos;
         this.numberInStreet = numberInStreet;
         this.street = street;
         this.street2 = street2;
@@ -121,6 +123,7 @@ public class Property {
     }
 
     public String getMainPhoto() { return mainPhoto;}
+    public int getNbrePhotos() { return nbrePhotos;}
 
     public String getNumberInStreet() {return numberInStreet;}
     public String getStreet() {return street;}
@@ -173,6 +176,7 @@ public class Property {
     }
 
     public void setMainPhoto(String mainPhoto) {this.mainPhoto = mainPhoto;}
+    public void setNbrePhotos(int nbrePhotos) {this.nbrePhotos = nbrePhotos;}
 
     public void setNumberInStreet(String numberInStreet) {this.numberInStreet = numberInStreet;}
     public void setStreet(String street) {this.street = street;}
