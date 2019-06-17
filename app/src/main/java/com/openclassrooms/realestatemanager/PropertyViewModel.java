@@ -1,5 +1,7 @@
 package com.openclassrooms.realestatemanager;
 
+import android.util.Log;
+
 import com.openclassrooms.realestatemanager.models.Address;
 import com.openclassrooms.realestatemanager.models.Agent;
 import com.openclassrooms.realestatemanager.nesertplusariennormalement.AttractingPoint;
@@ -15,18 +17,25 @@ import com.openclassrooms.realestatemanager.repositories.PropertyRepository;
 import com.openclassrooms.realestatemanager.repositories.StatusRepository;
 import com.openclassrooms.realestatemanager.repositories.TypeOfPropertyRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.sqlite.db.SupportSQLiteQuery;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Anne-Charlotte Vivant on 16/05/2019.
  */
 public class PropertyViewModel extends ViewModel {
+
+    private static final String TAG = "PropertyViewModel";
 
     // REPOSITORIES
     private PropertyRepository propertyRepository;
@@ -137,6 +146,21 @@ public class PropertyViewModel extends ViewModel {
     }
 
     public LiveData<List<Property>> getFilteredProperties(SupportSQLiteQuery query) { return propertyRepository.getFilteredProperties(query);}
+
+    public void createProperty (Property myProperty,  ArrayList<String> photosList,  ArrayList<String> legendList, String mainPhotoUri, String mainPhotoLegend) {
+        long propertyId = propertyRepository.insertProperty(myProperty);
+                    Log.d(TAG, "call: propertyId " + propertyId);
+
+                    createPhotos(propertyId, photosList, legendList, mainPhotoUri, mainPhotoLegend);
+    }
+
+    private void createPhotos(long propertyId, ArrayList<String> photosList,  ArrayList<String> legendList, String mainPhotoUri, String mainPhotoLegend) {
+        this.insertPhoto(new Photo(mainPhotoUri, mainPhotoLegend, propertyId));
+
+        for (int i=0; i<photosList.size(); i++) {
+            this.insertPhoto(new Photo(photosList.get(i), legendList.get(i), propertyId));
+        }
+    }
 
     // For Agent
     public LiveData<Agent> getAgentFromId(int agentId) {

@@ -363,19 +363,13 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
             Toast.makeText(this, "Il faut entrer une date de vente", Toast.LENGTH_LONG).show();
         } else {
 
-            RealEstateDatabase database = RealEstateDatabase.getInstance(this);
-            PropertyRepository propertyRepository=  new PropertyRepository(database.propertyDao());
-
             Property myProperty = new Property(newPrice, newRooms, newBedrooms, newBathrooms, newDescription, intUpForSale, intSoldOn, newSurface, nearShop, nearSchool, nearMuseum, nearPark, typeId, agentId, statusId, mainPhotoUri, newAddressNumber, newAddressStreet, newAddressStreet2, newZipcode, newTown, newCountry);
 
             Observable<Property> propertyObservable = Observable
                     .fromCallable(new Callable<Property>() {
                         @Override
                         public Property call() throws Exception {
-                            //propertyViewModel.insertProperty(myProperty);
-                            propertyRepository.insertProperty(myProperty);
-                            //propertyId = propertyDao.insertProperty(myProperty);
-                            Log.d(TAG, "call: propertyId " + propertyId);
+                            propertyViewModel.createProperty(myProperty, photosList, legendList, mainPhotoUri, mainPhotoLegend);
                             return myProperty;
                         }
                     })
@@ -403,8 +397,6 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
                 @Override
                 public void onComplete() {
                     Log.d(TAG, "onComplete: called");
-                    Log.d(TAG, "onComplete: propertyId " + propertyId);
-                    //createPhotos();
 
                 }
             });
@@ -550,13 +542,11 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     }
 
     private void createPhotos() {
-        // Comment est-ce que je récupère l'id du bien en cours de création?
         propertyViewModel.insertPhoto(new Photo(mainPhotoUri, mainPhotoLegend, propertyId));
 
         for (int i=0; i<photosList.size(); i++) {
             propertyViewModel.insertPhoto(new Photo(photosList.get(i), legendList.get(i), propertyId));
         }
-
         sendNotification();
     }
 
