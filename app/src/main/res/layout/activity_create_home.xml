@@ -86,7 +86,7 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/create_decription_text"
+            android:id="@+id/create_description_text"
             android:layout_width="match_parent"
             android:layout_height="@dimen/create_home_description"
             android:hint="@string/house_description"

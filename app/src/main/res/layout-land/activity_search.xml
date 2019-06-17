@@ -84,6 +84,7 @@ tools:context=".SearchActivity">
             android:textSize="@dimen/default_text_size"/>
 
         <EditText
+            android:id="@+id/price_min"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="20"
@@ -105,6 +106,7 @@ tools:context=".SearchActivity">
             android:textSize="@dimen/default_text_size"/>
 
         <EditText
+            android:id="@+id/price_max"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="20"
@@ -134,6 +136,7 @@ tools:context=".SearchActivity">
             android:textSize="@dimen/default_text_size"/>
 
         <EditText
+            android:id="@+id/surface_min"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="20"
@@ -155,6 +158,7 @@ tools:context=".SearchActivity">
             android:textSize="@dimen/default_text_size"/>
 
         <EditText
+            android:id="@+id/surface_max"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="20"
@@ -188,6 +192,7 @@ tools:context=".SearchActivity">
             android:textSize="@dimen/default_text_size"/>
 
         <EditText
+            android:id="@+id/rooms_min"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
@@ -211,6 +216,7 @@ tools:context=".SearchActivity">
             android:textSize="@dimen/default_text_size"/>
 
         <EditText
+            android:id="@+id/bedrooms_min"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
@@ -234,6 +240,7 @@ tools:context=".SearchActivity">
             android:textSize="@dimen/default_text_size"/>
 
         <EditText
+            android:id="@+id/bathrooms_min"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
@@ -258,6 +265,7 @@ tools:context=".SearchActivity">
             android:layout_marginEnd="@dimen/default_margin"/>
 
         <EditText
+            android:id="@+id/photos_min"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/default_text_size"
@@ -297,6 +305,7 @@ tools:context=".SearchActivity">
             android:textSize="@dimen/default_text_size"/>
 
         <EditText
+            android:id="@+id/filter_zipcode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
@@ -319,6 +328,7 @@ tools:context=".SearchActivity">
             android:textSize="@dimen/default_text_size"/>
 
         <EditText
+            android:id="@+id/filter_town"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
@@ -341,6 +351,7 @@ tools:context=".SearchActivity">
             android:textSize="@dimen/default_text_size"/>
 
         <EditText
+            android:id="@+id/filter_country"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
@@ -368,6 +379,7 @@ tools:context=".SearchActivity">
         android:paddingEnd="@dimen/default_margin">
 
         <CheckBox
+            android:id="@+id/filter_school"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
@@ -375,6 +387,7 @@ tools:context=".SearchActivity">
             android:textSize="@dimen/default_text_size"/>
 
         <CheckBox
+            android:id="@+id/filter_shop"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
@@ -390,6 +403,7 @@ tools:context=".SearchActivity">
         android:paddingEnd="@dimen/default_margin">
 
         <CheckBox
+            android:id="@+id/filter_park"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
@@ -397,6 +411,7 @@ tools:context=".SearchActivity">
             android:textSize="@dimen/default_text_size"/>
 
         <CheckBox
+            android:id="@+id/filter_museum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
@@ -428,10 +443,34 @@ tools:context=".SearchActivity">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
+            android:text="@string/statut"
+            android:textSize="@dimen/default_text_size"/>
+
+        <Spinner
+            android:id="@+id/spinner_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:textSize="@dimen/default_text_size"
+            android:hint="@string/statut"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/default_margin"
+        android:paddingEnd="@dimen/default_margin">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
             android:text="@string/search_max_date_ask"
             android:textSize="@dimen/default_text_size"/>
 
         <EditText
+            android:id="@+id/soldOn_min"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
@@ -454,6 +493,7 @@ tools:context=".SearchActivity">
             android:textSize="@dimen/default_text_size"/>
 
         <EditText
+            android:id="@+id/soldOn_max"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
@@ -476,6 +516,7 @@ tools:context=".SearchActivity">
             android:textSize="@dimen/default_text_size"/>
 
         <EditText
+            android:id="@+id/upForSale_max"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
@@ -498,6 +539,7 @@ tools:context=".SearchActivity">
             android:textSize="@dimen/default_text_size"/>
 
         <EditText
+            android:id="@+id/upForSale_min"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
@@ -519,7 +561,8 @@ tools:context=".SearchActivity">
             android:text="@string/agent_in_charge"
             android:textSize="@dimen/default_text_size"/>
 
-        <EditText
+        <Spinner
+            android:id="@+id/spinner_responsable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
@@ -535,6 +578,7 @@ tools:context=".SearchActivity">
         android:layout_marginTop="@dimen/default_margin">
 
         <Button
+            android:id="@+id/search_validation_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/validation"
@@ -543,6 +587,7 @@ tools:context=".SearchActivity">
             android:padding="@dimen/default_margin"/>
 
         <Button
+            android:id="@+id/search_cancel_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_margin"

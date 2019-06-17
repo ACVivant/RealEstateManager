@@ -301,7 +301,6 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
 
             queryString += " nbrePhotos > ?";
             int minPhotos = (int)  Integer.parseInt(photos.getText().toString()) ;
-            Log.d(TAG, "createQuery: minPhotos " + minPhotos);
             args.add(minPhotos+1);
             containsCondition = true;
         }

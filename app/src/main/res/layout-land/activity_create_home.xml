@@ -253,6 +253,16 @@
                 android:tint="@color/colorAccent"
                 android:background="@android:color/white"/>
 
+            <TextView
+                android:id="@+id/create_add_main_photo_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_main_photo"
+                android:textSize="@dimen/default_text_size"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"/>
+
             <!-- IMAGE CHOSEN PREVIEW -->
             <ImageView
                 android:id="@+id/create_main_photo_preview"
@@ -261,6 +271,127 @@
                 android:layout_margin="@dimen/default_margin" />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/default_margin"
+            android:paddingEnd="@dimen/default_margin">
+
+            <ImageButton
+                android:id="@+id/add_more_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/default_margin"
+                app:srcCompat="@drawable/ic_action_add"
+                android:tint="@color/colorAccent"
+                android:background="@android:color/white"/>
+
+            <TextView
+                android:id="@+id/create_add_others_photo_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_more_photo"
+                android:textSize="@dimen/default_text_size"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/create_all_others_photos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/default_margin"
+            android:paddingEnd="@dimen/default_margin"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/more_photo"
+                android:textSize="@dimen/default_text_size"
+                android:layout_marginHorizontal="@dimen/default_margin"
+                android:layout_gravity="center_vertical"
+                />
+
+            <TextView
+                android:id="@+id/number_photo_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="@dimen/default_text_size"
+                android:layout_marginHorizontal="@dimen/default_margin"
+                android:layout_gravity="center_vertical"
+                />
+
+            <!-- IMAGE CHOSEN PREVIEW -->
+            <ImageView
+                android:id="@+id/create_photo_more_preview1"
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:layout_margin="@dimen/default_mini_margin" />
+
+            <ImageView
+                android:id="@+id/create_photo_more_preview2"
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:layout_margin="@dimen/default_mini_margin" />
+
+            <ImageView
+                android:id="@+id/create_photo_more_preview3"
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:layout_margin="@dimen/default_mini_margin" />
+
+            <ImageView
+                android:id="@+id/create_photo_more_preview4"
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:layout_margin="@dimen/default_mini_margin" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/delete_photo_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/default_margin"
+            android:paddingEnd="@dimen/default_margin">
+
+            <ImageButton
+                android:id="@+id/delete_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/default_margin"
+                app:srcCompat="@drawable/ic_delete"
+                android:tint="@color/colorAccent"
+                android:background="@android:color/white"/>
+
+            <TextView
+                android:id="@+id/create_delete_photo_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/delete_photo"
+                android:textSize="@dimen/default_text_size"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/default_margin"/>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/update_photo_recyclerview_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/recyclerview_description"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/default_margin"/>
     </LinearLayout>
 
 
@@ -582,30 +713,21 @@
                 android:id="@+id/save_new_property"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryLight"
+                android:padding="@dimen/default_margin"
                 android:text="@string/validation"
-                android:background="@color/colorPrimaryLight"
-                android:textColor="@android:color/white"
-                android:padding="@dimen/default_mini_margin"/>
-
-            <Button
-                android:id="@+id/save_new_property_add_photos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
-                android:text="@string/add_photo"
-                android:background="@color/colorPrimaryLight"
-                android:textColor="@android:color/white"
-                android:padding="@dimen/default_mini_margin"/>
+                android:textColor="@android:color/white" />
 
             <Button
                 android:id="@+id/reset_new_property"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/default_margin"
-                android:text="@string/dismiss"
+                android:layout_marginBottom="@dimen/default_margin"
                 android:background="@color/colorAccentLight"
-                android:textColor="@android:color/white"
-                android:padding="@dimen/default_mini_margin"/>
+                android:padding="@dimen/default_margin"
+                android:text="@string/dismiss"
+                android:textColor="@android:color/white" />
     </LinearLayout>
     </LinearLayout>
 </ScrollView>

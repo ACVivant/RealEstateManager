@@ -197,7 +197,7 @@ tools:context=".SearchActivity">
             android:textSize="@dimen/default_text_size"/>
 
         <EditText
-            android:id="@+id/romms_min"
+            android:id="@+id/rooms_min"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
