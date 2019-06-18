@@ -52,7 +52,8 @@ tools:context=".SearchActivity">
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingStart="@dimen/default_margin"
-        android:paddingEnd="@dimen/default_margin">
+        android:paddingEnd="@dimen/default_margin"
+        android:paddingBottom="@dimen/default_mini_margin">
 
         <TextView
             android:layout_width="wrap_content"
@@ -172,17 +173,12 @@ tools:context=".SearchActivity">
             android:text="@string/square_meter"
             android:textSize="@dimen/default_text_size" />
     </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/default_margin"
-        android:paddingEnd="@dimen/default_mini_margin">
+        android:paddingStart="@dimen/default_margin">
 
         <TextView
             android:layout_width="match_parent"
@@ -205,8 +201,7 @@ tools:context=".SearchActivity">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/default_mini_margin"
-        android:paddingEnd="@dimen/default_mini_margin">
+        android:paddingStart="@dimen/default_margin">
 
         <TextView
             android:layout_width="match_parent"
@@ -229,8 +224,7 @@ tools:context=".SearchActivity">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/default_mini_margin"
-        android:paddingEnd="@dimen/default_mini_margin">
+        android:paddingStart="@dimen/default_margin">
 
         <TextView
             android:layout_width="match_parent"
@@ -248,7 +242,6 @@ tools:context=".SearchActivity">
             android:hint="@string/bathroom_text"
             android:layout_marginStart="@dimen/default_mini_margin"/>
     </LinearLayout>
-        </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

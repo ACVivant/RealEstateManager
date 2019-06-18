@@ -48,7 +48,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
             EditText surfMin;
     @BindView(R.id.surface_max)
             EditText surfMax;
-    @BindView(R.id.romms_min)
+    @BindView(R.id.rooms_min)
             EditText rooms;
     @BindView(R.id.bedrooms_min)
             EditText bedrooms;

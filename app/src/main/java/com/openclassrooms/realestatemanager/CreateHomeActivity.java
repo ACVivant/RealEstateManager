@@ -75,7 +75,7 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     Spinner spinnerStatus;
     @BindView(R.id.create_spinner_type)
     Spinner spinnerType;
-    @BindView(R.id.create_decription_text)
+    @BindView(R.id.create_description_text)
     EditText descriptionText;
     @BindView(R.id.create_insert_price_text)
     EditText price;
