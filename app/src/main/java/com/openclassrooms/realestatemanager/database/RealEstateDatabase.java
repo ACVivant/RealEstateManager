@@ -265,7 +265,7 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesProperty4.put("statusId", 2);
                 contentValuesProperty4.put("mainPhoto", "https://www.expert-peinture.fr/wp-content/uploads/2015/09/5-conseils-pour-peindre-sa-fa%c3%a7ade-%c3%a0-la-perfection-.jpg?auto=compress,format&q=80&h=100&dpr=2");
                 contentValuesProperty4.put("nbrePhotos", "3");
-                contentValuesProperty4.put("numberInStreet", "13");
+                contentValuesProperty4.put("numberInStreet", "10");
                 contentValuesProperty4.put("street", "rue Saint Denis");
                 contentValuesProperty4.put("zipcode", "60800");
                 contentValuesProperty4.put("town", "Crépy-en-Valois");
@@ -292,7 +292,7 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesProperty5.put("statusId", 2);
                 contentValuesProperty5.put("mainPhoto", "http://www.constructions-dantan.fr/docs/Entreprise/restauration/charpente_normandie.jpg?auto=compress,format&q=80&h=100&dpr=2");
                 contentValuesProperty5.put("nbrePhotos", "3");
-                contentValuesProperty5.put("numberInStreet", "13");
+                contentValuesProperty5.put("numberInStreet", "5");
                 contentValuesProperty5.put("street", "rue de Vez");
                 contentValuesProperty5.put("zipcode", "60800");
                 contentValuesProperty5.put("town", "Crépy-en-Valois");
@@ -319,7 +319,7 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesProperty6.put("statusId", 2);
                 contentValuesProperty6.put("mainPhoto", "https://inhabitat.com/wp-content/blogs.dir/1/files/2016/01/Bergeron-Centre-for-Engineering-Excellence-by-ZAS-Architects-3.jpg?auto=compress,format&q=80&h=100&dpr=2");
                 contentValuesProperty6.put("nbrePhotos", "5");
-                contentValuesProperty6.put("numberInStreet", "19");
+                contentValuesProperty6.put("numberInStreet", "5b");
                 contentValuesProperty6.put("street", "rue de Vez");
                 contentValuesProperty6.put("zipcode", "60800");
                 contentValuesProperty6.put("town", "Crépy-en-Valois");

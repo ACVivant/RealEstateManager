@@ -1,12 +1,16 @@
 package com.openclassrooms.realestatemanager.utils;
 
 import android.content.Context;
+import android.util.Log;
 
 /**
  * Created by Anne-Charlotte Vivant on 09/05/2019.
  */
 
 public class MapUrl {
+
+    private static final String TAG = "MapUrl";
+
     private String base = "https://maps.googleapis.com/maps/api/staticmap?";
     private String mapType = "&maptype=";
     private String mapTypeInfos = "roadmap";
@@ -45,6 +49,7 @@ public String createUrl(String number, String street, String zipcode, String tow
     keyInfos =  myKey;
     createAddressUrlField(number, street, zipcode, town, country);
     String url = base + size + sizeInfos + mapType + mapTypeInfos + marker + markerSize + markerSizeInfos + markerColor + markerColorInfos + centerInfos + language + lanquageInfos + key + keyInfos;
+    Log.d(TAG, "createUrl: url " + url);
     return url;
 }
 

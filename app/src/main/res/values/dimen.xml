@@ -19,4 +19,6 @@
     <dimen name="create_home_description">116dip</dimen>
 
     <dimen name="recyclerview_item_height">96dp</dimen>
+
+    <dimen name="map_size">240dip</dimen>
 </resources>

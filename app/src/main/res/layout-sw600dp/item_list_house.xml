@@ -20,7 +20,7 @@
         android:layout_weight="40"
         android:orientation="vertical"
         android:padding="@dimen/default_mini_margin"
-        android:layout_gravity="center_vertical">
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/list_recyclerview_item_type"

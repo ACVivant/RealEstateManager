@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.openclassrooms.realestatemanager.injections.Injection;
+import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Address;
 import com.openclassrooms.realestatemanager.models.Agent;
 import com.openclassrooms.realestatemanager.models.Property;
@@ -22,6 +24,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +44,7 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
     private PropertyViewModel propertyViewModel;
     private  boolean useTablet;
     private int propertySelected;
+    private ArrayList<Integer> filteredResultsArray;
 
     String townText;
 
@@ -90,7 +94,7 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
                 .into(holder.picture);
 
         if(useTablet) {
-            if (position == propertySelected - 1) {
+            if (currentProperty.getPropertyId() == propertySelected ) {
                 holder.itemBackground.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimaryLight));
                 holder.type.setTextColor(mContext.getResources().getColor(R.color.colorMyWhite));
                 holder.town.setTextColor(mContext.getResources().getColor(R.color.colorMyWhite));

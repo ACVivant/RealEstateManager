@@ -454,7 +454,7 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
         addressNumber.setText(String.valueOf(currentProperty.getNumberInStreet()));
         Log.d(TAG, "setAddress: number " + String.valueOf(currentProperty.getNumberInStreet()));
         addressStreet.setText(String.valueOf(currentProperty.getStreet()));
-        if (!String.valueOf(currentProperty.getStreet2()).equals("")) {
+        if(currentProperty.getStreet2()!= null){
             addressStreet2.setText(String.valueOf(currentProperty.getStreet2()));
         } else {addressStreet2.setText("");}
         addressZipcode.setText(String.valueOf(currentProperty.getZipcode()));

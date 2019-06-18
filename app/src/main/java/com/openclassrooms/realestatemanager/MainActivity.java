@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.configureToolbar();
         this.configureDrawerLayout();
         this.configureNavigationView();
-        //this.configureBottomNavigationView();
 
         // id de la propriété à exposer
         homeToExpose = getIntent().getIntExtra(ListHouseFragment.ID_PROPERTY, 1);

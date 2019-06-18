@@ -69,6 +69,7 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
     private int clic = 0;
     private boolean firstView1 = false;
     private boolean firstView2 = false;
+    private boolean onclickDetail = false;
 
     //ViewModel
     private PropertyViewModel propertyViewModel;
@@ -92,6 +93,7 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
         homeToExpose = getIntent().getIntExtra(ListFilteredPropertiesFragment.ID_PROPERTY, 1);
         displayDetail = getIntent().getBooleanExtra(ListHouseFragment.DISPLAY_DETAIL, false);
         filteredResults = getIntent().getBooleanExtra(SearchActivity.RESULTS_FILTERED, true);
+
 
         Log.d(TAG, "onCreate: homeToExpose id " + homeToExpose);
 
@@ -144,6 +146,8 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
         args.putInt(ListFilteredPropertiesFragment.POSITON_IN_FILTER, position);
         //    if(filteredResults) {args.putString(SearchActivity.SEARCH_QUERY, searchQuery);}
 
+        Log.d(TAG, "configureFirstView: filteredResultsArray " + filteredResultsArray);
+
         if (findViewById(R.id.frame_layout_detail) == null) {
             Log.d(TAG, "configureFirstView: mobile");
 
@@ -169,8 +173,7 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
             Log.d(TAG, "configureFirstView: tablette");
 
             fm.beginTransaction().add(R.id.frame_layout_detail, fragment2, "2").commit();
-            fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
-
+                fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
         }
         firstView2 = true;
     }

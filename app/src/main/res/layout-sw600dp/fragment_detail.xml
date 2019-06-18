@@ -95,7 +95,7 @@
             android:textSize="@dimen/default_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView30" />
+            app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
         <TextView
             android:id="@+id/textView3"
@@ -345,17 +345,17 @@
             app:layout_constraintTop_toBottomOf="@+id/textView11"
             tools:text="@string/location_number" />
 
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/location_street"
-        android:textSize="@dimen/default_text_size"
-        app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/textView11"
-        tools:text="@string/location_street" />
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/location_street"
+            android:textSize="@dimen/default_text_size"
+            app:layout_constraintStart_toEndOf="@+id/textView12"
+            app:layout_constraintTop_toBottomOf="@+id/textView11"
+            tools:text="@string/location_street" />
 
         <TextView
             android:id="@+id/textView14"
@@ -379,17 +379,17 @@
             app:layout_constraintTop_toBottomOf="@+id/textView14"
             tools:text="@string/location_zipcode" />
 
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/location_town"
-        app:layout_constraintStart_toEndOf="@+id/textView15"
-        app:layout_constraintTop_toBottomOf="@+id/textView14"
-        tools:text="@string/location_town"
-        android:textSize="@dimen/default_text_size"/>
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/location_town"
+            app:layout_constraintStart_toEndOf="@+id/textView15"
+            app:layout_constraintTop_toBottomOf="@+id/textView14"
+            tools:text="@string/location_town"
+            android:textSize="@dimen/default_text_size"/>
 
         <TextView
             android:id="@+id/textView17"
@@ -402,17 +402,17 @@
             app:layout_constraintTop_toBottomOf="@+id/textView15"
             tools:text="@string/location_country" />
 
-    <TextView
-        android:id="@+id/textView20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:text="@string/price_title"
-        android:textSize="@dimen/default_text_size"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView21"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="@string/price_title"
-        android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:text="@string/price_title"
+            android:textSize="@dimen/default_text_size"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView21"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="@string/price_title"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/textView21"
@@ -425,27 +425,27 @@
             app:layout_constraintStart_toEndOf="@+id/textView20"
             app:layout_constraintTop_toBottomOf="@+id/textView24" />
 
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView24"
-        app:srcCompat="@drawable/detail_price" />
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView24"
+            app:srcCompat="@drawable/detail_price" />
 
         <ImageView
             android:id="@+id/map_detail"
             android:layout_width="300dp"
             android:layout_height="200dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+
             android:layout_marginBottom="16dp"
             app:srcCompat="@drawable/navigation_map"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView29"
-            app:layout_constraintTop_toBottomOf="@+id/checkBox3"
+            app:layout_constraintStart_toEndOf="@+id/checkBox4"
+            app:layout_constraintTop_toTopOf="@+id/textView29"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
@@ -482,6 +482,19 @@
             android:padding="5dp"/>
 
         <TextView
+            android:id="@+id/textView22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/house_type"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView30"
+            tools:text="@string/house_type"
+            android:textSize="@dimen/default_text_size"
+            android:textStyle="bold"/>
+
+        <TextView
             android:id="@+id/textView31"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -513,7 +526,7 @@
         <Button
             android:id="@+id/update_detail_btn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginHorizontal="@dimen/default_margin"
             android:layout_marginVertical="@dimen/default_large_margin"
             android:paddingHorizontal="@dimen/default_margin"

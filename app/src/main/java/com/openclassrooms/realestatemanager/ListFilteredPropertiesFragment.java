@@ -46,6 +46,7 @@ public class ListFilteredPropertiesFragment extends Fragment {
     public static final String DISPLAY_DETAIL = "display_detail_after_clic";
     public static final String FROM_FILTER = "from_filtered_results";
     public static final String POSITON_IN_FILTER = "position_of_property_in_filtered_results";
+    public static final String ONCLICK_DETAIL = "click_on-detail_result";
 
     private PropertyViewModel propertyViewModel;
     private ListRecyclerViewAdapter adapter;
@@ -80,6 +81,7 @@ public class ListFilteredPropertiesFragment extends Fragment {
         filteredResultsArray = bundle.getIntegerArrayList(SearchActivity.ID_FILTERED);
         filteredResults = bundle.getBoolean(SearchActivity.RESULTS_FILTERED, false);
         // if (filteredResults) {searchQuery = bundle.getString(SearchActivity.SEARCH_QUERY);}
+        Log.d(TAG, "onCreateView: filteredResultsArray " + filteredResultsArray);
 
         initRecyclerView();
         configureViewModel();

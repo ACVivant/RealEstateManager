@@ -117,7 +117,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                finish();
             }
         });
         configureSpinner();
@@ -485,6 +485,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
         intent.putExtra(RESULTS_FILTERED, true);
         intent.putExtra(SEARCH_QUERY, query);
         intent.putExtra(ID_FILTERED, tabId);
+        Log.d(TAG, "launchResultActivity: filteredResultsArray " + tabId);
         startActivity(intent);
     }
 

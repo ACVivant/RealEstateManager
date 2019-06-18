@@ -98,6 +98,7 @@ ImageView mMapView;;*/
     private String key;
 
     private PhotoRecyclerViewAdapter adapter;
+    private boolean tablet;
 
     public DetailFragment() {
         // Required empty public constructor
@@ -153,6 +154,8 @@ ImageView mMapView;;*/
             Log.d(TAG, "onCreateView: position " + position);
         }
         Log.d(TAG, "onCreateView: propertyId " + propertyId);
+
+        tablet = bundle.getBoolean(MainActivity.USE_TABLET, false);
 
         update.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,6 +213,10 @@ ImageView mMapView;;*/
             }
         });
 
+        if (tablet) {
+            before.setVisibility(View.GONE);
+            after.setVisibility(View.GONE);
+        }
 
         configureViewModel();
         this.getAllProperties();
@@ -232,7 +239,7 @@ ImageView mMapView;;*/
         MapUrl mapUrl = new MapUrl();
         String srcMap = mapUrl.createUrl(number, street, zipcode, town, country, key);
         Log.d(TAG, "initStaticMap: " + srcMap);
-        //Picasso.get().load(srcMap).into(mMap);
+
         Glide.with(getContext())
                 .load(srcMap)
                 .into(mMap);
@@ -274,13 +281,9 @@ ImageView mMapView;;*/
         price.setText(String.valueOf(currentProperty.getPrice()));
 
         agentId = currentProperty.getAgentId();
-       // addressId = currentProperty.getAddressId();
         typeId = currentProperty.getTypeId();
         statusId = currentProperty.getStatusId();
 
-        Log.d(TAG, "updateProperty: id " +propertyId + " " +typeId+ " " + statusId);
-
-       //this.getAddress(addressId);
         setAddress();
         this.getStatus(statusId);
         this.getType(typeId);
