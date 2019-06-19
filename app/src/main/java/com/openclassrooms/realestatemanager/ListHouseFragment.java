@@ -7,11 +7,18 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.sqlite.db.SimpleSQLiteQuery;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +37,7 @@ import com.openclassrooms.realestatemanager.models.TypeOfProperty;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 
 /**
@@ -42,6 +50,7 @@ public class ListHouseFragment extends Fragment {
     private static final String ID_FRAGMENT = "fragment_to_expose";
     public static final String ID_PROPERTY = "property_selected";
     public static final String DISPLAY_DETAIL = "display_detail_after_clic";
+    public static final String POSITION_IN_RV = "position_in_recyclerview";
 
     private PropertyViewModel propertyViewModel;
     private ListRecyclerViewAdapter adapter;
@@ -50,13 +59,15 @@ public class ListHouseFragment extends Fragment {
     public int propertySaved = 0;
     private boolean useTablet;
     private boolean displayDetail;
-    private boolean filteredResults;
-    private String searchQuery;
+    private int positionRV;
 
-    private ArrayList<Integer> filteredResultsArray = new ArrayList<>();
-
+    private List<Property> allProperties;
+    private List<TypeOfProperty> allTypes;
+    Observable<List<Property>> propertyListObservable;
 
     View v;
+
+    private Disposable disposable;
 
     public ListHouseFragment() {
         // Required empty public constructor
@@ -72,13 +83,12 @@ public class ListHouseFragment extends Fragment {
         Bundle bundle = getArguments();
         propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY, 1);
         useTablet = bundle.getBoolean(MainActivity.USE_TABLET, false);
-       // filteredResults = bundle.getBoolean(SearchActivity.RESULTS_FILTERED, false);
-       // if (filteredResults) {searchQuery = bundle.getString(SearchActivity.SEARCH_QUERY);}
+        positionRV = bundle.getInt(POSITION_IN_RV, 1);
 
-        initRecyclerView();
         configureViewModel();
         getAllTypes();
         getAllProperties();
+        initRecyclerView();
 
         return v;
     }
@@ -100,18 +110,21 @@ public class ListHouseFragment extends Fragment {
         RecyclerView recyclerView = v.findViewById(R.id.list_recyclerview_container);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
+        recyclerView.smoothScrollToPosition(positionRV);  // mais ça ne change rien... je pensais que ça permettait de décider de la position du recyclerView
+        Log.d(TAG, "initRecyclerView: positionRV " +positionRV);
 
             recyclerView.setAdapter(adapter);
             adapter.setOnItemClickedListener(new ListRecyclerViewAdapter.OnItemClickedListener() {
                 @Override
-                public void OnItemClicked(int position) {
+                public void OnItemClicked(int propertyId, int position) {
                     displayDetail = true;
-
                     Log.d(TAG, "OnItemClicked");
                     Intent intent = new Intent(getActivity(), MainActivity.class);
-                    intent.putExtra(ID_PROPERTY, position);
+                    intent.putExtra(ID_PROPERTY, propertyId);
                     intent.putExtra(DISPLAY_DETAIL, displayDetail);
                     intent.putExtra(ListFilteredPropertiesFragment.FROM_FILTER, false);
+                    intent.putExtra(POSITION_IN_RV, position);
+                    Log.d(TAG, "OnItemClicked: position " + position);
                     startActivity(intent);
                 }
             });
@@ -122,6 +135,7 @@ public class ListHouseFragment extends Fragment {
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getContext());
         this.propertyViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PropertyViewModel.class);
     }
+
 
     private void getAllProperties(){
         this.propertyViewModel.getAllProperty().observe(this, this::updatePropertyList);
@@ -138,5 +152,6 @@ public class ListHouseFragment extends Fragment {
     private void updateTypes(List<TypeOfProperty> types){
         this.adapter.setTypes(types);
     }
+
 }
 

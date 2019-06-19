@@ -23,6 +23,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -71,6 +72,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private Marker myMarker;
     private Toolbar toolbar;
     private NavigationView  navigationView;
+    private ProgressBar progressBar;
 
     //Data (for test)
     private double[] test_latitude = {49.23, 49.25, 49.23};
@@ -121,6 +123,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         configureToolbar();
+        configureProgressBar();
+        showProgressBar();
         getInternetConnexion();
         if (internet) {
             getLocationPermission();
@@ -135,6 +139,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         // Sets the Toolbar
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void configureProgressBar() {
+        progressBar = findViewById(R.id.map_progress_bar);
+    }
+
+    private void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+}
+
+    private void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
     }
 
     private boolean getInternetConnexion() {
@@ -237,6 +253,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         for (int i=0; i<properties.size(); i++) {
             loadMarkerInfos(properties.get(i), i);
         }
+
+        hideProgressBar();
     }
 
     public void loadMarkerInfos(Property currentProperty, int i) {

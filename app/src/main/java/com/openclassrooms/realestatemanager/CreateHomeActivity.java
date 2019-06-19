@@ -385,27 +385,22 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
                 @Override
                 public void onSubscribe(Disposable d) {
                     Log.d(TAG, "onSubscribe: called");
-
                 }
 
                 @Override
                 public void onNext(Property property) {
-
                 }
 
                 @Override
                 public void onError(Throwable e) {
                     Log.d(TAG, "onError: " + e.getMessage());
-
                 }
 
                 @Override
                 public void onComplete() {
                     Log.d(TAG, "onComplete: called");
-
                 }
             });
-
         }
     }
 

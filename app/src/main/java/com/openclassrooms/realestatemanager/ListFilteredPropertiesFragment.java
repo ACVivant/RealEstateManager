@@ -60,7 +60,7 @@ public class ListFilteredPropertiesFragment extends Fragment {
     private List<Property> listFilteredProperty = new ArrayList<>();
 
     private ArrayList<Integer> filteredResultsArray = new ArrayList<>();
-
+    private int positionRV;
 
     View v;
 
@@ -80,13 +80,14 @@ public class ListFilteredPropertiesFragment extends Fragment {
         useTablet = bundle.getBoolean(MainActivity.USE_TABLET, false);
         filteredResultsArray = bundle.getIntegerArrayList(SearchActivity.ID_FILTERED);
         filteredResults = bundle.getBoolean(SearchActivity.RESULTS_FILTERED, false);
+        positionRV = bundle.getInt(ListHouseFragment.POSITION_IN_RV, 1);
         // if (filteredResults) {searchQuery = bundle.getString(SearchActivity.SEARCH_QUERY);}
         Log.d(TAG, "onCreateView: filteredResultsArray " + filteredResultsArray);
-
-        initRecyclerView();
         configureViewModel();
         getAllTypes();
         getFilteredProperties();
+        initRecyclerView();
+
         //setFilteredProperties();
 
         return v;
@@ -109,12 +110,13 @@ public class ListFilteredPropertiesFragment extends Fragment {
         RecyclerView recyclerView = v.findViewById(R.id.list_recyclerview_container);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
+        recyclerView.smoothScrollToPosition(positionRV);
 
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickedListener(new ListRecyclerViewAdapter.OnItemClickedListener() {
             @Override
             //public void OnItemClicked(int position) {
-                public void OnItemClicked(int propertyId) {
+                public void OnItemClicked(int propertyId, int position) {
                 displayDetail = true;
 
                 Intent intent = new Intent(getActivity(), ResultSearchActivity.class);
@@ -123,6 +125,7 @@ public class ListFilteredPropertiesFragment extends Fragment {
                 intent.putExtra(SearchActivity.ID_FILTERED, filteredResultsArray);
                 //intent.putExtra(FROM_FILTER, true);
                 intent.putExtra(SearchActivity.RESULTS_FILTERED, true);
+                intent.putExtra(ListHouseFragment.POSITION_IN_RV, position);
                 Log.d(TAG, "OnItemClicked: id " + propertyId);
                 startActivity(intent);
             }

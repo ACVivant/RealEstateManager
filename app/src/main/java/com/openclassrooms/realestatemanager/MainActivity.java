@@ -69,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private boolean firstView1 = false;
     private boolean firstView2 = false;
 
+    private int positionRV;
+
     //ViewModel
     private PropertyViewModel propertyViewModel;
 
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         displayDetail = getIntent().getBooleanExtra(ListHouseFragment.DISPLAY_DETAIL, false);
         // On vient de MapActivity
         fragmentToExposeFromMap = getIntent().getStringExtra(ID_FRAGMENT);
+        positionRV = getIntent().getIntExtra(ListHouseFragment.POSITION_IN_RV, 0);
 
         Log.d(TAG, "onCreate: fragment_id " + fragmentToExposeFromMap);
         Log.d(TAG, "onCreate: homeToExpose id " + homeToExpose);
@@ -147,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.d(TAG, "configureFirstView");
         Bundle args = new Bundle();
             args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
+            args.putInt(ListHouseFragment.POSITION_IN_RV, positionRV);
 /*            args.putBoolean(SearchActivity.RESULTS_FILTERED, filteredResults);
             if (filteredResults) {
                 args.putIntArray(SearchActivity.ID_FILTERED, filteredResultsArray);
@@ -224,8 +228,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             if (findViewById(R.id.frame_layout_detail) == null) {
                 Log.d(TAG, "configureViewFromMapOrRecyclerView: mode telephone");
-                //fm.beginTransaction().hide(fragment1).commit();
-                //fm.beginTransaction().show(fragment2).commit();
 
                 fm.beginTransaction().add(R.id.main_container, fragment1, "1").hide(fragment1).commit();
                 fm.beginTransaction().add(R.id.main_container, fragment2, "2").commit();
@@ -236,14 +238,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
             }
     }
-
-/*    private void configureBottomNavigationView() {
-        //We only add use bottom navigation in phone mode (If not found frame_layout_detail)
-        if (findViewById(R.id.frame_layout_detail) == null) {
-            BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
-            navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        }
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -261,34 +255,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
-
-    // Actions from bottom bar
-/*    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.bottom_navigation_list:
-                    fm.beginTransaction().hide(active).show(fragment1).commit();
-                    active = fragment1;
-                    getSupportActionBar().setTitle(R.string.nav_title);
-                    clic = 1; // To know which fragment was choosen how to design ActionBar
-                    invalidateOptionsMenu();
-                    return true;
-
-                case R.id.bottom_navigation_detail:
-                    fm.beginTransaction().hide(active).show(fragment2).commit();
-                    active = fragment2;
-                    getSupportActionBar().setTitle(R.string.nav_title);
-                    clic = 2;
-                    invalidateOptionsMenu();
-                    return true;
-            }
-            return false;
-        }
-    };*/
 
     // Actions from navigation drawer
     @Override

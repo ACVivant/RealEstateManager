@@ -21,6 +21,7 @@ import com.openclassrooms.realestatemanager.models.TypeOfProperty;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -28,6 +29,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Anne-Charlotte Vivant on 02/05/2019.
@@ -72,14 +76,16 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
         Log.d(TAG, "onBindViewHolder: ListRecyclerViewAdapter Called.");
 
         Property currentProperty = properties.get(position);
+
         // Parfois ça bug ici. Parce qu'on n'attend pas le résultat de getType?
     /*    2019-05-31 17:29:24.853 24668-24668/com.openclassrooms.realestatemanager E/AndroidRuntime: FATAL EXCEPTION: main
         Process: com.openclassrooms.realestatemanager, PID: 24668
         java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
         at java.util.ArrayList.get(ArrayList.java:437)
         at com.openclassrooms.realestatemanager.ListRecyclerViewAdapter.onBindViewHolder(ListRecyclerViewAdapter.java:73)*/
-
         TypeOfProperty currentType = types.get(currentProperty.getTypeId()-1);
+
+
         Log.d(TAG, "onBindViewHolder: typeId " + currentProperty.getTypeId());
         Log.d(TAG, "onBindViewHolder: typeText " + currentType.getTypeText());
         Log.d(TAG, "onBindViewHolder: propertyId " +currentProperty.getPropertyId());
@@ -123,7 +129,7 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
 
     public interface OnItemClickedListener{
         //void OnItemClicked(int position);
-        void OnItemClicked(int propertyId);
+        void OnItemClicked(int propertyId, int position);
     }
 
     public void setOnItemClickedListener(OnItemClickedListener listener) {
@@ -163,7 +169,7 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
                         Log.d(TAG, "onClick: id " + propertyId);
                         if (position!= RecyclerView.NO_POSITION) {
                            // listener.OnItemClicked(position);
-                            listener.OnItemClicked(propertyId);
+                            listener.OnItemClicked(propertyId, position);
                         }
                     }
                 }
