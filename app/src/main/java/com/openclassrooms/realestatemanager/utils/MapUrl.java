@@ -1,6 +1,5 @@
 package com.openclassrooms.realestatemanager.utils;
 
-import android.content.Context;
 import android.util.Log;
 
 /**
@@ -26,7 +25,6 @@ public class MapUrl {
     private String lanquageInfos = "french";
     private String key = "&key=";
     private String keyInfos;
-    Context mContext;
 
 public String formatAddressFieldsForMap(String input) {
     String output= input.replace("-", "&");
@@ -34,15 +32,13 @@ public String formatAddressFieldsForMap(String input) {
     return output;
 }
 
-public String extractSmallNameOfStreet(String input) { // Sinon GoogleMap est vraiment très fantaisiste
+public String extractSmallNameOfStreet(String input) {
     int index = input.lastIndexOf("&");
-    String output = input.substring(index+1);
-    return  output;
+    return input.substring(index+1);
 }
 
 public void createAddressUrlField(String number, String street, String zipcode, String town, String country) {
-    String allAddress = number + "," + extractSmallNameOfStreet(formatAddressFieldsForMap(street)) + ',' +zipcode + ',' + formatAddressFieldsForMap(town) + ',' + formatAddressFieldsForMap(country);
-    centerInfos = allAddress;
+    centerInfos = number + "," + extractSmallNameOfStreet(formatAddressFieldsForMap(street)) + ',' +zipcode + ',' + formatAddressFieldsForMap(town) + ',' + formatAddressFieldsForMap(country);
 }
 
 public String createUrl(String number, String street, String zipcode, String town, String country, String myKey) {
@@ -54,7 +50,6 @@ public String createUrl(String number, String street, String zipcode, String tow
 }
 
 public String createGeocoderUrl(String number, String street, String zipcode, String town, String country) {
-    String geocoderField = number + "+" + street + ",+" + zipcode + "+" + town + ",+" +country;
-    return  geocoderField;
+    return  number + "+" + street + ",+" + zipcode + "+" + town + ",+" +country;
 }
 }

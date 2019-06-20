@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.util.Log;
 
-import com.openclassrooms.realestatemanager.database.dao.AddressDao;
 import com.openclassrooms.realestatemanager.database.dao.AgentDao;
 import com.openclassrooms.realestatemanager.database.dao.PhotoDao;
 import com.openclassrooms.realestatemanager.database.dao.PropertyDao;
@@ -42,7 +41,6 @@ public abstract class RealEstateDatabase extends RoomDatabase {
     private static RealEstateDatabase INSTANCE;
 
     // --- DAO ---
-    public abstract AddressDao addressDao();
     public abstract AgentDao agentDao();
     public abstract PhotoDao photoDao();
     public abstract PropertyDao propertyDao();

@@ -145,8 +145,6 @@ ImageView mMapView;;*/
         propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY,1);
         Log.d(TAG, "onCreateView: id " + propertyId);
         filteredResults = bundle.getBoolean(SearchActivity.RESULTS_FILTERED, false);
-        //fromFilter = bundle.getBoolean(ListFilteredPropertiesFragment.FROM_FILTER, false);
-        //Log.d(TAG, "onCreateView: fromFilter " + fromFilter);
         Log.d(TAG, "onCreateView: filteredResults " +filteredResults);
         if (filteredResults) {
             filteredResultsArray = bundle.getIntegerArrayList(SearchActivity.ID_FILTERED);

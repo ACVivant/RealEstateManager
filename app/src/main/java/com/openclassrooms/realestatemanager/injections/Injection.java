@@ -3,9 +3,7 @@ package com.openclassrooms.realestatemanager.injections;
 import android.content.Context;
 
 import com.openclassrooms.realestatemanager.database.RealEstateDatabase;
-import com.openclassrooms.realestatemanager.repositories.AddressRepository;
 import com.openclassrooms.realestatemanager.repositories.AgentRepository;
-import com.openclassrooms.realestatemanager.repositories.AttractingPointRepository;
 import com.openclassrooms.realestatemanager.repositories.PhotoRepository;
 import com.openclassrooms.realestatemanager.repositories.PropertyRepository;
 import com.openclassrooms.realestatemanager.repositories.StatusRepository;
@@ -18,11 +16,6 @@ import java.util.concurrent.Executors;
  * Created by Anne-Charlotte Vivant on 21/05/2019.
  */
 public class Injection {
-
-    public static AddressRepository provideAddressRepository(Context context) {
-        RealEstateDatabase database = RealEstateDatabase.getInstance(context);
-        return new AddressRepository(database.addressDao());
-    }
 
     public static AgentRepository provideAgentRepository(Context context) {
         RealEstateDatabase database = RealEstateDatabase.getInstance(context);
@@ -52,7 +45,6 @@ public class Injection {
     public static Executor provideExecutor(){ return Executors.newSingleThreadExecutor(); }
 
     public static ViewModelFactory provideViewModelFactory(Context context) {
-        AddressRepository addressRepository = provideAddressRepository(context);
         AgentRepository agentRepository = provideAgentRepository(context);
         PhotoRepository photoRepository = providePhotoRepository(context);
         PropertyRepository propertyRepository = providePropertyRepository(context);
@@ -60,6 +52,6 @@ public class Injection {
         TypeOfPropertyRepository typeOfPropertyRepository = provideTypeOfPropertyRepository(context);
 
         Executor executor = provideExecutor();
-        return new ViewModelFactory(propertyRepository, addressRepository, agentRepository, photoRepository, statusRepository, typeOfPropertyRepository, executor);
+        return new ViewModelFactory(propertyRepository, agentRepository, photoRepository, statusRepository, typeOfPropertyRepository, executor);
     }
 }

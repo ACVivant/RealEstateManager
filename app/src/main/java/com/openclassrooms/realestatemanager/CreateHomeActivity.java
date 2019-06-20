@@ -9,11 +9,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -40,16 +37,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.openclassrooms.realestatemanager.database.RealEstateDatabase;
 import com.openclassrooms.realestatemanager.database.dao.PropertyDao;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Address;
-import com.openclassrooms.realestatemanager.models.Agent;
 import com.openclassrooms.realestatemanager.models.Photo;
 import com.openclassrooms.realestatemanager.models.Property;
-import com.openclassrooms.realestatemanager.models.Status;
-import com.openclassrooms.realestatemanager.models.TypeOfProperty;
 import com.openclassrooms.realestatemanager.repositories.PropertyRepository;
 import com.openclassrooms.realestatemanager.utils.Utils;
 
@@ -59,9 +52,6 @@ import java.util.concurrent.Callable;
 public class CreateHomeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, PhotoDialogFragment.DialogListener {
 
     private PropertyViewModel propertyViewModel;
-    private PropertyRepository propertyRepository;
-    private PropertyDao propertyDao;
-
 
     private NotificationManagerCompat notificationManager;
 
@@ -143,39 +133,39 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     @BindView(R.id.reset_new_property)
     Button resetProperty;
 
-    String newStatus;
-    String newDescription;
-    int newPrice;
-    String newType;
-    int newSurface;
-    int newRooms;
-    int newBedrooms;
-    int newBathrooms;
+    private String newStatus;
+    private String newDescription;
+    private int newPrice;
+    private String newType;
+    private int newSurface;
+    private int newRooms;
+    private int newBedrooms;
+    private int newBathrooms;
     private String newLegend;
 
-    String newAddressNumber;
-    String newAddressStreet;
-    String newAddressStreet2;
-    String newZipcode;
-    String newTown;
-    String newCountry;
+    private String newAddressNumber;
+    private String newAddressStreet;
+    private String newAddressStreet2;
+    private String newZipcode;
+    private String newTown;
+    private String newCountry;
 
-    Boolean nearSchool;
-    Boolean nearShop;
-    Boolean nearPark;
-    Boolean nearMuseum;
+    private Boolean nearSchool;
+    private Boolean nearShop;
+    private Boolean nearPark;
+    private Boolean nearMuseum;
 
-    String newUpForSale;
-    String newSoldOn;
-    String newAgent;
+    private String newUpForSale;
+    private String newSoldOn;
+    private String newAgent;
 
-    int intUpForSale;
-    int intSoldOn;
+    private int intUpForSale;
+    private int intSoldOn;
 
-    int agentId;
-    int statusId;
-    int typeId;
-    long propertyId;
+    private int agentId;
+    private int statusId;
+    private int typeId;
+    private long propertyId;
 
     private Address myAddress;
     private boolean  mainPhotoOk;
@@ -191,7 +181,6 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     private ArrayList<String> legendList = new ArrayList<>();
     private String mainPhotoUri;
     private String mainPhotoLegend;
-    private int mCreate_status_array;
 
 
     @Override
@@ -236,7 +225,6 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
                 configureViewModel();
                 savePropertyData();
                 createProperty();
-                //createPhotos();
                 launchMainActivityDetail();
             }
         });
@@ -244,7 +232,6 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         addMainPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //addMainPhoto();
                 openDialog(MAIN_PHOTO_REQUEST);
             }
         });
@@ -399,6 +386,7 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
                 @Override
                 public void onComplete() {
                     Log.d(TAG, "onComplete: called");
+                    sendNotification();
                 }
             });
         }

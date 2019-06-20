@@ -5,15 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.room.Dao;
-import androidx.room.Query;
-import androidx.room.Transaction;
-import okhttp3.internal.Util;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Geocoder;
@@ -26,8 +20,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -40,7 +32,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
-import com.openclassrooms.realestatemanager.database.dao.AddressDao;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Address;
@@ -52,8 +43,6 @@ import com.openclassrooms.realestatemanager.utils.Utils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.openclassrooms.realestatemanager.ListHouseFragment.DISPLAY_DETAIL;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener{
 
@@ -74,28 +63,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private NavigationView  navigationView;
     private ProgressBar progressBar;
 
-    //Data (for test)
-    private double[] test_latitude = {49.23, 49.25, 49.23};
-    private double[] test_longitude = {2.88, 2.9, 2.91};
-    private String[] test_type = {"appartement", "manoir", "palace"};
-    private double[] test_price = {25000, 145000, 875400};
-    private int[] test_id = {100, 101, 102};
-    //private String devise = "€";
-
-    private double[] tab_latitude = {1,2,3,4,5,6,7} ;
-    private double[] tab_longitude = {1,2,3,4,5,6,7} ;
-    private String[] tab_type = {"maison", "appartement", "manoir", "appartement", "palace", "appartement", "maison"} ;
-    private int[] tab_room = {1,2,3,4,5,6,7};
-    private int[] tab_price = {450000, 578230, 125480, 56230500, 153450, 275490, 562300} ;
-    private int[] tab_id = {1,2,3,4,5,6,7} ;
-    private String devise = "€";
+    private double[] tab_latitude ;
+    private double[] tab_longitude;
+    private int[] tab_room ;
+    private int[] tab_price;
+    private int[] tab_id ;
+    private String devise = "$";
 
     // Data
     private List<Property> properties = new ArrayList<>();
     private Property currentProperty;
     private PropertyViewModel propertyViewModel;
     private TypeOfProperty currentType;
-    private Address currentAddress;
     private List<TypeOfProperty> allTypes;
     private List<Address> allAddresses;
     private int currentPropertyId;
@@ -105,12 +84,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private int currentPrice;
     private int typeIndex;
     private int addressIndex;
-    /*private double[] tab_latitude ;
-    private double[] tab_longitude ;
-    private String[] tab_type ;
-    private int[] tab_price ;
-    private long[] tab_id ;
-    private String devise = "€";*/
 
     //clic
     private boolean displayDetail;
@@ -160,8 +133,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Toast.makeText(this, "Map is ready", Toast.LENGTH_LONG).show();
-        Log.d(TAG, "onMapReady: Map is ready");
+       Log.d(TAG, "onMapReady: Map is ready");
         mMap = googleMap;
 
         if (mLocationPermissionGranted) {
@@ -301,10 +273,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-      /*  for (int i=0; i< tab_latitude.length; i++) {
-            addMarker(new LatLng(tab_latitude[i], tab_longitude[i]), tab_room[i], tab_price[i], devise, tab_id[i]);
-        }*/
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override

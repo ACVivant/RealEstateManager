@@ -1,7 +1,5 @@
 package com.openclassrooms.realestatemanager;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -16,13 +14,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.material.navigation.NavigationView;
 import com.openclassrooms.realestatemanager.utils.Utils;
 
 public class SettingActivity extends AppCompatActivity {
@@ -44,8 +39,6 @@ public class SettingActivity extends AppCompatActivity {
 
     //Design
     private Toolbar toolbar;
-    private DrawerLayout drawerLayout;
-    private NavigationView  navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,21 +126,6 @@ public class SettingActivity extends AppCompatActivity {
 
     private void launchSearch() {
         Intent intent = new Intent(this, SearchActivity.class);
-        startActivity(intent);
-    }
-
-    private void launchSetting() {
-        Intent intent = new Intent(this, SettingActivity.class);
-        startActivity(intent);
-    }
-
-    private void launchUpdate() {
-        Intent intent = new Intent(this, UpdateActivity.class);
-        startActivity(intent);
-    }
-
-    private void launchMap() {
-        Intent intent = new Intent(this, MapActivity.class);
         startActivity(intent);
     }
 

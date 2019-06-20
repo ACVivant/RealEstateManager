@@ -4,12 +4,10 @@ import android.util.Log;
 
 import com.openclassrooms.realestatemanager.models.Address;
 import com.openclassrooms.realestatemanager.models.Agent;
-import com.openclassrooms.realestatemanager.nesertplusariennormalement.AttractingPoint;
 import com.openclassrooms.realestatemanager.models.Photo;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.models.Status;
 import com.openclassrooms.realestatemanager.models.TypeOfProperty;
-import com.openclassrooms.realestatemanager.repositories.AddressRepository;
 import com.openclassrooms.realestatemanager.repositories.AgentRepository;
 import com.openclassrooms.realestatemanager.repositories.AttractingPointRepository;
 import com.openclassrooms.realestatemanager.repositories.PhotoRepository;
@@ -19,16 +17,12 @@ import com.openclassrooms.realestatemanager.repositories.TypeOfPropertyRepositor
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.sqlite.db.SupportSQLiteQuery;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Anne-Charlotte Vivant on 16/05/2019.
@@ -39,9 +33,7 @@ public class PropertyViewModel extends ViewModel {
 
     // REPOSITORIES
     private PropertyRepository propertyRepository;
-    private AddressRepository addressRepository;
     private AgentRepository agentRepository;
-    private AttractingPointRepository attractingPointRepository;
     private PhotoRepository photoRepository;
     private StatusRepository statusRepository;
     private TypeOfPropertyRepository typeOfPropertyRepository;
@@ -50,8 +42,6 @@ public class PropertyViewModel extends ViewModel {
     // DATA
     @Nullable
     private LiveData<Property> currentProperty;
-    @Nullable
-    private LiveData<Address> currentAddress;
     @Nullable
     private LiveData<Agent> currentAgent;
     @Nullable

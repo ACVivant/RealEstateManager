@@ -118,38 +118,37 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
     @BindView(R.id.reset_new_property)
     Button resetProperty;
 
-    String newStatus;
-    String newDescription;
-    int newPrice;
-    String newType;
-    int newSurface;
-    int newRooms;
-    int newBedrooms;
-    int newBathrooms;
+    private String newStatus;
+    private String newDescription;
+    private int newPrice;
+    private String newType;
+    private int newSurface;
+    private int newRooms;
+    private int newBedrooms;
+    private int newBathrooms;
 
-    String newAddressNumber;
-    String newAddressStreet;
-    String newAddressStreet2;
-    String newZipcode;
-    String newTown;
-    String newCountry;
+    private  String newAddressNumber;
+    private String newAddressStreet;
+    private String newAddressStreet2;
+    private String newZipcode;
+    private String newTown;
+    private String newCountry;
 
-    Boolean nearSchool;
-    Boolean nearShop;
-    Boolean nearPark;
-    Boolean nearMuseum;
+    private Boolean nearSchool;
+    private Boolean nearShop;
+    private Boolean nearPark;
+    private Boolean nearMuseum;
 
-    String newUpForSale;
-    String newSoldOn;
-    String newAgent;
+    private String newUpForSale;
+    private String newSoldOn;
+    private String newAgent;
 
-    int intUpForSale;
-    int intSoldOn;
+    private int intUpForSale;
+    private int intSoldOn;
 
-    String newPhotoUrl;
+    private String newPhotoUrl;
 
     private Property currentProperty;
-    //private Address currentAddress;
     private TypeOfProperty currentType;
     private Status currentStatus;
     private Agent currentAgent;

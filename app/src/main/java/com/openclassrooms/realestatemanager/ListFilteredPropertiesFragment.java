@@ -37,8 +37,6 @@ import java.util.List;
  */
 public class ListFilteredPropertiesFragment extends Fragment {
 
-    // A mettre à jour avec les données de ResultSearchActivity passées par SearchActivity
-
     private static final String TAG = "ListFilteredPropertiesF";
     private static final String PLACE_ID = "id_of_place";
     private static final String ID_FRAGMENT = "fragment_to_expose";
@@ -81,14 +79,12 @@ public class ListFilteredPropertiesFragment extends Fragment {
         filteredResultsArray = bundle.getIntegerArrayList(SearchActivity.ID_FILTERED);
         filteredResults = bundle.getBoolean(SearchActivity.RESULTS_FILTERED, false);
         positionRV = bundle.getInt(ListHouseFragment.POSITION_IN_RV, 1);
-        // if (filteredResults) {searchQuery = bundle.getString(SearchActivity.SEARCH_QUERY);}
+
         Log.d(TAG, "onCreateView: filteredResultsArray " + filteredResultsArray);
         configureViewModel();
         getAllTypes();
         getFilteredProperties();
         initRecyclerView();
-
-        //setFilteredProperties();
 
         return v;
     }
@@ -123,7 +119,6 @@ public class ListFilteredPropertiesFragment extends Fragment {
                 intent.putExtra(ID_PROPERTY, propertyId);
                 intent.putExtra(DISPLAY_DETAIL, displayDetail);
                 intent.putExtra(SearchActivity.ID_FILTERED, filteredResultsArray);
-                //intent.putExtra(FROM_FILTER, true);
                 intent.putExtra(SearchActivity.RESULTS_FILTERED, true);
                 intent.putExtra(ListHouseFragment.POSITION_IN_RV, position);
                 Log.d(TAG, "OnItemClicked: id " + propertyId);
@@ -158,10 +153,6 @@ public class ListFilteredPropertiesFragment extends Fragment {
         this.adapter.setTypes(types);
     }
 
-    private void setFilteredProperties() {
-        Log.d(TAG, "setFilteredProperties");
-        this.adapter.setProperties(listFilteredProperty);
-    }
 }
 
 

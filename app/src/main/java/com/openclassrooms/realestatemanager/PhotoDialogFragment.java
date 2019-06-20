@@ -49,12 +49,6 @@ import static android.app.Activity.RESULT_OK;
 public class PhotoDialogFragment extends AppCompatDialogFragment {
 
     private static final String TAG = "PhotoDialogFragment";
-/*    @BindView(R.id.search_photo)
-    ImageButton search;
-    @BindView(R.id.create_photo_description)
-    EditText legend;
-    @BindView(R.id.dialog_photo_preview)
-    ImageView photoPreview;*/
 
     private ImageButton search;
     private ImageButton take;

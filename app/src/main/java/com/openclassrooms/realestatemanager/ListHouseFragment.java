@@ -46,8 +46,6 @@ import java.util.concurrent.Callable;
 public class ListHouseFragment extends Fragment {
 
     private static final String TAG = "ListHouseFragment";
-    private static final String PLACE_ID = "id_of_place";
-    private static final String ID_FRAGMENT = "fragment_to_expose";
     public static final String ID_PROPERTY = "property_selected";
     public static final String DISPLAY_DETAIL = "display_detail_after_clic";
     public static final String POSITION_IN_RV = "position_in_recyclerview";
@@ -61,13 +59,7 @@ public class ListHouseFragment extends Fragment {
     private boolean displayDetail;
     private int positionRV;
 
-    private List<Property> allProperties;
-    private List<TypeOfProperty> allTypes;
-    Observable<List<Property>> propertyListObservable;
-
     View v;
-
-    private Disposable disposable;
 
     public ListHouseFragment() {
         // Required empty public constructor

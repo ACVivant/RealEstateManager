@@ -1,7 +1,6 @@
 package com.openclassrooms.realestatemanager;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,29 +8,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.openclassrooms.realestatemanager.injections.Injection;
-import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
-import com.openclassrooms.realestatemanager.models.Address;
-import com.openclassrooms.realestatemanager.models.Agent;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.models.TypeOfProperty;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Anne-Charlotte Vivant on 02/05/2019.
@@ -43,18 +31,12 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
     private OnItemClickedListener mListener;
 
     private List<Property> properties ;
-    //private List<Address> addresses;
     private List<TypeOfProperty> types;
-    private PropertyViewModel propertyViewModel;
     private  boolean useTablet;
     private int propertySelected;
-    private ArrayList<Integer> filteredResultsArray;
-
-    String townText;
 
     public ListRecyclerViewAdapter(int propertySelected, boolean useTablet) {
         this.properties = new ArrayList<>();
-        //this.addresses = new ArrayList<>();
         this.types = new ArrayList<>();
         this.propertySelected = propertySelected;
         this.useTablet = useTablet;

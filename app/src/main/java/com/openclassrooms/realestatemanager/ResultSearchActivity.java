@@ -1,30 +1,16 @@
 package com.openclassrooms.realestatemanager;
 
-//import android.support.v7.app.AppCompatActivity;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import com.openclassrooms.realestatemanager.models.Address;
-import com.openclassrooms.realestatemanager.models.Property;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -32,14 +18,10 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 public class ResultSearchActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,PhotoRecyclerViewAdapter.DeletePhotoListener{
 
     private static final String TAG = "ResultSearchActivity";
-    private static final int ERROR_DIALOG_REQUEST = 9001;
-    public static final int CREATE_PROPERTY_REQUEST = 333;
     private static final String ID_FRAGMENT = "fragment_to_expose";
     private static final String ID_PLACE = "id_of_place";
     public static final String USE_TABLET = "mobile_or_tablet";
@@ -89,7 +71,6 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
         position = getIntent().getIntExtra(ListFilteredPropertiesFragment.POSITON_IN_FILTER, 0);
         Log.d(TAG, "onCreate: position " +position);
         Log.d(TAG, "onCreate: filteredResults " + filteredResultsArray.size());
-        //homeToExpose =filteredResultsArray.get(position);
         homeToExpose = getIntent().getIntExtra(ListFilteredPropertiesFragment.ID_PROPERTY, 1);
         displayDetail = getIntent().getBooleanExtra(ListHouseFragment.DISPLAY_DETAIL, false);
         filteredResults = getIntent().getBooleanExtra(SearchActivity.RESULTS_FILTERED, true);
@@ -275,11 +256,6 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
 
     private void launchSetting() {
         Intent intent = new Intent(this, SettingActivity.class);
-        startActivity(intent);
-    }
-
-    private void launchUpdate() {
-        Intent intent = new Intent(this, UpdateActivity.class);
         startActivity(intent);
     }
 

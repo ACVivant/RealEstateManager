@@ -32,13 +32,11 @@ public class CreditActivity extends AppCompatActivity {
     @BindView(R.id.credit_validate)
     ImageButton creditValidate;
 
-
     private double input;
     private double interest;
     private  int lenght;
     private double cost;
     private double month;
-    private double monthCapital;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +61,6 @@ public class CreditActivity extends AppCompatActivity {
     }
 
     private void calculate() {
-        double[] monthRestTab = new double[(int) lenght*12];
-        double[] monthPaidTab = new double[(int) lenght*12];
-
-        monthCapital = input/lenght/12;
 
         double haut = input*interest/12/100;
         Log.d(TAG, "calculate: haut " + haut);
@@ -81,7 +75,6 @@ public class CreditActivity extends AppCompatActivity {
         String str = df.format(month);
         month = Double.parseDouble(str.replace(',', '.'));
         creditMonth.setText(Double.toString(month));
-
 
         cost = month*lenght*12-input;
         str = df.format(cost);

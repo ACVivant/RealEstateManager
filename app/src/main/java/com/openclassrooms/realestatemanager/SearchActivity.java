@@ -1,12 +1,8 @@
 package com.openclassrooms.realestatemanager;
 
-import androidx.annotation.BoolRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.room.Dao;
-import androidx.room.RawQuery;
 import androidx.sqlite.db.SimpleSQLiteQuery;
-import androidx.sqlite.db.SupportSQLiteQuery;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -21,7 +17,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.openclassrooms.realestatemanager.database.dao.RawDao;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Property;

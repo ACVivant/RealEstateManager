@@ -1,30 +1,18 @@
 package com.openclassrooms.realestatemanager;
 
-//import android.support.v7.app.AppCompatActivity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import com.openclassrooms.realestatemanager.models.Address;
-import com.openclassrooms.realestatemanager.models.Property;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -32,16 +20,12 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PhotoRecyclerViewAdapter.DeletePhotoListener{
 
     private static final String TAG = "MainActivity";
     private static final int ERROR_DIALOG_REQUEST = 9001;
-    public static final int CREATE_PROPERTY_REQUEST = 333;
     private static final String ID_FRAGMENT = "fragment_to_expose";
-    private static final String ID_PLACE = "id_of_place";
     public static final String USE_TABLET = "mobile_or_tablet";
 
     //Design
@@ -55,19 +39,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     final FragmentManager fm = getSupportFragmentManager();
     private Fragment active = fragment1;
-    private String fragmentToExpose;
     private String fragmentToExposeFromMap;
-    private Bundle state;
     private int homeToExpose;
     private boolean displayDetail = false;
-    private boolean filteredResults = false;
-    private int[] filteredResultsArray;
-    private String searchQuery;
-    private int position;
-
-    private int clic = 0;
-    private boolean firstView1 = false;
-    private boolean firstView2 = false;
 
     private int positionRV;
 
@@ -151,11 +125,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Bundle args = new Bundle();
             args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
             args.putInt(ListHouseFragment.POSITION_IN_RV, positionRV);
-/*            args.putBoolean(SearchActivity.RESULTS_FILTERED, filteredResults);
-            if (filteredResults) {
-                args.putIntArray(SearchActivity.ID_FILTERED, filteredResultsArray);
-            }*/
-
 
             if (findViewById(R.id.frame_layout_detail) == null) {
                 Log.d(TAG, "configureFirstView: mobile");
@@ -183,7 +152,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
 
             }
-            firstView2 = true;
     }
 
     // Configure view after rotation
@@ -191,11 +159,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Ajouter les infos pour afficher la bonne maison
         Bundle args = new Bundle();
         args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
-
-/*        args.putBoolean(SearchActivity.RESULTS_FILTERED, filteredResults);
-        if (filteredResults) {
-            args.putIntArray(SearchActivity.ID_FILTERED, filteredResultsArray);
-        }*/
 
         Log.d(TAG, "configureView: bundle " + homeToExpose);
         fragment1.setArguments(args);
