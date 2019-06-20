@@ -29,10 +29,18 @@ public class MapUrl {
 public String formatAddressFieldsForMap(String input) {
     String output= input.replace("-", "&");
     output = output.replace(" ", "&");
+
     return output;
 }
 
 public String extractSmallNameOfStreet(String input) {
+
+    // We control that the las character is not &
+    int inputLenght = input.length();
+    if(input.charAt(inputLenght-1) =='&') {
+        input = input.substring(0, inputLenght-1);
+    }
+
     int index = input.lastIndexOf("&");
     return input.substring(index+1);
 }

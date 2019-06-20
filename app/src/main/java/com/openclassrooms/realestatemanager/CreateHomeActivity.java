@@ -376,6 +376,7 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
 
                 @Override
                 public void onNext(Property property) {
+                    sendNotification();
                 }
 
                 @Override
@@ -386,7 +387,7 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
                 @Override
                 public void onComplete() {
                     Log.d(TAG, "onComplete: called");
-                    sendNotification();
+
                 }
             });
         }
