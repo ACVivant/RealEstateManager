@@ -37,25 +37,12 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
 
     final FragmentManager fm = getSupportFragmentManager();
     private Fragment active = fragment1;
-    private String fragmentToExpose;
     private String fragmentToExposeFromMap;
-    private Bundle state;
     private int homeToExpose;
     private boolean displayDetail = false;
     private boolean filteredResults = false;
     private ArrayList<Integer> filteredResultsArray = new ArrayList<>();
-    private String searchQuery;
     private int position;
-
-
-    private int clic = 0;
-    private boolean firstView1 = false;
-    private boolean firstView2 = false;
-    private boolean onclickDetail = false;
-
-    //ViewModel
-    private PropertyViewModel propertyViewModel;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,12 +143,11 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
             fm.beginTransaction().add(R.id.frame_layout_detail, fragment2, "2").commit();
                 fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
         }
-        firstView2 = true;
     }
 
     // Configure view after rotation
     private void configureView() {
-        // Ajouter les infos pour afficher la bonne maison
+
         Bundle args = new Bundle();
         args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
         args.putBoolean(SearchActivity.RESULTS_FILTERED, filteredResults);
@@ -174,7 +160,7 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
 
         Log.d(TAG, "configureView");
         if (findViewById(R.id.frame_layout_detail) == null) {
-            if (fragmentToExposeFromMap.equals("1") || displayDetail) {
+            if (displayDetail) {
                 fm.beginTransaction().hide(fragment2).commit();
                 fm.beginTransaction().show(fragment1).commit();
             }
@@ -207,6 +193,10 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
+            case R.id.menu_home:
+                launchMain();
+                return true;
+
             case R.id.menu_add :
                 launchCreate();
                 return true;

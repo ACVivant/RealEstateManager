@@ -45,9 +45,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private int positionRV;
 
-    //ViewModel
-    private PropertyViewModel propertyViewModel;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.d(TAG, "onCreate: displayDetail " + displayDetail);
 
         if (fragmentToExposeFromMap == null) {
-
             if (savedInstanceState == null) {
                 Log.d(TAG, "onCreate: savedInstanceState null");
                 this.configureFirstView();
@@ -156,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // Configure view after rotation
     private void configureView() {
-        // Ajouter les infos pour afficher la bonne maison
+
         Bundle args = new Bundle();
         args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
 
@@ -223,6 +219,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
+            case R.id.menu_home:
+                launchMain();
+                return true;
+
             case R.id.menu_add :
                 launchCreate();
                 return true;
@@ -275,11 +275,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
     }
 
-    private void launchUpdate() {
-        Intent intent = new Intent(this, UpdateActivity.class);
-        startActivity(intent);
-    }
-
     private void launchMap() {
         Intent intent = new Intent(this, MapActivity.class);
         startActivity(intent);
@@ -287,6 +282,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void launchCredit() {
         Intent intent = new Intent(this, CreditActivity.class);
+        startActivity(intent);
+    }
+
+    private void launchMain() {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
