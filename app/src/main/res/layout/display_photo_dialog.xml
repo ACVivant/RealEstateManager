@@ -12,9 +12,9 @@
 
             <ImageView
                 android:id="@+id/bigPhotoImg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerInside"
                 android:layout_centerHorizontal="true"
                 android:src="@drawable/menu"/>
 
@@ -25,7 +25,7 @@
                 android:background="@color/colorAccentLightTransparent"
                 android:layout_alignBottom="@+id/bigPhotoImg"
                 android:text="@string/house_type"
-                android:padding="@dimen/default_mini_margin"
+                android:padding="@dimen/default_margin"
                 android:textColor="@android:color/white"
                 android:gravity="center_horizontal"
                 />

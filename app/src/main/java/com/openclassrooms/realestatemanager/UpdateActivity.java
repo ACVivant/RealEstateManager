@@ -552,6 +552,7 @@ public class UpdateActivity extends AppCompatActivity implements AdapterView.OnI
         Boolean displayDetail = false;
         Intent intent = new Intent(UpdateActivity.this, MainActivity.class);
         intent.putExtra(ListHouseFragment.DISPLAY_DETAIL, displayDetail);
+        intent.putExtra(ListHouseFragment.ID_PROPERTY, propertyId);
         startActivity(intent);
     }
 

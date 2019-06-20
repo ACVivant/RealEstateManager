@@ -9,8 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -36,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
         android:background="@color/colorPrimary"
-        android:padding="@dimen/default_mini_margin"
+        android:padding="5dp"
         android:text="@string/credit_title"
         android:textColor="@android:color/white"
         android:textSize="@dimen/default_text_size" />
@@ -45,8 +44,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/default_large_margin"
-        android:paddingEnd="@dimen/default_margin"
+        android:paddingStart="@dimen/default_very_large_margin"
+        android:paddingEnd="@dimen/default_very_large_margin"
         android:layout_marginTop="@dimen/default_margin">
 
         <TextView
@@ -78,8 +77,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingStart="@dimen/default_large_margin"
-    android:paddingEnd="@dimen/default_margin">
+    android:paddingStart="@dimen/default_very_large_margin"
+    android:paddingEnd="@dimen/default_very_large_margin">
 
     <TextView
         android:layout_width="0dp"
@@ -109,8 +108,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/default_large_margin"
-        android:paddingEnd="@dimen/default_margin">
+        android:paddingStart="@dimen/default_very_large_margin"
+        android:paddingEnd="@dimen/default_very_large_margin">
 
         <TextView
             android:layout_width="0dp"
@@ -146,44 +145,44 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/default_large_margin"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/default_very_large_margin"
+        android:paddingEnd="@dimen/default_very_large_margin"
+        android:layout_marginTop="@dimen/default_large_margin">
+
+        <TextView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_large_margin"
-            android:orientation="horizontal"
-            android:paddingStart="@dimen/default_large_margin"
-            android:paddingEnd="@dimen/default_margin">
+            android:layout_weight="80"
+            android:text="@string/credit_month"
+            android:textSize="@dimen/default_text_size" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="80"
-                android:text="@string/credit_month"
-                android:textSize="@dimen/default_text_size" />
+        <TextView
+            android:id="@+id/credit_month"
+            android:layout_width="0dp"
+            android:layout_weight="50"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/default_text_size"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/credit_month"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:textColor="@color/colorAccent"
-                android:textSize="@dimen/default_text_size"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="20"
-                android:text="$"
-                android:textSize="@dimen/default_text_size" />
-        </LinearLayout>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="$"
+            android:textSize="@dimen/default_text_size"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/default_large_margin"
-        android:paddingEnd="@dimen/default_margin"
+        android:paddingStart="@dimen/default_very_large_margin"
+        android:paddingEnd="@dimen/default_very_large_margin"
         android:layout_marginTop="@dimen/default_margin">
 
         <TextView

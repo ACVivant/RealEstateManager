@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -142,6 +143,8 @@ public PhotoRecyclerViewAdapter(Context context, String which) {
         View alertLayout =LayoutInflater.from(mContext).inflate(R.layout.display_photo_dialog, null);
         final ImageView photoView = alertLayout.findViewById(R.id.bigPhotoImg);
 
+
+
         Glide.with(mContext)
                 .load(photoUri)
                 .into(photoView);
@@ -164,7 +167,8 @@ public PhotoRecyclerViewAdapter(Context context, String which) {
 
         AlertDialog dialog = alert.create();
         dialog.show();
-
+        Window window = dialog.getWindow();
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
     public interface DeletePhotoListener{

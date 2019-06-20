@@ -102,8 +102,7 @@ public class ListHouseFragment extends Fragment {
         RecyclerView recyclerView = v.findViewById(R.id.list_recyclerview_container);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
-        recyclerView.smoothScrollToPosition(positionRV);  // mais ça ne change rien... je pensais que ça permettait de décider de la position du recyclerView
-        Log.d(TAG, "initRecyclerView: positionRV " +positionRV);
+        recyclerView.smoothScrollToPosition(positionRV);
 
             recyclerView.setAdapter(adapter);
             adapter.setOnItemClickedListener(new ListRecyclerViewAdapter.OnItemClickedListener() {

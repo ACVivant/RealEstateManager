@@ -196,7 +196,7 @@
 
     <!-- Credit Activity-->
     <string name="credit_title">"Simulateur coût de crédit"</string>
-    <string name="credit_input">"Apport"</string>
+    <string name="credit_input">"Montant emprunté"</string>
     <string name="credit_length">"Durée en années"</string>
     <string name="credit_interest">"Taux"</string>
     <string name="credit_month">"Mensualités"</string>
