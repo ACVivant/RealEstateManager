@@ -43,7 +43,7 @@ import java.util.concurrent.Callable;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ListHouseFragment extends Fragment {
+public class ListHouseFragment extends Fragment  {
 
     private static final String TAG = "ListHouseFragment";
     public static final String ID_PROPERTY = "property_selected";
@@ -60,6 +60,13 @@ public class ListHouseFragment extends Fragment {
     private int positionRV;
 
     View v;
+
+    private OnItemRVClickedListener mCallback;
+
+    // Declare our interface that will be implemented by any container activity
+    public interface OnItemRVClickedListener {
+        void onItemRVClicked(int propertyId);
+    }
 
     public ListHouseFragment() {
         // Required empty public constructor
@@ -108,7 +115,7 @@ public class ListHouseFragment extends Fragment {
             adapter.setOnItemClickedListener(new ListRecyclerViewAdapter.OnItemClickedListener() {
                 @Override
                 public void OnItemClicked(int propertyId, int position) {
-                    displayDetail = true;
+                  /*  displayDetail = true;
                     Log.d(TAG, "OnItemClicked");
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     intent.putExtra(ID_PROPERTY, propertyId);
@@ -116,7 +123,12 @@ public class ListHouseFragment extends Fragment {
                     intent.putExtra(ListFilteredPropertiesFragment.FROM_FILTER, false);
                     intent.putExtra(POSITION_IN_RV, position);
                     Log.d(TAG, "OnItemClicked: position " + position);
-                    startActivity(intent);
+                    startActivity(intent);*/
+
+                    mCallback.onItemRVClicked(propertyId);
+
+                    adapter.setBackgroudColor(position);
+
                 }
             });
     }
@@ -144,5 +156,22 @@ public class ListHouseFragment extends Fragment {
         this.adapter.setTypes(types);
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        // 4 - Call the method that creating callback after being attached to parent activity
+        this.createCallbackToMainActivity();
+    }
+
+        // 3 - Create callback to parent activity
+    private void createCallbackToMainActivity(){
+        try {
+            //Parent activity will automatically subscribe to callback
+            mCallback = (OnItemRVClickedListener) getActivity();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(e.toString()+ " must implement OnItemClickedListener");
+        }
+    }
 }
 

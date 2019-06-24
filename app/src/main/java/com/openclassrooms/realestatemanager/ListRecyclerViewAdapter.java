@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +35,7 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
     private List<TypeOfProperty> types;
     private  boolean useTablet;
     private int propertySelected;
+    private int rowIndex;
 
     public ListRecyclerViewAdapter(int propertySelected, boolean useTablet) {
         this.properties = new ArrayList<>();
@@ -56,9 +58,13 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: ListRecyclerViewAdapter Called.");
+        Log.d(TAG, "onBindViewHolder: position " + position);
 
         Property currentProperty = properties.get(position);
         TypeOfProperty currentType = types.get(currentProperty.getTypeId()-1);
+
+        Log.d(TAG, "onBindViewHolder: currentProperty " + currentProperty.getPropertyId());
+        Log.d(TAG, "onBindViewHolder: propertySelected " + propertySelected);
 
         holder.type.setText(String.valueOf(currentType.getTypeText()));
         holder.town.setText(String.valueOf(currentProperty.getTown()));
@@ -70,13 +76,34 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
                 .load(uriPhoto)
                 .into(holder.picture);
 
-        if(useTablet) {
-            if (currentProperty.getPropertyId() == propertySelected ) {
-                holder.itemBackground.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimaryLight));
-                holder.type.setTextColor(mContext.getResources().getColor(R.color.colorMyWhite));
-                holder.town.setTextColor(mContext.getResources().getColor(R.color.colorMyWhite));
+/*        holder.itemContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rowIndex=position;
+                //notifyDataSetChanged();
             }
+        });*/
+
+        if(rowIndex==position){
+            holder.itemBackground.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimaryLight));
+            holder.type.setTextColor(mContext.getResources().getColor(R.color.colorMyWhite));
+            holder.town.setTextColor(mContext.getResources().getColor(R.color.colorMyWhite));
         }
+        else
+        {
+            holder.itemBackground.setBackgroundColor(mContext.getResources().getColor(R.color.colorMyWhite));
+            holder.type.setTextColor(mContext.getResources().getColor(R.color.colorPrimaryLight));
+            holder.town.setTextColor(mContext.getResources().getColor(R.color.colorPrimaryLight));
+        }
+
+    }
+
+    public void setBackgroudColor(int position) {
+        Log.d(TAG, "setBackgroundColor: je passe par ici " + position);
+        rowIndex = position;
+        notifyDataSetChanged();
+
+
     }
 
     @Override
@@ -126,9 +153,13 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
         @BindView(R.id.list_recyclerview_background)
         LinearLayout itemBackground;
 
+        RecyclerView rv;
+
         public ListViewHolder(View itemView, final ListRecyclerViewAdapter.OnItemClickedListener listener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            rv=(RecyclerView)itemView.findViewById(R.id.list_recyclerview_container);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -138,6 +169,7 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
                         int propertyId = properties.get(position).getPropertyId();
                         Log.d(TAG, "onClick: position " + position);
                         Log.d(TAG, "onClick: id " + propertyId);
+
                         if (position!= RecyclerView.NO_POSITION) {
                            // listener.OnItemClicked(position);
                             listener.OnItemClicked(propertyId, position);

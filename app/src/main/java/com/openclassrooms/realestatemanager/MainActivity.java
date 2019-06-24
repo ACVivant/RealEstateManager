@@ -1,11 +1,13 @@
 package com.openclassrooms.realestatemanager;
 
 import android.app.Dialog;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -21,7 +23,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PhotoRecyclerViewAdapter.DeletePhotoListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PhotoRecyclerViewAdapter.DeletePhotoListener, ListHouseFragment.OnItemRVClickedListener{
 
     private static final String TAG = "MainActivity";
     private static final int ERROR_DIALOG_REQUEST = 9001;
@@ -34,8 +36,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView  navigationView;
 
     //Fragments
-    final ListHouseFragment fragment1 = new ListHouseFragment();
-    final DetailFragment fragment2 = new DetailFragment();
+    ListHouseFragment fragment1 = new ListHouseFragment();
+    DetailFragment fragment2 = new DetailFragment();
 
     final FragmentManager fm = getSupportFragmentManager();
     private Fragment active = fragment1;
@@ -44,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private boolean displayDetail = false;
 
     private int positionRV;
+
+    private int propertyId;
 
 
     @Override
@@ -329,6 +333,30 @@ public boolean isServiceOK() {
     @Override
     public void photoToDelete(long photoId) {
 
+    }
+
+    @Override
+    public void onItemRVClicked(int propertyId) {
+        Log.d(TAG, "onItemRVClicked: Item cliqué " + propertyId);
+
+        if (findViewById(R.id.frame_layout_detail) == null) {  // cas du téléphone
+            Intent intent = new Intent(this, DetailActivity.class);
+            intent.putExtra(ListHouseFragment.ID_PROPERTY, propertyId);
+            startActivity(intent);
+        } else { // cas de la tablette
+            Log.d(TAG, "onItemRVClicked: il est passé par ici");
+            Bundle args = new Bundle();
+            args.putInt(ListHouseFragment.ID_PROPERTY, propertyId);
+            //DetailFragment detail = new DetailFragment();
+            //detail.setArguments(args);
+            // fm.beginTransaction().replace(R.id.frame_layout_detail, detail, "2").commit();
+            //
+
+             DetailFragment detail =fragment2.newInstance(propertyId);
+
+            fm.beginTransaction().replace(R.id.frame_layout_detail, detail, "2").commit();
+
+        }
     }
 }
 //---------------------------------------------------------

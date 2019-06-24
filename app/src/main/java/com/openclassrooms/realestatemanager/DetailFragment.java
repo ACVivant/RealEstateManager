@@ -141,6 +141,12 @@ ImageView mMapView;;*/
         before = (Button) v.findViewById(R.id.before_detail_btn);
         after = (Button) v.findViewById(R.id.after_detail_btn);
 
+        if (container == null) {
+            // Si le ViewGroup n'est pas renseigné on ne cherche pas à en créer un
+            // car sur cet écran l'appelant doit passer par newInstance...
+            return null;
+        }
+
         Bundle bundle = getArguments();
         propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY,1);
         Log.d(TAG, "onCreateView: id " + propertyId);
@@ -226,6 +232,7 @@ ImageView mMapView;;*/
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Log.d(TAG, "onActivityCreated: ");
     }
 
 
@@ -389,5 +396,14 @@ ImageView mMapView;;*/
             Log.d(TAG, "launchResultSearchActivityDetail: newId " + filteredResultsArray.get(newPosition));
 
         startActivity(intent);
+    }
+
+    public static DetailFragment newInstance(int propertyId) {
+        DetailFragment fragment = new DetailFragment();
+        Bundle args = new Bundle();
+        args.putInt(ListHouseFragment.ID_PROPERTY, propertyId);
+        fragment.setArguments(args);
+
+        return fragment;
     }
 }
