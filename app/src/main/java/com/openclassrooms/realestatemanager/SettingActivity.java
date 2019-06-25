@@ -82,12 +82,17 @@ public class SettingActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         // Sets the Toolbar
         setSupportActionBar(toolbar);
+
+        if (getSupportActionBar()!=null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //Inflate the menu and add it to the top Toolbar
-        getMenuInflater().inflate(R.menu.top_toolbar_menu, menu);
+        //getMenuInflater().inflate(R.menu.top_toolbar_menu, menu);
         return true;
     }
 
@@ -104,17 +109,9 @@ public class SettingActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.top_menu_add:
-                launchCreate();
-                return true;
-
-            case R.id.top_menu_search:
-                launchSearch();
-                return true;
-
-            case R.id.top_menu_home:
-                launchMain();
-                return true;
+            case android.R.id.home:
+                //onBackPressed();
+                finish();
         }
         return false;
     }

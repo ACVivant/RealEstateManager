@@ -114,25 +114,18 @@ public class ListFilteredPropertiesFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
         recyclerView.smoothScrollToPosition(positionRV);
-
         recyclerView.setAdapter(adapter);
+        Log.d(TAG, "initRecyclerView: propertyId " + propertyId);
+        adapter.setRVBackgroudColor(propertyId);
+
         adapter.setOnItemClickedListener(new ListRecyclerViewAdapter.OnItemClickedListener() {
             @Override
-            //public void OnItemClicked(int position) {
                 public void OnItemClicked(int propertyId, int position) {
                 displayDetail = true;
-
-                /*Intent intent = new Intent(getActivity(), ResultSearchActivity.class);
-                intent.putExtra(ID_PROPERTY, propertyId);
-                intent.putExtra(DISPLAY_DETAIL, displayDetail);
-                intent.putExtra(SearchActivity.ID_FILTERED, filteredResultsArray);
-                intent.putExtra(SearchActivity.RESULTS_FILTERED, true);
-                intent.putExtra(ListHouseFragment.POSITION_IN_RV, position);
-                Log.d(TAG, "OnItemClicked: id " + propertyId);
-                startActivity(intent);*/
-
                 mCallback.onFilteredItemRVClicked(propertyId, position);
-                adapter.setBackgroudColor(position);
+                adapter.setRVBackgroudColor(propertyId);
+                Log.d(TAG, "OnItemClicked: position " + position);
+                Log.d(TAG, "OnItemClicked: propertyId " + propertyId);
             }
         });
     }

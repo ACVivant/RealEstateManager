@@ -43,7 +43,7 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
     private boolean filteredResults = false;
     private ArrayList<Integer> filteredResultsArray = new ArrayList<>();
     private int position;
-    private int propertyIdClicked;
+    private int propertyIdClicked=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +75,8 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
             // Decide which fragment has to be shown (rotation)
             if (savedInstanceState != null) {
                 Log.d(TAG, "onCreate: savedInstanceState non null");
+                propertyIdClicked = savedInstanceState.getInt(MainActivity.PROPERTY_ID_SAVED);
+                Log.d(TAG, "onCreate: propertyIdClicked " + propertyIdClicked);
                 this.configureView();
             }
     }
@@ -150,7 +152,7 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
     private void configureView() {
 
         Bundle args = new Bundle();
-        args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
+        args.putInt(ListHouseFragment.ID_PROPERTY, propertyIdClicked);
         args.putBoolean(SearchActivity.RESULTS_FILTERED, filteredResults);
         args.putIntegerArrayList(SearchActivity.ID_FILTERED, filteredResultsArray);
         args.putInt(ListFilteredPropertiesFragment.POSITON_IN_FILTER, position);
@@ -166,8 +168,13 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
                 fm.beginTransaction().show(fragment1).commit();
             }
             } else {
-                fm.beginTransaction().hide(fragment1).commit();
-                fm.beginTransaction().show(fragment2).commit();
+
+            Log.d(TAG, "configureView4");
+            ListFilteredPropertiesFragment rotation =new ListFilteredPropertiesFragment();
+            rotation.setArguments(args);
+
+            fm.beginTransaction().replace(R.id.frame_layout_list, rotation, "1").commit();
+
             }
         }
 
@@ -270,7 +277,11 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
         super.onSaveInstanceState(outState);
         String idFragment = active.getTag();
         outState.putString(ID_FRAGMENT, idFragment);
+        outState.putInt(MainActivity.PROPERTY_ID_SAVED, propertyIdClicked);
+        Log.d(TAG, "onSaveInstanceState: propertyIdClicked " + propertyIdClicked);
     }
+
+
 
     @Override
     public void photoToDelete(long photoId) {

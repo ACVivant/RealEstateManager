@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.appbar.AppBarLayout;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Agent;
@@ -178,6 +179,8 @@ public class UpdateActivity extends AppCompatActivity implements PhotoRecyclerVi
 
     UpdateFragment fragmentUpdate = new UpdateFragment();
 
+    AppBarLayout toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -185,6 +188,9 @@ public class UpdateActivity extends AppCompatActivity implements PhotoRecyclerVi
         setContentView(R.layout.activity_detail);
 
         propertyId = getIntent().getIntExtra(ListHouseFragment.ID_PROPERTY,1);
+
+        toolbar = findViewById(R.id.appBarLayout);
+        toolbar.setVisibility(View.GONE);
 
         Bundle args = new Bundle();
         args.putInt(ListHouseFragment.ID_PROPERTY, propertyId);

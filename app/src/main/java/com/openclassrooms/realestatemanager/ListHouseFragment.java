@@ -65,7 +65,7 @@ public class ListHouseFragment extends Fragment  {
 
     // Declare our interface that will be implemented by any container activity
     public interface OnItemRVClickedListener {
-        void onItemRVClicked(int propertyId);
+        void onItemRVClicked(int propertyId, int position);
     }
 
     public ListHouseFragment() {
@@ -83,6 +83,9 @@ public class ListHouseFragment extends Fragment  {
         propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY, 1);
         useTablet = bundle.getBoolean(MainActivity.USE_TABLET, false);
         positionRV = bundle.getInt(POSITION_IN_RV, 1);
+
+        Log.d(TAG, "onCreateView: position_in_rv " + positionRV);
+        Log.d(TAG, "onCreateView: test " + bundle.getInt("TEST"));
 
         configureViewModel();
         getAllTypes();
@@ -103,7 +106,6 @@ public class ListHouseFragment extends Fragment  {
 
 
     private void initRecyclerView() {
-        Log.d(TAG, "initRecyclerView");
 
         this.adapter = new ListRecyclerViewAdapter(propertyId, useTablet);
         RecyclerView recyclerView = v.findViewById(R.id.list_recyclerview_container);
@@ -111,24 +113,14 @@ public class ListHouseFragment extends Fragment  {
         recyclerView.setHasFixedSize(true);
         recyclerView.smoothScrollToPosition(positionRV);
 
+        adapter.setRVBackgroudColor(propertyId);
+
             recyclerView.setAdapter(adapter);
             adapter.setOnItemClickedListener(new ListRecyclerViewAdapter.OnItemClickedListener() {
                 @Override
                 public void OnItemClicked(int propertyId, int position) {
-                  /*  displayDetail = true;
-                    Log.d(TAG, "OnItemClicked");
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    intent.putExtra(ID_PROPERTY, propertyId);
-                    intent.putExtra(DISPLAY_DETAIL, displayDetail);
-                    intent.putExtra(ListFilteredPropertiesFragment.FROM_FILTER, false);
-                    intent.putExtra(POSITION_IN_RV, position);
-                    Log.d(TAG, "OnItemClicked: position " + position);
-                    startActivity(intent);*/
-
-                    mCallback.onItemRVClicked(propertyId);
-
-                    adapter.setBackgroudColor(position);
-
+                    mCallback.onItemRVClicked(propertyId, position);
+                    adapter.setRVBackgroudColor(propertyId);
                 }
             });
     }

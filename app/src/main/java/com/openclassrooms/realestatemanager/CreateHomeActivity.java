@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.lifecycle.ViewModelProviders;
@@ -22,6 +23,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -182,6 +185,8 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     private String mainPhotoUri;
     private String mainPhotoLegend;
 
+    private Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,8 +195,10 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         ButterKnife.bind(this);
 
         notificationManager = NotificationManagerCompat.from(this);
-
+        configureToolbar();
         configureView();
+
+        Log.d(TAG, "onCreate");
     }
 
     private void configureView() {
@@ -249,6 +256,22 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
                 CreateHomeActivity.this.finish();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //Inflate the menu and add it to the top Toolbar
+            getMenuInflater().inflate(R.menu.top_toolbar_main_menu_create, menu);
+        Log.d(TAG, "onCreateOptionsMenu: called");
+        return true;
+    }
+
+    // Configure toolbar
+    private void configureToolbar(){
+        // Get the toolbar view inside the activity layout
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // Sets the Toolbar
+        setSupportActionBar(toolbar);
     }
 
     private void savePropertyData() {
@@ -392,6 +415,31 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
             });
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.top_menu_home:
+                launchMain();
+                return true;
+
+            case R.id.top_menu_search:
+                launchSearch();
+                return true;
+        }
+        return false;
+    }
+
+    private void launchSearch() {
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
+    }
+
+    private void launchMain() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

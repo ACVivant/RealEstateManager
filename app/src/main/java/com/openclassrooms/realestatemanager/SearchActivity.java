@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 import butterknife.BindView;
@@ -9,6 +10,7 @@ import butterknife.ButterKnife;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -85,6 +87,8 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
 
     private PropertyViewModel propertyViewModel;
 
+    private Toolbar toolbar;
+
     // Query string
     String queryString = new String();
 
@@ -117,6 +121,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
         });
         configureSpinner();
         configureViewModel();
+        configureToolbar();
     }
 
     private  void configureSpinner() {
@@ -140,6 +145,40 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
         spinnerAgent.setAdapter(adapter2);
         spinnerAgent.setOnItemSelectedListener(this);
     }
+
+    // Configure toolbar
+    private void configureToolbar(){
+        // Get the toolbar view inside the activity layout
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // Sets the Toolbar
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar()!=null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        /*DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {*/
+        super.onBackPressed();
+        // }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                //onBackPressed();
+                finish();
+        }
+        return false;
+    }
+
     private void loadFilterData(){}
 
     private void createQuery() {
