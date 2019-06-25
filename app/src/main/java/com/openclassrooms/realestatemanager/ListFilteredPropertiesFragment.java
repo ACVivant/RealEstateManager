@@ -62,6 +62,13 @@ public class ListFilteredPropertiesFragment extends Fragment {
 
     View v;
 
+    private OnItemFilteredRVClickedListener mCallback;
+
+    // Declare our interface that will be implemented by any container activity
+    public interface OnItemFilteredRVClickedListener {
+        void onFilteredItemRVClicked(int propertyId, int position);
+    }
+
     public ListFilteredPropertiesFragment() {
         // Required empty public constructor
     }
@@ -115,14 +122,17 @@ public class ListFilteredPropertiesFragment extends Fragment {
                 public void OnItemClicked(int propertyId, int position) {
                 displayDetail = true;
 
-                Intent intent = new Intent(getActivity(), ResultSearchActivity.class);
+                /*Intent intent = new Intent(getActivity(), ResultSearchActivity.class);
                 intent.putExtra(ID_PROPERTY, propertyId);
                 intent.putExtra(DISPLAY_DETAIL, displayDetail);
                 intent.putExtra(SearchActivity.ID_FILTERED, filteredResultsArray);
                 intent.putExtra(SearchActivity.RESULTS_FILTERED, true);
                 intent.putExtra(ListHouseFragment.POSITION_IN_RV, position);
                 Log.d(TAG, "OnItemClicked: id " + propertyId);
-                startActivity(intent);
+                startActivity(intent);*/
+
+                mCallback.onFilteredItemRVClicked(propertyId, position);
+                adapter.setBackgroudColor(position);
             }
         });
     }
@@ -151,6 +161,24 @@ public class ListFilteredPropertiesFragment extends Fragment {
 
     private void updateTypes(List<TypeOfProperty> types){
         this.adapter.setTypes(types);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        // 4 - Call the method that creating callback after being attached to parent activity
+        this.createCallbackToMainActivity();
+    }
+
+    // 3 - Create callback to parent activity
+    private void createCallbackToMainActivity(){
+        try {
+            //Parent activity will automatically subscribe to callback
+            mCallback = (OnItemFilteredRVClickedListener) getActivity();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(e.toString()+ " must implement OnItemFilteredClickedListener");
+        }
     }
 
 }

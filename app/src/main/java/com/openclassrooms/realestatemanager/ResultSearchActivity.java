@@ -19,7 +19,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-public class ResultSearchActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,PhotoRecyclerViewAdapter.DeletePhotoListener{
+public class ResultSearchActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,PhotoRecyclerViewAdapter.DeletePhotoListener, ListFilteredPropertiesFragment.OnItemFilteredRVClickedListener{
 
     private static final String TAG = "ResultSearchActivity";
     private static final String ID_FRAGMENT = "fragment_to_expose";
@@ -43,6 +43,7 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
     private boolean filteredResults = false;
     private ArrayList<Integer> filteredResultsArray = new ArrayList<>();
     private int position;
+    private int propertyIdClicked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -274,5 +275,30 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
     @Override
     public void photoToDelete(long photoId) {
 
+    }
+
+    @Override
+    public void onFilteredItemRVClicked(int propertyId, int position) {
+        Log.d(TAG, "onItemRVClicked: Item cliqué " + propertyId);
+        propertyIdClicked = propertyId;
+
+        if (findViewById(R.id.frame_layout_detail) == null) {  // cas du téléphone
+            Log.d(TAG, "onItemRVClicked: portable");
+            Intent intent = new Intent(this, DetailActivity.class);
+            intent.putExtra(ListHouseFragment.ID_PROPERTY, propertyId);
+            intent.putExtra(SearchActivity.RESULTS_FILTERED,true);
+            intent.putExtra(SearchActivity.ID_FILTERED, filteredResultsArray);
+            intent.putExtra(ListFilteredPropertiesFragment.POSITON_IN_FILTER, position);
+            startActivity(intent);
+        } else { // cas de la tablette
+            Log.d(TAG, "onItemRVClicked: tablette");
+            Bundle args = new Bundle();
+            args.putInt(ListHouseFragment.ID_PROPERTY, propertyId);
+
+            DetailFragment detail =fragment2.newInstance(propertyId);
+
+            fm.beginTransaction().replace(R.id.frame_layout_detail, detail, "2").commit();
+
+        }
     }
 }

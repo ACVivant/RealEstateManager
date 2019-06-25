@@ -68,7 +68,7 @@ public class DetailFragment extends Fragment {
     private TextView zipcode;
     private TextView town;
     private TextView country;
-    private Button update;
+    //private Button update;
     private Button before;
     private Button after;
 
@@ -149,10 +149,12 @@ ImageView mMapView;;*/
         Log.d(TAG, "onCreateView: id " + propertyId);
         filteredResults = bundle.getBoolean(SearchActivity.RESULTS_FILTERED, false);
         Log.d(TAG, "onCreateView: filteredResults " +filteredResults);
+
         if (filteredResults) {
             filteredResultsArray = bundle.getIntegerArrayList(SearchActivity.ID_FILTERED);
             position = bundle.getInt(ListFilteredPropertiesFragment.POSITON_IN_FILTER, 1);
             Log.d(TAG, "onCreateView: position " + position);
+            //propertyId = filteredResultsArray.get(position);
         }
         Log.d(TAG, "onCreateView: propertyId " + propertyId);
 
@@ -167,14 +169,14 @@ ImageView mMapView;;*/
             price = (TextView) v.findViewById(R.id.textView21);
             before = (Button) v.findViewById(R.id.before_detail_btn);
             after = (Button) v.findViewById(R.id.after_detail_btn);
-            update = (Button) v.findViewById(R.id.update_detail_btn);
+           /* update = (Button) v.findViewById(R.id.update_detail_btn);
 
             update.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     launchUpdateActivity();
                 }
-            });
+            });*/
 
             before.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -213,7 +215,8 @@ ImageView mMapView;;*/
                         }
                     } else {
                         Log.d(TAG, "onClick: filteredResults.size " + (filteredResultsArray.size()));
-                        if (propertyId == filteredResultsArray.get(filteredResultsArray.size() - 1)) {
+                        if (position == filteredResultsArray.size()-1) {
+                        //if (propertyId == filteredResultsArray.get(filteredResultsArray.size() - 1)) {
                             Toast.makeText(getContext(), R.string.after_not_allowed, Toast.LENGTH_LONG).show();
                         } else {
                             Log.d(TAG, "onClick: position " + position);
@@ -373,14 +376,14 @@ ImageView mMapView;;*/
 
     //-----------------------------------------------------------------------------------
 
-    private void launchUpdateActivity() {
+/*    private void launchUpdateActivity() {
         Intent intent = new Intent(this.getActivity(), UpdateActivity.class);
         intent.putExtra(ListHouseFragment.ID_PROPERTY, propertyId);
         startActivity(intent);
-    }
+    }*/
 
     private void launchMainActivityDetail(int id) {
-        Boolean displayDetail = true;
+/*        Boolean displayDetail = true;
 
         Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.putExtra(ListHouseFragment.ID_PROPERTY, id);
@@ -392,6 +395,11 @@ ImageView mMapView;;*/
             Log.d(TAG, "launchMainActivityDetail: newPostition " + newPosition);
             Log.d(TAG, "launchMainActivityDetail: newId " + filteredResultsArray.get(newPosition));
         }
+        startActivity(intent);*/
+
+
+        Intent intent = new Intent(getActivity(), DetailActivity.class);
+        intent.putExtra(ListHouseFragment.ID_PROPERTY, id);
         startActivity(intent);
     }
 

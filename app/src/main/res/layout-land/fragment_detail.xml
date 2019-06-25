@@ -523,7 +523,7 @@
             android:textColor="@android:color/white"
             />
 
-        <Button
+        <!--Button
             android:id="@+id/update_detail_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -537,7 +537,7 @@
             android:padding="@dimen/default_mini_margin"
             android:background="@color/colorPrimaryLight"
             android:textColor="@android:color/white"
-            />
+            /-->
 
         <Button
             android:id="@+id/after_detail_btn"
