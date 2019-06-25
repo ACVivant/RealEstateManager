@@ -95,7 +95,7 @@
             android:textSize="@dimen/default_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView22" />
+            app:layout_constraintTop_toBottomOf="@+id/textView30" />
 
         <TextView
             android:id="@+id/textView3"
@@ -402,38 +402,6 @@
             app:layout_constraintTop_toBottomOf="@+id/textView15"
             tools:text="@string/location_country" />
 
-        <TextView
-            android:id="@+id/textView20"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
-            android:text="@string/price_title"
-            android:textSize="@dimen/default_text_size"
-            app:layout_constraintBaseline_toBaselineOf="@+id/textView21"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="@string/price_title"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/textView21"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/price_text"
-            android:textSize="@dimen/default_text_size"
-            app:layout_constraintStart_toEndOf="@+id/textView20"
-            app:layout_constraintTop_toBottomOf="@+id/textView24" />
-
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView24"
-            app:srcCompat="@drawable/detail_price" />
 
         <ImageView
             android:id="@+id/map_detail"
@@ -458,7 +426,7 @@
             android:text="@string/recyclerview_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView21"
+            app:layout_constraintTop_toBottomOf="@+id/textView24"
             tools:text="@string/recyclerview_title"
             android:textSize="@dimen/default_text_size"
             android:background="@color/colorPrimaryLight"
@@ -482,19 +450,6 @@
             android:padding="5dp"/>
 
         <TextView
-            android:id="@+id/textView22"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/house_type"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView30"
-            tools:text="@string/house_type"
-            android:textSize="@dimen/default_text_size"
-            android:textStyle="bold"/>
-
-        <TextView
             android:id="@+id/textView31"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -508,51 +463,22 @@
             app:layout_constraintTop_toBottomOf="@+id/textView7"
             tools:text="@string/localisation" />
 
-        <Button
-            android:id="@+id/before_detail_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/default_margin"
-            android:layout_marginVertical="@dimen/default_large_margin"
-            android:paddingHorizontal="@dimen/default_margin"
-            app:layout_constraintTop_toBottomOf="@+id/map_detail"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/detail_before"
-            android:padding="@dimen/default_mini_margin"
-            android:background="@color/colorAccentLight"
-            android:textColor="@android:color/white"
-            />
-
-        <Button
+        <!--Button
             android:id="@+id/update_detail_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="@dimen/default_margin"
             android:layout_marginVertical="@dimen/default_large_margin"
-            android:paddingHorizontal="@dimen/default_margin"
-            app:layout_constraintTop_toBottomOf="@+id/map_detail"
-            app:layout_constraintStart_toEndOf="@+id/before_detail_btn"
-            app:layout_constraintEnd_toStartOf="@+id/after_detail_btn"
-            android:text="@string/detail_update"
-            android:padding="@dimen/default_mini_margin"
+            android:layout_marginTop="52dp"
             android:background="@color/colorPrimaryLight"
-            android:textColor="@android:color/white"
-            />
-
-        <Button
-            android:id="@+id/after_detail_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/default_margin"
-            android:layout_marginVertical="@dimen/default_large_margin"
-            android:paddingHorizontal="@dimen/default_margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/map_detail"
-            android:text="@string/detail_after"
             android:padding="@dimen/default_mini_margin"
-            android:background="@color/colorAccentLight"
+            android:paddingHorizontal="@dimen/default_margin"
+            android:text="@string/detail_update"
             android:textColor="@android:color/white"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/map_detail"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/-->
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,11 @@
 package com.openclassrooms.realestatemanager;
 
-import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,10 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -38,88 +43,57 @@ import com.openclassrooms.realestatemanager.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpdateActivity extends AppCompatActivity implements PhotoRecyclerViewAdapter.DeletePhotoListener  {
-//    public class UpdateActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, PhotoDialogFragment.DialogListener, PhotoRecyclerViewAdapter.DeletePhotoListener  {
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class UpdateFragment extends Fragment implements AdapterView.OnItemSelectedListener, PhotoDialogFragment.DialogListener, PhotoRecyclerViewAdapter.DeletePhotoListener {
 
     private static final String TAG = "UpdateActivity";
     public static final String  FROM_UPDATE_REQUEST = "fromUpadateActivity";
 
     private PropertyViewModel propertyViewModel;
 
-    @BindView(R.id.create_spinner_status)
-    Spinner spinnerStatus;
-    @BindView(R.id.create_spinner_type)
-    Spinner spinnerType;
-    @BindView(R.id.create_description_text)
-    EditText descriptionText;
-    @BindView(R.id.create_insert_price_text)
-    EditText price;
-    @BindView(R.id.create_insert_surface)
-    EditText surface;
+    private Spinner spinnerStatus;
+    private Spinner spinnerType;
+    private EditText descriptionText;
+    private EditText price;
+    private EditText surface;
 
-    @BindView(R.id.create_all_others_photos)
-    LinearLayout photoLayout;
-    @BindView(R.id.add_main_photo)
-    ImageButton updateMainPhoto;
-    @BindView(R.id.create_add_main_photo_text)
-    TextView addMainPhotoText;
-    @BindView(R.id.create_add_others_photo_text)
-    TextView addOthersPhotosText;
-    @BindView(R.id.add_more_photo)
-    ImageButton addPhotos;
-    @BindView(R.id.create_main_photo_preview)
-    ImageView mainPhotoPreview;
-    @BindView(R.id.create_photo_more_preview1)
-    ImageView photo1;
-    @BindView(R.id.create_photo_more_preview2)
-    ImageView photo2;
-    @BindView(R.id.create_photo_more_preview3)
-    ImageView photo3;
-    @BindView(R.id.create_photo_more_preview4)
-    ImageView photo4;
-    @BindView(R.id.number_photo_more)
-    TextView numberPhotos;
+    private LinearLayout photoLayout;
+    private ImageButton updateMainPhoto;
+    private TextView addMainPhotoText;
+    private TextView addOthersPhotosText;
+    private ImageButton addPhotos;
+    private ImageView mainPhotoPreview;
+    private ImageView photo1;
+    private ImageView photo2;
+    private ImageView photo3;
+    private ImageView photo4;
+    private TextView numberPhotos;
 
-    @BindView(R.id.create_insert_rooms)
-    EditText rooms;
-    @BindView(R.id.create_insert_bedrooms)
-    EditText bedrooms;
-    @BindView(R.id.create_insert_bathrooms)
-    EditText bathrooms;
+    private EditText rooms;
+    private  EditText bedrooms;
+    private EditText bathrooms;
 
-    @BindView(R.id.create_insert_address_number)
-    EditText addressNumber;
-    @BindView(R.id.create_insert_address_street)
-    EditText addressStreet;
-    @BindView(R.id.create_insert_address_street2)
-    EditText addressStreet2;
-    @BindView(R.id.create_insert_address_zipcode)
-    EditText addressZipcode;
-    @BindView(R.id.create_insert_address_town)
-    EditText addressTown;
-    @BindView(R.id.create_insert_address_country)
-    EditText addressCountry;
+    private EditText addressNumber;
+    private EditText addressStreet;
+    private EditText addressStreet2;
+    private EditText addressZipcode;
+    private EditText addressTown;
+    private EditText addressCountry;
 
-    @BindView(R.id.create_checkbox_school)
-    CheckBox checkboxSchool;
-    @BindView(R.id.create_checkbox_shop)
-    CheckBox checkboxShop;
-    @BindView(R.id.create_checkbox_park)
-    CheckBox checkboxPark;
-    @BindView(R.id.create_checkbox_museum)
-    CheckBox checkboxMuseum;
+    private CheckBox checkboxSchool;
+    private CheckBox checkboxShop;
+    private CheckBox checkboxPark;
+    private CheckBox checkboxMuseum;
 
-    @BindView(R.id.create_insert_upforsale)
-    EditText dateUpForSale;
-    @BindView(R.id.create_insert_soldon)
-    EditText dateSoldOn;
-    @BindView(R.id.create_spinner_agent)
-    Spinner spinnerAgent;
+    private EditText dateUpForSale;
+    private EditText dateSoldOn;
+    private Spinner spinnerAgent;
 
-    @BindView(R.id.save_new_property)
-    Button saveProperty;
-    @BindView(R.id.reset_new_property)
-    Button resetProperty;
+    private Button saveProperty;
+    private Button resetProperty;
 
     private String newStatus;
     private String newDescription;
@@ -174,41 +148,68 @@ public class UpdateActivity extends AppCompatActivity implements PhotoRecyclerVi
     private String newMainLegend;
     private int nbrePhotos;
 
-    final FragmentManager fm = getSupportFragmentManager();
+    private Context mContext;
 
-    UpdateFragment fragmentUpdate = new UpdateFragment();
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_detail);
-
-        propertyId = getIntent().getIntExtra(ListHouseFragment.ID_PROPERTY,1);
-
-        Bundle args = new Bundle();
-        args.putInt(ListHouseFragment.ID_PROPERTY, propertyId);
-        fragmentUpdate.setArguments(args);
-
-        fm.beginTransaction().add(R.id.detail_container, fragmentUpdate, "2").commit();
-
-
-//        setContentView(R.layout.activity_create_home);
-//        ButterKnife.bind(this);
-//        propertyId= getIntent().getIntExtra(ListHouseFragment.ID_PROPERTY, 1);
-//        Log.d(TAG, "onCreate: propertyId " +propertyId);
-//
-//        configureView();
-//        configureViewModel();
-//        launchSavedData();
+    public UpdateFragment() {
+        // Required empty public constructor
     }
 
-   /* public void configureView() {
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        v = inflater.inflate(R.layout.activity_create_home, container, false);
+        mContext = getContext();
+        Bundle bundle = getArguments();
+        propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY,1);
+
+        spinnerStatus = v.findViewById(R.id.create_spinner_status);
+        spinnerType= v.findViewById(R.id.create_spinner_type);
+        descriptionText= v.findViewById(R.id.create_description_text);
+        price= v.findViewById(R.id.create_insert_price_text);
+        surface= v.findViewById(R.id.create_insert_surface);
+
+        photoLayout= v.findViewById(R.id.create_all_others_photos);
+        updateMainPhoto= v.findViewById(R.id.add_main_photo);
+        addMainPhotoText= v.findViewById(R.id.create_add_main_photo_text);
+        addOthersPhotosText= v.findViewById(R.id.create_add_others_photo_text);
+        addPhotos= v.findViewById(R.id.add_more_photo);
+        mainPhotoPreview= v.findViewById(R.id.create_main_photo_preview);
+        photo1= v.findViewById(R.id.create_photo_more_preview1);
+        photo2= v.findViewById(R.id.create_photo_more_preview2);
+        photo3= v.findViewById(R.id.create_photo_more_preview3);
+        photo4= v.findViewById(R.id.create_photo_more_preview4);
+        numberPhotos= v.findViewById(R.id.number_photo_more);
+
+        rooms= v.findViewById(R.id.create_insert_rooms);
+        bedrooms= v.findViewById(R.id.create_insert_bedrooms);
+        bathrooms= v.findViewById(R.id.create_insert_bathrooms);
+
+        addressNumber= v.findViewById(R.id.create_insert_address_number);
+        addressStreet= v.findViewById(R.id.create_insert_address_street);
+        addressStreet2= v.findViewById(R.id.create_insert_address_street2);
+        addressZipcode= v.findViewById(R.id.create_insert_address_zipcode);
+        addressTown= v.findViewById(R.id.create_insert_address_town);
+        addressCountry= v.findViewById(R.id.create_insert_address_country);
+
+        checkboxSchool= v.findViewById(R.id.create_checkbox_school);
+        checkboxShop= v.findViewById(R.id.create_checkbox_shop);
+        checkboxPark= v.findViewById(R.id.create_checkbox_park);
+        checkboxMuseum= v.findViewById(R.id.create_checkbox_museum);
+
+        dateUpForSale= v.findViewById(R.id.create_insert_upforsale);
+        dateSoldOn= v.findViewById(R.id.create_insert_soldon);
+        spinnerAgent= v.findViewById(R.id.create_spinner_agent);
+
+        saveProperty= v.findViewById(R.id.save_new_property);
+        resetProperty= v.findViewById(R.id.reset_new_property);
+
         addMainPhotoText.setText(R.string.modify_main_photo);
         addOthersPhotosText.setText(R.string.modify_others_photo);
 
         // spinnerStatus = (Spinner) findViewById(R.id.create_spinner_status);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(mContext,
                 R.array.create_status_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -216,7 +217,7 @@ public class UpdateActivity extends AppCompatActivity implements PhotoRecyclerVi
         spinnerStatus.setOnItemSelectedListener(this);
 
         //spinnerType = (Spinner) findViewById(R.id.create_spinner_type);
-        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this,
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(mContext,
                 R.array.search_type_answer, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -224,7 +225,7 @@ public class UpdateActivity extends AppCompatActivity implements PhotoRecyclerVi
         spinnerType.setOnItemSelectedListener(this);
 
         //spinnerAgent = (Spinner) findViewById(R.id.create_spinner_agent);
-        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(mContext,
                 R.array.create_agent_name, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAgent.setAdapter(adapter2);
@@ -247,7 +248,19 @@ public class UpdateActivity extends AppCompatActivity implements PhotoRecyclerVi
         resetProperty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UpdateActivity.this.finish();
+                //UpdateActivity.this.finish();
+                if (v.findViewById(R.id.textView20) != null) {
+                    getActivity().finish();
+                } else {
+                    Bundle args = new Bundle();
+                    args.putInt(ListHouseFragment.ID_PROPERTY, propertyId);
+
+                    DetailFragment detail =new DetailFragment();
+                    detail.setArguments(args);
+                    final FragmentManager fm = getFragmentManager();
+
+                    fm.beginTransaction().replace(R.id.frame_layout_detail, detail, "2").commit();
+                }
             }
         });
 
@@ -261,24 +274,19 @@ public class UpdateActivity extends AppCompatActivity implements PhotoRecyclerVi
                 launchMainActivity();
             }
         });
-    }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        configureViewModel();
+        launchSavedData();
 
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
+        return v;
     }
 
     private void initPhotosRecyclerView() {
         Log.d(TAG, "initPhotosRecyclerView");
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView recyclerView = findViewById(R.id.update_photo_recyclerview_container);
-        adapter = new PhotoRecyclerViewAdapter(this, FROM_UPDATE_REQUEST);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView recyclerView = v.findViewById(R.id.update_photo_recyclerview_container);
+        adapter = new PhotoRecyclerViewAdapter(mContext, FROM_UPDATE_REQUEST);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
     }
@@ -292,7 +300,7 @@ public class UpdateActivity extends AppCompatActivity implements PhotoRecyclerVi
                 addressZipcode.getText().toString().trim().isEmpty() ||
                 addressTown.getText().toString().trim().isEmpty()||
                 addressCountry.getText().toString().trim().isEmpty()) {
-            Toast.makeText(this, "Il faut entrer l'adrese du bien", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, "Il faut entrer l'adrese du bien", Toast.LENGTH_LONG).show();
         } else {
 
             if (!descriptionText.getText().toString().isEmpty()) {
@@ -523,7 +531,7 @@ public class UpdateActivity extends AppCompatActivity implements PhotoRecyclerVi
         myProperty.setPropertyId(propertyId);
 
         propertyViewModel.updateProperty(myProperty);
-        Toast.makeText(this, "Le bien a été mis à jour", Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, "Le bien a été mis à jour", Toast.LENGTH_LONG).show();
 
         for (int i=0; i<newPhotosList.size(); i++) {
             Log.d(TAG, "updateProperty: legend " + newLegendList.get(i));
@@ -561,15 +569,16 @@ public class UpdateActivity extends AppCompatActivity implements PhotoRecyclerVi
         Log.d(TAG, "updatePhotoDeleteList: delete photo");
     }
 
+
     private void configureViewModel(){
         Log.d(TAG, "configureViewModel");
-        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
+        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(mContext);
         this.propertyViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PropertyViewModel.class);
     }
 
     private void launchMainActivity() {
         Boolean displayDetail = false;
-        Intent intent = new Intent(UpdateActivity.this, MainActivity.class);
+        Intent intent = new Intent(mContext, MainActivity.class);
         intent.putExtra(ListHouseFragment.DISPLAY_DETAIL, displayDetail);
         intent.putExtra(ListHouseFragment.ID_PROPERTY, propertyId);
         startActivity(intent);
@@ -580,7 +589,18 @@ public class UpdateActivity extends AppCompatActivity implements PhotoRecyclerVi
         Bundle args = new Bundle();
         args.putString(CreateHomeActivity.WHICH_REQUEST, which);
         dialog.setArguments(args);
-        dialog.show(getSupportFragmentManager(), "dialog");
+        dialog.show(getFragmentManager(), "dialog");
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 
     @Override
@@ -636,9 +656,10 @@ public class UpdateActivity extends AppCompatActivity implements PhotoRecyclerVi
             }
         }
     }
-*/
+
     @Override
     public void photoToDelete(long photoId) {
         photoToDeleteList.add(photoId);
     }
 }
+

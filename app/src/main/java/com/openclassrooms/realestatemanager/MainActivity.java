@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private int positionRV;
 
-    private int propertyId;
+    private int propertyIdClicked;
 
 
     @Override
@@ -205,7 +205,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //Inflate the menu and add it to the top Toolbar
-        getMenuInflater().inflate(R.menu.top_toolbar_main_menu, menu);
+        if (findViewById(R.id.frame_layout_detail) != null) {
+            getMenuInflater().inflate(R.menu.top_toolbar_main_menu_update, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.top_toolbar_main_menu, menu);
+        }
         return true;
     }
 
@@ -260,6 +264,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.top_menu_search:
                 launchSearch();
                 return true;
+
+            case R.id.top_menu_update:
+                launchUpdate(propertyIdClicked);
+                return true;
         }
         return false;
     }
@@ -292,6 +300,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void launchMain() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    private void launchUpdate(int propertyId) {
+        Bundle args = new Bundle();
+        args.putInt(ListHouseFragment.ID_PROPERTY, propertyId);
+
+        UpdateFragment update =new UpdateFragment();
+        update.setArguments(args);
+
+        fm.beginTransaction().replace(R.id.frame_layout_detail, update, "3").commit();
     }
 
 
@@ -338,19 +356,17 @@ public boolean isServiceOK() {
     @Override
     public void onItemRVClicked(int propertyId) {
         Log.d(TAG, "onItemRVClicked: Item cliqué " + propertyId);
+        propertyIdClicked = propertyId;
 
         if (findViewById(R.id.frame_layout_detail) == null) {  // cas du téléphone
+            Log.d(TAG, "onItemRVClicked: portable");
             Intent intent = new Intent(this, DetailActivity.class);
             intent.putExtra(ListHouseFragment.ID_PROPERTY, propertyId);
             startActivity(intent);
         } else { // cas de la tablette
-            Log.d(TAG, "onItemRVClicked: il est passé par ici");
+            Log.d(TAG, "onItemRVClicked: tablette");
             Bundle args = new Bundle();
             args.putInt(ListHouseFragment.ID_PROPERTY, propertyId);
-            //DetailFragment detail = new DetailFragment();
-            //detail.setArguments(args);
-            // fm.beginTransaction().replace(R.id.frame_layout_detail, detail, "2").commit();
-            //
 
              DetailFragment detail =fragment2.newInstance(propertyId);
 

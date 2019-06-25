@@ -48,29 +48,29 @@ public class DetailFragment extends Fragment {
 
     private View v;
 
-    TextView status;
-    TextView upForSaleDate;
-    TextView soldOnDate;
-    TextView description;
-    TextView type;
-    TextView surface;
-    TextView rooms;
-    TextView bedrooms;
-    TextView bathrooms;
-    CheckBox shops;
-    CheckBox schools;
-    CheckBox museum;
-    CheckBox park;
-    TextView numberInStreet;
-    TextView street;
-    TextView street2;
-    TextView zipcode;
-    TextView town;
-    TextView country;
-    TextView price;
-    Button update;
-    Button before;
-    Button after;
+    private TextView status;
+    private TextView upForSaleDate;
+    private TextView soldOnDate;
+    private TextView description;
+    private TextView surface;
+    private TextView rooms;
+    private TextView bedrooms;
+    private TextView bathrooms;
+    private TextView price;
+    private TextView type;
+    private CheckBox shops;
+    private CheckBox schools;
+    private CheckBox museum;
+    private CheckBox park;
+    private TextView numberInStreet;
+    private TextView street;
+    private TextView street2;
+    private TextView zipcode;
+    private TextView town;
+    private TextView country;
+    private Button update;
+    private Button before;
+    private Button after;
 
     /* @BindView(R.id.map-detail)
 ImageView mMapView;;*/
@@ -121,8 +121,7 @@ ImageView mMapView;;*/
         upForSaleDate = (TextView) v.findViewById(R.id.textView27);
         soldOnDate = (TextView) v.findViewById(R.id.textView28);
         description = (TextView) v.findViewById(R.id.editText);
-        type = (TextView) v.findViewById(R.id.textView22);
-        surface = (TextView) v.findViewById(R.id.textView4);
+               surface = (TextView) v.findViewById(R.id.textView4);
         rooms = (TextView) v.findViewById(R.id.textView6);
         bedrooms = (TextView) v.findViewById(R.id.textView8);
         bathrooms = (TextView) v.findViewById(R.id.textView10);
@@ -136,10 +135,8 @@ ImageView mMapView;;*/
         zipcode = (TextView) v.findViewById(R.id.textView15);
         town = (TextView) v.findViewById(R.id.textView16);
         country = (TextView) v.findViewById(R.id.textView17);
-        price = (TextView) v.findViewById(R.id.textView21);
-        update = (Button) v.findViewById(R.id.update_detail_btn);
-        before = (Button) v.findViewById(R.id.before_detail_btn);
-        after = (Button) v.findViewById(R.id.after_detail_btn);
+
+
 
         if (container == null) {
             // Si le ViewGroup n'est pas renseigné on ne cherche pas à en créer un
@@ -161,66 +158,77 @@ ImageView mMapView;;*/
 
         tablet = bundle.getBoolean(MainActivity.USE_TABLET, false);
 
-        update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchUpdateActivity();
-            }
-        });
 
-        before.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: filteredResults " + filteredResults);
-                if(!filteredResults) {
-                    Log.d(TAG, "onClick: not filteredResults");
-                    if (propertyId == 1) {
-                        Toast.makeText(getContext(), R.string.before_not_allowed, Toast.LENGTH_LONG).show();
+        if (v.findViewById(R.id.textView20) != null) { // cas des téléphones
+            Log.d(TAG, "onCreateView: telephones");
+            Log.d(TAG, "onCreateView: " + v.findViewById(R.id.textView20));
+
+            type = (TextView) v.findViewById(R.id.textView22);
+            price = (TextView) v.findViewById(R.id.textView21);
+            before = (Button) v.findViewById(R.id.before_detail_btn);
+            after = (Button) v.findViewById(R.id.after_detail_btn);
+            update = (Button) v.findViewById(R.id.update_detail_btn);
+
+            update.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    launchUpdateActivity();
+                }
+            });
+
+            before.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "onClick: filteredResults " + filteredResults);
+                    if (!filteredResults) {
+                        Log.d(TAG, "onClick: not filteredResults");
+                        if (propertyId == 1) {
+                            Toast.makeText(getContext(), R.string.before_not_allowed, Toast.LENGTH_LONG).show();
+                        } else {
+                            launchMainActivityDetail(propertyId - 1);
+                        }
                     } else {
-                        launchMainActivityDetail(propertyId - 1);
-                    }
-                } else {
-                    Log.d(TAG, "onClick: filteredResults");
-                    if(propertyId == filteredResultsArray.get(0)) {
-                        Toast.makeText(getContext(), R.string.before_not_allowed, Toast.LENGTH_LONG).show();
-                    } else {
-                        Log.d(TAG, "onClick: position " +position);
-                        newPosition = position-1;
-                        launchResultSearchActivityDetail(filteredResultsArray.get(position -1));
+                        Log.d(TAG, "onClick: filteredResults");
+                        if (propertyId == filteredResultsArray.get(0)) {
+                            Toast.makeText(getContext(), R.string.before_not_allowed, Toast.LENGTH_LONG).show();
+                        } else {
+                            Log.d(TAG, "onClick: position " + position);
+                            newPosition = position - 1;
+                            launchResultSearchActivityDetail(filteredResultsArray.get(position - 1));
+                        }
                     }
                 }
-            }
-        });
+            });
 
-        after.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: propertyId " + propertyId);
-                Log.d(TAG, "onClick: properties.size " +numberOfProperties);
-                if (!filteredResults) {
-                    if (propertyId == numberOfProperties) {
-                        Toast.makeText(getContext(), R.string.after_not_allowed, Toast.LENGTH_LONG).show();
+            after.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "onClick: propertyId " + propertyId);
+                    Log.d(TAG, "onClick: properties.size " + numberOfProperties);
+                    if (!filteredResults) {
+                        if (propertyId == numberOfProperties) {
+                            Toast.makeText(getContext(), R.string.after_not_allowed, Toast.LENGTH_LONG).show();
+                        } else {
+                            launchMainActivityDetail(propertyId + 1);
+                        }
                     } else {
-                        launchMainActivityDetail(propertyId + 1);
-                    }
-                }else {
-                    Log.d(TAG, "onClick: filteredResults.size " + (filteredResultsArray.size()));
-                    if(propertyId == filteredResultsArray.get(filteredResultsArray.size()-1)) {
-                        Toast.makeText(getContext(), R.string.after_not_allowed, Toast.LENGTH_LONG).show();
-                    } else {
-                        Log.d(TAG, "onClick: position " + position);
-                        newPosition = position+1;
-                        launchResultSearchActivityDetail(filteredResultsArray.get(newPosition));
+                        Log.d(TAG, "onClick: filteredResults.size " + (filteredResultsArray.size()));
+                        if (propertyId == filteredResultsArray.get(filteredResultsArray.size() - 1)) {
+                            Toast.makeText(getContext(), R.string.after_not_allowed, Toast.LENGTH_LONG).show();
+                        } else {
+                            Log.d(TAG, "onClick: position " + position);
+                            newPosition = position + 1;
+                            launchResultSearchActivityDetail(filteredResultsArray.get(newPosition));
+                        }
                     }
                 }
+            });
+        }
 
-            }
-        });
-
-        if (tablet) {
+/*        if (tablet) {
             before.setVisibility(View.GONE);
             after.setVisibility(View.GONE);
-        }
+        }*/
 
         configureViewModel();
         this.getAllProperties();
@@ -283,15 +291,18 @@ ImageView mMapView;;*/
         schools.setChecked(currentProperty.getSchool());
         museum.setChecked(currentProperty.getMuseum());
         park.setChecked(currentProperty.getPark());
-        price.setText(String.valueOf(currentProperty.getPrice()));
 
         agentId = currentProperty.getAgentId();
-        typeId = currentProperty.getTypeId();
         statusId = currentProperty.getStatusId();
 
         setAddress();
         this.getStatus(statusId);
-        this.getType(typeId);
+
+        if (v.findViewById(R.id.textView20) != null) { // cas des téléphones
+            price.setText(String.valueOf(currentProperty.getPrice()));
+            typeId = currentProperty.getTypeId();
+            this.getType(typeId);
+        }
 
         this.initPhotosRecyclerView();
         this.getAllPhotosFromProperty(propertyId);
@@ -318,7 +329,9 @@ ImageView mMapView;;*/
     private void updateType(TypeOfProperty typeOfProperty){
         currentType = typeOfProperty;
         Log.d(TAG, "updateType: typeId " + typeId);
-        type.setText(String.valueOf(currentType.getTypeText()));
+        if (v.findViewById(R.id.textView20) != null) {  // cas des téléphones
+            type.setText(String.valueOf(currentType.getTypeText()));
+        }
     }
 
     private void getStatus(int id) {
