@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".WelcomeActivity">
+
+    <ImageView
+        android:id="@+id/imgPlaylistItemBg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:maxHeight="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/menu" />
+
 <LinearLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
 android:id="@+id/main_activity_linear_layout"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:orientation="horizontal"
-android:background="@drawable/menu"
-tools:context=".WelcomeActivity">
+android:orientation="horizontal">
 
 
     <LinearLayout
@@ -56,3 +68,5 @@ tools:context=".WelcomeActivity">
     </LinearLayout>
 
 </LinearLayout>
+
+</FrameLayout>

@@ -144,7 +144,11 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //Inflate the menu and add it to the top Toolbar
-        getMenuInflater().inflate(R.menu.top_toolbar_menu, menu);
+        if(tabletSize) {
+            getMenuInflater().inflate(R.menu.top_toolbar_main_menu_all, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.top_toolbar_menu, menu);
+        }
         return true;
     }
 
@@ -199,6 +203,10 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
             case R.id.top_menu_home:
                 launchMain();
                 return true;
+
+            case R.id.top_menu_update:
+                launchUpdate(propertyIdClicked);
+                return true;
         }
         return false;
     }
@@ -226,6 +234,16 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
     private void launchMain() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    private void launchUpdate(int propertyId) {
+        Bundle args = new Bundle();
+        args.putInt(ListHouseFragment.ID_PROPERTY, propertyId);
+
+        UpdateFragment update =new UpdateFragment();
+        update.setArguments(args);
+
+        fm.beginTransaction().replace(R.id.frame_layout_detail, update, "3").commit();
     }
 
 //-------------------------------------------------------

@@ -65,7 +65,7 @@ public class DetailActivity extends AppCompatActivity implements PhotoRecyclerVi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.top_toolbar_main_menu_update, menu);
+        getMenuInflater().inflate(R.menu.top_toolbar_main_menu_all, menu);
         return true;
     }
 
@@ -82,6 +82,10 @@ public class DetailActivity extends AppCompatActivity implements PhotoRecyclerVi
 
             case R.id.top_menu_update:
                 launchUpdateActivity();
+                return true;
+
+            case R.id.top_menu_home:
+                finish();
                 return true;
         }
         return false;

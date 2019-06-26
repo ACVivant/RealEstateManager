@@ -247,7 +247,7 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
         resetProperty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (tabletSize) {
+                if (!tabletSize) {
                     getActivity().finish();
                 } else {
                     Bundle args = new Bundle();
