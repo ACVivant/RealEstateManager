@@ -88,8 +88,6 @@ public class CreditActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //Inflate the menu and add it to the top Toolbar
-        //getMenuInflater().inflate(R.menu.top_toolbar_menu, menu);
         return true;
     }
 
@@ -97,25 +95,9 @@ public class CreditActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                //onBackPressed();
                 finish();
         }
         return false;
-    }
-
-    private void launchCreate() {
-        Intent intent = new Intent(this, CreateHomeActivity.class);
-        startActivity(intent);
-    }
-
-    private void launchSearch() {
-        Intent intent = new Intent(this, SearchActivity.class);
-        startActivity(intent);
-    }
-
-    private void launchMain() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
     }
 
     private void getData() {
@@ -144,6 +126,5 @@ public class CreditActivity extends AppCompatActivity {
         str = df.format(cost);
         cost = Double.parseDouble(str.replace(',', '.'));
         creditCost.setText(Double.toString(cost));
-
     }
 }

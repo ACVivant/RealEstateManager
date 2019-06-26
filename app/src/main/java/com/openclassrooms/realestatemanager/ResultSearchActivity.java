@@ -38,7 +38,6 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
     final FragmentManager fm = getSupportFragmentManager();
     private Fragment active = fragment1;
     private int homeToExpose;
-   // private boolean displayDetail = false;
     private boolean filteredResults = false;
     private ArrayList<Integer> filteredResultsArray = new ArrayList<>();
     private int position;
@@ -57,30 +56,18 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
         this.configureDrawerLayout();
         this.configureNavigationView();
 
-
-
         filteredResultsArray = getIntent().getIntegerArrayListExtra(SearchActivity.ID_FILTERED);
         position = getIntent().getIntExtra(ListFilteredPropertiesFragment.POSITON_IN_FILTER, 0);
-        Log.d(TAG, "onCreate: position " +position);
-        Log.d(TAG, "onCreate: filteredResults " + filteredResultsArray.size());
         homeToExpose = getIntent().getIntExtra(ListFilteredPropertiesFragment.ID_PROPERTY, 1);
-        //displayDetail = getIntent().getBooleanExtra(ListHouseFragment.DISPLAY_DETAIL, false);
         filteredResults = getIntent().getBooleanExtra(SearchActivity.RESULTS_FILTERED, true);
 
-
-        Log.d(TAG, "onCreate: homeToExpose id " + homeToExpose);
-
-
             if (savedInstanceState == null) {
-                Log.d(TAG, "onCreate: savedInstanceState null");
                 this.configureFirstView();
             }
 
             // Decide which fragment has to be shown (rotation)
             if (savedInstanceState != null) {
-                Log.d(TAG, "onCreate: savedInstanceState non null");
                 propertyIdClicked = savedInstanceState.getInt(MainActivity.PROPERTY_ID_SAVED);
-                Log.d(TAG, "onCreate: propertyIdClicked " + propertyIdClicked);
                 this.configureView();
             }
     }
@@ -91,9 +78,7 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
 
     // Configure toolbar
     private void configureToolbar(){
-        // Get the toolbar view inside the activity layout
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // Sets the Toolbar
         setSupportActionBar(toolbar);
     }
 
@@ -119,34 +104,14 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
         args.putBoolean(SearchActivity.RESULTS_FILTERED, filteredResults);
         args.putIntegerArrayList(SearchActivity.ID_FILTERED, filteredResultsArray);
         args.putInt(ListFilteredPropertiesFragment.POSITON_IN_FILTER, position);
-        //    if(filteredResults) {args.putString(SearchActivity.SEARCH_QUERY, searchQuery);}
-
-        Log.d(TAG, "configureFirstView: filteredResultsArray " + filteredResultsArray);
+        fragment2.setArguments(args);
+        fragment1.setArguments(args);
 
         if (!tabletSize) {
-            Log.d(TAG, "configureFirstView: mobile");
-
-            args.putBoolean(USE_TABLET, false);
-            fragment2.setArguments(args);
-            fragment1.setArguments(args);
-
-
-          //  if (!displayDetail) {
                 fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
                 fm.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
-            /*} else {
-                fm.beginTransaction().add(R.id.main_container, fragment1, "1").hide(fragment1).commit();
-                fm.beginTransaction().add(R.id.main_container, fragment2, "2").commit();
-            }*/
 
         } else {
-
-            args.putBoolean(USE_TABLET, true);
-            fragment2.setArguments(args);
-            fragment1.setArguments(args);
-
-            Log.d(TAG, "configureFirstView: tablette");
-
             fm.beginTransaction().add(R.id.frame_layout_detail, fragment2, "2").commit();
                 fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
         }
@@ -160,12 +125,10 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
         args.putBoolean(SearchActivity.RESULTS_FILTERED, filteredResults);
         args.putIntegerArrayList(SearchActivity.ID_FILTERED, filteredResultsArray);
         args.putInt(ListFilteredPropertiesFragment.POSITON_IN_FILTER, position);
-        //  if(filteredResults) {args.putString(SearchActivity.SEARCH_QUERY, searchQuery);}
-        Log.d(TAG, "configureView: bundle " + homeToExpose);
+
         fragment1.setArguments(args);
         fragment2.setArguments(args);
 
-        Log.d(TAG, "configureView");
         ListFilteredPropertiesFragment rotation =new ListFilteredPropertiesFragment();
         rotation.setArguments(args);
 
@@ -279,20 +242,15 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
         Log.d(TAG, "onSaveInstanceState: propertyIdClicked " + propertyIdClicked);
     }
 
-
-
     @Override
     public void photoToDelete(long photoId) {
-
     }
 
     @Override
     public void onFilteredItemRVClicked(int propertyId, int position) {
-        Log.d(TAG, "onItemRVClicked: Item cliqué " + propertyId);
         propertyIdClicked = propertyId;
 
         if (!tabletSize) {  // cas du téléphone
-            Log.d(TAG, "onItemRVClicked: portable");
             Intent intent = new Intent(this, DetailActivity.class);
             intent.putExtra(ListHouseFragment.ID_PROPERTY, propertyId);
             intent.putExtra(SearchActivity.RESULTS_FILTERED,true);
@@ -300,14 +258,10 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
             intent.putExtra(ListFilteredPropertiesFragment.POSITON_IN_FILTER, position);
             startActivity(intent);
         } else { // cas de la tablette
-            Log.d(TAG, "onItemRVClicked: tablette");
             Bundle args = new Bundle();
             args.putInt(ListHouseFragment.ID_PROPERTY, propertyId);
-
             DetailFragment detail =fragment2.newInstance(propertyId);
-
             fm.beginTransaction().replace(R.id.frame_layout_detail, detail, "2").commit();
-
         }
     }
 }

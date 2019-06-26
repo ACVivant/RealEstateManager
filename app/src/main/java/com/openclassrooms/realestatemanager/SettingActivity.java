@@ -52,9 +52,8 @@ public class SettingActivity extends AppCompatActivity {
         convertFromEuros.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(euros.getText().toString().equals("")) { Toast.makeText(context, "Il faut entrer une valeur en euros.", Toast.LENGTH_LONG).show();
+                if(euros.getText().toString().equals("")) { Toast.makeText(context, getResources().getString(R.string.euros_needed), Toast.LENGTH_LONG).show();
                 } else {
-                    Log.d(TAG, "onClick: euros: " + euros.getText().toString());
                     valueToConvert = Integer.parseInt(euros.getText().toString());;
                     convertedValue = Utils.convertEuroToDollar(valueToConvert);
                     dollars.setText(String.valueOf(convertedValue));
@@ -65,9 +64,8 @@ public class SettingActivity extends AppCompatActivity {
         convertFromDollars.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(dollars.getText().toString().equals("")) { Toast.makeText(context, "Il faut entrer une valeur en dollars.", Toast.LENGTH_LONG).show();
-                } else {
-                    Log.d(TAG, "onClick: dollars: " + dollars.getText().toString());
+                if(dollars.getText().toString().equals("")) { Toast.makeText(context, getResources().getString(R.string.dollars_needed), Toast.LENGTH_LONG).show();
+                } else { ;
                     valueToConvert = Integer.parseInt(dollars.getText().toString());
                     convertedValue = Utils.convertDollarToEuro(valueToConvert);
                     euros.setText(String.valueOf(convertedValue));
@@ -78,9 +76,7 @@ public class SettingActivity extends AppCompatActivity {
 
     // Configure toolbar
     private void configureToolbar(){
-        // Get the toolbar view inside the activity layout
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // Sets the Toolbar
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar()!=null) {
@@ -91,45 +87,20 @@ public class SettingActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //Inflate the menu and add it to the top Toolbar
-        //getMenuInflater().inflate(R.menu.top_toolbar_menu, menu);
         return true;
     }
 
     @Override
     public void onBackPressed() {
-        /*DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {*/
             super.onBackPressed();
-       // }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                //onBackPressed();
                 finish();
         }
         return false;
     }
-
-    private void launchCreate() {
-        Intent intent = new Intent(this, CreateHomeActivity.class);
-        startActivity(intent);
-    }
-
-    private void launchSearch() {
-        Intent intent = new Intent(this, SearchActivity.class);
-        startActivity(intent);
-    }
-
-    private void launchMain() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
-
-
 }

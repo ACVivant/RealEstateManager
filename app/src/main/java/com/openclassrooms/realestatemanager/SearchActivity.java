@@ -33,7 +33,6 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
     public static final String ID_FILTERED = "list_of_filtered_properties";
     public static final String RESULTS_FILTERED = "results_are_filtered";
     public static final String SEARCH_QUERY = "search_query";
-    public static final String ARGS_QUERY = "args_query";
 
     @BindView(R.id.spinner_type)
     Spinner spinnerType;
@@ -148,9 +147,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
 
     // Configure toolbar
     private void configureToolbar(){
-        // Get the toolbar view inside the activity layout
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // Sets the Toolbar
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar()!=null) {
@@ -161,32 +158,23 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
 
     @Override
     public void onBackPressed() {
-        /*DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {*/
         super.onBackPressed();
-        // }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                //onBackPressed();
                 finish();
         }
         return false;
     }
-
-    private void loadFilterData(){}
 
     private void createQuery() {
         // Beginning of query string
         queryString += "SELECT * FROM Property";
 
         // Optional parts are added to query string and to args upon here
-
         if(!spinnerAgent.getSelectedItem().toString().equals(getResources().getString(R.string.all))) {
             queryString += " WHERE ";
             queryString += "agentId = ?";
@@ -501,14 +489,10 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void updatePropertyList(List<Property> properties) {
-        Log.d(TAG, "launchResultActivity: result.size " + properties.size());
 
         ArrayList<Integer> filteredId = new ArrayList<Integer>();
 
         for (int i = 0; i < properties.size(); i++) {
-            Log.d(TAG, "updatePropertyList: " + properties.get(i).getPrice());
-            Log.d(TAG, "updatePropertyList:  " + properties.get(i).getSurface());
-            Log.d(TAG, "updatePropertyList: " + properties.get(i).getPropertyId());
             filteredId.add(properties.get(i).getPropertyId());
         }
         launchResultActivity( queryString, filteredId);
@@ -519,12 +503,10 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
         intent.putExtra(RESULTS_FILTERED, true);
         intent.putExtra(SEARCH_QUERY, query);
         intent.putExtra(ID_FILTERED, tabId);
-        Log.d(TAG, "launchResultActivity: filteredResultsArray " + tabId);
         startActivity(intent);
     }
 
     private void configureViewModel(){
-        Log.d(TAG, "configureViewModel");
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
         this.propertyViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PropertyViewModel.class);
     }

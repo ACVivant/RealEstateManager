@@ -38,23 +38,16 @@ import java.util.List;
 public class ListFilteredPropertiesFragment extends Fragment {
 
     private static final String TAG = "ListFilteredPropertiesF";
-    //private static final String PLACE_ID = "id_of_place";
-    //private static final String ID_FRAGMENT = "fragment_to_expose";
     public static final String ID_PROPERTY = "property_selected";
-    //public static final String DISPLAY_DETAIL = "display_detail_after_clic";
     public static final String FROM_FILTER = "from_filtered_results";
     public static final String POSITON_IN_FILTER = "position_of_property_in_filtered_results";
-    //public static final String ONCLICK_DETAIL = "click_on-detail_result";
 
     private PropertyViewModel propertyViewModel;
     private ListRecyclerViewAdapter adapter;
 
     private int propertyId = 0;
     public int propertySaved = 0;
-    //private boolean useTablet;
-    //private boolean displayDetail;
-    //private boolean filteredResults;
-    //private String searchQuery;
+
     private List<Property> listFilteredProperty = new ArrayList<>();
 
     private ArrayList<Integer> filteredResultsArray = new ArrayList<>();
@@ -82,9 +75,7 @@ public class ListFilteredPropertiesFragment extends Fragment {
         v= inflater.inflate(R.layout.fragment_list_house, container, false);
         Bundle bundle = getArguments();
         propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY, 0);
-        //useTablet = bundle.getBoolean(MainActivity.USE_TABLET, false);
         filteredResultsArray = bundle.getIntegerArrayList(SearchActivity.ID_FILTERED);
-        //filteredResults = bundle.getBoolean(SearchActivity.RESULTS_FILTERED, false);
         positionRV = bundle.getInt(ListHouseFragment.POSITION_IN_RV, 1);
 
         Log.d(TAG, "onCreateView: filteredResultsArray " + filteredResultsArray);
@@ -109,7 +100,6 @@ public class ListFilteredPropertiesFragment extends Fragment {
     private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView");
 
-       // this.adapter = new ListRecyclerViewAdapter(propertyId, useTablet);
         this.adapter = new ListRecyclerViewAdapter(propertyId);
         RecyclerView recyclerView = v.findViewById(R.id.list_recyclerview_container);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -122,7 +112,6 @@ public class ListFilteredPropertiesFragment extends Fragment {
         adapter.setOnItemClickedListener(new ListRecyclerViewAdapter.OnItemClickedListener() {
             @Override
                 public void OnItemClicked(int propertyId, int position) {
-                //displayDetail = true;
                 mCallback.onFilteredItemRVClicked(propertyId, position);
                 adapter.setRVBackgroudColor(propertyId);
                 Log.d(TAG, "OnItemClicked: position " + position);
@@ -160,12 +149,11 @@ public class ListFilteredPropertiesFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
-        // 4 - Call the method that creating callback after being attached to parent activity
+        //Call the method that creating callback after being attached to parent activity
         this.createCallbackToMainActivity();
     }
 
-    // 3 - Create callback to parent activity
+    // Create callback to parent activity
     private void createCallbackToMainActivity(){
         try {
             //Parent activity will automatically subscribe to callback

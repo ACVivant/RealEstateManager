@@ -144,7 +144,6 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     private int newRooms;
     private int newBedrooms;
     private int newBathrooms;
-    private String newLegend;
 
     private String newAddressNumber;
     private String newAddressStreet;
@@ -170,7 +169,6 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     private int typeId;
     private long propertyId;
 
-    private Address myAddress;
     private boolean  mainPhotoOk;
     private int nbrePhotos=0;
 
@@ -197,8 +195,6 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         notificationManager = NotificationManagerCompat.from(this);
         configureToolbar();
         configureView();
-
-        Log.d(TAG, "onCreate");
     }
 
     private void configureView() {
@@ -262,7 +258,6 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     public boolean onCreateOptionsMenu(Menu menu) {
         //Inflate the menu and add it to the top Toolbar
             getMenuInflater().inflate(R.menu.top_toolbar_main_menu_create, menu);
-        Log.d(TAG, "onCreateOptionsMenu: called");
         return true;
     }
 
@@ -283,10 +278,10 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
                 addressZipcode.getText().toString().trim().isEmpty() ||
                 addressTown.getText().toString().trim().isEmpty() ||
                 addressCountry.getText().toString().trim().isEmpty()) {
-            Toast.makeText(this, "Il faut entrer l'adrese du bien", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getResources().getString(R.string.address_missing), Toast.LENGTH_LONG).show();
         } else {
             if (!mainPhotoOk) {
-                Toast.makeText(this, "Il faut définir une photo principale", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getResources().getString(R.string.photo_missing), Toast.LENGTH_LONG).show();
             } else {
                 if (!descriptionText.getText().toString().isEmpty()) {
                     newDescription = descriptionText.getText().toString();
@@ -346,20 +341,14 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
                 if (dateUpForSale.getText().toString().length() == 10) {
                     newUpForSale = dateUpForSale.getText().toString();
                     intUpForSale = Utils.convertStringDateToIntDate(newUpForSale);
-                    Log.d(TAG, "savePropertyData: upForSale enteredDate " + newUpForSale);
-                    Log.d(TAG, "savePropertyData: upForSale formattedDate " + intUpForSale);
                 } else {
                     newUpForSale = "99/99/9999";
                     intUpForSale = Utils.convertStringDateToIntDate(newUpForSale);
-                    Log.d(TAG, "savePropertyData: enteredDate " + newUpForSale);
-                    Log.d(TAG, "savePropertyData: formattedDate " + intUpForSale);
                 }
 
                 if (dateSoldOn.getText().toString().length() == 10) {
                     newSoldOn = dateSoldOn.getText().toString();
                     intSoldOn = Utils.convertStringDateToIntDate(newSoldOn);
-                    Log.d(TAG, "savePropertyData: soldOn enteredDate " + newUpForSale);
-                    Log.d(TAG, "savePropertyData: soldOn formattedDate " + intUpForSale);
                 } else {
                     newSoldOn = "99/99/9999";
                     intSoldOn = Utils.convertStringDateToIntDate(newSoldOn);
@@ -375,9 +364,8 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         Log.d(TAG, "createProperty: called");
 
         if(newStatus.equals(R.string.status_sold)&& newSoldOn.equals("99/99/9999")) {
-            Toast.makeText(this, "Il faut entrer une date de vente", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getResources().getString(R.string.soldon_date_missing), Toast.LENGTH_LONG).show();
         } else {
-
             Property myProperty = new Property(newPrice, newRooms, newBedrooms, newBathrooms, newDescription, intUpForSale, intSoldOn, newSurface, nearShop, nearSchool, nearMuseum, nearPark, typeId, agentId, statusId, mainPhotoUri, nbrePhotos, newAddressNumber, newAddressStreet, newAddressStreet2, newZipcode, newTown, newCountry);
 
             Observable<Property> propertyObservable = Observable
@@ -450,19 +438,11 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     }
 
     private void configureViewModel() {
-        Log.d(TAG, "configureViewModel");
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
         this.propertyViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PropertyViewModel.class);
     }
 
     private void launchMainActivityDetail() {
-        Boolean displayDetail = false;
-        Intent intent = new Intent(CreateHomeActivity.this, MainActivity.class);
-        intent.putExtra(ListHouseFragment.DISPLAY_DETAIL, displayDetail);
-        startActivity(intent);
-    }
-
-    private void launchMainActivity() {
         Boolean displayDetail = false;
         Intent intent = new Intent(CreateHomeActivity.this, MainActivity.class);
         intent.putExtra(ListHouseFragment.DISPLAY_DETAIL, displayDetail);

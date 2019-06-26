@@ -58,18 +58,15 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
 
     private static final String PERMS = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final int RC_IMAGE_PERMS1 = 101;
+    private static final int RC_CHOOSE_PHOTO1 = 201;
+    private static final int RC_TAKE_PHOTO1 = 301;
     private Uri uriImageSelected;
     private String newPhotoUrl;
     private Uri pictureUri;
-    private static final int RC_CHOOSE_PHOTO1 = 201;
-    private static final int RC_TAKE_PHOTO1 = 301;
-    static final int REQUEST_IMAGE_CAPTURE = 401;
-    String currentPhotoPath;
-    Uri photoURI;
+    private String currentPhotoPath;
+    private Uri photoURI;
     private String whichRequest;
-    String photoLegend;
-
-
+    private String photoLegend;
 
     private DialogListener listener;
     private Context context;
@@ -82,9 +79,6 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
 
         Bundle bundle = getArguments();
         whichRequest = bundle.getString(CreateHomeActivity.WHICH_REQUEST);
-        Log.d(TAG, "onCreateDialog: which " + whichRequest);
-
-        //ButterKnife.bind(this.getActivity());
 
         context = this.getContext();
 
@@ -110,22 +104,21 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
 
         builder.setView(view)
                 .setTitle("Photo")
-                .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getResources().getString(R.string.reset), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                     }
                 })
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                         if (legend.getText()==null ||photoURI.toString().isEmpty()) {
-                            Toast.makeText(getContext(), "Il faut choisir une photo et une légende", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), getResources().getString(R.string.photo_and_legend_needed), Toast.LENGTH_LONG).show();
                         } else {
                             photoLegend = legend.getText().toString();
                             if (whichRequest.equals(CreateHomeActivity.OTHERS_PHOTO_REQUEST)) {
-                                Log.d(TAG, "onClick: photoLegend " + photoLegend);
                                 listener.applyOthersPhoto(photoURI.toString(), photoLegend);
                             }
                             if (whichRequest.equals(CreateHomeActivity.MAIN_PHOTO_REQUEST)) {
@@ -164,6 +157,7 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
                 photoFile = createImageFile();
             } catch (IOException ex) {
                 // Error occurred while creating the File
+                Log.e(TAG, "takePhoto: ",ex );
 
             }
             // Continue only if the File was successfully created
@@ -174,13 +168,11 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, RC_TAKE_PHOTO1);
-
             }
         }
     }
 
     private File createImageFile() throws IOException {
-        Log.d(TAG, "createImageFile");
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "REM_" + timeStamp;
@@ -240,7 +232,7 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
 
                 galleryAddPic();
             } else {
-                Toast.makeText(context, "Erreur", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, getResources().getString(R.string.error), Toast.LENGTH_LONG).show();
             }
         }
     }

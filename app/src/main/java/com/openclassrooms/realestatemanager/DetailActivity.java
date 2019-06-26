@@ -20,12 +20,9 @@ public class DetailActivity extends AppCompatActivity implements PhotoRecyclerVi
 
     //Design
     private Toolbar toolbar;
-    //private DrawerLayout drawerLayout;
-    //private NavigationView navigationView;
 
     final FragmentManager fm = getSupportFragmentManager();
-
-    DetailFragment fragmentDetail = new DetailFragment();
+    private DetailFragment fragmentDetail = new DetailFragment();
 
     private int propertyId;
     private boolean filteredResults;
@@ -45,7 +42,6 @@ public class DetailActivity extends AppCompatActivity implements PhotoRecyclerVi
         filteredResultsArray = getIntent().getIntegerArrayListExtra(SearchActivity.ID_FILTERED);
         filteredPosition = getIntent().getIntExtra(ListFilteredPropertiesFragment.POSITON_IN_FILTER, 0);
 
-
         Bundle args = new Bundle();
         args.putInt(ListHouseFragment.ID_PROPERTY, propertyId);
         args.putBoolean(SearchActivity.RESULTS_FILTERED, filteredResults);
@@ -63,16 +59,12 @@ public class DetailActivity extends AppCompatActivity implements PhotoRecyclerVi
 
     // Configure toolbar
     private void configureToolbar(){
-        // Get the toolbar view inside the activity layout
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // Sets the Toolbar
         setSupportActionBar(toolbar);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //Inflate the menu and add it to the top Toolbar
         getMenuInflater().inflate(R.menu.top_toolbar_main_menu_update, menu);
         return true;
     }
@@ -121,8 +113,6 @@ public class DetailActivity extends AppCompatActivity implements PhotoRecyclerVi
         super.onSaveInstanceState(outState);
         int idSaved = propertyId;
         outState.putInt(MainActivity.PROPERTY_ID_SAVED, idSaved);
-        Log.d(TAG, "onSaveInstanceState");
-        Log.d(TAG, "onSaveInstanceState: idsaved " + idSaved);
     }
 
 }

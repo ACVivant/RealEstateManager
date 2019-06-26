@@ -42,8 +42,6 @@ import butterknife.ButterKnife;
 public class PhotoRecyclerViewAdapter extends RecyclerView.Adapter<PhotoRecyclerViewAdapter.PhotoViewHolder> {
 
     private static final String TAG = "PhotoRecyclerViewAdapte";
-    public static final String PHOTO_URI = "photoUri";
-    public static final String PHOTO_ID = "photoId";
 
     //Variables
     private Context mContext;
@@ -78,7 +76,6 @@ public PhotoRecyclerViewAdapter(Context context, String which) {
 
     @Override
     public void onBindViewHolder(@NonNull PhotoViewHolder holder, int position) {
-        Log.d(TAG, "onBindViewHolder: Called.");
 
         Photo currentPhoto = photos.get(position);
 
@@ -105,7 +102,6 @@ public PhotoRecyclerViewAdapter(Context context, String which) {
     @Override
     public int getItemCount() {
     return photos.size();
-        //return photoList.size();
     }
 
     public void setPhotos(List<Photo> photos) {
@@ -116,7 +112,7 @@ public PhotoRecyclerViewAdapter(Context context, String which) {
     private void openDeleteDialog(PhotoViewHolder holder, Photo currentPhoto, String Uri, long photoId) {
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
-        alertDialog.setTitle("Warning");
+        alertDialog.setTitle("Attention");
         alertDialog.setMessage("Vous allez supprimer cette photo");
         alertDialog.setPositiveButton("Confirmer", new DialogInterface.OnClickListener() {
             @Override

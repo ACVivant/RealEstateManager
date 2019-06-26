@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private static final String TAG = "MainActivity";
     private static final int ERROR_DIALOG_REQUEST = 9001;
-    private static final String ID_FRAGMENT = "fragment_to_expose";
     public static final String USE_TABLET = "mobile_or_tablet";
     public static final String PROPERTY_ID_SAVED = "property_saved_when_rotation";
     public static final String POSITION_SAVED = "position_saved_when_rotation";
@@ -42,17 +41,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DetailFragment fragment2 = new DetailFragment();
 
     final FragmentManager fm = getSupportFragmentManager();
-    //private Fragment active = fragment1;
-    //private String fragmentToExposeFromMap;
     private int homeToExpose;
-    //private boolean displayDetail = false;
-
     private int positionRV;
-
     private int propertyIdClicked;
-
     private  boolean tabletSize;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,15 +59,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // id de la propriété à exposer
         homeToExpose = getIntent().getIntExtra(ListHouseFragment.ID_PROPERTY, 1);
-        // on a besoin du fragment détail et pas de la liste
-        //displayDetail = getIntent().getBooleanExtra(ListHouseFragment.DISPLAY_DETAIL, false);
-        // On vient de MapActivity
-        //fragmentToExposeFromMap = getIntent().getStringExtra(ID_FRAGMENT);
         positionRV = getIntent().getIntExtra(ListHouseFragment.POSITION_IN_RV, 0);
 
         Log.d(TAG, "onCreate: homeToExpose id " + homeToExpose);
 
-       // if (fragmentToExposeFromMap == null) {
             if (savedInstanceState == null) {
                 Log.d(TAG, "onCreate: savedInstanceState null");
                 this.configureFirstView();
@@ -86,19 +73,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Log.d(TAG, "onCreate: savedInstanceState non null");
                 homeToExpose = savedInstanceState.getInt(PROPERTY_ID_SAVED);
                 positionRV = savedInstanceState.getInt(POSITION_SAVED);
-                //this.configureFirstView();
                 this.configureView();
             }
-/*        } else {
-            if (savedInstanceState == null) {
-                this.configureViewFromMapOrRecyclerView();
-            } else {
-                homeToExpose = savedInstanceState.getInt(PROPERTY_ID_SAVED);
-                positionRV = savedInstanceState.getInt(POSITION_SAVED);
-                //this.configureFirstView();
-                this.configureView();
-            }
-        }*/
 
         isServiceOK();
     }
@@ -109,9 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // Configure toolbar
     private void configureToolbar(){
-        // Get the toolbar view inside the activity layout
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // Sets the Toolbar
         setSupportActionBar(toolbar);
     }
 
@@ -137,31 +111,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             args.putInt(ListHouseFragment.POSITION_IN_RV, positionRV);
 
         if (!tabletSize) {
-                Log.d(TAG, "configureFirstView: mobile");
 
                 args.putBoolean(USE_TABLET, false);
                 fragment2.setArguments(args);
                 fragment1.setArguments(args);
 
-               // if (!displayDetail) {
                     fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
                     fm.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
-               /* } else {
-                    fm.beginTransaction().add(R.id.main_container, fragment1, "1").hide(fragment1).commit();
-                    fm.beginTransaction().add(R.id.main_container, fragment2, "2").commit();
-                }*/
-            } else {
 
+            } else {
                 args.putBoolean(USE_TABLET, true);
                 fragment2.setArguments(args);
                 fragment1.setArguments(args);
 
-                Log.d(TAG, "configureFirstView: tablette");
-                Log.d(TAG, "configureFirstView: position_in_rv " + positionRV);
-
                 fm.beginTransaction().add(R.id.frame_layout_detail, fragment2, "2").commit();
                 fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
-
             }
     }
 
@@ -171,14 +135,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Bundle args = new Bundle();
         args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
         args.putInt(ListHouseFragment.POSITION_IN_RV, positionRV);
-        args.putInt("TEST", 5);
 
-        Log.d(TAG, "configureView: bundle " + homeToExpose);
-        Log.d(TAG, "configureView: position RV " + positionRV);
         fragment1.setArguments(args);
         fragment2.setArguments(args);
 
-        Log.d(TAG, "configureView4");
         ListHouseFragment rotation =new ListHouseFragment();
         rotation.setArguments(args);
 
@@ -187,56 +147,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             fm.beginTransaction().replace(R.id.main_container, rotation, "1").commit();
         }
-
-      /*  Log.d(TAG, "configureView1");
-        if (findViewById(R.id.frame_layout_detail) == null) {
-
-            if (fragmentToExposeFromMap!=null) {
-                if (fragmentToExposeFromMap.equals("1") || displayDetail) {
-                    //fm.beginTransaction().hide(fragment2).commit();
-                    //fm.beginTransaction().show(fragment1).commit();
-                    Log.d(TAG, "configureView2");
-                    ListHouseFragment rotation =new ListHouseFragment();
-                    rotation.setArguments(args);
-
-                    fm.beginTransaction().replace(R.id.frame_layout_list, rotation, "1").commit();
-                }
-            }else {
-                Log.d(TAG, "configureView3");
-                ListHouseFragment rotation =new ListHouseFragment();
-                rotation.setArguments(args);
-
-                fm.beginTransaction().replace(R.id.frame_layout_list, rotation, "1").commit();
-
-                //fm.beginTransaction().hide(fragment1).commit();
-                //fm.beginTransaction().show(fragment2).commit();
-            }
-        }*/
-
     }
-
-    // Configure view when called by mapActivity
-   /* private void configureViewFromMapOrRecyclerView() {
-        Log.d(TAG, "configureViewFromMapOrRecyclerView");
-        Bundle args = new Bundle();
-        args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
-        args.putBoolean(ListHouseFragment.DISPLAY_DETAIL, displayDetail);
-        Log.d(TAG, "configureView: bundle " + homeToExpose);
-        fragment1.setArguments(args);
-        fragment2.setArguments(args);
-
-            if (findViewById(R.id.frame_layout_detail) == null) {
-                Log.d(TAG, "configureViewFromMapOrRecyclerView: mode telephone");
-
-                fm.beginTransaction().add(R.id.main_container, fragment1, "1").hide(fragment1).commit();
-                fm.beginTransaction().add(R.id.main_container, fragment2, "2").commit();
-                // Ajouter les infos pour afficher la bonne maison}
-            } else {
-                Log.d(TAG, "configureViewFromMapOrRecyclerView: mode tablette");
-                fm.beginTransaction().add(R.id.frame_layout_detail, fragment2, "2").commit();
-                fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
-            }
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -383,11 +294,6 @@ public boolean isServiceOK() {
         int idSaved = propertyIdClicked;
         outState.putInt(PROPERTY_ID_SAVED, idSaved);
         outState.putInt(POSITION_SAVED, positionRV);
-        Log.d(TAG, "onSaveInstanceState");
-        Log.d(TAG, "onSaveInstanceState: idsaved " + idSaved);
-        Log.d(TAG, "onSaveInstanceState: positionRV " + positionRV);
-        //String idFragment = active.getTag();
-        //outState.putString(ID_FRAGMENT, idFragment);
     }
 
     @Override
@@ -397,17 +303,14 @@ public boolean isServiceOK() {
 
     @Override
     public void onItemRVClicked(int propertyId, int position) {
-        Log.d(TAG, "onItemRVClicked: Item cliqué " + propertyId);
         propertyIdClicked = propertyId;
         positionRV = position;
 
         if (!tabletSize) {  // cas du téléphone
-            Log.d(TAG, "onItemRVClicked: portable");
             Intent intent = new Intent(this, DetailActivity.class);
             intent.putExtra(ListHouseFragment.ID_PROPERTY, propertyId);
             startActivity(intent);
         } else { // cas de la tablette
-            Log.d(TAG, "onItemRVClicked: tablette");
             Bundle args = new Bundle();
             args.putInt(ListHouseFragment.ID_PROPERTY, propertyId);
 

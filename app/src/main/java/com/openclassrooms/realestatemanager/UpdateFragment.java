@@ -149,6 +149,7 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
     private int nbrePhotos;
 
     private Context mContext;
+    private  boolean tabletSize;
 
     public UpdateFragment() {
         // Required empty public constructor
@@ -161,6 +162,7 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.activity_create_home, container, false);
         mContext = getContext();
+        tabletSize = getResources().getBoolean(R.bool.isTablet);
         Bundle bundle = getArguments();
         propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY,1);
 
@@ -208,7 +210,6 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
         addMainPhotoText.setText(R.string.modify_main_photo);
         addOthersPhotosText.setText(R.string.modify_others_photo);
 
-        // spinnerStatus = (Spinner) findViewById(R.id.create_spinner_status);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(mContext,
                 R.array.create_status_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
@@ -216,7 +217,6 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
         spinnerStatus.setAdapter(adapter);
         spinnerStatus.setOnItemSelectedListener(this);
 
-        //spinnerType = (Spinner) findViewById(R.id.create_spinner_type);
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(mContext,
                 R.array.search_type_answer, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
@@ -224,7 +224,6 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
         spinnerType.setAdapter(adapter1);
         spinnerType.setOnItemSelectedListener(this);
 
-        //spinnerAgent = (Spinner) findViewById(R.id.create_spinner_agent);
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(mContext,
                 R.array.create_agent_name, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -248,8 +247,7 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
         resetProperty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //UpdateActivity.this.finish();
-                if (v.findViewById(R.id.textView20) != null) {
+                if (tabletSize) {
                     getActivity().finish();
                 } else {
                     Bundle args = new Bundle();
@@ -267,8 +265,6 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
         saveProperty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: valider");
-                //configureViewModel();
                 savePropertyData();
                 updateProperty();
                 launchMainActivity();
@@ -282,8 +278,6 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
     }
 
     private void initPhotosRecyclerView() {
-        Log.d(TAG, "initPhotosRecyclerView");
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = v.findViewById(R.id.update_photo_recyclerview_container);
         adapter = new PhotoRecyclerViewAdapter(mContext, FROM_UPDATE_REQUEST);
@@ -300,7 +294,7 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
                 addressZipcode.getText().toString().trim().isEmpty() ||
                 addressTown.getText().toString().trim().isEmpty()||
                 addressCountry.getText().toString().trim().isEmpty()) {
-            Toast.makeText(mContext, "Il faut entrer l'adrese du bien", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, getResources().getString(R.string.address_missing), Toast.LENGTH_LONG).show();
         } else {
 
             if (!descriptionText.getText().toString().isEmpty()) {
@@ -343,7 +337,6 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
             }
 
             newAddressNumber = addressNumber.getText().toString();
-            Log.d(TAG, "savePropertyData: number " + newAddressNumber);
 
             if (!addressStreet.getText().toString().isEmpty()) {
                 newAddressStreet = addressStreet.getText().toString();
@@ -363,14 +356,12 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
             if (dateUpForSale.getText().toString().length()==10) {
                 newUpForSale = dateUpForSale.getText().toString();
                 intUpForSale = Utils.convertStringDateToIntDate(newUpForSale);
-                Log.d(TAG, "savePropertyData: enteredDate "+ newUpForSale);
-                Log.d(TAG, "savePropertyData: formattedDate " + intUpForSale);
+
             } else {
                 newUpForSale = "99/99/9999";
                 intUpForSale = Utils.convertStringDateToIntDate(newUpForSale);
             }
 
-            Log.d(TAG, "savePropertyData: length date " + dateSoldOn.getText().toString().length());
             if (dateSoldOn.getText().toString().length()==10) {
                 newSoldOn = dateSoldOn.getText().toString();
                 intSoldOn = Utils.convertStringDateToIntDate(newSoldOn);
@@ -381,8 +372,6 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
 
             newAgent = spinnerAgent.getSelectedItem().toString();
             agentId = spinnerAgent.getSelectedItemPosition()+1;
-            Log.d(TAG, "savePropertyData: agentId " +agentId);
-
         }
     }
 
@@ -458,10 +447,7 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
         typeId = currentProperty.getTypeId();
         statusId = currentProperty.getStatusId();
 
-        //En attendant de gérer les images
         newPhotoUrl = currentProperty.getMainPhoto();
-
-        Log.d(TAG, "updateProperty: id " +propertyId + " " +typeId+ " " + statusId);
 
         Glide.with(this) //SHOWING PREVIEW OF IMAGE
                 .load(this.currentProperty.getMainPhoto())
@@ -478,7 +464,6 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
 
     private void setAddress(){
         addressNumber.setText(String.valueOf(currentProperty.getNumberInStreet()));
-        Log.d(TAG, "setAddress: number " + String.valueOf(currentProperty.getNumberInStreet()));
         addressStreet.setText(String.valueOf(currentProperty.getStreet()));
         if(currentProperty.getStreet2()!= null){
             addressStreet2.setText(String.valueOf(currentProperty.getStreet2()));
@@ -494,7 +479,6 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
 
     private void updateType(TypeOfProperty typeOfProperty){
         currentType = typeOfProperty;
-        Log.d(TAG, "updateType: typeId " + typeId);
         spinnerType.setSelection(typeId-1);
     }
 
@@ -517,13 +501,7 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
     }
 
     private void updateProperty(){
-        Log.d(TAG, "updateProperty: id " + propertyId);
-        Log.d(TAG, "createProperty: statusId " +statusId);
-        Log.d(TAG, "createProperty: typeId " + typeId);
-        Log.d(TAG, "createProperty: agentId " +agentId);
-        Log.d(TAG, "updateProperty: number " +newAddressNumber);
-
-        if (newMainPhotoUri!=null) {
+       if (newMainPhotoUri!=null) {
             newPhotoUrl = newMainPhotoUri;
         }
 
@@ -531,18 +509,14 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
         myProperty.setPropertyId(propertyId);
 
         propertyViewModel.updateProperty(myProperty);
-        Toast.makeText(mContext, "Le bien a été mis à jour", Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, getResources().getString(R.string.update_ok), Toast.LENGTH_LONG).show();
 
         for (int i=0; i<newPhotosList.size(); i++) {
-            Log.d(TAG, "updateProperty: legend " + newLegendList.get(i));
             propertyViewModel.insertPhoto(new Photo(newPhotosList.get(i), newLegendList.get(i), propertyId));
         }
 
         if (photoToDeleteList!=null) {
             for (int i = 0; i < photoToDeleteList.size(); i++) {
-
-                Log.d(TAG, "updateProperty: boucle delete photos");
-                Log.d(TAG, "updateProperty: id to delete " + photoToDeleteList.get(i));
                 getPhotosToDelete(photoToDeleteList.get(i));
             }
             nbrePhotos-= photoToDeleteList.size();
@@ -566,12 +540,10 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
     private void updatePhotoDeleteList(Photo photos){
         myPhotoToDelete = photos;
         propertyViewModel.deletePhoto(myPhotoToDelete);
-        Log.d(TAG, "updatePhotoDeleteList: delete photo");
     }
 
 
     private void configureViewModel(){
-        Log.d(TAG, "configureViewModel");
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(mContext);
         this.propertyViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PropertyViewModel.class);
     }

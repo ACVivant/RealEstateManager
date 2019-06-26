@@ -324,10 +324,6 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesProperty6.put("country", "France");
                 db.insert("property", OnConflictStrategy.REPLACE, contentValuesProperty6);
 
-                Log.d(TAG, "onCreate: prepopulate Property 7");
-
-                Log.d(TAG, "onCreate: propopulate Property");
-
                 ContentValues contentValuesPhoto = new ContentValues();
                 contentValuesPhoto.put("photoUri","https://www.parklex.com/wp-content/uploads/2015/11/WoodviewMews-GeraghtyTaylorArchitects-London-UK-2015-Parklex-Facade-Gold-02.jpg?auto=compress,format&q=80&h=100&dpr=2");
                 contentValuesPhoto.put("photoText", "façade");
@@ -471,10 +467,6 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesPhoto23.put("photoText", "kitchen");
                 contentValuesPhoto23.put("propertyId",7 );
                 db.insert("photo", OnConflictStrategy.REPLACE, contentValuesPhoto23);
-
-                Log.d(TAG, "onCreate: propopulate Photos");
-
-                Log.d(TAG, "onCreate: Prepopulate end");
 
             }
         };

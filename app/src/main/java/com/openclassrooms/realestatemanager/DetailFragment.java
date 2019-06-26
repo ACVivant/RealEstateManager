@@ -83,11 +83,11 @@ public class DetailFragment extends Fragment {
     private int typeId;
     private int agentId;
     private int numberOfProperties;
-    private boolean fromFilter = false;
     private boolean filteredResults;
     private ArrayList<Integer> filteredResultsArray = new ArrayList<>();
     private int position;
     private int newPosition;
+    private  boolean tabletSize;
 
     private String key;
 
@@ -106,7 +106,7 @@ public class DetailFragment extends Fragment {
         v= inflater.inflate(R.layout.fragment_detail, container, false);
         key = getContext().getResources().getString(R.string.Google_Maps_API_Key);
         mMap = (ImageView) v.findViewById(R.id.map_detail);
-        //ButterKnife.bind(v); // Ca ne marche pas...
+        tabletSize = getResources().getBoolean(R.bool.isTablet);
 
         properties = new ArrayList<>();
         currentPhotos = new ArrayList<>();
@@ -133,62 +133,38 @@ public class DetailFragment extends Fragment {
 
 
         if (container == null) {
-            // Si le ViewGroup n'est pas renseigné on ne cherche pas à en créer un
-            // car sur cet écran l'appelant doit passer par newInstance...
+            // Si le ViewGroup n'est pas renseigné on ne cherche pas à en créer un car sur cet écran l'appelant doit passer par newInstance...
             return null;
         }
 
         Bundle bundle = getArguments();
         propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY,1);
-        Log.d(TAG, "onCreateView: id " + propertyId);
         filteredResults = bundle.getBoolean(SearchActivity.RESULTS_FILTERED, false);
-        Log.d(TAG, "onCreateView: filteredResults " +filteredResults);
 
         if (filteredResults) {
             filteredResultsArray = bundle.getIntegerArrayList(SearchActivity.ID_FILTERED);
             position = bundle.getInt(ListFilteredPropertiesFragment.POSITON_IN_FILTER, 1);
-            Log.d(TAG, "onCreateView: position " + position);
-            //propertyId = filteredResultsArray.get(position);
         }
-        Log.d(TAG, "onCreateView: propertyId " + propertyId);
 
-        tablet = bundle.getBoolean(MainActivity.USE_TABLET, false);
-
-
-        if (v.findViewById(R.id.textView20) != null) { // cas des téléphones
-            Log.d(TAG, "onCreateView: telephones");
-            Log.d(TAG, "onCreateView: " + v.findViewById(R.id.textView20));
-
+        if (!tabletSize) { // cas des téléphones
             type = (TextView) v.findViewById(R.id.textView22);
             price = (TextView) v.findViewById(R.id.textView21);
             before = (Button) v.findViewById(R.id.before_detail_btn);
             after = (Button) v.findViewById(R.id.after_detail_btn);
-           /* update = (Button) v.findViewById(R.id.update_detail_btn);
-
-            update.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    launchUpdateActivity();
-                }
-            });*/
 
             before.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d(TAG, "onClick: filteredResults " + filteredResults);
                     if (!filteredResults) {
-                        Log.d(TAG, "onClick: not filteredResults");
                         if (propertyId == 1) {
                             Toast.makeText(getContext(), R.string.before_not_allowed, Toast.LENGTH_LONG).show();
                         } else {
                             launchMainActivityDetail(propertyId - 1);
                         }
                     } else {
-                        Log.d(TAG, "onClick: filteredResults");
                         if (propertyId == filteredResultsArray.get(0)) {
                             Toast.makeText(getContext(), R.string.before_not_allowed, Toast.LENGTH_LONG).show();
                         } else {
-                            Log.d(TAG, "onClick: position " + position);
                             newPosition = position - 1;
                             launchResultSearchActivityDetail(filteredResultsArray.get(position - 1));
                         }
@@ -199,8 +175,6 @@ public class DetailFragment extends Fragment {
             after.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d(TAG, "onClick: propertyId " + propertyId);
-                    Log.d(TAG, "onClick: properties.size " + numberOfProperties);
                     if (!filteredResults) {
                         if (propertyId == numberOfProperties) {
                             Toast.makeText(getContext(), R.string.after_not_allowed, Toast.LENGTH_LONG).show();
@@ -208,12 +182,9 @@ public class DetailFragment extends Fragment {
                             launchMainActivityDetail(propertyId + 1);
                         }
                     } else {
-                        Log.d(TAG, "onClick: filteredResults.size " + (filteredResultsArray.size()));
                         if (position == filteredResultsArray.size()-1) {
-                        //if (propertyId == filteredResultsArray.get(filteredResultsArray.size() - 1)) {
                             Toast.makeText(getContext(), R.string.after_not_allowed, Toast.LENGTH_LONG).show();
                         } else {
-                            Log.d(TAG, "onClick: position " + position);
                             newPosition = position + 1;
                             launchResultSearchActivityDetail(filteredResultsArray.get(newPosition));
                         }
@@ -221,11 +192,6 @@ public class DetailFragment extends Fragment {
                 }
             });
         }
-
-/*        if (tablet) {
-            before.setVisibility(View.GONE);
-            after.setVisibility(View.GONE);
-        }*/
 
         configureViewModel();
         this.getAllProperties();
@@ -237,7 +203,6 @@ public class DetailFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.d(TAG, "onActivityCreated: ");
     }
 
 
@@ -261,7 +226,6 @@ public class DetailFragment extends Fragment {
 
 
     private void configureViewModel(){
-        Log.d(TAG, "configureViewModel");
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getContext());
         this.propertyViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PropertyViewModel.class);
     }
@@ -295,7 +259,7 @@ public class DetailFragment extends Fragment {
         setAddress();
         this.getStatus(statusId);
 
-        if (v.findViewById(R.id.textView20) != null) { // cas des téléphones
+        if (!tabletSize) { // cas des téléphones
             price.setText(String.valueOf(currentProperty.getPrice()));
             typeId = currentProperty.getTypeId();
             this.getType(typeId);
@@ -308,7 +272,6 @@ public class DetailFragment extends Fragment {
     private void setAddress(){
         numberInStreet.setText(String.valueOf(currentProperty.getNumberInStreet()));
         street.setText(String.valueOf(currentProperty.getStreet()));
-        Log.d(TAG, "setAddress: address2 " + currentProperty.getStreet2());
         if(currentProperty.getStreet2()!= null && !currentProperty.getStreet2().isEmpty()){
             street2.setText(String.valueOf(currentProperty.getStreet2()));
         } else {street2.setVisibility(View.GONE);}
@@ -325,8 +288,7 @@ public class DetailFragment extends Fragment {
 
     private void updateType(TypeOfProperty typeOfProperty){
         currentType = typeOfProperty;
-        Log.d(TAG, "updateType: typeId " + typeId);
-        if (v.findViewById(R.id.textView20) != null) {  // cas des téléphones
+        if (!tabletSize) {  // cas des téléphones
             type.setText(String.valueOf(currentType.getTypeText()));
         }
     }
@@ -341,8 +303,6 @@ public class DetailFragment extends Fragment {
     }
 
     private void initPhotosRecyclerView() {
-        Log.d(TAG, "initPhotosRecyclerView");
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = v.findViewById(R.id.photo_recyclerview_container);
         adapter = new PhotoRecyclerViewAdapter(getContext(), FROM_DETAIL_REQUEST);
@@ -370,28 +330,7 @@ public class DetailFragment extends Fragment {
 
     //-----------------------------------------------------------------------------------
 
-/*    private void launchUpdateActivity() {
-        Intent intent = new Intent(this.getActivity(), UpdateActivity.class);
-        intent.putExtra(ListHouseFragment.ID_PROPERTY, propertyId);
-        startActivity(intent);
-    }*/
-
     private void launchMainActivityDetail(int id) {
-/*        Boolean displayDetail = true;
-
-        Intent intent = new Intent(getActivity(), MainActivity.class);
-        intent.putExtra(ListHouseFragment.ID_PROPERTY, id);
-        intent.putExtra(ListHouseFragment.DISPLAY_DETAIL, displayDetail);
-        if (filteredResults) {
-            intent.putExtra(ListFilteredPropertiesFragment.FROM_FILTER, true);
-            intent.putExtra(ListFilteredPropertiesFragment.POSITON_IN_FILTER, newPosition);
-            intent.putExtra(SearchActivity.ID_FILTERED, filteredResultsArray);
-            Log.d(TAG, "launchMainActivityDetail: newPostition " + newPosition);
-            Log.d(TAG, "launchMainActivityDetail: newId " + filteredResultsArray.get(newPosition));
-        }
-        startActivity(intent);*/
-
-
         Intent intent = new Intent(getActivity(), DetailActivity.class);
         intent.putExtra(ListHouseFragment.ID_PROPERTY, id);
         startActivity(intent);
@@ -407,8 +346,6 @@ public class DetailFragment extends Fragment {
             intent.putExtra(SearchActivity.RESULTS_FILTERED, true);
             intent.putExtra(ListFilteredPropertiesFragment.POSITON_IN_FILTER, newPosition);
             intent.putExtra(SearchActivity.ID_FILTERED, filteredResultsArray);
-            Log.d(TAG, "launchResultSearchActivityDetail: newPosition " + newPosition);
-            Log.d(TAG, "launchResultSearchActivityDetail: newId " + filteredResultsArray.get(newPosition));
 
         startActivity(intent);
     }

@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.repositories;
+package com.openclassrooms.realestatemanager.nesertplusariennormalement;
 
 import com.openclassrooms.realestatemanager.nesertplusariennormalement.AttractingPointDao;
 import com.openclassrooms.realestatemanager.nesertplusariennormalement.AttractingPoint;

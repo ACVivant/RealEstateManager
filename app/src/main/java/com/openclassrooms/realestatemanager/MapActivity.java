@@ -51,8 +51,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private static final float DEFAULT_ZOOM = 14f;
-    public static final String ID_PROPERTY = "property_selected";
-    public static final String ID_FRAGMENT = "fragment_to_expose";
 
     //Variables
     private boolean mLocationPermissionGranted = false;
@@ -60,7 +58,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private Marker myMarker;
     private Toolbar toolbar;
-    private NavigationView  navigationView;
     private ProgressBar progressBar;
 
     private double[] tab_latitude ;
@@ -71,24 +68,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private String devise = "$";
 
     // Data
-    private List<Property> properties = new ArrayList<>();
-    private Property currentProperty;
     private PropertyViewModel propertyViewModel;
-    private TypeOfProperty currentType;
-    private List<TypeOfProperty> allTypes;
-    private List<Address> allAddresses;
     private int currentPropertyId;
-    private String currentTypeText;
     private double currentLat;
     private double currentLng;
     private int currentPrice;
-    private int typeIndex;
-    private int addressIndex;
 
     //clic
     private boolean displayDetail;
-    Handler handlerUI = new Handler();
-    int compteur;
     private boolean internet;
 
     @Override
@@ -102,14 +89,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         if (internet) {
             getLocationPermission();
         } else {
-            Toast.makeText(this, "Vous n'êtes pas connecté à internet", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.no_connection, Toast.LENGTH_LONG).show();
         }
     }
 
     private void configureToolbar(){
-        // Get the toolbar view inside the activity layout
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // Sets the Toolbar
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -146,8 +131,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mMap.setMyLocationEnabled(true); // icone GPS pour recentrer la carte
             mMap.getUiSettings().setZoomControlsEnabled(true); // zoom
         }
-
-
     }
 
     private void initMap() {
@@ -172,8 +155,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                             Location currentLocation = (Location) task.getResult();
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),DEFAULT_ZOOM);
 
-                           // addAlMarkers();
-
                         } else {
                             Log.d(TAG, "onComplete: current location is null");
                             Toast.makeText(MapActivity.this, "Unable to get current location", Toast.LENGTH_LONG).show();
@@ -190,8 +171,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void moveCamera(LatLng latLng, float zoom) {
         Log.d(TAG, "moveCamera: moving the camera to lat: " + latLng.latitude +" lng: " + latLng.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
-
-        Toast.makeText(this, "chargement des données", Toast.LENGTH_LONG).show();
 
         addAlMarkers();
     }
@@ -232,11 +211,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void loadMarkerInfos(Property currentProperty, int i) {
         currentPrice = currentProperty.getPrice();
         tab_price[i] = currentPrice;
-        Log.d(TAG, "updatePropertyList: currentPrice " + currentPrice);
 
         tab_id[i] = currentProperty.getPropertyId();
         currentPropertyId = currentProperty.getPropertyId();
-        Log.d(TAG, "updatePropertyList: currentPropertyId " + currentPropertyId);
 
         tab_room[i] = currentProperty.getRooms();
 
@@ -266,8 +243,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     //--------------------------------------------------------------------------------------------------------------------
 
     private void addAlMarkers() {
-        Log.d(TAG, "addAllMarkers");
-
         try {
             getData();
         } catch (IOException e) {
@@ -283,10 +258,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private Marker addMarker(LatLng latLng, int room, int price, String devise, int propertyId) {
-        Log.d(TAG, "addMarkers");
+
         MarkerOptions options = new MarkerOptions()
                 .position(latLng)
-                .title(room + " pièces: " + price + devise);
+                .title(room + getResources().getString(R.string.room) + price + devise);
 
         myMarker = mMap.addMarker(options);
         myMarker.setTag(propertyId);
@@ -297,23 +272,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
         if (tabletSize) {
-            Log.d(TAG, "launchDetail: mode tablette");
             int ref = (int) marker.getTag();
-            Log.d(TAG, "launchDetail: ref " + ref);
-            displayDetail = true;
             Intent WVIntent = new Intent(MapActivity.this, MainActivity.class);
             WVIntent.putExtra(ListHouseFragment.ID_PROPERTY, ref);
-            // WVIntent.putExtra(ID_FRAGMENT, "2");
-            //WVIntent.putExtra(ListHouseFragment.DISPLAY_DETAIL, displayDetail);
             startActivity(WVIntent);
         } else {
-            Log.d(TAG, "launchDetail: mode telephone");
             int ref = (int) marker.getTag();
-            Log.d(TAG, "launchDetail: ref " + ref);
             displayDetail = true;
             Intent WVIntent = new Intent(MapActivity.this, DetailActivity.class);
             WVIntent.putExtra(ListHouseFragment.ID_PROPERTY, ref);
-            // WVIntent.putExtra(ID_FRAGMENT, "2");
             WVIntent.putExtra(ListHouseFragment.DISPLAY_DETAIL, displayDetail);
             startActivity(WVIntent);
         }

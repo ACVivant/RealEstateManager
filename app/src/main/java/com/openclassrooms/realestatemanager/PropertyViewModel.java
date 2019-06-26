@@ -9,7 +9,6 @@ import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.models.Status;
 import com.openclassrooms.realestatemanager.models.TypeOfProperty;
 import com.openclassrooms.realestatemanager.repositories.AgentRepository;
-import com.openclassrooms.realestatemanager.repositories.AttractingPointRepository;
 import com.openclassrooms.realestatemanager.repositories.PhotoRepository;
 import com.openclassrooms.realestatemanager.repositories.PropertyRepository;
 import com.openclassrooms.realestatemanager.repositories.StatusRepository;

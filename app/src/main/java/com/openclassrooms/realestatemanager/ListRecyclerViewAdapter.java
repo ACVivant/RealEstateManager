@@ -33,29 +33,18 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
 
     private List<Property> properties ;
     private List<TypeOfProperty> types;
-    private  boolean useTablet;
     private int propertySelected;
     private int rowIndex;
-
- /*   public ListRecyclerViewAdapter(int propertySelected, boolean useTablet) {
-        this.properties = new ArrayList<>();
-        this.types = new ArrayList<>();
-        this.propertySelected = propertySelected;
-        this.useTablet = useTablet;
-        Log.d(TAG, "ListRecyclerViewAdapter: constructor");
-    }*/
 
     public ListRecyclerViewAdapter(int propertySelected) {
         this.properties = new ArrayList<>();
         this.types = new ArrayList<>();
         this.propertySelected = propertySelected;
-        Log.d(TAG, "ListRecyclerViewAdapter: constructor");
     }
 
     @NonNull
     @Override
     public ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d(TAG, "onCreateViewHolder: ListRecyclerViewAdapter");
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_house, parent, false);
         ListViewHolder holder = new ListViewHolder(itemView, mListener);
         mContext = parent.getContext();
@@ -64,14 +53,8 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
-        Log.d(TAG, "onBindViewHolder: ListRecyclerViewAdapter Called.");
-        Log.d(TAG, "onBindViewHolder: position " + position);
-
         Property currentProperty = properties.get(position);
         TypeOfProperty currentType = types.get(currentProperty.getTypeId()-1);
-
-        Log.d(TAG, "onBindViewHolder: currentProperty " + currentProperty.getPropertyId());
-        Log.d(TAG, "onBindViewHolder: propertySelected " + propertySelected);
 
         holder.type.setText(String.valueOf(currentType.getTypeText()));
         holder.town.setText(String.valueOf(currentProperty.getTown()));
@@ -83,22 +66,11 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
                 .load(uriPhoto)
                 .into(holder.picture);
 
-/*        holder.itemContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rowIndex=position;
-                //notifyDataSetChanged();
-            }
-        });*/
-
         for (int i=0; i<properties.size(); i++) {
-            Log.d(TAG, "setRVBackgroudColor: properties.get(i).getPropertyId " + properties.get(i).getPropertyId());
-            Log.d(TAG, "onBindViewHolder:setRVBackgroudColor  propertySelected " + propertySelected);
             if (properties.get(i).getPropertyId()== propertySelected) {
                 rowIndex =i;
             }
         }
-        Log.d(TAG, "onBindViewHolder setRVBackgroudColor: rowIndex " + rowIndex);
 
         if(rowIndex==position){
             holder.itemBackground.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimaryLight));
@@ -114,43 +86,27 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
 
     }
 
-    //public void setRVBackgroudColor(int position) {
     public void setRVBackgroudColor(int propertyId) {
-        Log.d(TAG, "setRVBackgroudColor: propertyId " + propertyId);
-        Log.d(TAG, "setRVBackgroudColor: properties.size " + properties.size());
-/*        for (int i=0; i<properties.size(); i++) {
-            Log.d(TAG, "setRVBackgroudColor: properties.get(i).getPropertyId " + properties.get(i).getPropertyId());
-            if (properties.get(i).getPropertyId()== propertyId) {
-                rowIndex =i;
-            }
-        }
-        Log.d(TAG, "setBackgroundColor: je passe par ici " + rowIndex);*/
         propertySelected = propertyId;
-        //rowIndex = position;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        Log.d(TAG, "getItemCount: ListRecyclerViewAdapter " + properties.size());
         return properties.size();
     }
 
     public void setProperties(List<Property> properties) {
         this.properties = properties;
         notifyDataSetChanged();
-        Log.d(TAG, "setProperties");
-        Log.d(TAG, "setProperties: properties.size " + properties.size());
     }
 
     public void setTypes(List<TypeOfProperty> types) {
         this.types = types;
         notifyDataSetChanged();
-        Log.d(TAG, "setTypes");
     }
 
     public interface OnItemClickedListener{
-        //void OnItemClicked(int position);
         void OnItemClicked(int propertyId, int position);
     }
 
@@ -195,7 +151,6 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
                         Log.d(TAG, "onClick: id " + propertyId);
 
                         if (position!= RecyclerView.NO_POSITION) {
-                           // listener.OnItemClicked(position);
                             listener.OnItemClicked(propertyId, position);
                         }
                     }

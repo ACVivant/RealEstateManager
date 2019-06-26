@@ -89,6 +89,9 @@
     <string name="agent_example">"Jules"</string>
     <string name="please_insert_address">"La fiche ne peut pas être sauvegardée si l'addresse n'est pas renseignée."</string>
     <string name="create_status">"Statut"</string>
+    <string name="address_missing">"Il faut entrer l'adresse du bien."</string>
+    <string name="photo_missing">"Il faut définir une photo principale."</string>
+    <string name="soldon_date_missing">"Il faut entrer la date de vente."</string>
 
     <string-array name="create_agent_name">
         <item>Jules</item>
@@ -136,9 +139,16 @@
     <string name="more_photo">"Autres photos"</string>
     <string name="add_main_photo_description">"Légende de la photo"</string>
     <string name="add_main_photo_description_short">"Légende"</string>
+    <string name="photo_and_legend_needed">"Il faut choisir une photo et une légende."</string>
 
     <string name="add_photo_close">"Valider"</string>
     <string name="add_photo_more">"Continuer"</string>
+
+    <string name="error">"Oups! Quelque chose n'a pas fonctionné."</string>
+    <string name="ok">"OK"</string>
+    <string name="reset">"Annuler"</string>
+
+    <string name="warning">"Attention!</string>
 
     <!-- List Recyclerview  -->
     <string name="house_type">"Type de bien"</string>
@@ -188,6 +198,8 @@
 
     <!-- Map Activity-->
     <string name="map_connection_error">"Nous ne pouvons pas nous connecter à Google Map"</string>
+    <string name="no_connection">"Vous n'êtes pas connecté à Internet.</string>
+    <string name="room">" pièce(s) "</string>
 
     <!-- Notification-->
     <string name="channel_description">"Channel notification de Real Estate Manager"</string>
@@ -202,6 +214,11 @@
     <string name="credit_month">"Mensualités"</string>
     <string name="credit_cost">"Coût total du crédit"</string>
     <string name="credit_capital">"Capital remboursé chaque mois"</string>
+    <string name="euros_needed">"Il faut entrer une valeur en euros."</string>
+    <string name="dollars_needed">"Il faut entrer une valeur en dollars."</string>
+
+    <!-- Update activity -->
+    <string name="update_ok">"Le bien a été mis à jour."</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
