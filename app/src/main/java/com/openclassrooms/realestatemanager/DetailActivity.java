@@ -85,7 +85,7 @@ public class DetailActivity extends AppCompatActivity implements PhotoRecyclerVi
                 return true;
 
             case R.id.top_menu_home:
-                finish();
+                launchMain();
                 return true;
         }
         return false;
@@ -98,6 +98,11 @@ public class DetailActivity extends AppCompatActivity implements PhotoRecyclerVi
 
     private void launchSearch() {
         Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
+    }
+
+    private void launchMain() {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

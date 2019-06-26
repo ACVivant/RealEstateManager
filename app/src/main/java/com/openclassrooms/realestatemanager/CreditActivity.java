@@ -40,7 +40,6 @@ public class CreditActivity extends AppCompatActivity {
     private double interest;
     private  int lenght;
     private double cost;
-    private double month;
 
     //Design
     private Toolbar toolbar;
@@ -55,7 +54,8 @@ public class CreditActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getData();
-                calculate();
+                creditMonth.setText(Double.toString(calculateMonth(input, interest, lenght)));
+                creditCost.setText(Double.toString(calculateCost(input, interest, lenght,calculateMonth(input, interest, lenght)) ));
             }
         });
 
@@ -78,12 +78,7 @@ public class CreditActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        /*DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {*/
         super.onBackPressed();
-        // }
     }
 
     @Override
@@ -106,25 +101,26 @@ public class CreditActivity extends AppCompatActivity {
         lenght = Integer.parseInt(creditLenght.getText().toString());
     }
 
-    private void calculate() {
+    public double calculateMonth(double inputValue, double interestValue, int lenghtValue) {
+        double haut = inputValue * interestValue / 12 / 100;
+        double bas = 1 - Math.pow(1 + (interestValue / 12 / 100), -lenghtValue * 12);
 
-        double haut = input*interest/12/100;
-        Log.d(TAG, "calculate: haut " + haut);
-        double bas = 1- Math.pow(1+(interest/12/100), -lenght*12);
-        Log.d(TAG, "calculate: bas " + bas);
-
-        month = haut/bas;
-        Log.d(TAG, "calculate: mensualité " + month);
+        double month = haut / bas;
 
         DecimalFormat df = new DecimalFormat("########.00");
 
         String str = df.format(month);
         month = Double.parseDouble(str.replace(',', '.'));
-        creditMonth.setText(Double.toString(month));
 
-        cost = month*lenght*12-input;
+        return month;
+    }
+
+        public double calculateCost(double inputValue, double interestValue, int lenghtValue, double month) {
+            DecimalFormat df = new DecimalFormat("########.00");
+            String str = df.format(month);
+        cost = month*lenghtValue*12-inputValue;
         str = df.format(cost);
         cost = Double.parseDouble(str.replace(',', '.'));
-        creditCost.setText(Double.toString(cost));
+        return cost;
     }
 }

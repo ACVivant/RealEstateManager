@@ -28,7 +28,6 @@ public class UtilsTest {
 
         @Test
     public void  getFormatDate_test() {
-
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, 2019);
         cal.set(Calendar.MONTH, 03); // Months are denombrated from 0 to 11
@@ -36,5 +35,20 @@ public class UtilsTest {
         Date date = cal.getTime();
 
         assertEquals("25/04/2019", test.getFormatDate(date));
+    }
+
+    @Test
+    public void convertStringToDate_test() {
+        String textDate = "20190626";
+        assertEquals("26/06/2019", test.convertStringToDate(textDate));
+
+        String textDateFalse = "2019062";
+        assertEquals("N/A", test.convertStringToDate(textDateFalse));
+    }
+
+    @Test
+    public void convertStringDateToIntDate_test() {
+        String textDate = "26/06/2019";
+        assertEquals("20190626", String.valueOf((test.convertStringDateToIntDate(textDate))));
     }
 }
