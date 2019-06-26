@@ -294,15 +294,29 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void launchDetail(Marker marker ) {
-        int ref = (int) marker.getTag();
-        Log.d(TAG, "launchDetail: ref " +ref);
-        displayDetail = true;
-        Intent WVIntent = new Intent(MapActivity.this, MainActivity.class);
-        WVIntent.putExtra(ListHouseFragment.ID_PROPERTY, ref);
-        WVIntent.putExtra(ID_FRAGMENT, "2");
-        WVIntent.putExtra(ListHouseFragment.DISPLAY_DETAIL, displayDetail);
-        startActivity(WVIntent);
 
+        boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
+        if (tabletSize) {
+            Log.d(TAG, "launchDetail: mode tablette");
+            int ref = (int) marker.getTag();
+            Log.d(TAG, "launchDetail: ref " + ref);
+            displayDetail = true;
+            Intent WVIntent = new Intent(MapActivity.this, MainActivity.class);
+            WVIntent.putExtra(ListHouseFragment.ID_PROPERTY, ref);
+            // WVIntent.putExtra(ID_FRAGMENT, "2");
+            //WVIntent.putExtra(ListHouseFragment.DISPLAY_DETAIL, displayDetail);
+            startActivity(WVIntent);
+        } else {
+            Log.d(TAG, "launchDetail: mode telephone");
+            int ref = (int) marker.getTag();
+            Log.d(TAG, "launchDetail: ref " + ref);
+            displayDetail = true;
+            Intent WVIntent = new Intent(MapActivity.this, DetailActivity.class);
+            WVIntent.putExtra(ListHouseFragment.ID_PROPERTY, ref);
+            // WVIntent.putExtra(ID_FRAGMENT, "2");
+            WVIntent.putExtra(ListHouseFragment.DISPLAY_DETAIL, displayDetail);
+            startActivity(WVIntent);
+        }
     }
 
     //------------------------------------------------

@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -19,8 +20,8 @@ public class DetailActivity extends AppCompatActivity implements PhotoRecyclerVi
 
     //Design
     private Toolbar toolbar;
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
+    //private DrawerLayout drawerLayout;
+    //private NavigationView navigationView;
 
     final FragmentManager fm = getSupportFragmentManager();
 
@@ -31,7 +32,7 @@ public class DetailActivity extends AppCompatActivity implements PhotoRecyclerVi
     private ArrayList<Integer> filteredResultsArray = new ArrayList<>();
     private int filteredPosition;
 
-
+    private static final String TAG = "DetailActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,12 @@ public class DetailActivity extends AppCompatActivity implements PhotoRecyclerVi
         args.putInt(ListFilteredPropertiesFragment.POSITON_IN_FILTER, filteredPosition);
         fragmentDetail.setArguments(args);
 
-        fm.beginTransaction().add(R.id.detail_container, fragmentDetail, "2").commit();
+        if (savedInstanceState != null) {
+                   return;
+        } else {
+            fm.beginTransaction().add(R.id.detail_container, fragmentDetail, "2").commit();
+        }
+        Log.d(TAG, "onCreate: ");
     }
 
     // Configure toolbar
@@ -75,11 +81,11 @@ public class DetailActivity extends AppCompatActivity implements PhotoRecyclerVi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.top_menu_add:
-                //launchCreate();
+                launchCreate();
                 return true;
 
             case R.id.top_menu_search:
-                //launchSearch();
+                launchSearch();
                 return true;
 
             case R.id.top_menu_update:
@@ -87,6 +93,16 @@ public class DetailActivity extends AppCompatActivity implements PhotoRecyclerVi
                 return true;
         }
         return false;
+    }
+
+    private void launchCreate() {
+        Intent intent = new Intent(this, CreateHomeActivity.class);
+        startActivity(intent);
+    }
+
+    private void launchSearch() {
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -98,6 +114,15 @@ public class DetailActivity extends AppCompatActivity implements PhotoRecyclerVi
         Intent intent = new Intent(DetailActivity.this, UpdateActivity.class);
         intent.putExtra(ListHouseFragment.ID_PROPERTY, propertyId);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        int idSaved = propertyId;
+        outState.putInt(MainActivity.PROPERTY_ID_SAVED, idSaved);
+        Log.d(TAG, "onSaveInstanceState");
+        Log.d(TAG, "onSaveInstanceState: idsaved " + idSaved);
     }
 
 }

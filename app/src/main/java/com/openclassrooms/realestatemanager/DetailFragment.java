@@ -40,7 +40,6 @@ import java.util.List;
 public class DetailFragment extends Fragment {
 
     private static final String TAG = "DetailFragment";
-    private static final float DEFAULT_ZOOM = 13f;
     public static final String FROM_DETAIL_REQUEST = "fromDetailActivity";
 
     // Real data
@@ -72,19 +71,14 @@ public class DetailFragment extends Fragment {
     private Button before;
     private Button after;
 
-    /* @BindView(R.id.map-detail)
-ImageView mMapView;;*/
     private ImageView mMap;
 
     private List<Property> properties;
     private List<Photo> currentPhotos;
     private PropertyViewModel propertyViewModel;
     private Property currentProperty;
-    //private Address currentAddress;
     private TypeOfProperty currentType;
     private Status currentStatus;
-    private Agent currentAgent;
-    private int addressId;
     private int statusId;
     private int typeId;
     private int agentId;

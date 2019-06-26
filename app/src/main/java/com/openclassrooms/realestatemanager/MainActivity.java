@@ -43,13 +43,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     final FragmentManager fm = getSupportFragmentManager();
     //private Fragment active = fragment1;
-    private String fragmentToExposeFromMap;
+    //private String fragmentToExposeFromMap;
     private int homeToExpose;
-    private boolean displayDetail = false;
+    //private boolean displayDetail = false;
 
     private int positionRV;
 
     private int propertyIdClicked;
+
+    private  boolean tabletSize;
 
 
     @Override
@@ -61,19 +63,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.configureDrawerLayout();
         this.configureNavigationView();
 
+        tabletSize = getResources().getBoolean(R.bool.isTablet);
+
         // id de la propriété à exposer
         homeToExpose = getIntent().getIntExtra(ListHouseFragment.ID_PROPERTY, 1);
         // on a besoin du fragment détail et pas de la liste
-        displayDetail = getIntent().getBooleanExtra(ListHouseFragment.DISPLAY_DETAIL, false);
+        //displayDetail = getIntent().getBooleanExtra(ListHouseFragment.DISPLAY_DETAIL, false);
         // On vient de MapActivity
-        fragmentToExposeFromMap = getIntent().getStringExtra(ID_FRAGMENT);
+        //fragmentToExposeFromMap = getIntent().getStringExtra(ID_FRAGMENT);
         positionRV = getIntent().getIntExtra(ListHouseFragment.POSITION_IN_RV, 0);
 
-        Log.d(TAG, "onCreate: fragment_id " + fragmentToExposeFromMap);
         Log.d(TAG, "onCreate: homeToExpose id " + homeToExpose);
-        Log.d(TAG, "onCreate: displayDetail " + displayDetail);
 
-        if (fragmentToExposeFromMap == null) {
+       // if (fragmentToExposeFromMap == null) {
             if (savedInstanceState == null) {
                 Log.d(TAG, "onCreate: savedInstanceState null");
                 this.configureFirstView();
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //this.configureFirstView();
                 this.configureView();
             }
-        } else {
+/*        } else {
             if (savedInstanceState == null) {
                 this.configureViewFromMapOrRecyclerView();
             } else {
@@ -96,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //this.configureFirstView();
                 this.configureView();
             }
-        }
+        }*/
 
         isServiceOK();
     }
@@ -129,25 +131,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // Configure first view
     private void configureFirstView() {
-        Log.d(TAG, "configureFirstView");
+
         Bundle args = new Bundle();
             args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
             args.putInt(ListHouseFragment.POSITION_IN_RV, positionRV);
 
-            if (findViewById(R.id.frame_layout_detail) == null) {
+        if (!tabletSize) {
                 Log.d(TAG, "configureFirstView: mobile");
 
                 args.putBoolean(USE_TABLET, false);
                 fragment2.setArguments(args);
                 fragment1.setArguments(args);
 
-                if (!displayDetail) {
+               // if (!displayDetail) {
                     fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
                     fm.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
-                } else {
+               /* } else {
                     fm.beginTransaction().add(R.id.main_container, fragment1, "1").hide(fragment1).commit();
                     fm.beginTransaction().add(R.id.main_container, fragment2, "2").commit();
-                }
+                }*/
             } else {
 
                 args.putBoolean(USE_TABLET, true);
@@ -176,7 +178,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragment1.setArguments(args);
         fragment2.setArguments(args);
 
-        Log.d(TAG, "configureView1");
+        Log.d(TAG, "configureView4");
+        ListHouseFragment rotation =new ListHouseFragment();
+        rotation.setArguments(args);
+
+        if (tabletSize) {
+            fm.beginTransaction().replace(R.id.frame_layout_list, rotation, "1").commit();
+        } else {
+            fm.beginTransaction().replace(R.id.main_container, rotation, "1").commit();
+        }
+
+      /*  Log.d(TAG, "configureView1");
         if (findViewById(R.id.frame_layout_detail) == null) {
 
             if (fragmentToExposeFromMap!=null) {
@@ -199,16 +211,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //fm.beginTransaction().hide(fragment1).commit();
                 //fm.beginTransaction().show(fragment2).commit();
             }
-        }
-        Log.d(TAG, "configureView4");
-        ListHouseFragment rotation =new ListHouseFragment();
-        rotation.setArguments(args);
+        }*/
 
-        fm.beginTransaction().replace(R.id.frame_layout_list, rotation, "1").commit();
     }
 
     // Configure view when called by mapActivity
-    private void configureViewFromMapOrRecyclerView() {
+   /* private void configureViewFromMapOrRecyclerView() {
         Log.d(TAG, "configureViewFromMapOrRecyclerView");
         Bundle args = new Bundle();
         args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
@@ -228,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fm.beginTransaction().add(R.id.frame_layout_detail, fragment2, "2").commit();
                 fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
             }
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -393,7 +401,7 @@ public boolean isServiceOK() {
         propertyIdClicked = propertyId;
         positionRV = position;
 
-        if (findViewById(R.id.frame_layout_detail) == null) {  // cas du téléphone
+        if (!tabletSize) {  // cas du téléphone
             Log.d(TAG, "onItemRVClicked: portable");
             Intent intent = new Intent(this, DetailActivity.class);
             intent.putExtra(ListHouseFragment.ID_PROPERTY, propertyId);

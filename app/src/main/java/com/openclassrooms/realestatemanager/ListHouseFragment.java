@@ -5,9 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,8 +58,8 @@ public class ListHouseFragment extends Fragment  {
 
     private int propertyId = 0;
     public int propertySaved = 0;
-    private boolean useTablet;
-    private boolean displayDetail;
+    //private boolean useTablet;
+    //private boolean displayDetail;
     private int positionRV;
 
     View v;
@@ -81,7 +84,7 @@ public class ListHouseFragment extends Fragment  {
        v= inflater.inflate(R.layout.fragment_list_house, container, false);
         Bundle bundle = getArguments();
         propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY, 1);
-        useTablet = bundle.getBoolean(MainActivity.USE_TABLET, false);
+        //useTablet = bundle.getBoolean(MainActivity.USE_TABLET, false);
         positionRV = bundle.getInt(POSITION_IN_RV, 1);
 
         Log.d(TAG, "onCreateView: position_in_rv " + positionRV);
@@ -90,6 +93,7 @@ public class ListHouseFragment extends Fragment  {
         configureViewModel();
         getAllTypes();
         getAllProperties();
+
         initRecyclerView();
 
         return v;
@@ -105,9 +109,15 @@ public class ListHouseFragment extends Fragment  {
     }
 
 
-    private void initRecyclerView() {
+    private void initRecyclerView(){
+        try {
+            Thread.sleep(1000);
+        } catch(InterruptedException e) {
+            System.out.println("got interrupted!");
+        }
 
-        this.adapter = new ListRecyclerViewAdapter(propertyId, useTablet);
+       // this.adapter = new ListRecyclerViewAdapter(propertyId, useTablet);
+        this.adapter = new ListRecyclerViewAdapter(propertyId);
         RecyclerView recyclerView = v.findViewById(R.id.list_recyclerview_container);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);

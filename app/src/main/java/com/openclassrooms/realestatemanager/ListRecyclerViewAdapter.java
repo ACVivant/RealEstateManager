@@ -37,11 +37,18 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
     private int propertySelected;
     private int rowIndex;
 
-    public ListRecyclerViewAdapter(int propertySelected, boolean useTablet) {
+ /*   public ListRecyclerViewAdapter(int propertySelected, boolean useTablet) {
         this.properties = new ArrayList<>();
         this.types = new ArrayList<>();
         this.propertySelected = propertySelected;
         this.useTablet = useTablet;
+        Log.d(TAG, "ListRecyclerViewAdapter: constructor");
+    }*/
+
+    public ListRecyclerViewAdapter(int propertySelected) {
+        this.properties = new ArrayList<>();
+        this.types = new ArrayList<>();
+        this.propertySelected = propertySelected;
         Log.d(TAG, "ListRecyclerViewAdapter: constructor");
     }
 

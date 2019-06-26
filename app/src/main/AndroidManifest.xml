@@ -25,7 +25,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".DetailActivity"></activity>
-        <activity android:name=".CreditActivity" />
+        <activity android:name=".CreditActivity"
+            android:parentActivityName=".MainActivity"/>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -38,9 +39,9 @@
             android:name=".MapActivity"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".UpdateActivity" />
-        <activity android:name=".SettingActivity" />
+        <activity android:name=".SettingActivity"
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".SearchActivity" />
-        <activity android:name=".CreateHomeActivity" />
         <activity android:name=".ResultSearchActivity" />
         <activity android:name=".WelcomeActivity">
             <intent-filter>
@@ -50,6 +51,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
+        <activity android:name=".CreateHomeActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

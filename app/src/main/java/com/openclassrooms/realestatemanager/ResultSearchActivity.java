@@ -37,17 +37,20 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
 
     final FragmentManager fm = getSupportFragmentManager();
     private Fragment active = fragment1;
-    private String fragmentToExposeFromMap;
     private int homeToExpose;
-    private boolean displayDetail = false;
+   // private boolean displayDetail = false;
     private boolean filteredResults = false;
     private ArrayList<Integer> filteredResultsArray = new ArrayList<>();
     private int position;
     private int propertyIdClicked=1;
 
+    private  boolean tabletSize;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        tabletSize = getResources().getBoolean(R.bool.isTablet);
 
         setContentView(R.layout.activity_main);
         this.configureToolbar();
@@ -55,12 +58,13 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
         this.configureNavigationView();
 
 
+
         filteredResultsArray = getIntent().getIntegerArrayListExtra(SearchActivity.ID_FILTERED);
         position = getIntent().getIntExtra(ListFilteredPropertiesFragment.POSITON_IN_FILTER, 0);
         Log.d(TAG, "onCreate: position " +position);
         Log.d(TAG, "onCreate: filteredResults " + filteredResultsArray.size());
         homeToExpose = getIntent().getIntExtra(ListFilteredPropertiesFragment.ID_PROPERTY, 1);
-        displayDetail = getIntent().getBooleanExtra(ListHouseFragment.DISPLAY_DETAIL, false);
+        //displayDetail = getIntent().getBooleanExtra(ListHouseFragment.DISPLAY_DETAIL, false);
         filteredResults = getIntent().getBooleanExtra(SearchActivity.RESULTS_FILTERED, true);
 
 
@@ -119,7 +123,7 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
 
         Log.d(TAG, "configureFirstView: filteredResultsArray " + filteredResultsArray);
 
-        if (findViewById(R.id.frame_layout_detail) == null) {
+        if (!tabletSize) {
             Log.d(TAG, "configureFirstView: mobile");
 
             args.putBoolean(USE_TABLET, false);
@@ -127,13 +131,13 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
             fragment1.setArguments(args);
 
 
-            if (!displayDetail) {
+          //  if (!displayDetail) {
                 fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
                 fm.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
-            } else {
+            /*} else {
                 fm.beginTransaction().add(R.id.main_container, fragment1, "1").hide(fragment1).commit();
                 fm.beginTransaction().add(R.id.main_container, fragment2, "2").commit();
-            }
+            }*/
 
         } else {
 
@@ -162,20 +166,14 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
         fragment2.setArguments(args);
 
         Log.d(TAG, "configureView");
-        if (findViewById(R.id.frame_layout_detail) == null) {
-            if (displayDetail) {
-                fm.beginTransaction().hide(fragment2).commit();
-                fm.beginTransaction().show(fragment1).commit();
-            }
-            } else {
+        ListFilteredPropertiesFragment rotation =new ListFilteredPropertiesFragment();
+        rotation.setArguments(args);
 
-            Log.d(TAG, "configureView4");
-            ListFilteredPropertiesFragment rotation =new ListFilteredPropertiesFragment();
-            rotation.setArguments(args);
-
+        if (tabletSize) {
             fm.beginTransaction().replace(R.id.frame_layout_list, rotation, "1").commit();
-
-            }
+        } else {
+            fm.beginTransaction().replace(R.id.main_container, rotation, "1").commit();
+        }
         }
 
 
@@ -293,7 +291,7 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
         Log.d(TAG, "onItemRVClicked: Item cliqué " + propertyId);
         propertyIdClicked = propertyId;
 
-        if (findViewById(R.id.frame_layout_detail) == null) {  // cas du téléphone
+        if (!tabletSize) {  // cas du téléphone
             Log.d(TAG, "onItemRVClicked: portable");
             Intent intent = new Intent(this, DetailActivity.class);
             intent.putExtra(ListHouseFragment.ID_PROPERTY, propertyId);

@@ -408,11 +408,12 @@
             android:layout_width="300dp"
             android:layout_height="200dp"
             android:layout_marginStart="8dp"
+
             android:layout_marginBottom="16dp"
             app:srcCompat="@drawable/navigation_map"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView17"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/checkBox4"
+            app:layout_constraintTop_toTopOf="@+id/textView29"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
@@ -461,6 +462,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView7"
             tools:text="@string/localisation" />
+
+        <!--Button
+            android:id="@+id/update_detail_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/default_margin"
+            android:layout_marginVertical="@dimen/default_large_margin"
+            android:layout_marginTop="52dp"
+            android:background="@color/colorPrimaryLight"
+            android:padding="@dimen/default_mini_margin"
+            android:paddingHorizontal="@dimen/default_margin"
+            android:text="@string/detail_update"
+            android:textColor="@android:color/white"
+            app:layout_constraintTop_toBottomOf="@+id/map_detail"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/-->
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
