@@ -13,6 +13,12 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.navigation.NavigationView;
+import com.openclassrooms.realestatemanager.injections.Injection;
+import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
+import com.openclassrooms.realestatemanager.models.Photo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -22,8 +28,9 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProviders;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PhotoRecyclerViewAdapter.DeletePhotoListener, ListHouseFragment.OnItemRVClickedListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PhotoRecyclerViewAdapter.DeletePhotoListener, ListHouseFragment.OnItemRVClickedListener, UpdateFragment.OnValidateClickedListener{
 
     private static final String TAG = "MainActivity";
     private static final int ERROR_DIALOG_REQUEST = 9001;
@@ -43,8 +50,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     final FragmentManager fm = getSupportFragmentManager();
     private int homeToExpose;
     private int positionRV;
-    private int propertyIdClicked;
+    private int propertyIdClicked=1;
     private  boolean tabletSize;
+
+    private List<Long> photoToDeleteList = new ArrayList<>();
+    private PropertyViewModel propertyViewModel;
+    private Photo myPhotoToDelete;
+    private int deleteId=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         tabletSize = getResources().getBoolean(R.bool.isTablet);
 
-        // id de la propriété à exposer
+        // home to expose id
         homeToExpose = getIntent().getIntExtra(ListHouseFragment.ID_PROPERTY, 1);
         positionRV = getIntent().getIntExtra(ListHouseFragment.POSITION_IN_RV, 0);
 
@@ -77,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
         isServiceOK();
+            configureViewModel();
     }
 
     // ---------------------
@@ -108,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Bundle args = new Bundle();
             args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
+        Log.d(TAG, "configureFirstView: propertyId " + homeToExpose);
             args.putInt(ListHouseFragment.POSITION_IN_RV, positionRV);
 
         if (!tabletSize) {
@@ -296,9 +310,48 @@ public boolean isServiceOK() {
         outState.putInt(POSITION_SAVED, positionRV);
     }
 
+    //-------------------------------------------------
+    // Delete pictures for tablet
+    //------------------------------------------------
+
     @Override
     public void photoToDelete(long photoId) {
+        Log.d(TAG, "photoToDelete: on passe par ici");
+        Log.d(TAG, "photoToDelete: photo à détruire " + photoId);
 
+        photoToDeleteList.add(photoId);
+        getPhotosToDelete(photoId);
+    }
+
+    @Override
+    public void onValidateClicked(int propertyId) {
+        propertyIdClicked = propertyId;
+
+        Log.d(TAG, "onValidateClicked: on passe par ici");
+        if(tabletSize) {
+            Bundle args = new Bundle();
+            args.putInt(ListHouseFragment.ID_PROPERTY, propertyId);
+
+            DetailFragment detail =fragment2.newInstance(propertyId);
+
+            fm.beginTransaction().replace(R.id.frame_layout_detail, detail, "2").commit();
+        }
+    }
+
+    private void getPhotosToDelete(long id){
+        Log.d(TAG, "getPhotosToDelete: id " +id);
+        this.propertyViewModel.getPhotoFromId(id).observe(this, this::updatePhotoDeleteList);
+    }
+
+    private void updatePhotoDeleteList(Photo photos){
+        Log.d(TAG, "updatePhotoDeleteList: deleteId " + deleteId);
+        if (deleteId<photoToDeleteList.size()) {
+            Log.d(TAG, "updatePhotoDeleteList: on passe par ici");
+            myPhotoToDelete = photos;
+            propertyViewModel.deletePhoto(myPhotoToDelete);
+            Log.d(TAG, "updatePhotoDeleteList: on passe ensuite par là");
+            deleteId+=1;
+        }
     }
 
     @Override
@@ -320,6 +373,16 @@ public boolean isServiceOK() {
 
         }
     }
+
+    //---------------------------------------------------
+    // Database
+    //-----------------------------------------------------
+    private void configureViewModel() {
+        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
+        this.propertyViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PropertyViewModel.class);
+    }
+
+
 }
 //---------------------------------------------------------
 // A conserver

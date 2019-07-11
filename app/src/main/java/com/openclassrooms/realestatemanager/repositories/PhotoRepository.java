@@ -8,8 +8,9 @@ import java.util.List;
 import androidx.lifecycle.LiveData;
 
 /**
- * Created by Anne-Charlotte Vivant on 13/05/2019.
+ * Photo Repository
  */
+
 public class PhotoRepository {
     private PhotoDao photoDao;
 

@@ -20,8 +20,9 @@
             android:text="@string/statut"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:textSize="@dimen/default_small_title_size"
-            android:textStyle="bold"/>
+            android:textSize="@dimen/default_text_size"
+            android:textStyle="bold"
+            android:textColor="@color/colorAccent"/>
 
         <TextView
             android:id="@+id/textView24"
@@ -406,7 +407,7 @@
             android:id="@+id/textView20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
+            android:layout_marginStart="@dimen/default_margin"
             android:text="@string/price_title"
             android:textSize="@dimen/default_text_size"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView21"
@@ -424,16 +425,6 @@
             android:textSize="@dimen/default_text_size"
             app:layout_constraintStart_toEndOf="@+id/textView20"
             app:layout_constraintTop_toBottomOf="@+id/textView24" />
-
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView24"
-            app:srcCompat="@drawable/detail_price" />
 
         <ImageView
             android:id="@+id/map_detail"
@@ -457,7 +448,6 @@
             android:layout_marginEnd="0dp"
             android:text="@string/recyclerview_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView21"
             tools:text="@string/recyclerview_title"
             android:textSize="@dimen/default_text_size"

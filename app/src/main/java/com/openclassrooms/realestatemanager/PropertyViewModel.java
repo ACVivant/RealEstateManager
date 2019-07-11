@@ -138,7 +138,6 @@ public class PropertyViewModel extends ViewModel {
 
     public void createProperty (Property myProperty,  ArrayList<String> photosList,  ArrayList<String> legendList, String mainPhotoUri, String mainPhotoLegend) {
         long propertyId = propertyRepository.insertProperty(myProperty);
-                    Log.d(TAG, "call: propertyId " + propertyId);
 
                     createPhotos(propertyId, photosList, legendList, mainPhotoUri, mainPhotoLegend);
     }

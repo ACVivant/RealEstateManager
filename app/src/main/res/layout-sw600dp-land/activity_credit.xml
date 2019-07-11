@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title="@string/nav_title"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:background="@color/colorPrimary"
+        android:padding="5dp"
+        android:text="@string/credit_title"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/default_text_size" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/default_very_large_margin"
+        android:paddingEnd="@dimen/default_very_large_margin"
+        android:layout_marginTop="@dimen/default_margin">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="80"
+            android:text="@string/credit_input"
+            android:textSize="@dimen/default_text_size"/>
+
+        <EditText
+            android:id="@+id/credit_input"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="50"
+            android:textSize="@dimen/default_text_size"
+            android:inputType="number" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="$"
+            android:textSize="@dimen/default_text_size"/>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/default_very_large_margin"
+    android:paddingEnd="@dimen/default_very_large_margin">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="80"
+        android:layout_height="wrap_content"
+        android:text="@string/credit_length"
+        android:textSize="@dimen/default_text_size"/>
+
+    <EditText
+        android:id="@+id/credit_length"
+        android:layout_width="0dp"
+        android:layout_weight="50"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/default_text_size"
+        android:inputType="number"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text=""
+            android:textSize="@dimen/default_text_size" />
+
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/default_very_large_margin"
+        android:paddingEnd="@dimen/default_very_large_margin">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="80"
+            android:layout_height="wrap_content"
+            android:text="@string/credit_interest"
+            android:textSize="@dimen/default_text_size"/>
+
+        <EditText
+            android:id="@+id/credit_interest"
+            android:layout_width="0dp"
+            android:layout_weight="50"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/default_text_size"
+            android:inputType="numberDecimal"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="%"
+            android:textSize="@dimen/default_text_size" />
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/credit_validate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_convert1"
+        android:backgroundTint="@color/colorPrimary"
+        android:tint="@color/colorMyWhite"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/default_large_margin"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/default_very_large_margin"
+        android:paddingEnd="@dimen/default_very_large_margin"
+        android:layout_marginTop="@dimen/default_large_margin">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="80"
+            android:text="@string/credit_month"
+            android:textSize="@dimen/default_text_size" />
+
+        <TextView
+            android:id="@+id/credit_month"
+            android:layout_width="0dp"
+            android:layout_weight="50"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/default_text_size"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="$"
+            android:textSize="@dimen/default_text_size"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/default_very_large_margin"
+        android:paddingEnd="@dimen/default_very_large_margin"
+        android:layout_marginTop="@dimen/default_margin">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="80"
+            android:layout_height="wrap_content"
+            android:text="@string/credit_cost"
+            android:textSize="@dimen/default_text_size"/>
+
+        <TextView
+            android:id="@+id/credit_total"
+            android:layout_width="0dp"
+            android:layout_weight="50"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/default_text_size"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="$"
+            android:textSize="@dimen/default_text_size"/>
+    </LinearLayout>
+    </LinearLayout>
+</ScrollView>

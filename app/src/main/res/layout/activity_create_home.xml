@@ -702,6 +702,7 @@
                 android:background="@color/colorPrimaryLight"
                 android:padding="@dimen/default_margin"
                 android:text="@string/validation"
+                android:textSize="@dimen/default_text_size"
                 android:textColor="@android:color/white" />
 
             <Button
@@ -713,6 +714,7 @@
                 android:background="@color/colorAccentLight"
                 android:padding="@dimen/default_margin"
                 android:text="@string/dismiss"
+                android:textSize="@dimen/default_text_size"
                 android:textColor="@android:color/white" />
         </LinearLayout>
 

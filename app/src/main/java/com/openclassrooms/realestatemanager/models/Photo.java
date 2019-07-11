@@ -5,7 +5,7 @@ import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 /**
- * Created by Anne-Charlotte Vivant on 10/05/2019.
+ * Photo model
  */
 @Entity(tableName = "photo",
         foreignKeys = @ForeignKey(entity = Property.class,

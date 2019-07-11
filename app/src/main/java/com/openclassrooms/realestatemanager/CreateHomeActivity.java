@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
@@ -40,19 +41,21 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.openclassrooms.realestatemanager.database.dao.PropertyDao;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
-import com.openclassrooms.realestatemanager.models.Address;
 import com.openclassrooms.realestatemanager.models.Photo;
 import com.openclassrooms.realestatemanager.models.Property;
-import com.openclassrooms.realestatemanager.repositories.PropertyRepository;
 import com.openclassrooms.realestatemanager.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
-public class CreateHomeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, PhotoDialogFragment.DialogListener {
+/**
+ * Activity to create a new property
+ */
+
+public class CreateHomeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+    //public class CreateHomeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, PhotoDialogFragment.DialogListener {
 
     private PropertyViewModel propertyViewModel;
 
@@ -139,7 +142,7 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     private String newStatus;
     private String newDescription;
     private int newPrice;
-    private String newType;
+
     private int newSurface;
     private int newRooms;
     private int newBedrooms;
@@ -157,10 +160,7 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     private Boolean nearPark;
     private Boolean nearMuseum;
 
-    private String newUpForSale;
     private String newSoldOn;
-    private String newAgent;
-
     private int intUpForSale;
     private int intSoldOn;
 
@@ -183,7 +183,7 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     private String mainPhotoUri;
     private String mainPhotoLegend;
 
-    private Toolbar toolbar;
+
 
 
     @Override
@@ -227,8 +227,6 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
             public void onClick(View v) {
                 configureViewModel();
                 savePropertyData();
-                createProperty();
-                launchMainActivityDetail();
             }
         });
 
@@ -263,13 +261,17 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
 
     // Configure toolbar
     private void configureToolbar(){
+        Toolbar toolbar;
         // Get the toolbar view inside the activity layout
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         // Sets the Toolbar
         setSupportActionBar(toolbar);
     }
 
+    // Save data entered by user
     private void savePropertyData() {
+        String newUpForSale;
+
         newStatus = spinnerStatus.getSelectedItem().toString();
         statusId = spinnerStatus.getSelectedItemPosition() + 1;
 
@@ -295,7 +297,6 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
                     newPrice = 0;
                 }
 
-                newType = spinnerType.getSelectedItem().toString();
                 typeId = spinnerType.getSelectedItemPosition() + 1;
 
                 if (!surface.getText().toString().isEmpty()) {
@@ -354,14 +355,20 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
                     intSoldOn = Utils.convertStringDateToIntDate(newSoldOn);
                 }
 
-                newAgent = spinnerAgent.getSelectedItem().toString();
                 agentId = spinnerAgent.getSelectedItemPosition() + 1;
+
+                if (statusId==4 && intSoldOn==99999999) {
+                    Toast.makeText(this, getResources().getString(R.string.soldon_date_missing), Toast.LENGTH_LONG).show();
+                } else {
+                    createProperty();
+                    finish();
+                }
             }
         }
     }
 
+    // Create the new property
     private void createProperty() {
-        Log.d(TAG, "createProperty: called");
 
         if(newStatus.equals(R.string.status_sold)&& newSoldOn.equals("99/99/9999")) {
             Toast.makeText(this, getResources().getString(R.string.soldon_date_missing), Toast.LENGTH_LONG).show();
@@ -404,6 +411,10 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         }
     }
 
+    //------------------------------------------------------------------------------------------------
+    // Toolbar buttons
+    //------------------------------------------------------------------------------------------------
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -437,30 +448,29 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
     public void onNothingSelected(AdapterView<?> parent) {
     }
 
+    //--------------------------------------------------------------------------------------------------
+    // Database
+    //--------------------------------------------------------------------------------------------------
+
     private void configureViewModel() {
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
         this.propertyViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PropertyViewModel.class);
-    }
-
-    private void launchMainActivityDetail() {
-        Boolean displayDetail = false;
-        Intent intent = new Intent(CreateHomeActivity.this, MainActivity.class);
-        intent.putExtra(ListHouseFragment.DISPLAY_DETAIL, displayDetail);
-        startActivity(intent);
     }
 
     //--------------------------------------------------------------------------------------------------
     // Photos
     //--------------------------------------------------------------------------------------------------
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        this.handleResponse(requestCode, resultCode, data);
+    private void openDialog(String which) {
+        PhotoDialogFragment dialog = new PhotoDialogFragment();
+        Bundle args = new Bundle();
+        args.putString(WHICH_REQUEST, which);
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), "dialog");
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         //Forward results to EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
@@ -481,6 +491,12 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         startActivityForResult(i, RC_CHOOSE_PHOTO);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        this.handleResponse(requestCode, resultCode, data);
+    }
+
     private void handleResponse(int requestCode, int resultCode, Intent data) {
         if (requestCode == RC_CHOOSE_PHOTO) {
             if (resultCode == RESULT_OK) { //SUCCESS
@@ -495,14 +511,6 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
                 Toast.makeText(this, getString(R.string.no_photo), Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    private void openDialog(String which) {
-        PhotoDialogFragment dialog = new PhotoDialogFragment();
-        Bundle args = new Bundle();
-        args.putString(WHICH_REQUEST, which);
-        dialog.setArguments(args);
-        dialog.show(getSupportFragmentManager(), "dialog");
     }
 
     private void setMainPhoto() {
@@ -544,7 +552,7 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         }
     }
 
-    @Override
+/*    @Override
     public void applyOthersPhoto(String photoUri, String photoLegend) {
         photosList.add(photoUri);
         legendList.add(photoLegend);
@@ -559,16 +567,11 @@ public class CreateHomeActivity extends AppCompatActivity implements AdapterView
         mainPhotoOk = main;
         nbrePhotos+=1;
         setMainPhoto();
-    }
+    }*/
 
-    private void createPhotos() {
-        propertyViewModel.insertPhoto(new Photo(mainPhotoUri, mainPhotoLegend, propertyId));
-
-        for (int i=0; i<photosList.size(); i++) {
-            propertyViewModel.insertPhoto(new Photo(photosList.get(i), legendList.get(i), propertyId));
-        }
-        sendNotification();
-    }
+    //-----------------------------------------------------------------------------------------------
+    // Notification
+    //----------------------------------------------------------------------------------------------
 
     private void sendNotification() {
         Notification notification = new NotificationCompat.Builder(this, RemApp.CHANNEL_ID)

@@ -68,7 +68,7 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
     private String whichRequest;
     private String photoLegend;
 
-    private DialogListener listener;
+    //private DialogListener listener;
     private Context context;
 
     @Override
@@ -119,11 +119,23 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
                         } else {
                             photoLegend = legend.getText().toString();
                             if (whichRequest.equals(CreateHomeActivity.OTHERS_PHOTO_REQUEST)) {
-                                listener.applyOthersPhoto(photoURI.toString(), photoLegend);
+                                //listener.applyOthersPhoto(photoURI.toString(), photoLegend);
+
+
+                                if( getTargetFragment() == null ) {
+                                    return;
+                                }
+                                Log.d(TAG, "onClick OK");
+                                Intent intent = UpdateFragment.newIntent(photoURI.toString(), photoLegend, false);
+                                getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
                             }
                             if (whichRequest.equals(CreateHomeActivity.MAIN_PHOTO_REQUEST)) {
-                                listener.applyMainPhoto(photoURI.toString(), photoLegend, true);
+                                //listener.applyMainPhoto(photoURI.toString(), photoLegend, true);
+                                Log.d(TAG, "onClick OK");
+                                Intent intent = UpdateFragment.newIntent(photoURI.toString(), photoLegend, true);
+                                getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
                             }
+                            dismiss();
                         }
                     }
                 });
@@ -246,8 +258,9 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
     }
 
 
-    @Override
+/*    @Override
     public void onAttach(Context context) {
+        Log.d(TAG, "onAttach");
         super.onAttach(context);
 
         try {
@@ -255,10 +268,10 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
         } catch (ClassCastException e) {
            throw new ClassCastException(context.toString() + "must implement DialogListener");
         }
-    }
+    }*/
 
-    public interface DialogListener{
+/*    public interface DialogListener{
         void applyOthersPhoto(String photoUri, String photoLegend);
         void applyMainPhoto(String photoUri, String photoLegend, boolean main);
-    }
+    }*/
 }

@@ -112,7 +112,7 @@ public PhotoRecyclerViewAdapter(Context context, String which) {
     private void openDeleteDialog(PhotoViewHolder holder, Photo currentPhoto, String Uri, long photoId) {
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
-        alertDialog.setTitle("Attention");
+        alertDialog.setTitle(mContext.getString(R.string.warning));
         alertDialog.setMessage("Vous allez supprimer cette photo");
         alertDialog.setPositiveButton("Confirmer", new DialogInterface.OnClickListener() {
             @Override
@@ -139,8 +139,6 @@ public PhotoRecyclerViewAdapter(Context context, String which) {
         View alertLayout =LayoutInflater.from(mContext).inflate(R.layout.display_photo_dialog, null);
         final ImageView photoView = alertLayout.findViewById(R.id.bigPhotoImg);
 
-
-
         Glide.with(mContext)
                 .load(photoUri)
                 .into(photoView);
@@ -154,7 +152,6 @@ public PhotoRecyclerViewAdapter(Context context, String which) {
         alert.setView(alertLayout);
         // disallow cancel of AlertDialog on click of back button and outside touch
         alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

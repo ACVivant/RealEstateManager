@@ -4,7 +4,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 /**
- * Created by Anne-Charlotte Vivant on 10/05/2019.
+ * Status model
  */
 @Entity(tableName = "status")
 public class Status {

@@ -12,37 +12,34 @@ import com.openclassrooms.realestatemanager.repositories.TypeOfPropertyRepositor
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-/**
- * Created by Anne-Charlotte Vivant on 21/05/2019.
- */
 public class Injection {
 
-    public static AgentRepository provideAgentRepository(Context context) {
+    private static AgentRepository provideAgentRepository(Context context) {
         RealEstateDatabase database = RealEstateDatabase.getInstance(context);
         return new AgentRepository(database.agentDao());
     }
 
-    public static PhotoRepository providePhotoRepository(Context context) {
+    private static PhotoRepository providePhotoRepository(Context context) {
         RealEstateDatabase database = RealEstateDatabase.getInstance(context);
         return new PhotoRepository(database.photoDao());
     }
 
-    public static PropertyRepository providePropertyRepository(Context context) {
+    private static PropertyRepository providePropertyRepository(Context context) {
         RealEstateDatabase database = RealEstateDatabase.getInstance(context);
         return new PropertyRepository(database.propertyDao());
     }
 
-    public static StatusRepository provideStatusRepository(Context context) {
+    private static StatusRepository provideStatusRepository(Context context) {
         RealEstateDatabase database = RealEstateDatabase.getInstance(context);
         return new StatusRepository(database.statusDao());
     }
 
-    public static TypeOfPropertyRepository provideTypeOfPropertyRepository(Context context) {
+    private static TypeOfPropertyRepository provideTypeOfPropertyRepository(Context context) {
         RealEstateDatabase database = RealEstateDatabase.getInstance(context);
         return new TypeOfPropertyRepository(database.typeOfPropertyDao());
     }
 
-    public static Executor provideExecutor(){ return Executors.newSingleThreadExecutor(); }
+    private static Executor provideExecutor(){ return Executors.newSingleThreadExecutor(); }
 
     public static ViewModelFactory provideViewModelFactory(Context context) {
         AgentRepository agentRepository = provideAgentRepository(context);

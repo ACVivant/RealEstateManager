@@ -102,6 +102,7 @@ public class DetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        Log.d(TAG, "onCreateView: On passe par là");
         // Inflate the layout for this fragment
         v= inflater.inflate(R.layout.fragment_detail, container, false);
         key = getContext().getResources().getString(R.string.Google_Maps_API_Key);
@@ -139,6 +140,7 @@ public class DetailFragment extends Fragment {
 
         Bundle bundle = getArguments();
         propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY,1);
+        Log.d(TAG, "onCreateView: propertyId " +propertyId);
         filteredResults = bundle.getBoolean(SearchActivity.RESULTS_FILTERED, false);
 
         if (filteredResults) {

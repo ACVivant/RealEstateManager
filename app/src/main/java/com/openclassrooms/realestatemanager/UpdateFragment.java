@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,10 +48,17 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UpdateFragment extends Fragment implements AdapterView.OnItemSelectedListener, PhotoDialogFragment.DialogListener, PhotoRecyclerViewAdapter.DeletePhotoListener {
+public class UpdateFragment extends Fragment implements AdapterView.OnItemSelectedListener, PhotoRecyclerViewAdapter.DeletePhotoListener {
+   // public class UpdateFragment extends Fragment implements AdapterView.OnItemSelectedListener, PhotoDialogFragment.DialogListener, PhotoRecyclerViewAdapter.DeletePhotoListener {
+
 
     private static final String TAG = "UpdateActivity";
     public static final String  FROM_UPDATE_REQUEST = "fromUpadateActivity";
+    private static final int TARGET_FRAGMENT_REQUEST_CODE = 123;
+    private static final int TARGET_DELETE_REQUEST_CODE = 124;
+    private static final String NEW_PHOTO_URI = "newPhotoUri";
+    private static final String NEW_LEGEND = "newLegend";
+    private static final String IS_MAIN_PHOTO = "isTHisMainPhoto";
 
     private PropertyViewModel propertyViewModel;
 
@@ -133,7 +141,7 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
     private int typeId;
     private int agentId;
     private int numberOfProperties;
-    private int propertyId;
+    private int propertyId =1;
     private List<Photo> currentPhotos;
     private List<Long> photoToDeleteList = new ArrayList<>();
     private Photo myPhotoToDelete;
@@ -150,6 +158,13 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
 
     private Context mContext;
     private  boolean tabletSize;
+
+    private OnValidateClickedListener mCallback;
+
+    // Declare our interface that will be implemented by any container activity
+    public interface OnValidateClickedListener {
+        void onValidateClicked(int propertyId);
+    }
 
     public UpdateFragment() {
         // Required empty public constructor
@@ -266,10 +281,9 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
             @Override
             public void onClick(View v) {
                 savePropertyData();
-                updateProperty();
-                launchMainActivity();
             }
         });
+
 
         configureViewModel();
         launchSavedData();
@@ -372,6 +386,17 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
 
             newAgent = spinnerAgent.getSelectedItem().toString();
             agentId = spinnerAgent.getSelectedItemPosition()+1;
+
+            if (statusId==4 && intSoldOn==99999999) {
+                Toast.makeText(mContext, getResources().getString(R.string.soldon_date_missing), Toast.LENGTH_LONG).show();
+            } else {
+                updateProperty();
+                if (!tabletSize) {
+                    getActivity().finish();
+                } else {
+                    mCallback.onValidateClicked(propertyId);
+                }
+            }
         }
     }
 
@@ -388,7 +413,7 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
 
         nbrePhotos = currentProperty.getNbrePhotos();
 
-        String upForSaleDateText = Utils.convertStringToDate(String.valueOf(currentProperty.getSoldOnDate()));
+        String upForSaleDateText = Utils.convertStringToDate(String.valueOf(currentProperty.getUpForSaleDate()));
         if (upForSaleDateText.equals("99/99/9999")) {
             dateUpForSale.setText("");
         } else {
@@ -510,8 +535,11 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
 
         propertyViewModel.updateProperty(myProperty);
         Toast.makeText(mContext, getResources().getString(R.string.update_ok), Toast.LENGTH_LONG).show();
+        Log.d(TAG, "updateProperty: on passe par là 1");
 
         for (int i=0; i<newPhotosList.size(); i++) {
+            Log.d(TAG, "updateProperty: on passe par ici 2");
+            Log.d(TAG, "updateProperty: legende " + newLegendList.get(i));
             propertyViewModel.insertPhoto(new Photo(newPhotosList.get(i), newLegendList.get(i), propertyId));
         }
 
@@ -547,23 +575,47 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(mContext);
         this.propertyViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PropertyViewModel.class);
     }
-
-    private void launchMainActivity() {
-        Boolean displayDetail = false;
-        Intent intent = new Intent(mContext, MainActivity.class);
-        intent.putExtra(ListHouseFragment.DISPLAY_DETAIL, displayDetail);
-        intent.putExtra(ListHouseFragment.ID_PROPERTY, propertyId);
-        startActivity(intent);
-    }
+    
+    //----------------------------------------------------------
+    // Alert dialog to add photo or change main photo
+    //--------------------------------------------------------
 
     private void openDialog(String which) {
         PhotoDialogFragment dialog = new PhotoDialogFragment();
         Bundle args = new Bundle();
         args.putString(CreateHomeActivity.WHICH_REQUEST, which);
         dialog.setArguments(args);
+        dialog.setTargetFragment(UpdateFragment.this,TARGET_FRAGMENT_REQUEST_CODE);
         dialog.show(getFragmentManager(), "dialog");
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if( resultCode != Activity.RESULT_OK ) {
+            return;
+        }
+        if( requestCode == TARGET_FRAGMENT_REQUEST_CODE ) {
+            if(!data.getBooleanExtra(IS_MAIN_PHOTO, false)) {
+                newPhotosList.add(data.getStringExtra(NEW_PHOTO_URI));
+                newLegendList.add(data.getStringExtra(NEW_LEGEND));
+                nbrePhotos += 1;
+                Log.d(TAG, "onActivityResult: on passe par là");
+                setPreviewPhotos();
+            } else {
+                newMainPhotoUri= data.getStringExtra(NEW_PHOTO_URI);
+                newMainLegend = data.getStringExtra(NEW_LEGEND);
+                setMainPhoto();
+            }
+        }
+    }
+
+    public static Intent newIntent(String photoUri, String photoLegend, Boolean main) {
+        Intent intent = new Intent();
+        intent.putExtra(NEW_PHOTO_URI, photoUri);
+        intent.putExtra(NEW_LEGEND, photoLegend);
+        intent.putExtra(IS_MAIN_PHOTO, main);
+        return intent;
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -575,20 +627,27 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
 
     }
 
+/*
     @Override
     public void applyOthersPhoto(String photoUri, String photoLegend) {
-        newPhotosList.add(photoUri);
+       */
+/* newPhotosList.add(photoUri);
         newLegendList.add(photoLegend);
         nbrePhotos+=1;
-        setPreviewPhotos();
+        Log.d(TAG, "applyOthersPhoto: on passe par là");
+        setPreviewPhotos();*//*
+
     }
 
     @Override
     public void applyMainPhoto(String photoUri, String photoLegend, boolean main) {
-        newMainPhotoUri= photoUri;
+        */
+/*newMainPhotoUri= photoUri;
         newMainLegend = photoLegend;
-        setMainPhoto();
+        setMainPhoto();*//*
+
     }
+*/
 
     private void setMainPhoto() {
         Glide.with(this) //SHOWING PREVIEW OF IMAGE
@@ -632,6 +691,25 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
     @Override
     public void photoToDelete(long photoId) {
         photoToDeleteList.add(photoId);
+        Log.d(TAG, "photoToDelete: on passe par là");
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        // 4 - Call the method that creating callback after being attached to parent activity
+        this.createCallbackToMainActivity();
+    }
+
+    // 3 - Create callback to parent activity
+    private void createCallbackToMainActivity(){
+        try {
+            //Parent activity will automatically subscribe to callback
+            mCallback = (OnValidateClickedListener) getActivity();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(e.toString()+ " must implement OnItemClickedListener");
+        }
     }
 }
 

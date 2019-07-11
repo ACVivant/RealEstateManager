@@ -6,8 +6,9 @@ import com.openclassrooms.realestatemanager.models.Status;
 import androidx.lifecycle.LiveData;
 
 /**
- * Created by Anne-Charlotte Vivant on 13/05/2019.
+ * Status Repository
  */
+
 public class StatusRepository {
 
     private StatusDao statusDao;

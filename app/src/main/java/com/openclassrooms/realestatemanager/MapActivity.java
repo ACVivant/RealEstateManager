@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -78,10 +79,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private boolean displayDetail;
     private boolean internet;
 
+    View mapView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+
         configureToolbar();
         configureProgressBar();
         showProgressBar();
@@ -128,7 +132,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
                 return;
             }
+
             mMap.setMyLocationEnabled(true); // icone GPS pour recentrer la carte
+            // Get the button view
+            View locationButton = ((View) mapView.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
+            // and next place it, on bottom right (as Google Maps app)
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)
+                    locationButton.getLayoutParams();
+            // position on right top
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+            layoutParams.setMargins(0, 200, 30, 0);
+
             mMap.getUiSettings().setZoomControlsEnabled(true); // zoom
         }
     }
@@ -136,8 +151,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void initMap() {
         Log.d(TAG, "initMap: initializing map");
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapView = mapFragment.getView();
         mapFragment.getMapAsync(MapActivity.this);
-
     }
 
     private void getDeviceLocation() {

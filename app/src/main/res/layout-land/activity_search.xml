@@ -463,7 +463,7 @@ tools:context=".SearchActivity">
             android:textSize="@dimen/default_text_size"/>
 
         <EditText
-            android:id="@+id/soldOn_min"
+            android:id="@+id/upForSale_max"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
@@ -486,7 +486,7 @@ tools:context=".SearchActivity">
             android:textSize="@dimen/default_text_size"/>
 
         <EditText
-            android:id="@+id/soldOn_max"
+            android:id="@+id/upForSale_min"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
@@ -509,7 +509,7 @@ tools:context=".SearchActivity">
             android:textSize="@dimen/default_text_size"/>
 
         <EditText
-            android:id="@+id/upForSale_max"
+            android:id="@+id/soldOn_max"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
@@ -532,7 +532,7 @@ tools:context=".SearchActivity">
             android:textSize="@dimen/default_text_size"/>
 
         <EditText
-            android:id="@+id/upForSale_min"
+            android:id="@+id/soldOn_min"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"

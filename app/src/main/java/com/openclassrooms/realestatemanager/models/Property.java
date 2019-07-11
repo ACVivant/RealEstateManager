@@ -1,15 +1,11 @@
 package com.openclassrooms.realestatemanager.models;
 
-import java.util.Date;
-
-import androidx.lifecycle.LiveData;
-import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 /**
- * Created by Anne-Charlotte Vivant on 10/05/2019.
+ * Property model
  */
 @Entity(tableName = "property",
         foreignKeys = {

@@ -5,19 +5,18 @@ import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
+
+/**
+ * Activity Credit: calculate the cost of a credit
+ */
 
 public class CreditActivity extends AppCompatActivity {
 
@@ -39,10 +38,6 @@ public class CreditActivity extends AppCompatActivity {
     private double input;
     private double interest;
     private  int lenght;
-    private double cost;
-
-    //Design
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +50,7 @@ public class CreditActivity extends AppCompatActivity {
             public void onClick(View v) {
                 getData();
                 creditMonth.setText(Double.toString(calculateMonth(input, interest, lenght)));
-                creditCost.setText(Double.toString(calculateCost(input, interest, lenght,calculateMonth(input, interest, lenght)) ));
+                creditCost.setText(Double.toString(calculateCost(input, lenght,calculateMonth(input, interest, lenght)) ));
             }
         });
 
@@ -65,8 +60,9 @@ public class CreditActivity extends AppCompatActivity {
 
     // Configure toolbar
     private void configureToolbar(){
+        Toolbar toolbar;
         // Get the toolbar view inside the activity layout
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         // Sets the Toolbar
         setSupportActionBar(toolbar);
 
@@ -115,9 +111,10 @@ public class CreditActivity extends AppCompatActivity {
         return month;
     }
 
-        public double calculateCost(double inputValue, double interestValue, int lenghtValue, double month) {
+        public double calculateCost(double inputValue, int lenghtValue, double month) {
+            double cost;
+            String str;
             DecimalFormat df = new DecimalFormat("########.00");
-            String str = df.format(month);
         cost = month*lenghtValue*12-inputValue;
         str = df.format(cost);
         cost = Double.parseDouble(str.replace(',', '.'));

@@ -426,7 +426,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
                 containsCondition = true;
             }
 
-            queryString += " soldOnDate < ?";
+            queryString += " soldOnDate > ?";
             int soldOnMaxInt = Utils.convertStringDateToIntDate(soldOnMax.getText().toString());
             args.add(soldOnMaxInt);
             containsCondition = true;
@@ -440,7 +440,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
                 containsCondition = true;
             }
 
-            queryString += " soldOnDate > ?";
+            queryString += " soldOnDate < ?";
             int soldOnMinInt = Utils.convertStringDateToIntDate(solOnMin.getText().toString());
             args.add(soldOnMinInt);
             containsCondition = true;

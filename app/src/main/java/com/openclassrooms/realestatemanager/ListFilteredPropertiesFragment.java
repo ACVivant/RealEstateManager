@@ -98,7 +98,6 @@ public class ListFilteredPropertiesFragment extends Fragment {
 
 
     private void initRecyclerView() {
-        Log.d(TAG, "initRecyclerView");
 
         this.adapter = new ListRecyclerViewAdapter(propertyId);
         RecyclerView recyclerView = v.findViewById(R.id.list_recyclerview_container);
@@ -106,7 +105,7 @@ public class ListFilteredPropertiesFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.smoothScrollToPosition(positionRV);
         recyclerView.setAdapter(adapter);
-        Log.d(TAG, "initRecyclerView: propertyId " + propertyId);
+
         adapter.setRVBackgroudColor(propertyId);
 
         adapter.setOnItemClickedListener(new ListRecyclerViewAdapter.OnItemClickedListener() {
@@ -114,14 +113,12 @@ public class ListFilteredPropertiesFragment extends Fragment {
                 public void OnItemClicked(int propertyId, int position) {
                 mCallback.onFilteredItemRVClicked(propertyId, position);
                 adapter.setRVBackgroudColor(propertyId);
-                Log.d(TAG, "OnItemClicked: position " + position);
-                Log.d(TAG, "OnItemClicked: propertyId " + propertyId);
             }
         });
     }
 
     private void configureViewModel(){
-        Log.d(TAG, "configureViewModel");
+
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getContext());
         this.propertyViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PropertyViewModel.class);
     }

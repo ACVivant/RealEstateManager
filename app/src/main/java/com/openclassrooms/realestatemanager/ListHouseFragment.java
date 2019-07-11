@@ -56,8 +56,8 @@ public class ListHouseFragment extends Fragment  {
     private PropertyViewModel propertyViewModel;
     private ListRecyclerViewAdapter adapter;
 
-    private int propertyId = 0;
-    public int propertySaved = 0;
+    private int propertyId = 1;
+    public int propertySaved = 1;
     private int positionRV;
 
     View v;
@@ -83,9 +83,6 @@ public class ListHouseFragment extends Fragment  {
         Bundle bundle = getArguments();
         propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY, 1);
         positionRV = bundle.getInt(POSITION_IN_RV, 1);
-
-        Log.d(TAG, "onCreateView: position_in_rv " + positionRV);
-        Log.d(TAG, "onCreateView: test " + bundle.getInt("TEST"));
 
         configureViewModel();
         getAllTypes();
@@ -132,7 +129,6 @@ public class ListHouseFragment extends Fragment  {
     }
 
     private void configureViewModel(){
-        Log.d(TAG, "configureViewModel");
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getContext());
         this.propertyViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PropertyViewModel.class);
     }

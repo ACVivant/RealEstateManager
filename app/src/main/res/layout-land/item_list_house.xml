@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/house_type"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/default_small_title_size" />
+                android:textSize="@dimen/default_text_size" />
 
             <TextView
                 android:id="@+id/list_recyclerview_item_town"
@@ -56,7 +56,7 @@
                 android:paddingEnd="@dimen/default_mini_margin"
                 android:text="@string/devise"
                 android:textColor="@color/colorAccentLight"
-                android:textSize="@dimen/default_small_title_size" />
+                android:textSize="@dimen/default_text_size" />
 
             <TextView
                 android:id="@+id/list_recyclerview_item_price"
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/price_text"
                 android:textColor="@color/colorAccentLight"
-                android:textSize="@dimen/default_small_title_size" />
+                android:textSize="@dimen/default_text_size" />
         </LinearLayout>
     </LinearLayout>
 

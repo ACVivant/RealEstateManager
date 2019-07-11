@@ -9,8 +9,9 @@ import androidx.lifecycle.LiveData;
 import androidx.sqlite.db.SupportSQLiteQuery;
 
 /**
- * Created by Anne-Charlotte Vivant on 13/05/2019.
+ * Property Repository
  */
+
 public class PropertyRepository {
         private PropertyDao propertyDao;
 

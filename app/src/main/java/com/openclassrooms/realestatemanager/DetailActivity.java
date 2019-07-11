@@ -54,7 +54,6 @@ public class DetailActivity extends AppCompatActivity implements PhotoRecyclerVi
         } else {
             fm.beginTransaction().add(R.id.detail_container, fragmentDetail, "2").commit();
         }
-        Log.d(TAG, "onCreate: ");
     }
 
     // Configure toolbar

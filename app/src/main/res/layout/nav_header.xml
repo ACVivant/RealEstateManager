@@ -18,7 +18,7 @@
         android:paddingStart="@dimen/default_margin"
         android:layout_centerVertical="true"
         android:text="@string/title_3"
-        android:textSize="30sp"
+        android:textSize="@dimen/nav_header_title_size"
         android:textColor="@android:color/white"
         android:textStyle="bold"/>
 

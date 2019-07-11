@@ -1,0 +1,228 @@
+<resources>
+    <!--Keys-->
+    <string name="Google_Maps_API_Key">"AIzaSyDCGD3YBl9JssVJKfRm9yFM13SxOz8cSeQ"</string>
+
+    <!-- welcome screen-->
+    <string name="app_name">Real Estate Manager</string>
+    <string name="app_slogan">"Just what you need"</string>
+    <string name="login_go">"Begin"</string>
+    <string name="welcome_picture">"welcome picture"</string>
+
+    <!-- Bottom Nav Bar -->
+    <string name="nav_title">"Real Estate Manager"</string>
+    <string name="nav_detail">"Detail"</string>
+    <string name="nav_list">"List"</string>
+
+    <!-- Navigation drawer -->
+    <string name="navigation_drawer_open">"Open"</string>
+    <string name="navigation_drawer_close">"Close"</string>
+    <string name="title_3">"Real \nEstate \nManager"</string>
+    <string name="drawer_title_settings">"Tools"</string>
+    <string name="drawer_title_search">"Search"</string>
+    <string name="drawer_title_update">"Uodate"</string>
+
+    <!-- Menu -->
+    <string name="menu_add">"Add a property"</string>
+    <string name="menu_update">"Update a property"</string>
+    <string name="menu_search">"Search"</string>
+    <string name="menu_param">"Parameters"</string>
+    <string name="menu_convert">"Conversion"</string>
+    <string name="menu_credit">"Credit"</string>
+    <string name="menu_map">"Map"</string>
+    <string name="menu_home">"Home"</string>
+
+    <!-- Detail layout-->
+    <string name="recyclerview_title">"Pictures"</string>
+    <string name="recyclerview_description">"Description of pictures"</string>
+    <string name="description_title">"Description"</string>
+    <string name="house_description">"Description of property"</string>
+    <string name="surface_title">"Surface"</string>
+    <string name="surface_text">"0"</string>
+    <string name="room_title">"Rooms"</string>
+    <string name="room_text">"0"</string>
+    <string name="bedroom_title">"Bedrooms"</string>
+    <string name="bedroom_text">"0"</string>
+    <string name="bathroom_title">"Bathrooms"</string>
+    <string name="bathroom_text">"0"</string>
+    <string name="location_title">"Address"</string>
+    <string name="location_number">"number"</string>
+    <string name="location_street">" street"</string>
+    <string name="location_street2">"complement"</string>
+    <string name="location_zipcode">"zipcode"</string>
+    <string name="location_town">"Town"</string>
+    <string name="location_country">"Country"</string>
+    <string name="square_meter">"sq m"</string>
+    <string name="devise">"€"</string>
+    <string name="statut">"Statut"</string>
+    <string name="date_offer">"Up for sale"</string>
+    <string name="date_sold">"Sold on"</string>
+    <string name="school">"School"</string>
+    <string name="shop">"Shop"</string>
+    <string name="museum">"Museum"</string>
+    <string name="park">"Park"</string>
+    <string name="localisation">"Localisation</string>
+    <string name="detail_update">" Update "</string>
+    <string name="detail_before">" Before "</string>
+    <string name="detail_after">" Aftert "</string>
+    <string name="before_not_allowed">"You are already on the first property"</string>
+    <string name="after_not_allowed">"You are already on the last property"</string>
+
+    <!-- Create layout-->
+    <string name="set_location_number">"Number"</string>
+    <string name="set_location_street">"Street"</string>
+    <string name="set_location_street2">"Complement"</string>
+    <string name="set_location_zipcode">"Zipcode"</string>
+    <string name="set_location_town">"Town"</string>
+    <string name="set_location_country">"Country"</string>
+    <string name="price_title">"Price $"</string>
+    <string name="price_text">"99999"</string>
+    <string name="euros">"€"</string>
+    <string name="dollars">"$"</string>
+    <string name="insert_photo">"Add a photo"</string>
+    <string name="describe_photo">"Caption"</string>
+    <string name="validation">"Validate"</string>
+    <string name="add_photo">"Add pictures"</string>
+    <string name="dismiss">"Cancel"</string>
+    <string name="agency_informations">"Agency informations"</string>
+    <string name="agent_in_charge">"Agnet in charge"</string>
+    <string name="date_example">"12/05/2019"</string>
+    <string name="agent_example">"Jules"</string>
+    <string name="please_insert_address">"You must put an address"</string>
+    <string name="create_status">"Status"</string>
+    <string name="address_missing">"You must put an address."</string>
+    <string name="photo_missing">"You must put a main picture."</string>
+    <string name="soldon_date_missing">"You must put the date of sale."</string>
+
+    <string-array name="create_agent_name">
+        <item>Jules</item>
+        <item>Marcelina</item>
+        <item>Victoire</item>
+    </string-array>
+
+    <string-array name="filter_agent_ask">
+        <item>Jules</item>
+        <item>Marcelina</item>
+        <item>Victoire</item>
+        <item>All</item>
+    </string-array>
+
+    <string name="all">Tous</string>
+
+    <string-array name="create_status_array">
+        <item>Being created</item>
+        <item>On sale</item>
+        <item>Under negotiation</item>
+        <item>"Sold"</item>
+    </string-array>
+
+    <string name="status_sold">"Sold"</string>
+
+    <string-array name="filter_status_ask">
+        <item>Being created</item>
+        <item>On sale</item>
+        <item>Under negotiation</item>
+        <item>"Sold"</item>
+        <item>All</item>
+    </string-array>
+
+    <string name="photo_permission_allowed">"Access to photos is allowed."</string>
+    <string name="photo_permission_denied">"Access to photos denied"</string>
+    <string name="no_photo">"No picture was chosen"</string>
+    <string name="add_main_photo">"Add main picture"</string>
+    <string name="modify_main_photo">"Update main picture"</string>
+    <string name="modify_others_photo">"Add another picture"</string>
+    <string name="delete_photo">"Delete a picture"</string>
+    <string name="search_photo">"Search for a picture"</string>
+    <string name="take_photo">"Take a photo"</string>
+    <string name="main_photo">"Main picture"</string>
+    <string name="add_more_photo">"Add others picture"</string>
+    <string name="more_photo">"Others pictures"</string>
+    <string name="add_main_photo_description">"Pictures caption"</string>
+    <string name="add_main_photo_description_short">"Caption"</string>
+    <string name="photo_and_legend_needed">"You must choose a picture and a caption"</string>
+
+    <string name="add_photo_close">"Confirm"</string>
+    <string name="add_photo_more">"Continue"</string>
+
+    <string name="error">"Oups! Somethnis was wrong."</string>
+    <string name="ok">"OK"</string>
+    <string name="reset">"Cancel"</string>
+
+    <string name="warning">"Warning!</string>
+
+    <!-- List Recyclerview  -->
+    <string name="house_type">"Type od property"</string>
+
+    <!-- Search Activity -->
+    <string name="search_type_ask">"Type of property"</string>
+    <string-array name="search_type_answer">
+        <item>Appartment</item>
+        <item>Loft</item>
+        <item>House</item>
+        <item>Manor</item>
+        <item>Castle</item>
+    </string-array>
+
+    <string-array name="filter_type_ask">
+        <item>Appartment</item>
+        <item>Loft</item>
+        <item>House</item>
+        <item>Manor</item>
+        <item>Castle</item>
+        <item>All</item>
+    </string-array>
+
+    <string name="search_price_mini_ask">"Price min"</string>
+    <string name="search_price_max_ask">"Price max"</string>
+    <string name="search_surface_mini_ask">"Surf. min"</string>
+    <string name="search_surface_max_ask">"Surf. max"</string>
+    <string name="search_room_ask">"Rooms min"</string>
+    <string name="search_bedroom_ask">"Bedrooms min"</string>
+    <string name="search_bathroom_ask">"Bathroomsn min"</string>
+    <string name="search_photo_ask">"Photos min "</string>
+    <string name="search_attracting_ask">"Interesting points"</string>
+    <string name="search_max_date_ask">"Put on sale before "</string>
+    <string name="search_min_date_ask">"Put on sale after "</string>
+    <string name="search_max_datesold_ask">"Sold before "</string>
+    <string name="search_min_datesold_ask">"Sold after "</string>
+
+    <!-- Settings Activity -->
+    <string name="settings_devise_ask">"Converter"</string>
+    <string name="settings_euros">"Euros"</string>
+    <string name="settings_dollars">"Dollars"</string>
+    <string name="convert_devise">"Convert"</string>
+    <string-array name="settings_devise_answer">
+        <item>€</item>
+        <item>$</item>
+    </string-array>
+
+    <!-- Map Activity-->
+    <string name="map_connection_error">"We can not connect to Google Map"</string>
+    <string name="no_connection">"You are not connected to the Internet"</string>
+    <string name="room">" room(s) "</string>
+
+    <!-- Notification-->
+    <string name="channel_description">"Notification Channel  of Real Estate Manager"</string>
+    <string name="notification_title">"Bravo!"</string>
+    <string name="notification_message">"New property has been created."</string>
+
+    <!-- Credit Activity-->
+    <string name="credit_title">"Simulate cost of credit"</string>
+    <string name="credit_input">"Amount borrowed"</string>
+    <string name="credit_length">"Duration in years"</string>
+    <string name="credit_interest">"Rate"</string>
+    <string name="credit_month">"Monthly fees"</string>
+    <string name="credit_cost">"Total cost of credit"</string>
+    <string name="credit_capital">"Repayed capital each month"</string>
+    <string name="euros_needed">"You have to enter a value in euros."</string>
+    <string name="dollars_needed">"You have to enter a value in dollars."</string>
+
+    <!-- Update activity -->
+    <string name="update_ok">"Property has been updated."</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>
+

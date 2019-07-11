@@ -25,7 +25,7 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 /**
- * Created by Anne-Charlotte Vivant on 10/05/2019.
+ * Creation of the database and first implementation
  */
 
 
@@ -49,37 +49,33 @@ public abstract class RealEstateDatabase extends RoomDatabase {
 
     // --- INSTANCE ---
     public static RealEstateDatabase getInstance(Context context) {
-        Log.d(TAG, "getInstance: RealEstateDatabase 1");
         if (INSTANCE == null) {
             synchronized (RealEstateDatabase.class) {
-                Log.d(TAG, "getInstance: RealEstateDatabase 2");
                 if (INSTANCE == null) {
-                    Log.d(TAG, "getInstance: RealEstateDatabase 3");
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             RealEstateDatabase.class, "real_estate_database.db")
                             .fallbackToDestructiveMigration()
                             .addCallback(prepopulateDatabase())
                             .build();
-                    Log.d(TAG, "getInstance: RealEstateDatabase 4");
                 }
             }
         }
         return INSTANCE;
     }
 
-    // ---
+    // ---------------------------------
+    // Prepopulate database for demo
+    // ---------------------------------
+
     private static Callback prepopulateDatabase(){
-        Log.d(TAG, "prepopulateDatabase: CallBack called");
         return new Callback() {
             @Override
             public void onOpen(@NonNull SupportSQLiteDatabase db) {
                 super.onOpen(db);
-                Log.d(TAG, "onOpen: CallBack");
             }
 
             @Override
             public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                Log.d(TAG, "onCreate: CallBack");
                 super.onCreate(db);
 
                 ContentValues contentValuesAgent = new ContentValues();
@@ -93,8 +89,6 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 ContentValues contentValuesAgent3 = new ContentValues();
                 contentValuesAgent3.put("agentName", "Victoire");
                 db.insert("agent", OnConflictStrategy.REPLACE, contentValuesAgent3);
-
-                Log.d(TAG, "onCreate: propopulate Agent");
 
                 ContentValues contentValuesStatus = new ContentValues();
                 contentValuesStatus.put("statusText", "En cours de création");
@@ -111,8 +105,6 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 ContentValues contentValuesStatus3 = new ContentValues();
                 contentValuesStatus3.put("statusText", "Vendu");
                 db.insert("status", OnConflictStrategy.REPLACE, contentValuesStatus3);
-
-                Log.d(TAG, "onCreate: propopulate Status");
 
                 ContentValues contentValuesType = new ContentValues();
                 contentValuesType.put("typeText", "Appartement" );
@@ -133,8 +125,6 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 ContentValues contentValuesType4 = new ContentValues();
                 contentValuesType4.put("typeText", "Château" );
                 db.insert("type_of_property", OnConflictStrategy.REPLACE, contentValuesType4);
-
-                Log.d(TAG, "onCreate: propopulate Type");
 
                 ContentValues contentValuesProperty = new ContentValues();
                 contentValuesProperty.put("price", 450000);
@@ -162,8 +152,6 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesProperty.put("country", "France");
                 db.insert("property", OnConflictStrategy.REPLACE, contentValuesProperty);
 
-                Log.d(TAG, "onCreate: prepopulate Property 1");
-
                 ContentValues contentValuesProperty1 = new ContentValues();
                 contentValuesProperty1.put("price", 578230);
                 contentValuesProperty1.put("rooms", 5);
@@ -180,7 +168,7 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesProperty1.put("typeId", 2);
                 contentValuesProperty1.put("agentId", 1);
                 contentValuesProperty1.put("statusId", 2);
-                contentValuesProperty1.put("mainPhoto", "http://espace-facades.fr/wp-content/uploads/sites/8/2018/09/ravalement-facade-maison-blagnac-avant.jpg?auto=compress,format&q=80&h=100&dpr=2");
+                contentValuesProperty1.put("mainPhoto", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeMzGKCkWMBHvCyz3C7fqYUYuGYUjjhJRwqM3XavLWSAvUiUz9?auto=compress,format&q=80&h=100&dpr=2");
                 contentValuesProperty1.put("nbrePhotos", "6");
                 contentValuesProperty1.put("numberInStreet", "10");
                 contentValuesProperty1.put("street", "rue de Soissons");
@@ -189,7 +177,6 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesProperty1.put("country", "France");
                 db.insert("property", OnConflictStrategy.REPLACE, contentValuesProperty1);
 
-                Log.d(TAG, "onCreate: prepopulate Property 2");
 
                 ContentValues contentValuesProperty2 = new ContentValues();
                 contentValuesProperty2.put("price", 125480);
@@ -216,8 +203,6 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesProperty2.put("country", "France");
                 db.insert("property", OnConflictStrategy.REPLACE, contentValuesProperty2);
 
-                Log.d(TAG, "onCreate: prepopulate Property 3");
-
                 ContentValues contentValuesProperty3 = new ContentValues();
                 contentValuesProperty3.put("price", 56230500);
                 contentValuesProperty3.put("rooms", 23);
@@ -242,8 +227,6 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesProperty3.put("town", "Crépy-en-Valois");
                 contentValuesProperty3.put("country", "France");
                 db.insert("property", OnConflictStrategy.REPLACE, contentValuesProperty3);
-
-                Log.d(TAG, "onCreate: prepopulate Property 4");
 
                 ContentValues contentValuesProperty4 = new ContentValues();
                 contentValuesProperty4.put("price", 153450);
@@ -270,8 +253,6 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesProperty4.put("country", "France");
                 db.insert("property", OnConflictStrategy.REPLACE, contentValuesProperty4);
 
-                Log.d(TAG, "onCreate: prepopulate Property 5");
-
                 ContentValues contentValuesProperty5 = new ContentValues();
                 contentValuesProperty5.put("price", 275490);
                 contentValuesProperty5.put("rooms", 3);
@@ -288,7 +269,7 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesProperty5.put("typeId", 1);
                 contentValuesProperty5.put("agentId", 1);
                 contentValuesProperty5.put("statusId", 2);
-                contentValuesProperty5.put("mainPhoto", "http://www.constructions-dantan.fr/docs/Entreprise/restauration/charpente_normandie.jpg?auto=compress,format&q=80&h=100&dpr=2");
+                contentValuesProperty5.put("mainPhoto", "https://cdn.pixabay.com/photo/2018/04/05/19/51/facade-3293950_960_720.jpg?auto=compress,format&q=80&h=100&dpr=2");
                 contentValuesProperty5.put("nbrePhotos", "3");
                 contentValuesProperty5.put("numberInStreet", "5");
                 contentValuesProperty5.put("street", "rue de Vez");
@@ -296,8 +277,6 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesProperty5.put("town", "Crépy-en-Valois");
                 contentValuesProperty5.put("country", "France");
                 db.insert("property", OnConflictStrategy.REPLACE, contentValuesProperty5);
-
-                Log.d(TAG, "onCreate: prepopulate Property 6");
 
                 ContentValues contentValuesProperty6 = new ContentValues();
                 contentValuesProperty6.put("price", 562300);
@@ -324,14 +303,8 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesProperty6.put("country", "France");
                 db.insert("property", OnConflictStrategy.REPLACE, contentValuesProperty6);
 
-                ContentValues contentValuesPhoto = new ContentValues();
-                contentValuesPhoto.put("photoUri","https://www.parklex.com/wp-content/uploads/2015/11/WoodviewMews-GeraghtyTaylorArchitects-London-UK-2015-Parklex-Facade-Gold-02.jpg?auto=compress,format&q=80&h=100&dpr=2");
-                contentValuesPhoto.put("photoText", "façade");
-                contentValuesPhoto.put("propertyId",1 );
-                db.insert("photo", OnConflictStrategy.REPLACE, contentValuesPhoto);
-
                 ContentValues contentValuesPhoto1 = new ContentValues();
-                contentValuesPhoto1.put("photoUri","https://img-3.journaldesfemmes.fr/qLiTvl6g4A4iw_56ntaA4-cOa1w=/819x546/smart/54dc4627fbce4251b7ffbc0702a26dc4/ccmcms-jdf/11014669.jpg?auto=compress,format&q=80&h=100&dpr=2");
+                contentValuesPhoto1.put("photoUri","https://s3.amazonaws.com/furniture.retailcatalog.us/products/208530/large/b219-31-36-46-77-74-71-96-q238.jpg?auto=compress,format&q=80&h=100&dpr=2");
                 contentValuesPhoto1.put("photoText", "bedroom");
                 contentValuesPhoto1.put("propertyId",1 );
                 db.insert("photo", OnConflictStrategy.REPLACE, contentValuesPhoto1);
@@ -347,12 +320,6 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesPhoto3.put("photoText", "kitchen");
                 contentValuesPhoto3.put("propertyId",1 );
                 db.insert("photo", OnConflictStrategy.REPLACE, contentValuesPhoto3);
-
-                ContentValues contentValuesPhoto4 = new ContentValues();
-                contentValuesPhoto4.put("photoUri","http://espace-facades.fr/wp-content/uploads/sites/8/2018/09/ravalement-facade-maison-blagnac-avant.jpg?auto=compress,format&q=80&h=100&dpr=2");
-                contentValuesPhoto4.put("photoText", "façade");
-                contentValuesPhoto4.put("propertyId",2 );
-                db.insert("photo", OnConflictStrategy.REPLACE, contentValuesPhoto4);
 
                 ContentValues contentValuesPhoto5 = new ContentValues();
                 contentValuesPhoto5.put("photoUri","https://cache.marieclaire.fr/data/photo/w1000_ci/4y/salon-design-new-york.jpg?auto=compress,format&q=80&h=100&dpr=2");
@@ -378,38 +345,26 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesPhoto8.put("propertyId",2 );
                 db.insert("photo", OnConflictStrategy.REPLACE, contentValuesPhoto8);
 
-                ContentValues contentValuesPhoto9 = new ContentValues();
-                contentValuesPhoto9.put("photoUri","https://upload.wikimedia.org/wikipedia/commons/3/3c/Fa%C3%A7ade_de_l%27immeuble_sis_au_57_rue_de_Bruxelles.JPG?auto=compress,format&q=80&h=100&dpr=2");
-                contentValuesPhoto9.put("photoText", "façade");
-                contentValuesPhoto9.put("propertyId",3 );
-                db.insert("photo", OnConflictStrategy.REPLACE, contentValuesPhoto9);
-
                 ContentValues contentValuesPhoto10 = new ContentValues();
                 contentValuesPhoto10.put("photoUri","https://s-ec.bstatic.com/images/hotel/max1024x768/962/96268673.jpg?auto=compress,format&q=80&h=100&dpr=2");
                 contentValuesPhoto10.put("photoText", "main room");
                 contentValuesPhoto10.put("propertyId",3 );
                 db.insert("photo", OnConflictStrategy.REPLACE, contentValuesPhoto10);
 
-                ContentValues contentValuesPhoto11 = new ContentValues();
-                contentValuesPhoto11.put("photoUri","https://www.nerienlouper.paris/wp-content/uploads/2018/05/chateau-de-versailles-photo.jpg?auto=compress,format&q=80&h=100&dpr=2");
-                contentValuesPhoto11.put("photoText", "façade");
-                contentValuesPhoto11.put("propertyId",4 );
-                db.insert("photo", OnConflictStrategy.REPLACE, contentValuesPhoto11);
-
                 ContentValues contentValuesPhoto12 = new ContentValues();
-                contentValuesPhoto12.put("photoUri","http://www.culture.gouv.fr/var/culture/storage/images/media/www.culture.gouv.fr/images/actualites/2011/octobre/exposition-versailles-raconte-le-mobilier-national.-quatre-siecles-de-creation-3/116755-1-fre-FR/Exposition-Versailles-raconte-le-Mobilier-national.-Quatre-siecles-de-creation-3.jpg?auto=compress,format&q=80&h=100&dpr=2");
-                contentValuesPhoto12.put("photoText", "bureau");
+                contentValuesPhoto12.put("photoUri","https://img.aws.la-croix.com/2019/04/09/1301014531/chambre-renovee-Marie-Antoinette-1755-1793-Chateau-Versailles-9-avril-2019_0_729_492.jpg?auto=compress,format&q=80&h=100&dpr=2");
+                contentValuesPhoto12.put("photoText", "chambre");
                 contentValuesPhoto12.put("propertyId",4 );
                 db.insert("photo", OnConflictStrategy.REPLACE, contentValuesPhoto12);
 
                 ContentValues contentValuesPhoto13 = new ContentValues();
-                contentValuesPhoto13.put("photoUri","http://www.iwishparis.com/wp-content/uploads/2016/03/orangerie-chateau-versailles-andre-le-notre-jcl.jpg?auto=compress,format&q=80&h=100&dpr=2");
+                contentValuesPhoto13.put("photoUri","https://img.grouponcdn.com/pwa_test/MSZ7NZCUsSLdpas2DmMMhKLBGA7/MS-669x446/v1/c700x420.jpg?auto=compress,format&q=80&h=100&dpr=2");
                 contentValuesPhoto13.put("photoText", "garden");
                 contentValuesPhoto13.put("propertyId",4 );
                 db.insert("photo", OnConflictStrategy.REPLACE, contentValuesPhoto13);
 
                 ContentValues contentValuesPhoto14 = new ContentValues();
-                contentValuesPhoto14.put("photoUri","http://www.nouveautourismeculturel.com/blog/wp-content/contenus/2012/08/Galerie-des-Glaces-.jpg?auto=compress,format&q=80&h=100&dpr=2");
+                contentValuesPhoto14.put("photoUri","https://images.musement.com/cover/0002/15/venuehero-versailles1-jpg_header-114728.jpeg?auto=compress,format&q=80&h=100&dpr=2");
                 contentValuesPhoto14.put("photoText", "dance room");
                 contentValuesPhoto14.put("propertyId",4 );
                 db.insert("photo", OnConflictStrategy.REPLACE, contentValuesPhoto14);
@@ -419,18 +374,6 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesPhoto15.put("photoText", "main room");
                 contentValuesPhoto15.put("propertyId",5 );
                 db.insert("photo", OnConflictStrategy.REPLACE, contentValuesPhoto15);
-
-                ContentValues contentValuesPhoto16 = new ContentValues();
-                contentValuesPhoto16.put("photoUri","https://www.expert-peinture.fr/wp-content/uploads/2015/09/5-conseils-pour-peindre-sa-fa%c3%a7ade-%c3%a0-la-perfection-.jpg?auto=compress,format&q=80&h=100&dpr=2");
-                contentValuesPhoto16.put("photoText", "facade");
-                contentValuesPhoto16.put("propertyId",5 );
-                db.insert("photo", OnConflictStrategy.REPLACE, contentValuesPhoto16);
-
-                ContentValues contentValuesPhoto17 = new ContentValues();
-                contentValuesPhoto17.put("photoUri","http://www.constructions-dantan.fr/docs/Entreprise/restauration/charpente_normandie.jpg?auto=compress,format&q=80&h=100&dpr=2");
-                contentValuesPhoto17.put("photoText", "facade");
-                contentValuesPhoto17.put("propertyId",6 );
-                db.insert("photo", OnConflictStrategy.REPLACE, contentValuesPhoto17);
 
                 ContentValues contentValuesPhoto18 = new ContentValues();
                 contentValuesPhoto18.put("photoUri","https://www.entre-hotes.com/images/chambres/insolite/chambre-7701.jpg?auto=compress,format&q=80&h=100&dpr=2");
@@ -444,12 +387,6 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesPhoto19.put("propertyId",6 );
                 db.insert("photo", OnConflictStrategy.REPLACE, contentValuesPhoto19);
 
-                ContentValues contentValuesPhoto20 = new ContentValues();
-                contentValuesPhoto20.put("photoUri","https://inhabitat.com/wp-content/blogs.dir/1/files/2016/01/Bergeron-Centre-for-Engineering-Excellence-by-ZAS-Architects-3.jpg?auto=compress,format&q=80&h=100&dpr=2");
-                contentValuesPhoto20.put("photoText", "façade");
-                contentValuesPhoto20.put("propertyId",7 );
-                db.insert("photo", OnConflictStrategy.REPLACE, contentValuesPhoto20);
-
                 ContentValues contentValuesPhoto21 = new ContentValues();
                 contentValuesPhoto21.put("photoUri","https://www.ikea.com/images/photo-dune-chambre-a-coucher-avec-lit-double-lit-bebe-et-jou-53a202d1682582a3f1e13520c2fba648.jpg?f=s?auto=compress,format&q=80&h=100&dpr=2");
                 contentValuesPhoto21.put("photoText", "bedroom");
@@ -457,7 +394,7 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 db.insert("photo", OnConflictStrategy.REPLACE, contentValuesPhoto21);
 
                 ContentValues contentValuesPhoto22 = new ContentValues();
-                contentValuesPhoto22.put("photoUri","http://static.cotemaison.fr/medias_11747/w_1362,h_1362,c_crop,x_205,y_0/w_600,h_600,c_fill,g_north/v1517914643/grand-salon-mobilier-rose_6014620.jpg?auto=compress,format&q=80&h=100&dpr=2");
+                contentValuesPhoto22.put("photoUri","http://static.cotemaison.fr/medias_11747/w_1365,h_1365,c_crop,x_444,y_0/w_600,h_600,c_fill,g_north/v1517915099/grand-salon-avec-miroir-xxl_6014646.jpg?auto=compress,format&q=80&h=100&dpr=2");
                 contentValuesPhoto22.put("photoText", "salon");
                 contentValuesPhoto22.put("propertyId",7 );
                 db.insert("photo", OnConflictStrategy.REPLACE, contentValuesPhoto22);
