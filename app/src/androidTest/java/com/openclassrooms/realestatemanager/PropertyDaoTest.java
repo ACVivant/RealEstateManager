@@ -23,13 +23,12 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by Anne-Charlotte Vivant on 13/05/2019.
+ * Testing database
  */
-//@RunWith(AndroidJUnit4.class)
+
 public class PropertyDaoTest {
 
     // FOR DATA
-    private PropertyDao mPropertyDao;
     private RealEstateDatabase database;
 
     // DATA SET FOR TEST
@@ -80,7 +79,7 @@ public class PropertyDaoTest {
     }
 
     @Test
-    public void testInsertAndGetUser() throws InterruptedException {
+    public void testInsertAndGetProperty() throws InterruptedException {
 
         // TEST
         Property property = LiveDataTestUtil.getValue(this.database.propertyDao().getPropertyFromId(1));
@@ -119,6 +118,15 @@ public class PropertyDaoTest {
         List<Property> items = LiveDataTestUtil.getValue(this.database.propertyDao().getAllProperty());
         assertTrue(items.size() == 2);
 
+    }
+
+    @Test
+    public void testGetPropertyInfosFromId() throws InterruptedException {
+        Property myProperty =  LiveDataTestUtil.getValue(this.database.propertyDao().getPropertyFromId(1));
+        int price = myProperty.getPrice();
+
+        // TEST
+        assertTrue(price==100000);
     }
 }
 
