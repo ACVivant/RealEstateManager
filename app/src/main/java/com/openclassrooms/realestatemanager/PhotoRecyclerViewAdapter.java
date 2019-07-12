@@ -117,8 +117,8 @@ public PhotoRecyclerViewAdapter(Context context, String which) {
         alertDialog.setPositiveButton("Confirmer", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                holder.picture.setImageResource(R.drawable.ic_delete);
-                holder.picture.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
+                /*holder.picture.setImageResource(R.drawable.ic_delete);
+                holder.picture.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));*/
 
                 listener.photoToDelete(photoId);
 
