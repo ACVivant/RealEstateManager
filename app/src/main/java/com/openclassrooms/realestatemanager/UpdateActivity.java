@@ -40,8 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UpdateActivity extends AppCompatActivity implements PhotoRecyclerViewAdapter.DeletePhotoListener, UpdateFragment.OnValidateClickedListener  {
-  //  public class UpdateActivity extends AppCompatActivity implements PhotoRecyclerViewAdapter.DeletePhotoListener, UpdateFragment.OnValidateClickedListener, PhotoDialogFragment.DialogListener  {
-    private static final String TAG = "UpdateActivity";
+  private static final String TAG = "UpdateActivity";
     public static final String  FROM_UPDATE_REQUEST = "fromUpadateActivity";
 
     @BindView(R.id.create_spinner_status)

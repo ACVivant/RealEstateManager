@@ -82,11 +82,11 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
 
         context = this.getContext();
 
-        search = (ImageButton) view.findViewById(R.id.search_photo);
-        take = (ImageButton) view.findViewById(R.id.take_photo);
-        legend = (EditText) view.findViewById(R.id.create_photo_description);
-        photoPreviewAdd = (ImageView) view.findViewById(R.id.dialog_add_photo_preview);
-        photoPreviewTake = (ImageView) view.findViewById(R.id.dialog_take_photo_preview);
+        search = view.findViewById(R.id.search_photo);
+        take = view.findViewById(R.id.take_photo);
+        legend = view.findViewById(R.id.create_photo_description);
+        photoPreviewAdd = view.findViewById(R.id.dialog_add_photo_preview);
+        photoPreviewTake = view.findViewById(R.id.dialog_take_photo_preview);
 
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +107,6 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
                 .setNegativeButton(getResources().getString(R.string.reset), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                     }
                 })
                 .setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
@@ -119,9 +118,6 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
                         } else {
                             photoLegend = legend.getText().toString();
                             if (whichRequest.equals(CreateHomeActivity.OTHERS_PHOTO_REQUEST)) {
-                                //listener.applyOthersPhoto(photoURI.toString(), photoLegend);
-
-
                                 if( getTargetFragment() == null ) {
                                     return;
                                 }
@@ -256,22 +252,4 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
         mediaScanIntent.setData(pictureUri);
         context.sendBroadcast(mediaScanIntent);
     }
-
-
-/*    @Override
-    public void onAttach(Context context) {
-        Log.d(TAG, "onAttach");
-        super.onAttach(context);
-
-        try {
-            listener = (DialogListener) context;
-        } catch (ClassCastException e) {
-           throw new ClassCastException(context.toString() + "must implement DialogListener");
-        }
-    }*/
-
-/*    public interface DialogListener{
-        void applyOthersPhoto(String photoUri, String photoLegend);
-        void applyMainPhoto(String photoUri, String photoLegend, boolean main);
-    }*/
 }

@@ -137,7 +137,7 @@
     <string name="main_photo">"Photo principale"</string>
     <string name="add_more_photo">"Ajouter d'autres photos"</string>
     <string name="more_photo">"Autres photos"</string>
-    <string name="add_main_photo_description">"Légende de la photo"</string>
+    <string name="add_main_photo_description">"Légende"</string>
     <string name="add_main_photo_description_short">"Légende"</string>
     <string name="photo_and_legend_needed">"Il faut choisir une photo et une légende."</string>
 

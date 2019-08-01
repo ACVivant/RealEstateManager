@@ -49,8 +49,6 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class UpdateFragment extends Fragment implements AdapterView.OnItemSelectedListener, PhotoRecyclerViewAdapter.DeletePhotoListener {
-   // public class UpdateFragment extends Fragment implements AdapterView.OnItemSelectedListener, PhotoDialogFragment.DialogListener, PhotoRecyclerViewAdapter.DeletePhotoListener {
-
 
     private static final String TAG = "UpdateActivity";
     public static final String  FROM_UPDATE_REQUEST = "fromUpadateActivity";
@@ -626,28 +624,6 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-
-/*
-    @Override
-    public void applyOthersPhoto(String photoUri, String photoLegend) {
-       */
-/* newPhotosList.add(photoUri);
-        newLegendList.add(photoLegend);
-        nbrePhotos+=1;
-        Log.d(TAG, "applyOthersPhoto: on passe par là");
-        setPreviewPhotos();*//*
-
-    }
-
-    @Override
-    public void applyMainPhoto(String photoUri, String photoLegend, boolean main) {
-        */
-/*newMainPhotoUri= photoUri;
-        newMainLegend = photoLegend;
-        setMainPhoto();*//*
-
-    }
-*/
 
     private void setMainPhoto() {
         Glide.with(this) //SHOWING PREVIEW OF IMAGE
