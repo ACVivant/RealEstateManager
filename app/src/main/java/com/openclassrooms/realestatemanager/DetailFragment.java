@@ -24,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.openclassrooms.realestatemanager.adapters.PhotoRecyclerViewAdapter;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
+import com.openclassrooms.realestatemanager.models.Agent;
 import com.openclassrooms.realestatemanager.models.Photo;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.models.Status;
@@ -50,6 +51,7 @@ public class DetailFragment extends Fragment {
     private View v;
 
     private TextView status;
+    private TextView agent;
     private TextView upForSaleDate;
     private TextView soldOnDate;
     private TextView description;
@@ -81,6 +83,7 @@ public class DetailFragment extends Fragment {
     private Property currentProperty;
     private TypeOfProperty currentType;
     private Status currentStatus;
+    private Agent currentAgent;
     private int statusId;
     private int typeId;
     private int agentId;
@@ -116,6 +119,7 @@ public class DetailFragment extends Fragment {
         currentPhotos = new ArrayList<>();
 
         status = (TextView) v.findViewById(R.id.textView23);
+        agent = (TextView) v.findViewById(R.id.textViewAgentEdit);
         upForSaleDate = (TextView) v.findViewById(R.id.textView27);
         soldOnDate = (TextView) v.findViewById(R.id.textView28);
         description = (TextView) v.findViewById(R.id.editText);
@@ -263,6 +267,7 @@ public class DetailFragment extends Fragment {
 
         setAddress();
         this.getStatus(statusId);
+        this.getAgent(agentId);
 
         if (!tabletSize) { // cas des téléphones
             price.setText(String.valueOf(currentProperty.getPrice()));
@@ -296,6 +301,15 @@ public class DetailFragment extends Fragment {
         if (!tabletSize) {  // cas des téléphones
             type.setText(String.valueOf(currentType.getTypeText()));
         }
+    }
+
+    private void getAgent(int id) {
+        this.propertyViewModel.getAgentFromId(id).observe(this, this::updateAgent);
+    }
+
+    private void updateAgent(Agent ag){
+        currentAgent = ag;
+        agent.setText(currentAgent.getAgentName());
     }
 
     private void getStatus(int id) {

@@ -109,20 +109,20 @@
     <string name="all">Tous</string>
 
     <string-array name="create_status_array">
-        <item>Being created</item>
-        <item>On sale</item>
-        <item>Under negotiation</item>
-        <item>"Sold"</item>
+        <item>En cours de création</item>
+        <item>En vente</item>
+        <item>En cours de négociation</item>
+        <item>Vendu</item>
     </string-array>
 
     <string name="status_sold">"Sold"</string>
 
     <string-array name="filter_status_ask">
-        <item>Being created</item>
-        <item>On sale</item>
-        <item>Under negotiation</item>
-        <item>"Sold"</item>
-        <item>All</item>
+        <item>En cours de création</item>
+        <item>En vente</item>
+        <item>En cours de négociation</item>
+        <item>Vendu</item>
+        <item>Tous</item>
     </string-array>
 
     <string name="photo_permission_allowed">"Access to photos is allowed."</string>
@@ -154,22 +154,22 @@
     <string name="house_type">"Type od property"</string>
 
     <!-- Search Activity -->
-    <string name="search_type_ask">"Type of property"</string>
+    <string name="search_type_ask">"Type de bien"</string>
     <string-array name="search_type_answer">
-        <item>Appartment</item>
+        <item>Appartement</item>
         <item>Loft</item>
-        <item>House</item>
-        <item>Manor</item>
-        <item>Castle</item>
+        <item>Maison</item>
+        <item>Manoir</item>
+        <item>Château</item>
     </string-array>
 
     <string-array name="filter_type_ask">
-        <item>Appartment</item>
+        <item>Appartement</item>
         <item>Loft</item>
-        <item>House</item>
-        <item>Manor</item>
-        <item>Castle</item>
-        <item>All</item>
+        <item>Maison</item>
+        <item>Manoir</item>
+        <item>Château</item>
+        <item>Tous</item>
     </string-array>
 
     <string name="search_price_mini_ask">"Price min"</string>
@@ -219,10 +219,6 @@
 
     <!-- Update activity -->
     <string name="update_ok">"Property has been updated."</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
 
 </resources>
 
