@@ -1,38 +1,28 @@
-package com.openclassrooms.realestatemanager;
+package com.openclassrooms.realestatemanager.adapters;
 
-import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.openclassrooms.realestatemanager.DetailFragment;
+import com.openclassrooms.realestatemanager.R;
+import com.openclassrooms.realestatemanager.UpdateActivity;
 import com.openclassrooms.realestatemanager.models.Photo;
 
-import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiFunction;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.PrimaryKey;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

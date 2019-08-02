@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.openclassrooms.realestatemanager.adapters.PhotoRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-public class ResultSearchActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,PhotoRecyclerViewAdapter.DeletePhotoListener, ListFilteredPropertiesFragment.OnItemFilteredRVClickedListener{
+public class ResultSearchActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PhotoRecyclerViewAdapter.DeletePhotoListener, ListFilteredPropertiesFragment.OnItemFilteredRVClickedListener{
 
     private static final String TAG = "ResultSearchActivity";
     private static final String ID_FRAGMENT = "fragment_to_expose";

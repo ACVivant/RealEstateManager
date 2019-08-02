@@ -1,6 +1,6 @@
 package com.openclassrooms.realestatemanager.injections;
 
-import com.openclassrooms.realestatemanager.PropertyViewModel;
+import com.openclassrooms.realestatemanager.viewmodels.PropertyViewModel;
 import com.openclassrooms.realestatemanager.repositories.AgentRepository;
 import com.openclassrooms.realestatemanager.repositories.PhotoRepository;
 import com.openclassrooms.realestatemanager.repositories.PropertyRepository;

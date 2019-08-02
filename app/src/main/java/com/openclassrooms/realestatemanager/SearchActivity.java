@@ -23,6 +23,7 @@ import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.utils.Utils;
+import com.openclassrooms.realestatemanager.viewmodels.PropertyViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -476,12 +477,9 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
 
 // End of query string
         queryString += ";";
-
         Log.d(TAG, "createQuery: QueryString "+ queryString);
-        Log.d(TAG, "createQuery: args " + args);
+
     }
-
-
 
     private void getFilteredProperties(){
         SimpleSQLiteQuery query = new SimpleSQLiteQuery(queryString, args.toArray());

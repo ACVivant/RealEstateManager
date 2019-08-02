@@ -55,3 +55,5 @@ public class Photo {
         this.propertyId = propertyId;
     }
 }
+
+

@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -20,15 +21,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.openclassrooms.realestatemanager.adapters.PhotoRecyclerViewAdapter;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
-import com.openclassrooms.realestatemanager.models.Agent;
 import com.openclassrooms.realestatemanager.models.Photo;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.models.Status;
 import com.openclassrooms.realestatemanager.models.TypeOfProperty;
 import com.openclassrooms.realestatemanager.utils.MapUrl;
 import com.openclassrooms.realestatemanager.utils.Utils;
+import com.openclassrooms.realestatemanager.viewmodels.PropertyViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +95,7 @@ public class DetailFragment extends Fragment {
 
     private PhotoRecyclerViewAdapter adapter;
     private boolean tablet;
+    private Context mContext;
 
     public DetailFragment() {
         // Required empty public constructor
@@ -102,7 +105,7 @@ public class DetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Log.d(TAG, "onCreateView: On passe par là");
+        mContext = getContext();
         // Inflate the layout for this fragment
         v= inflater.inflate(R.layout.fragment_detail, container, false);
         key = getContext().getResources().getString(R.string.Google_Maps_API_Key);
@@ -212,12 +215,12 @@ public class DetailFragment extends Fragment {
     // Map
     //------------------------------------------------------------------
 
-    public void initStaticMap(String number, String street, String zipcode, String town, String country, String key) {
+    private void initStaticMap(String number, String street, String zipcode, String town, String country, String key) {
         MapUrl mapUrl = new MapUrl();
         String srcMap = mapUrl.createUrl(number, street, zipcode, town, country, key);
         Log.d(TAG, "initStaticMap: " + srcMap);
 
-        Glide.with(getContext())
+        Glide.with(mContext)
                 .load(srcMap)
                 .into(mMap);
     }

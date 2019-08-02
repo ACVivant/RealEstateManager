@@ -19,6 +19,9 @@ public interface PhotoDao {
     @Query("SELECT * FROM photo ORDER BY propertyId ASC")
     LiveData<List<Photo>> getAllPhoto();
 
+    @Query("SELECT * FROM photo WHERE photoId = :photoId")
+    LiveData<Photo> getPhotoFromId(long photoId);
+
     @Insert
     void insertPhoto(Photo photo);
 
@@ -28,7 +31,6 @@ public interface PhotoDao {
     @Delete
     void deletePhoto(Photo photo);
 
-    @Query("SELECT * FROM photo WHERE photoId = :photoId")
-    LiveData<Photo> getPhotoFromId(long photoId);
-
 }
+
+

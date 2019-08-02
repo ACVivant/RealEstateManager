@@ -11,9 +11,11 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.navigation.NavigationView;
+import com.openclassrooms.realestatemanager.adapters.PhotoRecyclerViewAdapter;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.models.Photo;
+import com.openclassrooms.realestatemanager.viewmodels.PropertyViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -356,18 +358,15 @@ public boolean isServiceOK() {
         propertyIdClicked = propertyId;
         positionRV = position;
 
-        if (!tabletSize) {  // cas du téléphone
+        if (!tabletSize) {  // phone case
             Intent intent = new Intent(this, DetailActivity.class);
             intent.putExtra(ListHouseFragment.ID_PROPERTY, propertyId);
             startActivity(intent);
-        } else { // cas de la tablette
+        } else { // tablet case
             Bundle args = new Bundle();
             args.putInt(ListHouseFragment.ID_PROPERTY, propertyId);
-
              DetailFragment detail =fragment2.newInstance(propertyId);
-
             fm.beginTransaction().replace(R.id.frame_layout_detail, detail, "2").commit();
-
         }
     }
 

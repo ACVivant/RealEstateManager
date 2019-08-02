@@ -11,7 +11,6 @@ import com.openclassrooms.realestatemanager.database.dao.StatusDao;
 import com.openclassrooms.realestatemanager.database.dao.TypeOfPropertyDao;
 import com.openclassrooms.realestatemanager.models.Address;
 import com.openclassrooms.realestatemanager.models.Agent;
-import com.openclassrooms.realestatemanager.nesertplusariennormalement.AttractingPoint;
 import com.openclassrooms.realestatemanager.models.Photo;
 import com.openclassrooms.realestatemanager.models.Property;
 import com.openclassrooms.realestatemanager.models.Status;
@@ -30,7 +29,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 
 @Database(entities =
-        {Address.class, Agent.class, AttractingPoint.class, Photo.class, Property.class, Status.class, TypeOfProperty.class},
+        {Address.class, Agent.class, Photo.class, Property.class, Status.class, TypeOfProperty.class},
         version = 1,
         exportSchema = false)
 public abstract class RealEstateDatabase extends RoomDatabase {

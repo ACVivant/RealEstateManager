@@ -1,18 +1,15 @@
 package com.openclassrooms.realestatemanager;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.android.material.navigation.NavigationView;
+import com.openclassrooms.realestatemanager.adapters.PhotoRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
