@@ -70,6 +70,7 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
 
     //private DialogListener listener;
     private Context context;
+    private String fromTag;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -79,6 +80,7 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
 
         Bundle bundle = getArguments();
         whichRequest = bundle.getString(CreateHomeActivity.WHICH_REQUEST);
+        fromTag = bundle.getString(CreateHomeFragment.FRAGMENT_REQUEST);
 
         context = this.getContext();
 
@@ -122,13 +124,28 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
                                     return;
                                 }
                                 Log.d(TAG, "onClick OK");
-                                Intent intent = UpdateFragment.newIntent(photoURI.toString(), photoLegend, false);
+                                Intent intent;
+                                if (fromTag.equals(UpdateFragment.TAG)) {
+                                    intent = UpdateFragment.newIntent(photoURI.toString(), photoLegend, false);
+                                } else {
+                                    Log.d(TAG, "onClick:photoDialog createFragment");
+                                    intent = CreateHomeFragment.newIntent(photoURI.toString(), photoLegend, false);
+                                }
                                 getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
                             }
                             if (whichRequest.equals(CreateHomeActivity.MAIN_PHOTO_REQUEST)) {
                                 //listener.applyMainPhoto(photoURI.toString(), photoLegend, true);
+                                if( getTargetFragment() == null ) {
+                                    return;
+                                }
                                 Log.d(TAG, "onClick OK");
-                                Intent intent = UpdateFragment.newIntent(photoURI.toString(), photoLegend, true);
+                                Intent intent;
+                                if (fromTag.equals(UpdateFragment.TAG)) {
+                                    intent = UpdateFragment.newIntent(photoURI.toString(), photoLegend, true);
+                                } else {
+                                    Log.d(TAG, "onClick:photoDialog createFragment");
+                                    intent = CreateHomeFragment.newIntent(photoURI.toString(), photoLegend, true);
+                                }
                                 getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
                             }
                             dismiss();

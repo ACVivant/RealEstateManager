@@ -38,7 +38,7 @@ import java.util.List;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Display view with details of e property
  */
 public class DetailFragment extends Fragment {
 
@@ -269,7 +269,7 @@ public class DetailFragment extends Fragment {
         this.getStatus(statusId);
         this.getAgent(agentId);
 
-        if (!tabletSize) { // cas des téléphones
+        if (!tabletSize) { // phone case
             price.setText(String.valueOf(currentProperty.getPrice()));
             typeId = currentProperty.getTypeId();
             this.getType(typeId);
@@ -298,7 +298,7 @@ public class DetailFragment extends Fragment {
 
     private void updateType(TypeOfProperty typeOfProperty){
         currentType = typeOfProperty;
-        if (!tabletSize) {  // cas des téléphones
+        if (!tabletSize) {  // phone case
             type.setText(String.valueOf(currentType.getTypeText()));
         }
     }

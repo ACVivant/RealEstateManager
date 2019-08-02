@@ -30,82 +30,6 @@ import java.util.List;
 public class UpdateActivity extends AppCompatActivity implements PhotoRecyclerViewAdapter.DeletePhotoListener, UpdateFragment.OnValidateClickedListener  {
   private static final String TAG = "UpdateActivity";
     public static final String  FROM_UPDATE_REQUEST = "fromUpadateActivity";
-
-    @BindView(R.id.create_spinner_status)
-    Spinner spinnerStatus;
-    @BindView(R.id.create_spinner_type)
-    Spinner spinnerType;
-    @BindView(R.id.create_description_text)
-    EditText descriptionText;
-    @BindView(R.id.create_insert_price_text)
-    EditText price;
-    @BindView(R.id.create_insert_surface)
-    EditText surface;
-
-    @BindView(R.id.create_all_others_photos)
-    LinearLayout photoLayout;
-    @BindView(R.id.add_main_photo)
-    ImageButton updateMainPhoto;
-    @BindView(R.id.create_add_main_photo_text)
-    TextView addMainPhotoText;
-    @BindView(R.id.create_add_others_photo_text)
-    TextView addOthersPhotosText;
-    @BindView(R.id.add_more_photo)
-    ImageButton addPhotos;
-    @BindView(R.id.create_main_photo_preview)
-    ImageView mainPhotoPreview;
-    @BindView(R.id.create_photo_more_preview1)
-    ImageView photo1;
-    @BindView(R.id.create_photo_more_preview2)
-    ImageView photo2;
-    @BindView(R.id.create_photo_more_preview3)
-    ImageView photo3;
-    @BindView(R.id.create_photo_more_preview4)
-    ImageView photo4;
-    @BindView(R.id.number_photo_more)
-    TextView numberPhotos;
-
-    @BindView(R.id.create_insert_rooms)
-    EditText rooms;
-    @BindView(R.id.create_insert_bedrooms)
-    EditText bedrooms;
-    @BindView(R.id.create_insert_bathrooms)
-    EditText bathrooms;
-
-    @BindView(R.id.create_insert_address_number)
-    EditText addressNumber;
-    @BindView(R.id.create_insert_address_street)
-    EditText addressStreet;
-    @BindView(R.id.create_insert_address_street2)
-    EditText addressStreet2;
-    @BindView(R.id.create_insert_address_zipcode)
-    EditText addressZipcode;
-    @BindView(R.id.create_insert_address_town)
-    EditText addressTown;
-    @BindView(R.id.create_insert_address_country)
-    EditText addressCountry;
-
-    @BindView(R.id.create_checkbox_school)
-    CheckBox checkboxSchool;
-    @BindView(R.id.create_checkbox_shop)
-    CheckBox checkboxShop;
-    @BindView(R.id.create_checkbox_park)
-    CheckBox checkboxPark;
-    @BindView(R.id.create_checkbox_museum)
-    CheckBox checkboxMuseum;
-
-    @BindView(R.id.create_insert_upforsale)
-    EditText dateUpForSale;
-    @BindView(R.id.create_insert_soldon)
-    EditText dateSoldOn;
-    @BindView(R.id.create_spinner_agent)
-    Spinner spinnerAgent;
-
-    @BindView(R.id.save_new_property)
-    Button saveProperty;
-    @BindView(R.id.reset_new_property)
-    Button resetProperty;
-
     private PropertyViewModel propertyViewModel;
 
     private int propertyId;
@@ -137,11 +61,10 @@ public class UpdateActivity extends AppCompatActivity implements PhotoRecyclerVi
         fm.beginTransaction().add(R.id.detail_container, fragmentUpdate, "2").commit();
 
         configureViewModel();
-
     }
+
     @Override
     public void photoToDelete(long photoId) {
-        Log.d(TAG, "photoToDelete: on passe par ici");
         Log.d(TAG, "photoToDelete: photoId " +photoId);
         photoToDeleteList.add(photoId);
         getPhotosToDelete(photoId);

@@ -46,17 +46,17 @@ import java.util.List;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Allow updating a property
  */
 public class UpdateFragment extends Fragment implements AdapterView.OnItemSelectedListener, PhotoRecyclerViewAdapter.DeletePhotoListener {
 
-    private static final String TAG = "UpdateActivity";
+    public static final String TAG = "UpdateActivity";
     public static final String  FROM_UPDATE_REQUEST = "fromUpadateActivity";
-    private static final int TARGET_FRAGMENT_REQUEST_CODE = 123;
-    private static final int TARGET_DELETE_REQUEST_CODE = 124;
+    private static final int UPDATE_FRAGMENT_REQUEST_CODE = 123;
+    private static final int UPDATE_DELETE_REQUEST_CODE = 124;
     private static final String NEW_PHOTO_URI = "newPhotoUri";
     private static final String NEW_LEGEND = "newLegend";
-    private static final String IS_MAIN_PHOTO = "isTHisMainPhoto";
+    public static final String IS_MAIN_PHOTO = "isTHisMainPhoto";
 
     private PropertyViewModel propertyViewModel;
 
@@ -246,14 +246,14 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
         addPhotos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialog(CreateHomeActivity.OTHERS_PHOTO_REQUEST);
+                openDialog(CreateHomeActivity.OTHERS_PHOTO_REQUEST, TAG);
             }
         });
 
         updateMainPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialog(CreateHomeActivity.MAIN_PHOTO_REQUEST);
+                openDialog(CreateHomeActivity.MAIN_PHOTO_REQUEST, TAG);
             }
         });
 
@@ -578,12 +578,13 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
     // Alert dialog to add photo or change main photo
     //--------------------------------------------------------
 
-    private void openDialog(String which) {
+    private void openDialog(String which, String tag) {
         PhotoDialogFragment dialog = new PhotoDialogFragment();
         Bundle args = new Bundle();
         args.putString(CreateHomeActivity.WHICH_REQUEST, which);
+        args.putString(CreateHomeFragment.FRAGMENT_REQUEST, TAG);
         dialog.setArguments(args);
-        dialog.setTargetFragment(UpdateFragment.this,TARGET_FRAGMENT_REQUEST_CODE);
+        dialog.setTargetFragment(UpdateFragment.this,UPDATE_FRAGMENT_REQUEST_CODE);
         dialog.show(getFragmentManager(), "dialog");
     }
 
@@ -592,7 +593,7 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
         if( resultCode != Activity.RESULT_OK ) {
             return;
         }
-        if( requestCode == TARGET_FRAGMENT_REQUEST_CODE ) {
+        if( requestCode == UPDATE_FRAGMENT_REQUEST_CODE ) {
             if(!data.getBooleanExtra(IS_MAIN_PHOTO, false)) {
                 newPhotosList.add(data.getStringExtra(NEW_PHOTO_URI));
                 newLegendList.add(data.getStringExtra(NEW_LEGEND));
