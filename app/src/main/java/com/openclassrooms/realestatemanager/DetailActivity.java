@@ -47,7 +47,7 @@ public class DetailActivity extends AppCompatActivity implements PhotoRecyclerVi
         fragmentDetail.setArguments(args);
 
         if (savedInstanceState != null) {
-                   return;
+            return;
         } else {
             fm.beginTransaction().add(R.id.detail_container, fragmentDetail, "2").commit();
         }
@@ -103,9 +103,7 @@ public class DetailActivity extends AppCompatActivity implements PhotoRecyclerVi
     }
 
     @Override
-    public void photoToDelete(long photoId) {
-
-    }
+    public void photoToDelete(long photoId) {}
 
     private void launchUpdateActivity() {
         Intent intent = new Intent(DetailActivity.this, UpdateActivity.class);

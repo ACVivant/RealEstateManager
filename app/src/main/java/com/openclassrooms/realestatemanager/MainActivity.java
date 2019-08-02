@@ -74,21 +74,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Log.d(TAG, "onCreate: homeToExpose id " + homeToExpose);
 
-            if (savedInstanceState == null) {
-                Log.d(TAG, "onCreate: savedInstanceState null");
-                this.configureFirstView();
-            }
+        if (savedInstanceState == null) {
+            Log.d(TAG, "onCreate: savedInstanceState null");
+            this.configureFirstView();
+        }
 
-            // Decide which fragment has to be shown (rotation)
-            if (savedInstanceState != null) {
-                Log.d(TAG, "onCreate: savedInstanceState non null");
-                homeToExpose = savedInstanceState.getInt(PROPERTY_ID_SAVED);
-                positionRV = savedInstanceState.getInt(POSITION_SAVED);
-                this.configureView();
-            }
+        // Decide which fragment has to be shown (rotation)
+        if (savedInstanceState != null) {
+            Log.d(TAG, "onCreate: savedInstanceState non null");
+            homeToExpose = savedInstanceState.getInt(PROPERTY_ID_SAVED);
+            positionRV = savedInstanceState.getInt(POSITION_SAVED);
+            this.configureView();
+        }
 
         isServiceOK();
-            configureViewModel();
+        configureViewModel();
     }
 
     // ---------------------
@@ -119,27 +119,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void configureFirstView() {
 
         Bundle args = new Bundle();
-            args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
+        args.putInt(ListHouseFragment.ID_PROPERTY, homeToExpose);
         Log.d(TAG, "configureFirstView: propertyId " + homeToExpose);
-            args.putInt(ListHouseFragment.POSITION_IN_RV, positionRV);
+        args.putInt(ListHouseFragment.POSITION_IN_RV, positionRV);
 
         if (!tabletSize) {
 
-                args.putBoolean(USE_TABLET, false);
-                fragment2.setArguments(args);
-                fragment1.setArguments(args);
+            args.putBoolean(USE_TABLET, false);
+            fragment2.setArguments(args);
+            fragment1.setArguments(args);
 
-                    fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
-                    fm.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
+            fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
+            fm.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
 
-            } else {
-                args.putBoolean(USE_TABLET, true);
-                fragment2.setArguments(args);
-                fragment1.setArguments(args);
+        } else {
+            args.putBoolean(USE_TABLET, true);
+            fragment2.setArguments(args);
+            fragment1.setArguments(args);
 
-                fm.beginTransaction().add(R.id.frame_layout_detail, fragment2, "2").commit();
-                fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
-            }
+            fm.beginTransaction().add(R.id.frame_layout_detail, fragment2, "2").commit();
+            fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
+        }
     }
 
     // Configure view after rotation
@@ -273,28 +273,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-//--------------------------------------------------------
+    //--------------------------------------------------------
 // Verify connection to Map
 //-------------------------------------------------------
-public boolean isServiceOK() {
-    Log.d(TAG, "isServiceOK: Tracking GoogleServices version");
+    public boolean isServiceOK() {
+        Log.d(TAG, "isServiceOK: Tracking GoogleServices version");
 
-    int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(MainActivity.this);
+        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(MainActivity.this);
 
-    if (available == ConnectionResult.SUCCESS) {
-        // Everything is fine and the user ccan make map request
-        Log.d(TAG, "isServiceOK: GooglePlayServices is working");
-        return true;
-    } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
-        // an error occured but we can resolve it
-        Log.d(TAG, "isServiceOK: An error occured but we can fix it");
-        Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(MainActivity.this, available, ERROR_DIALOG_REQUEST);
-        dialog.show();
-    } else {
-        Toast.makeText(this, R.string.map_connection_error, Toast.LENGTH_LONG).show();
+        if (available == ConnectionResult.SUCCESS) {
+            // Everything is fine and the user ccan make map request
+            Log.d(TAG, "isServiceOK: GooglePlayServices is working");
+            return true;
+        } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
+            // an error occured but we can resolve it
+            Log.d(TAG, "isServiceOK: An error occured but we can fix it");
+            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(MainActivity.this, available, ERROR_DIALOG_REQUEST);
+            dialog.show();
+        } else {
+            Toast.makeText(this, R.string.map_connection_error, Toast.LENGTH_LONG).show();
+        }
+        return false;
     }
-    return false;
-}
 
 //-------------------------------------------------------
 // Gère la rotation
@@ -365,7 +365,7 @@ public boolean isServiceOK() {
         } else { // tablet case
             Bundle args = new Bundle();
             args.putInt(ListHouseFragment.ID_PROPERTY, propertyId);
-             DetailFragment detail =fragment2.newInstance(propertyId);
+            DetailFragment detail =fragment2.newInstance(propertyId);
             fm.beginTransaction().replace(R.id.frame_layout_detail, detail, "2").commit();
         }
     }

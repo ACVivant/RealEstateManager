@@ -1,7 +1,6 @@
 package com.openclassrooms.realestatemanager;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
@@ -43,8 +42,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -73,78 +70,30 @@ public class CreateHomeFragment extends Fragment implements AdapterView.OnItemSe
     public static final String OTHERS_PHOTO_REQUEST = "Create_others_photos";
     public static final String WHICH_REQUEST = "Create_main_orothers_photos";
 
+
+    //VIEW
     private View v;
 
-    Spinner spinnerStatus;
-    Spinner spinnerType;
-    EditText descriptionText;
-    EditText price;
-    EditText surface;
-    RecyclerView photosRecyclerView;
-    ImageButton addMainPhoto;
-    ImageView mainPhotoPreview;
-    ImageView photo1;
-    ImageView photo2;
-    ImageView photo3;
-    ImageView photo4;
-    ImageButton addPhotos;
-    TextView numberPhotos;
-    LinearLayout deletePhotoLayout;
+    private Spinner spinnerStatus, spinnerType, spinnerAgent;
+    private EditText descriptionText, price, surface, rooms, bedrooms, bathrooms, addressNumber, addressStreet, addressStreet2, addressZipcode, addressTown, addressCountry, dateUpForSale, dateSoldOn;
+    private RecyclerView photosRecyclerView;
+    private ImageButton addMainPhoto, addPhotos;
+    private ImageView mainPhotoPreview, photo1, photo2, photo3, photo4;
+    private TextView numberPhotos;
+    private LinearLayout deletePhotoLayout;
+    private CheckBox checkboxSchool, checkboxShop, checkboxPark, checkboxMuseum;
+    private Button saveProperty, resetProperty;
 
-    EditText rooms;
-    EditText bedrooms;
-    EditText bathrooms;
-
-    EditText addressNumber;
-    EditText addressStreet;
-    EditText addressStreet2;
-    EditText addressZipcode;
-    EditText addressTown;
-    EditText addressCountry;
-
-    CheckBox checkboxSchool;
-    CheckBox checkboxShop;
-    CheckBox checkboxPark;
-    CheckBox checkboxMuseum;
-
-    EditText dateUpForSale;
-    EditText dateSoldOn;
-    Spinner spinnerAgent;
-
-    Button saveProperty;
-    Button resetProperty;
-
+    //DATA
     private String newStatus;
     private String newDescription;
-    private int newPrice;
-
-    private int newSurface;
-    private int newRooms;
-    private int newBedrooms;
-    private int newBathrooms;
-
-    private String newAddressNumber;
-    private String newAddressStreet;
-    private String newAddressStreet2;
-    private String newZipcode;
-    private String newTown;
-    private String newCountry;
-
-    private Boolean nearSchool;
-    private Boolean nearShop;
-    private Boolean nearPark;
-    private Boolean nearMuseum;
-
+    private int newPrice, newSurface, newRooms, newBedrooms, newBathrooms;
+    private String newAddressNumber, newAddressStreet, newAddressStreet2, newZipcode, newTown, newCountry;
+    private Boolean nearSchool, nearShop, nearPark, nearMuseum;
     private String newSoldOn;
-    private int intUpForSale;
-    private int intSoldOn;
+    private int intUpForSale, intSoldOn;
+    private int agentId, statusId, typeId, propertyId;
 
-    private int agentId;
-    private int statusId;
-    private int typeId;
-    private int propertyId;
-
-    private boolean  mainPhotoOk;
     private int nbrePhotos=0;
 
     // 1 - STATIC DATA FOR PICTURE
@@ -155,10 +104,7 @@ public class CreateHomeFragment extends Fragment implements AdapterView.OnItemSe
     private static final int RC_CHOOSE_PHOTO = 200;
     private ArrayList<String> photosList = new ArrayList<>();
     private ArrayList<String> legendList = new ArrayList<>();
-    private String mainPhotoUri;
-    private String mainPhotoLegend;
-
-    //private int initPropertyId;
+    private String mainPhotoUri, mainPhotoLegend;
 
     private Context mContext;
     private  boolean tabletSize;
@@ -177,7 +123,6 @@ public class CreateHomeFragment extends Fragment implements AdapterView.OnItemSe
         tabletSize = getResources().getBoolean(R.bool.isTablet);
         mContext = getContext();
         notificationManager = NotificationManagerCompat.from(mContext);
-        //initPropertyId = savedInstanceState.getInt(MainActivity.PROPERTY_ID_SAVED);
 
         photosRecyclerView = v.findViewById(R.id.update_photo_recyclerview_container);
         photosRecyclerView.setVisibility(View.GONE);
@@ -190,7 +135,7 @@ public class CreateHomeFragment extends Fragment implements AdapterView.OnItemSe
         price= v.findViewById(R.id.create_insert_price_text);
         surface= v.findViewById(R.id.create_insert_surface);
         addMainPhoto= v.findViewById(R.id.add_main_photo);
-         mainPhotoPreview= v.findViewById(R.id.create_main_photo_preview);
+        mainPhotoPreview= v.findViewById(R.id.create_main_photo_preview);
         photo1= v.findViewById(R.id.create_photo_more_preview1);
         photo2= v.findViewById(R.id.create_photo_more_preview2);
         photo3= v.findViewById(R.id.create_photo_more_preview3);
@@ -281,7 +226,7 @@ public class CreateHomeFragment extends Fragment implements AdapterView.OnItemSe
                 }
             }
         });
-       return v;
+        return v;
     }
 
     // Save data entered by user
@@ -385,7 +330,7 @@ public class CreateHomeFragment extends Fragment implements AdapterView.OnItemSe
                         //args.putInt(ListHouseFragment.ID_PROPERTY, initPropertyId);
 
                         DetailFragment detail =new DetailFragment();
-                       // detail.setArguments(args);
+                        // detail.setArguments(args);
                         final FragmentManager fm = getFragmentManager();
 
                         fm.beginTransaction().replace(R.id.frame_layout_detail, detail, "2").commit();

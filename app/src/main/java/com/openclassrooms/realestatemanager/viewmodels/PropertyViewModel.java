@@ -1,7 +1,5 @@
 package com.openclassrooms.realestatemanager.viewmodels;
 
-import android.util.Log;
-
 import com.openclassrooms.realestatemanager.models.Address;
 import com.openclassrooms.realestatemanager.models.Agent;
 import com.openclassrooms.realestatemanager.models.Photo;
@@ -139,7 +137,7 @@ public class PropertyViewModel extends ViewModel {
     public void createProperty (Property myProperty,  ArrayList<String> photosList,  ArrayList<String> legendList, String mainPhotoUri, String mainPhotoLegend) {
         long propertyId = propertyRepository.insertProperty(myProperty);
 
-                    createPhotos(propertyId, photosList, legendList, mainPhotoUri, mainPhotoLegend);
+        createPhotos(propertyId, photosList, legendList, mainPhotoUri, mainPhotoLegend);
     }
 
     private void createPhotos(long propertyId, ArrayList<String> photosList,  ArrayList<String> legendList, String mainPhotoUri, String mainPhotoLegend) {

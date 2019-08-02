@@ -3,15 +3,10 @@ package com.openclassrooms.realestatemanager;
 import android.os.Bundle;
 import android.view.View;
 
-import com.google.android.material.appbar.AppBarLayout;
 import com.openclassrooms.realestatemanager.adapters.PhotoRecyclerViewAdapter;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
-import com.openclassrooms.realestatemanager.models.Photo;
 import com.openclassrooms.realestatemanager.viewmodels.PropertyViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -20,11 +15,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
 /**
- * Created by Anne-Charlotte Vivant on 02/08/2019.
+ * Activity which organise creation of new property in linf with CreateHomeFragment
  */
 public class CreateHomeActivity extends AppCompatActivity implements PhotoRecyclerViewAdapter.DeletePhotoListener, UpdateFragment.OnValidateClickedListener  {
 
-    public static final String  FROM_UPDATE_REQUEST = "fromCreateActivity";
     private static final String TAG = "CreateHomeActivity";
     public static final String MAIN_PHOTO_REQUEST = "Create_main_photo";
     public static final String OTHERS_PHOTO_REQUEST = "Create_others_photos";

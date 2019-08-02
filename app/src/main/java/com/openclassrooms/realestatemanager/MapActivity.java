@@ -59,23 +59,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private Toolbar toolbar;
     private ProgressBar progressBar;
 
-    private double[] tab_latitude ;
-    private double[] tab_longitude;
-    private int[] tab_room ;
-    private int[] tab_price;
-    private int[] tab_id ;
+    private double[] tab_latitude, tab_longitude;
+    private int[] tab_room , tab_price, tab_id ;
     private String devise = "$";
 
     // Data
     private PropertyViewModel propertyViewModel;
     private int currentPropertyId;
-    private double currentLat;
-    private double currentLng;
+    private double currentLat, currentLng;
     private int currentPrice;
 
     //clic
-    private boolean displayDetail;
-    private boolean internet;
+    private boolean displayDetail, internet;
 
     View mapView;
 
@@ -107,7 +102,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private void showProgressBar() {
         progressBar.setVisibility(View.VISIBLE);
-}
+    }
 
     private void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
@@ -120,14 +115,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-       Log.d(TAG, "onMapReady: Map is ready");
+        Log.d(TAG, "onMapReady: Map is ready");
         mMap = googleMap;
 
         if (mLocationPermissionGranted) {
             getDeviceLocation();
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-            && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
+                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
                 return;
             }
 
@@ -278,7 +273,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         myMarker = mMap.addMarker(options);
         myMarker.setTag(propertyId);
-            return myMarker;
+        return myMarker;
     }
 
     private void launchDetail(Marker marker ) {

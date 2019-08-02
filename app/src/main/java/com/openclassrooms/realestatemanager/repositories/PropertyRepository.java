@@ -13,7 +13,7 @@ import androidx.sqlite.db.SupportSQLiteQuery;
  */
 
 public class PropertyRepository {
-        private PropertyDao propertyDao;
+    private PropertyDao propertyDao;
 
     public PropertyRepository(PropertyDao propertyDao) {this.propertyDao = propertyDao;}
 

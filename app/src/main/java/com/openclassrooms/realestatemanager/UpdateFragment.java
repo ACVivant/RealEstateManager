@@ -60,85 +60,32 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
 
     private PropertyViewModel propertyViewModel;
 
-    private Spinner spinnerStatus;
-    private Spinner spinnerType;
-    private EditText descriptionText;
-    private EditText price;
-    private EditText surface;
-
+    //VIEW
+    private Spinner spinnerStatus, spinnerType, spinnerAgent;
+    private EditText descriptionText, price, surface;
     private LinearLayout photoLayout;
     private ImageButton updateMainPhoto;
-    private TextView addMainPhotoText;
-    private TextView addOthersPhotosText;
+    private TextView addMainPhotoText, addOthersPhotosText;
     private ImageButton addPhotos;
-    private ImageView mainPhotoPreview;
-    private ImageView photo1;
-    private ImageView photo2;
-    private ImageView photo3;
-    private ImageView photo4;
+    private ImageView mainPhotoPreview, photo1, photo2, photo3, photo4;
     private TextView numberPhotos;
+    private EditText rooms, bedrooms, bathrooms, addressNumber, addressStreet, addressStreet2, addressZipcode, addressTown, addressCountry;
+    private CheckBox checkboxSchool, checkboxShop, checkboxPark, checkboxMuseum;
+    private EditText dateUpForSale, dateSoldOn;
+     private Button saveProperty, resetProperty;
 
-    private EditText rooms;
-    private  EditText bedrooms;
-    private EditText bathrooms;
-
-    private EditText addressNumber;
-    private EditText addressStreet;
-    private EditText addressStreet2;
-    private EditText addressZipcode;
-    private EditText addressTown;
-    private EditText addressCountry;
-
-    private CheckBox checkboxSchool;
-    private CheckBox checkboxShop;
-    private CheckBox checkboxPark;
-    private CheckBox checkboxMuseum;
-
-    private EditText dateUpForSale;
-    private EditText dateSoldOn;
-    private Spinner spinnerAgent;
-
-    private Button saveProperty;
-    private Button resetProperty;
-
-    private String newStatus;
-    private String newDescription;
-    private int newPrice;
-    private String newType;
-    private int newSurface;
-    private int newRooms;
-    private int newBedrooms;
-    private int newBathrooms;
-
-    private  String newAddressNumber;
-    private String newAddressStreet;
-    private String newAddressStreet2;
-    private String newZipcode;
-    private String newTown;
-    private String newCountry;
-
-    private Boolean nearSchool;
-    private Boolean nearShop;
-    private Boolean nearPark;
-    private Boolean nearMuseum;
-
-    private String newUpForSale;
-    private String newSoldOn;
-    private String newAgent;
-
-    private int intUpForSale;
-    private int intSoldOn;
-
-    private String newPhotoUrl;
-
+     //DATA
+    private String newStatus, newDescription, newType;
+    private int newPrice, newSurface, newRooms, newBedrooms, newBathrooms;
+    private String newAddressNumber, newAddressStreet, newAddressStreet2, newZipcode, newTown, newCountry, newPhotoUrl;
+    private Boolean nearSchool, nearShop, nearPark, nearMuseum;
+    private String newUpForSale, newSoldOn, newAgent;
+    private int intUpForSale, intSoldOn;
     private Property currentProperty;
     private TypeOfProperty currentType;
     private Status currentStatus;
     private Agent currentAgent;
-    private int statusId;
-    private int typeId;
-    private int agentId;
-    private int numberOfProperties;
+    private int statusId, typeId, agentId;
     private int propertyId =1;
     private List<Photo> currentPhotos;
     private List<Long> photoToDeleteList = new ArrayList<>();
@@ -150,8 +97,7 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
     private PhotoRecyclerViewAdapter adapter;
     private View v;
 
-    private String newMainPhotoUri;
-    private String newMainLegend;
+    private String newMainPhotoUri, newMainLegend;
     private int nbrePhotos;
 
     private Context mContext;

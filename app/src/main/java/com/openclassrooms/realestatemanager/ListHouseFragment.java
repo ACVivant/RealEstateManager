@@ -61,7 +61,7 @@ public class ListHouseFragment extends Fragment  {
                              Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView");
         // Inflate the layout for this fragment
-       v= inflater.inflate(R.layout.fragment_list_house, container, false);
+        v= inflater.inflate(R.layout.fragment_list_house, container, false);
         Bundle bundle = getArguments();
         propertyId = bundle.getInt(ListHouseFragment.ID_PROPERTY, 1);
         positionRV = bundle.getInt(POSITION_IN_RV, 1);
@@ -100,14 +100,14 @@ public class ListHouseFragment extends Fragment  {
 
         adapter.setRVBackgroudColor(propertyId);
 
-            recyclerView.setAdapter(adapter);
-            adapter.setOnItemClickedListener(new ListRecyclerViewAdapter.OnItemClickedListener() {
-                @Override
-                public void OnItemClicked(int propertyId, int position) {
-                    mCallback.onItemRVClicked(propertyId, position);
-                    adapter.setRVBackgroudColor(propertyId);
-                }
-            });
+        recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickedListener(new ListRecyclerViewAdapter.OnItemClickedListener() {
+            @Override
+            public void OnItemClicked(int propertyId, int position) {
+                mCallback.onItemRVClicked(propertyId, position);
+                adapter.setRVBackgroudColor(propertyId);
+            }
+        });
     }
 
     private void configureViewModel(){
@@ -120,11 +120,11 @@ public class ListHouseFragment extends Fragment  {
         this.propertyViewModel.getAllProperty().observe(this, this::updatePropertyList);
     }
 
-        private void updatePropertyList(List<Property> properties){
+    private void updatePropertyList(List<Property> properties){
         this.adapter.setProperties(properties);
     }
 
-        private void getAllTypes() {
+    private void getAllTypes() {
         this.propertyViewModel.getAllTypes().observe(this, this::updateTypes);
     }
 
@@ -140,7 +140,7 @@ public class ListHouseFragment extends Fragment  {
         this.createCallbackToMainActivity();
     }
 
-        // 3 - Create callback to parent activity
+    // 3 - Create callback to parent activity
     private void createCallbackToMainActivity(){
         try {
             //Parent activity will automatically subscribe to callback

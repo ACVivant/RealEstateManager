@@ -62,15 +62,15 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
         homeToExpose = getIntent().getIntExtra(ListFilteredPropertiesFragment.ID_PROPERTY, 1);
         filteredResults = getIntent().getBooleanExtra(SearchActivity.RESULTS_FILTERED, true);
 
-            if (savedInstanceState == null) {
-                this.configureFirstView();
-            }
+        if (savedInstanceState == null) {
+            this.configureFirstView();
+        }
 
-            // Decide which fragment has to be shown (rotation)
-            if (savedInstanceState != null) {
-                propertyIdClicked = savedInstanceState.getInt(MainActivity.PROPERTY_ID_SAVED);
-                this.configureView();
-            }
+        // Decide which fragment has to be shown (rotation)
+        if (savedInstanceState != null) {
+            propertyIdClicked = savedInstanceState.getInt(MainActivity.PROPERTY_ID_SAVED);
+            this.configureView();
+        }
     }
 
     // ---------------------
@@ -109,12 +109,12 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
         fragment1.setArguments(args);
 
         if (!tabletSize) {
-                fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
-                fm.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
+            fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
+            fm.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
 
         } else {
             fm.beginTransaction().add(R.id.frame_layout_detail, fragment2, "2").commit();
-                fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
+            fm.beginTransaction().add(R.id.frame_layout_list, fragment1, "1").commit();
         }
     }
 
@@ -138,7 +138,7 @@ public class ResultSearchActivity extends AppCompatActivity implements Navigatio
         } else {
             fm.beginTransaction().replace(R.id.main_container, rotation, "1").commit();
         }
-        }
+    }
 
 
 

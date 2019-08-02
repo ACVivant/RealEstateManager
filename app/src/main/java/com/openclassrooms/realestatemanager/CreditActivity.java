@@ -111,10 +111,10 @@ public class CreditActivity extends AppCompatActivity {
         return month;
     }
 
-        public double calculateCost(double inputValue, int lenghtValue, double month) {
-            double cost;
-            String str;
-            DecimalFormat df = new DecimalFormat("########.00");
+    public double calculateCost(double inputValue, int lenghtValue, double month) {
+        double cost;
+        String str;
+        DecimalFormat df = new DecimalFormat("########.00");
         cost = month*lenghtValue*12-inputValue;
         str = df.format(cost);
         cost = Double.parseDouble(str.replace(',', '.'));

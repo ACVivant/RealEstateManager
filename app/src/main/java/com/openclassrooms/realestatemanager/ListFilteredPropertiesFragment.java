@@ -104,7 +104,7 @@ public class ListFilteredPropertiesFragment extends Fragment {
 
         adapter.setOnItemClickedListener(new ListRecyclerViewAdapter.OnItemClickedListener() {
             @Override
-                public void OnItemClicked(int propertyId, int position) {
+            public void OnItemClicked(int propertyId, int position) {
                 mCallback.onFilteredItemRVClicked(propertyId, position);
                 adapter.setRVBackgroudColor(propertyId);
             }

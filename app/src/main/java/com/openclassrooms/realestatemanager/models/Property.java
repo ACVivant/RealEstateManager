@@ -9,16 +9,16 @@ import androidx.room.PrimaryKey;
  */
 @Entity(tableName = "property",
         foreignKeys = {
-        @ForeignKey(entity = TypeOfProperty.class,
-        parentColumns = "typeId",
-        childColumns = "typeId"),
-        @ForeignKey(entity = Status.class,
-        parentColumns = "statusId",
-        childColumns = "statusId"),
-        @ForeignKey(entity = Agent.class,
-        parentColumns = "agentId",
-        childColumns = "agentId")
-})
+                @ForeignKey(entity = TypeOfProperty.class,
+                        parentColumns = "typeId",
+                        childColumns = "typeId"),
+                @ForeignKey(entity = Status.class,
+                        parentColumns = "statusId",
+                        childColumns = "statusId"),
+                @ForeignKey(entity = Agent.class,
+                        parentColumns = "agentId",
+                        childColumns = "agentId")
+        })
 public class Property {
     @PrimaryKey(autoGenerate = true)
     private int propertyId;
@@ -162,8 +162,8 @@ public class Property {
     public void setPark(Boolean park) { this.park = park;}
 
     public void setTypeId(int type) {
-    this.typeId = type;
-}
+        this.typeId = type;
+    }
     public void setAgentId(int agent) {
         this.agentId = agent;
     }

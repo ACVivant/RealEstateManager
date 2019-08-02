@@ -27,7 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Anne-Charlotte Vivant on 03/05/2019.
+ * Adapter and ViewHolder for photos recyclerview
  */
 public class PhotoRecyclerViewAdapter extends RecyclerView.Adapter<PhotoRecyclerViewAdapter.PhotoViewHolder> {
 
@@ -42,12 +42,12 @@ public class PhotoRecyclerViewAdapter extends RecyclerView.Adapter<PhotoRecycler
     private View view;
 
 
-public PhotoRecyclerViewAdapter(Context context, String which) {
-    mContext = context;
-    this.photos = new ArrayList<>();
-    this.which = which;
+    public PhotoRecyclerViewAdapter(Context context, String which) {
+        mContext = context;
+        this.photos = new ArrayList<>();
+        this.which = which;
 
-}
+    }
 
     @NonNull
     @Override
@@ -91,7 +91,7 @@ public PhotoRecyclerViewAdapter(Context context, String which) {
 
     @Override
     public int getItemCount() {
-    return photos.size();
+        return photos.size();
     }
 
     public void setPhotos(List<Photo> photos) {
@@ -107,11 +107,7 @@ public PhotoRecyclerViewAdapter(Context context, String which) {
         alertDialog.setPositiveButton("Confirmer", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                /*holder.picture.setImageResource(R.drawable.ic_delete);
-                holder.picture.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));*/
-
                 listener.photoToDelete(photoId);
-
             }
         });
         alertDialog.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {

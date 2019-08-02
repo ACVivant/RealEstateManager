@@ -50,30 +50,10 @@ public class DetailFragment extends Fragment {
 
     private View v;
 
-    private TextView status;
-    private TextView agent;
-    private TextView upForSaleDate;
-    private TextView soldOnDate;
-    private TextView description;
-    private TextView surface;
-    private TextView rooms;
-    private TextView bedrooms;
-    private TextView bathrooms;
-    private TextView price;
-    private TextView type;
-    private CheckBox shops;
-    private CheckBox schools;
-    private CheckBox museum;
-    private CheckBox park;
-    private TextView numberInStreet;
-    private TextView street;
-    private TextView street2;
-    private TextView zipcode;
-    private TextView town;
-    private TextView country;
-    //private Button update;
-    private Button before;
-    private Button after;
+    private TextView status, agent, upForSaleDate, soldOnDate, description, surface, rooms, bedrooms, bathrooms, price, type;
+    private CheckBox shops, schools, museum, park;
+    private TextView numberInStreet, street, street2, zipcode, town, country;
+    private Button before, after;
 
     private ImageView mMap;
 
@@ -84,20 +64,15 @@ public class DetailFragment extends Fragment {
     private TypeOfProperty currentType;
     private Status currentStatus;
     private Agent currentAgent;
-    private int statusId;
-    private int typeId;
-    private int agentId;
+    private int statusId, typeId, agentId;
     private int numberOfProperties;
     private boolean filteredResults;
     private ArrayList<Integer> filteredResultsArray = new ArrayList<>();
-    private int position;
-    private int newPosition;
+    private int position, newPosition;
     private  boolean tabletSize;
 
     private String key;
-
     private PhotoRecyclerViewAdapter adapter;
-    private boolean tablet;
     private Context mContext;
 
     public DetailFragment() {
@@ -123,7 +98,7 @@ public class DetailFragment extends Fragment {
         upForSaleDate = (TextView) v.findViewById(R.id.textView27);
         soldOnDate = (TextView) v.findViewById(R.id.textView28);
         description = (TextView) v.findViewById(R.id.editText);
-               surface = (TextView) v.findViewById(R.id.textView4);
+        surface = (TextView) v.findViewById(R.id.textView4);
         rooms = (TextView) v.findViewById(R.id.textView6);
         bedrooms = (TextView) v.findViewById(R.id.textView8);
         bathrooms = (TextView) v.findViewById(R.id.textView10);
@@ -250,7 +225,7 @@ public class DetailFragment extends Fragment {
         if (soldOnDateText.equals("99/99/9999")) {
             soldOnDate.setText("N/A");
         }else{
-        soldOnDate.setText(soldOnDateText);
+            soldOnDate.setText(soldOnDateText);
         }
         description.setText(String.valueOf(currentProperty.getDescription()));
         surface.setText(String.valueOf(currentProperty.getSurface()));
@@ -361,10 +336,10 @@ public class DetailFragment extends Fragment {
         Intent intent = new Intent(getActivity(), ResultSearchActivity.class);
         intent.putExtra(ListHouseFragment.ID_PROPERTY, id);
         intent.putExtra(ListHouseFragment.DISPLAY_DETAIL, displayDetail);
-            intent.putExtra(ListFilteredPropertiesFragment.FROM_FILTER, true);
-            intent.putExtra(SearchActivity.RESULTS_FILTERED, true);
-            intent.putExtra(ListFilteredPropertiesFragment.POSITON_IN_FILTER, newPosition);
-            intent.putExtra(SearchActivity.ID_FILTERED, filteredResultsArray);
+        intent.putExtra(ListFilteredPropertiesFragment.FROM_FILTER, true);
+        intent.putExtra(SearchActivity.RESULTS_FILTERED, true);
+        intent.putExtra(ListFilteredPropertiesFragment.POSITON_IN_FILTER, newPosition);
+        intent.putExtra(SearchActivity.ID_FILTERED, filteredResultsArray);
 
         startActivity(intent);
     }

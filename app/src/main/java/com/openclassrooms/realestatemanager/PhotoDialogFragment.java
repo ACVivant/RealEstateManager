@@ -247,7 +247,7 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
         if (requestCode == RC_TAKE_PHOTO1) {
             if (resultCode == RESULT_OK) {
                 if (data == null) {
-                   photoPreviewTake.setImageURI(photoURI);
+                    photoPreviewTake.setImageURI(photoURI);
                 } else {
                     Bundle extras = data.getExtras();
                     Bitmap imageBitmap = (Bitmap) extras.get("data");

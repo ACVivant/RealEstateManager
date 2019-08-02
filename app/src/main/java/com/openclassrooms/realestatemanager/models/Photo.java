@@ -9,8 +9,8 @@ import androidx.room.PrimaryKey;
  */
 @Entity(tableName = "photo",
         foreignKeys = @ForeignKey(entity = Property.class,
-        parentColumns = "propertyId",
-        childColumns = "propertyId"))
+                parentColumns = "propertyId",
+                childColumns = "propertyId"))
 public class Photo {
 
     @PrimaryKey(autoGenerate = true)

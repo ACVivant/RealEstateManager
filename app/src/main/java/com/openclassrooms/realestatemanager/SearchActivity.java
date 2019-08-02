@@ -42,48 +42,48 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
     @BindView(R.id.price_max)
     EditText priceMax;
     @BindView(R.id.surface_min)
-            EditText surfMin;
+    EditText surfMin;
     @BindView(R.id.surface_max)
-            EditText surfMax;
+    EditText surfMax;
     @BindView(R.id.rooms_min)
-            EditText rooms;
+    EditText rooms;
     @BindView(R.id.bedrooms_min)
-            EditText bedrooms;
+    EditText bedrooms;
     @BindView(R.id.bathrooms_min)
-            EditText bathrooms;
+    EditText bathrooms;
     @BindView(R.id.photos_min)
-            EditText photos;
+    EditText photos;
     @BindView(R.id.filter_zipcode)
-            EditText zipcode;
+    EditText zipcode;
     @BindView(R.id.filter_town)
-            EditText town;
+    EditText town;
     @BindView(R.id.filter_country)
-            EditText country;
+    EditText country;
     @BindView(R.id.filter_school)
     CheckBox school;
     @BindView(R.id.filter_shop)
-            CheckBox shop;
+    CheckBox shop;
     @BindView(R.id.filter_park)
-            CheckBox park;
+    CheckBox park;
     @BindView(R.id.filter_museum)
-            CheckBox museum;
+    CheckBox museum;
     @BindView(R.id.spinner_status)
     Spinner spinnerStatus;
     @BindView(R.id.soldOn_min)
-            EditText solOnMin;
+    EditText solOnMin;
     @BindView(R.id.soldOn_max)
-            EditText soldOnMax;
+    EditText soldOnMax;
     @BindView(R.id.upForSale_max)
-            EditText upForSaleMax;
+    EditText upForSaleMax;
     @BindView(R.id.upForSale_min)
-            EditText upForSaleMin;
+    EditText upForSaleMin;
     @BindView(R.id.spinner_responsable)
-            Spinner spinnerAgent;
+    Spinner spinnerAgent;
 
     @BindView(R.id.search_cancel_btn)
     Button cancelBtn;
     @BindView(R.id.search_validation_btn)
-            Button validationBtn;
+    Button validationBtn;
 
     private PropertyViewModel propertyViewModel;
 
@@ -254,7 +254,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
 
             queryString += " surface > ?";
             int minSurf = (int)  Integer.parseInt(surfMin.getText().toString()) ;
-           args.add(minSurf);
+            args.add(minSurf);
             containsCondition = true;
         }
 
@@ -494,7 +494,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
             filteredId.add(properties.get(i).getPropertyId());
         }
         launchResultActivity( queryString, filteredId);
-           }
+    }
 
     private void launchResultActivity(String query, ArrayList<Integer> tabId) {
         Intent intent = new Intent(this, ResultSearchActivity.class);

@@ -8,7 +8,7 @@ import android.os.Build;
 import com.openclassrooms.realestatemanager.R;
 
 /**
- * Created by Anne-Charlotte Vivant on 10/06/2019.
+ * use for sending notification
  */
 public class RemApp extends Application {
 

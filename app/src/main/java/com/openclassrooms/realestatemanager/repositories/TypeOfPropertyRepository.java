@@ -13,7 +13,7 @@ import androidx.lifecycle.LiveData;
 
 public class TypeOfPropertyRepository {
 
-        private TypeOfPropertyDao typeDao;
+    private TypeOfPropertyDao typeDao;
 
     public TypeOfPropertyRepository(TypeOfPropertyDao statusDao) {this.typeDao = statusDao;}
 

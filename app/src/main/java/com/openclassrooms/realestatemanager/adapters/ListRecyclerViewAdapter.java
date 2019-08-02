@@ -23,7 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Anne-Charlotte Vivant on 02/05/2019.
+ * Adapter and viewholder for list of properties
  */
 public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerViewAdapter.ListViewHolder> {
     private static final String TAG = "ListRecyclerViewAdapter";

@@ -321,7 +321,7 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 db.insert("photo", OnConflictStrategy.REPLACE, contentValuesPhoto3);
 
                 ContentValues contentValuesPhoto5 = new ContentValues();
-                contentValuesPhoto5.put("photoUri","https://cache.marieclaire.fr/data/photo/w1000_ci/4y/salon-design-new-york.jpg?auto=compress,format&q=80&h=100&dpr=2");
+                contentValuesPhoto5.put("photoUri","https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Castro_Pretorio_-_MNR_Palazzo_Massimo_1010397.JPG/230px-Castro_Pretorio_-_MNR_Palazzo_Massimo_1010397.JPG?auto=compress,format&q=80&h=100&dpr=2");
                 contentValuesPhoto5.put("photoText", "living room");
                 contentValuesPhoto5.put("propertyId",2 );
                 db.insert("photo", OnConflictStrategy.REPLACE, contentValuesPhoto5);

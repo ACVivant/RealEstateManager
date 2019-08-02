@@ -54,7 +54,7 @@ public class MapUrl {
 
 
 
-public String createGeocoderUrl(String number, String street, String zipcode, String town, String country) {
-    return  number + "+" + street + ",+" + zipcode + "+" + town + ",+" +country;
-}
+    public String createGeocoderUrl(String number, String street, String zipcode, String town, String country) {
+        return  number + "+" + street + ",+" + zipcode + "+" + town + ",+" +country;
+    }
 }

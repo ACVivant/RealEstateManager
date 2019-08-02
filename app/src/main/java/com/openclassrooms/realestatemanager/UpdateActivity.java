@@ -28,14 +28,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UpdateActivity extends AppCompatActivity implements PhotoRecyclerViewAdapter.DeletePhotoListener, UpdateFragment.OnValidateClickedListener  {
-  private static final String TAG = "UpdateActivity";
+    private static final String TAG = "UpdateActivity";
     public static final String  FROM_UPDATE_REQUEST = "fromUpadateActivity";
     private PropertyViewModel propertyViewModel;
 
     private int propertyId;
     private List<Long> photoToDeleteList = new ArrayList<>();
-    private List<String> photoToCreateList = new ArrayList<>();
-    private List<String> legendToCreateList = new ArrayList<>();
+
 
     final FragmentManager fm = getSupportFragmentManager();
     UpdateFragment fragmentUpdate = new UpdateFragment();
@@ -72,21 +71,6 @@ public class UpdateActivity extends AppCompatActivity implements PhotoRecyclerVi
 
     @Override
     public void onValidateClicked(int propertyId) {
-
-/*        for (int i=0; i<photoToCreateList.size(); i++) {
-            Photo photoToAdd = new Photo(photoToCreateList.get(i), legendToCreateList.get(i), propertyId);
-            propertyViewModel.insertPhoto(photoToAdd);
-            Log.d(TAG, "onValidateClicked: photoToCreate " + legendToCreateList.get(i));
-        }*/
-
-
-/*        for (int i=0; i<photoToDeleteList.size(); i++) {
-            getPhotosToDelete(photoToDeleteList.get(i));
-        }*/
-
-        Log.d(TAG, "onValidateClicked: on passe par ici");
-
-
     }
 
     private void getPhotosToDelete(long id){
@@ -101,19 +85,6 @@ public class UpdateActivity extends AppCompatActivity implements PhotoRecyclerVi
             deleteId+=1;
         }
     }
-
-/*    @Override
-    public void applyOthersPhoto(String photoUri, String photoLegend) {
-    *//*photoToCreateList.add(photoUri);
-    legendToCreateList.add(photoLegend);
-        Log.d(TAG, "applyOthersPhoto");*//*
-    }
-
-    @Override
-    public void applyMainPhoto(String photoUri, String photoLegend, boolean main) {
-
-    }*/
-
 
     //--------------------------------------------------------------------------------------------------
     // Database
