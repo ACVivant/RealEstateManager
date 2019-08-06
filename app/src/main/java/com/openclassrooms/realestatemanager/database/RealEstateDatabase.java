@@ -167,7 +167,7 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 contentValuesProperty1.put("typeId", 2);
                 contentValuesProperty1.put("agentId", 1);
                 contentValuesProperty1.put("statusId", 2);
-                contentValuesProperty1.put("mainPhoto", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeMzGKCkWMBHvCyz3C7fqYUYuGYUjjhJRwqM3XavLWSAvUiUz9?auto=compress,format&q=80&h=100&dpr=2");
+                contentValuesProperty1.put("mainPhoto", "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Castro_Pretorio_-_MNR_Palazzo_Massimo_1010397.JPG/230px-Castro_Pretorio_-_MNR_Palazzo_Massimo_1010397.JPG?auto=compress,format&q=80&h=100&dpr=2");
                 contentValuesProperty1.put("nbrePhotos", "6");
                 contentValuesProperty1.put("numberInStreet", "10");
                 contentValuesProperty1.put("street", "rue de Soissons");
@@ -321,7 +321,7 @@ public abstract class RealEstateDatabase extends RoomDatabase {
                 db.insert("photo", OnConflictStrategy.REPLACE, contentValuesPhoto3);
 
                 ContentValues contentValuesPhoto5 = new ContentValues();
-                contentValuesPhoto5.put("photoUri","https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Castro_Pretorio_-_MNR_Palazzo_Massimo_1010397.JPG/230px-Castro_Pretorio_-_MNR_Palazzo_Massimo_1010397.JPG?auto=compress,format&q=80&h=100&dpr=2");
+                contentValuesPhoto5.put("photoUri","https://www.deco.fr/sites/default/files/styles/article_970x500/public/migration-images/1091871.jpg??auto=compress,format&q=80&h=100&dpr=2");
                 contentValuesPhoto5.put("photoText", "living room");
                 contentValuesPhoto5.put("propertyId",2 );
                 db.insert("photo", OnConflictStrategy.REPLACE, contentValuesPhoto5);

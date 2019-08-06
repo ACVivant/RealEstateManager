@@ -121,7 +121,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="80"
-                android:text="@string/devise"
+                android:text=""
                 android:textSize="@dimen/default_text_size" />
 
 

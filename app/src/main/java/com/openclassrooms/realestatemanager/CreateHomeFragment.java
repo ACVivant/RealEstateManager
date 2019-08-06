@@ -65,7 +65,7 @@ public class CreateHomeFragment extends Fragment implements AdapterView.OnItemSe
 
     private NotificationManagerCompat notificationManager;
 
-    public static final String TAG = "CreateHomeActivity";
+    public static final String TAG = "CreateHomeFragment";
     public static final String MAIN_PHOTO_REQUEST = "Create_main_photo";
     public static final String OTHERS_PHOTO_REQUEST = "Create_others_photos";
     public static final String WHICH_REQUEST = "Create_main_orothers_photos";

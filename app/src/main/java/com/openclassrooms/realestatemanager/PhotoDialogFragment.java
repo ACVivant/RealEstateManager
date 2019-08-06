@@ -79,7 +79,7 @@ public class PhotoDialogFragment extends AppCompatDialogFragment {
         View view = inflater.inflate(R.layout.photo_picker_dialog, null);
 
         Bundle bundle = getArguments();
-        whichRequest = bundle.getString(CreateHomeActivity.WHICH_REQUEST);
+        whichRequest = bundle.getString(CreateHomeFragment.WHICH_REQUEST);
         fromTag = bundle.getString(CreateHomeFragment.FRAGMENT_REQUEST);
 
         context = this.getContext();
