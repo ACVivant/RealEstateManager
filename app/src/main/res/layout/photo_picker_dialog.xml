@@ -99,6 +99,7 @@
             android:textSize="@dimen/default_text_size"
             android:paddingHorizontal="@dimen/default_margin"
             app:layout_constraintBottom_toBottomOf="@id/legend_title"
+            app:layout_constraintTop_toTopOf="@+id/legend_title"
             app:layout_constraintStart_toStartOf="@id/take_photo"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
