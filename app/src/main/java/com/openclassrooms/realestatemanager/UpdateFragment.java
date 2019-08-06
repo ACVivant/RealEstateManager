@@ -209,14 +209,16 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
                 if (!tabletSize) {
                     getActivity().finish();
                 } else {
-                    Bundle args = new Bundle();
+/*                    Bundle args = new Bundle();
                     args.putInt(ListHouseFragment.ID_PROPERTY, propertyId);
 
                     DetailFragment detail =new DetailFragment();
                     detail.setArguments(args);
                     final FragmentManager fm = getFragmentManager();
 
-                    fm.beginTransaction().replace(R.id.frame_layout_detail, detail, "2").commit();
+                    fm.beginTransaction().replace(R.id.frame_layout_detail, detail, "2").commit();*/
+
+                    mCallback.onValidateClicked(propertyId);
                 }
             }
         });
@@ -338,6 +340,7 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
                 if (!tabletSize) {
                     getActivity().finish();
                 } else {
+                    Log.d(TAG, "savePropertyData");
                     mCallback.onValidateClicked(propertyId);
                 }
             }
@@ -629,6 +632,7 @@ public class UpdateFragment extends Fragment implements AdapterView.OnItemSelect
     private void createCallbackToMainActivity(){
         try {
             //Parent activity will automatically subscribe to callback
+            Log.d(TAG, "createCallbackToMainActivity: ");
             mCallback = (OnValidateClickedListener) getActivity();
         } catch (ClassCastException e) {
             throw new ClassCastException(e.toString()+ " must implement OnItemClickedListener");

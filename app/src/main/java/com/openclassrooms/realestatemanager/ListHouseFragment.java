@@ -78,12 +78,10 @@ public class ListHouseFragment extends Fragment  {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //Si on a un état sauvegardé on met a jour l'élément par défaut
         if (savedInstanceState != null) {
             propertySaved = savedInstanceState.getInt(ID_PROPERTY, 1);
         }
     }
-
 
     private void initRecyclerView(){
         try {
@@ -115,7 +113,6 @@ public class ListHouseFragment extends Fragment  {
         this.propertyViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PropertyViewModel.class);
     }
 
-
     private void getAllProperties(){
         this.propertyViewModel.getAllProperty().observe(this, this::updatePropertyList);
     }
@@ -135,7 +132,6 @@ public class ListHouseFragment extends Fragment  {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         // 4 - Call the method that creating callback after being attached to parent activity
         this.createCallbackToMainActivity();
     }

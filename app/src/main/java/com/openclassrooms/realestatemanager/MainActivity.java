@@ -315,26 +315,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void photoToDelete(long photoId) {
-        Log.d(TAG, "photoToDelete: on passe par ici");
-        Log.d(TAG, "photoToDelete: photo à détruire " + photoId);
-
         photoToDeleteList.add(photoId);
         getPhotosToDelete(photoId);
-    }
-
-    @Override
-    public void onValidateClicked(int propertyId) {
-        propertyIdClicked = propertyId;
-
-        Log.d(TAG, "onValidateClicked: on passe par ici");
-        if(tabletSize) {
-            Bundle args = new Bundle();
-            args.putInt(ListHouseFragment.ID_PROPERTY, propertyId);
-
-            DetailFragment detail =fragment2.newInstance(propertyId);
-
-            fm.beginTransaction().replace(R.id.frame_layout_detail, detail, "2").commit();
-        }
     }
 
     private void getPhotosToDelete(long id){
@@ -378,7 +360,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.propertyViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PropertyViewModel.class);
     }
 
+    @Override
+    public void onValidateClicked(int propertyId) {
+        propertyIdClicked = propertyId;
+        Log.d(TAG, "onValidateClicked: on passe par ici");
+        if(tabletSize) {
+            Bundle args = new Bundle();
+            args.putInt(ListHouseFragment.ID_PROPERTY, propertyId);
 
+            DetailFragment detail =fragment2.newInstance(propertyId);
+
+            fm.beginTransaction().replace(R.id.frame_layout_detail, detail, "2").commit();
+        }
+    }
 }
 //---------------------------------------------------------
 // A conserver

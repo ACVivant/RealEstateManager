@@ -108,6 +108,13 @@ public class CreateHomeFragment extends Fragment implements AdapterView.OnItemSe
 
     private Context mContext;
     private  boolean tabletSize;
+    private CreateHomeFragment.OnCreateValidateClickedListener mCallback;
+
+    // Declare our interface that will be implemented by any container activity
+    public interface OnCreateValidateClickedListener {
+        void onCreateValidateClicked();
+    }
+
 
     public CreateHomeFragment() {
         // Required empty public constructor
@@ -211,19 +218,12 @@ public class CreateHomeFragment extends Fragment implements AdapterView.OnItemSe
         resetProperty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (!tabletSize) {
+                getActivity().finish();
+                /*if (!tabletSize) {
                     getActivity().finish();
                 } else {
-                    Bundle args = new Bundle();
-                    //args.putInt(ListHouseFragment.ID_PROPERTY, initPropertyId);
-
-                    DetailFragment detail =new DetailFragment();
-                    //detail.setArguments(args);
-                    final FragmentManager fm = getFragmentManager();
-
-                    fm.beginTransaction().replace(R.id.frame_layout_detail, detail, "2").commit();
-                }
+                    mCallback.onCreateValidateClicked();
+                }*/
             }
         });
         return v;
@@ -323,18 +323,6 @@ public class CreateHomeFragment extends Fragment implements AdapterView.OnItemSe
                     Toast.makeText(mContext, getResources().getString(R.string.soldon_date_missing), Toast.LENGTH_LONG).show();
                 } else {
                     createProperty();
-                    if (!tabletSize) {
-                        getActivity().finish();
-                    } else {
-                        Bundle args = new Bundle();
-                        //args.putInt(ListHouseFragment.ID_PROPERTY, initPropertyId);
-
-                        DetailFragment detail =new DetailFragment();
-                        // detail.setArguments(args);
-                        final FragmentManager fm = getFragmentManager();
-
-                        fm.beginTransaction().replace(R.id.frame_layout_detail, detail, "2").commit();
-                    }
                 }
             }
         }
@@ -367,8 +355,10 @@ public class CreateHomeFragment extends Fragment implements AdapterView.OnItemSe
 
                 @Override
                 public void onNext(Property property) {
+                    Log.d(TAG, "onNext: called");
                     sendNotification();
-                }
+                    getActivity().finish();
+                                    }
 
                 @Override
                 public void onError(Throwable e) {
@@ -530,10 +520,7 @@ public class CreateHomeFragment extends Fragment implements AdapterView.OnItemSe
                 .build();
 
         notificationManager.notify(1, notification);
-
     }
-
-
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -543,5 +530,24 @@ public class CreateHomeFragment extends Fragment implements AdapterView.OnItemSe
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        // 4 - Call the method that creating callback after being attached to parent activity
+        Log.d(TAG, "onAttach: getActivity " +getActivity().toString());
+        this.createCallbackToMainActivity();
+    }
+
+    // 3 - Create callback to parent activity
+    private void createCallbackToMainActivity(){
+        try {
+            //Parent activity will automatically subscribe to callback
+            mCallback = (OnCreateValidateClickedListener) getActivity();
+            Log.d(TAG, "createCallbackToMainActivity");
+        } catch (ClassCastException e) {
+            throw new ClassCastException(e.toString()+ " must implement OnItemClickedListener");
+        }
     }
 }
